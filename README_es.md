@@ -49,3 +49,6 @@ Encontrarás más información sobre el repositorio en los otros archivos README
 - Documentación: https://github.com/arquisoft/lomap_es4a/tree/master/docs
 - Webapp: https://github.com/arquisoft/lomap_es4a/tree/master/webapp
 - Restapi: https://github.com/arquisoft/lomap_es4a/tree/master/restapi
+
+## Colaboradores
+- Manuel Palacios 
