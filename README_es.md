@@ -51,4 +51,5 @@ Encontrarás más información sobre el repositorio en los otros archivos README
 - Restapi: https://github.com/arquisoft/lomap_es4a/tree/master/restapi
 
 ## Colaboradores
-- Manuel Palacios 
+- Manuel Palacios
+- Carlos Cesáreo Martínez Fernández
