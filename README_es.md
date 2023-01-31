@@ -52,3 +52,4 @@ Encontrarás más información sobre el repositorio en los otros archivos README
 
 ## Colaboradores
 - Manuel Palacios 
+- Juan Gómez Tejeda
