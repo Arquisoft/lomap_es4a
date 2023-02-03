@@ -54,3 +54,4 @@ Encontrarás más información sobre el repositorio en los otros archivos README
 - Manuel Palacios
 - Carlos Cesáreo Martínez Fernández
 - Gonzalo Rodríguez
+- Diego García García
