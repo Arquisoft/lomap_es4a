@@ -55,3 +55,4 @@ Encontrarás más información sobre el repositorio en los otros archivos README
 - Carlos Cesáreo Martínez Fernández
 - Gonzalo Rodríguez
 - Diego García García
+- Juan Gómez Tejeda
