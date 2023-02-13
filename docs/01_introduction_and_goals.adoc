@@ -55,6 +55,7 @@ A table with quality goals and concrete scenarios, ordered by priorities
 === Stakeholders
 
 [role="arc42help"]
+
 ****
 .Contents
 Explicit overview of stakeholders of the system, i.e. all person, roles or organizations that
@@ -77,6 +78,11 @@ Table with role names, person names, and their expectations with respect to the 
 [options="header",cols="1,2,2"]
 |===
 |Role/Name|Contact|Expectations
-| _<Role-1>_ | _<Contact-1>_ | _<Expectation-1>_
-| _<Role-2>_ | _<Contact-2>_ | _<Expectation-2>_
+| Deployment city/ Client | Brussels City Hall | Have a functional application that adds value to the community, obtaining a benefit for local businesses and tourism.
+| Responsible company | HappySw | Development of a generic project expandable to other cities.
+| Main beneficiaries | Public users | Have an easily accessible and useful consultation and discovery service for premises or businesses.
+| Side beneficiaries | Businesses benefited | Obtain greater visibility and approach to the public, especially to the tourists of the city.
+| Project managers | Subject teachers | Development by the students of a functional application that meets the established criteria and can serve as a prototype for a real service.
+| Developers | Lomap_es4a team | Carrying out a serious project with a view to the future in which to develop your potential and show your technical skills.
+
 |===
