@@ -14,20 +14,18 @@ Describes the relevant requirements and the driving forces that software archite
 
 [role="arc42help"]
 ****
-.Contents
-Short description of the functional requirements, driving forces, extract (or abstract)
-of requirements. Link to (hopefully existing) requirements documents
-(with version number and information where to find it).
+The LoMap system is a software solution that allows the citizens of a city to share places of interest as well as allow businesses to share their locations to potential clients. These places are part of a map, and the users can give feedback about them to other users.
 
-.Motivation
-From the point of view of the end users a system is created or modified to
-improve support of a business activity and/or improve the quality.
+The LoMap system must accomplish the following requirements:
 
-.Form
-Short textual description, probably in tabular use-case format.
-If requirements documents exist this overview should refer to these documents.
-
-Keep these excerpts as short as possible. Balance readability of this document with potential redundancy w.r.t to requirements documents.
+* Users must be able to add locations of different categories, including bars, restaurants, shops, sights and monuments.
+*	Users must be able to show the locations in a map window.
+*	Users must be able to add review scores, comments and pictures about added places.
+*	Users must be able to manage the information that is accessible with other users, which can be part of their friends or a group of friends.
+*	The information about the places of each user should not be fully centralized.
+*	The privacy of each user should be respected as much as possible without interfering with other aspects of the application such as the performance.
+*	Users must be able to see places of their friends.
+*	Users must be able to filter the places they see in the map by friends or category.
 ****
 
 === Quality Goals
