@@ -53,4 +53,4 @@ Encontrarás más información sobre el repositorio en los otros archivos README
 ## Colaboradores
 - Manuel Palacios
 - Carlos Cesáreo Martínez Fernández
-- Gonzalo Rodríguez
+- Gonzalo Rodríguez Rodríguez
