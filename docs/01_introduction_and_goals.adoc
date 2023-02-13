@@ -9,6 +9,13 @@ Describes the relevant requirements and the driving forces that software archite
 * quality goals for the architecture
 * relevant stakeholders and their expectations
 ****
+In this part of the documentation the development team will describe all the main requirements and general information required to start designing the project's architecture.
+
+That information will be subdivided in the following sections
+*Requirements Overview, which describes the functionality of the project.
+*Quality Goals, which contains information regarding the level of quality the team aims to achieve.
+*Stakeholders, a sum of the main groups of people interested on the project, and also other groups that need to know the details of this specific architecture.
+
 
 === Requirements Overview
 
