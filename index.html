@@ -556,28 +556,52 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </div>
 </div>
 </div>
+<div class="paragraph">
+<p>In this part of the documentation the development team will describe all the main requirements and general information required to start designing the project&#8217;s architecture.</p>
+</div>
+<div class="paragraph">
+<p>That information will be subdivided in the following sections
+*Requirements Overview, which describes the functionality of the project.
+*Quality Goals, which contains information regarding the level of quality the team aims to achieve.
+*Stakeholders, a sum of the main groups of people interested on the project, and also other groups that need to know the details of this specific architecture.</p>
+</div>
 <div class="sect2">
 <h3 id="_requirements_overview">1.1. Requirements Overview</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
-<div class="title">Contents</div>
-<p>Short description of the functional requirements, driving forces, extract (or abstract)
-of requirements. Link to (hopefully existing) requirements documents
-(with version number and information where to find it).</p>
+<p>The LoMap system is a software solution that allows the citizens of a city to share places of interest as well as allow businesses to share their locations to potential clients. These places are part of a map, and the users can give feedback about them to other users.</p>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>From the point of view of the end users a system is created or modified to
-improve support of a business activity and/or improve the quality.</p>
+<p>The LoMap system must accomplish the following requirements:</p>
 </div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>Short textual description, probably in tabular use-case format.
-If requirements documents exist this overview should refer to these documents.</p>
-</div>
-<div class="paragraph">
-<p>Keep these excerpts as short as possible. Balance readability of this document with potential redundancy w.r.t to requirements documents.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Users must be able to add locations of different categories, including bars, restaurants, shops, sights and monuments.</p>
+</li>
+<li>
+<p>Users must be able to show the locations in a map window.</p>
+</li>
+<li>
+<p>Users must be able to add review scores, comments and pictures about added places.</p>
+</li>
+<li>
+<p>Users must be able to manage the information that is accessible with other users, which can be part of their friends or a group of friends.</p>
+</li>
+<li>
+<p>The information about the places of each user should not be fully centralized.</p>
+</li>
+<li>
+<p>The privacy of each user should be respected as much as possible without interfering with other aspects of the application such as the performance.</p>
+</li>
+<li>
+<p>Users must be able to see places of their friends.</p>
+</li>
+<li>
+<p>Users must be able to filter the places they see in the map by friends or category.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -602,7 +626,7 @@ If you as an architect do not know how the quality of your work will be judged â
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Quality goals ordered by priority (from more to least important)</caption>
+<caption class="title">Table 1. Quality goals ordered by priority (from most to least important)</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 75%;">
@@ -616,11 +640,11 @@ If you as an architect do not know how the quality of your work will be judged â
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Non technical users must be able to use the app easily. Esthetic must be familiar and understandable to them.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Non technical users must be able to use the app easily. Aesthetics must be familiar and understandable to them.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Privacy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Users can control the data that is shared with the app thanks to SOLID principles an the use of pods.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Users can control the data that is shared with the app thanks to SOLID principles and the use of pods.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Efficiency</p></td>
@@ -683,14 +707,34 @@ These stakeholders determine the extent and the level of detail of your work and
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Role-1&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Contact-1&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Expectation-1&gt;</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deployment city/ Client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Brussels City Hall</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Have a functional application that adds value to the community, obtaining a benefit for local businesses and tourism.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Role-2&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Contact-2&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Expectation-2&gt;</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Responsible company</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HappySw</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Development of a generic project expandable to other cities.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Main beneficiaries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Public users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Have an easily accessible and useful consultation and discovery service for premises or businesses.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Side beneficiaries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Businesses benefited</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Obtain greater visibility and approach to the public, especially to the tourists of the city.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Project managers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Subject teachers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Development by the students of a functional application that meets the established criteria and can serve as a prototype for a real service.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Developers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lomap_es4a team</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Carrying out a serious project with a view to the future in which to develop your potential and show your technical skills.</p></td>
 </tr>
 </tbody>
 </table>
