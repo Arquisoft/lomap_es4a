@@ -57,6 +57,10 @@ A table with quality goals and concrete scenarios, ordered by priorities
 | Usability | Non technical users must be able to use the app easily. Aesthetics must be familiar and understandable to them.
 | Privacy | Users can control the data that is shared with the app thanks to SOLID principles and the use of pods.
 | Efficiency | There must be a medium point between privacy and efficiency (all the information may not be stored inside the pods due to decreases in performance.
+| Testability | The application should be able to go through different test and complete them successfully.
+
+
+
 |===
 
 === Stakeholders
