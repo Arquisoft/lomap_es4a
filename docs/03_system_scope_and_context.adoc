@@ -1,4 +1,4 @@
 [[section-system-scope-and-context]]
 == System Scope and Context
 
-image::{./images/03_system_scope_context.png}[system scope and context diagram]
+image::images/03_system_scope_context.png[system scope and context diagram]
