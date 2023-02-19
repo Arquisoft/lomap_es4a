@@ -1,4 +1,4 @@
 [[section-system-scope-and-context]]
 == System Scope and Context
 
-![system scope and context diagram](../images/03system_scope_context.png)
+![system scope and context diagram](https://github.com/Arquisoft/lomap_es4a/blob/system-scope-and-context/docs/images/03_system_scope_context.png)
