@@ -46,4 +46,13 @@ A potential (but not mandatory) structure for this section could be:
 Note: it might be difficult to assign individual concepts to one specific topic
 on this list.
 ****
+=== Domain Concept
 
+
+image:images/08_concepts.png[Domain concept]
+
+User: This represents a client of the application. They can add other users as Friends and they have a list of marked places too. We get their information throught the POD
+
+Mark: This class represents de Marker made by the user with his name, user score and a Location.
+
+Location: This contains the longitud and latitud of the Marker.
