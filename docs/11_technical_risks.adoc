@@ -1,6 +1,13 @@
 [[section-technical-risks]]
 == Risks and Technical Debts
 
+### Risks
+
+#### Organizational Risks
+
+* GitHub is a very powerful tool when used correctly. As the developers tasked with developing the LoMap system do not have a lot of experience using GitHub in a professional work environment, it could become an issue. If not used correctly, Git and GitHub could become a liability and could delay development.
+* If the number of meetings is insufficient the team may have difficulties understanding what their responsibilities are and it could pose coordination problems.
+* If the number of meetings greater that the necesary amount, the team may lose time they could spend developing the system.
 
 [role="arc42help"]
 ****
