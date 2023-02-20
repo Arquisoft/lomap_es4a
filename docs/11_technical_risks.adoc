@@ -1,14 +1,6 @@
 [[section-technical-risks]]
 == Risks and Technical Debts
 
-### Risks
-
-#### Organizational Risks
-
-* GitHub is a very powerful tool when used correctly. As the developers tasked with developing the LoMap system do not have a lot of experience using GitHub in a professional work environment, it could become an issue. If not used correctly, Git and GitHub could become a liability and could delay development.
-* If the number of meetings is insufficient the team may have difficulties understanding what their responsibilities are and it could pose coordination problems.
-* If the number of meetings greater that the necesary amount, the team may lose time they could spend developing the system.
-
 [role="arc42help"]
 ****
 .Contents
@@ -22,3 +14,16 @@ This should be your motto for systematic detection and evaluation of risks and t
 .Form
 List of risks and/or technical debts, probably including suggested measures to minimize, mitigate or avoid risks or reduce technical debts.
 ****
+
+### Risks
+
+#### Organizational Risks
+
+* GitHub is a very powerful tool when used correctly. As the developers tasked with developing the LoMap system do not have a lot of experience using GitHub in a professional work environment, it could become an issue. If not used correctly, Git and GitHub could become a liability and could delay development.
+* If the number of meetings is insufficient the team may have difficulties understanding what their responsibilities are and it could pose coordination problems.
+* If the number of meetings greater that the necesary amount, the team may lose time they could spend developing the system.
+
+#### Technological Risks
+
+* If the team does not properly understand the technologies used, the system may not satisfy the quality goals.
+* If the data stored centrally contains too much information, the user privacy will not be respected. On the other hand, if all the data is stored in user PODs, the system will be too slow, so a certain balance must be found.
