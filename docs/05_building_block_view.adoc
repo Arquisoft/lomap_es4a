@@ -63,7 +63,7 @@ Actor User
 Folder LoMap
 
 Folder pod [
-User's pod
+    User's pod
 ]
 
 User -right-> LoMap: interacts with
@@ -98,26 +98,38 @@ Please prefer relevance over completeness. Specify important, surprising, risky,
 Leave out normal, simple, boring or standardized parts of your system
 ****
 
-==== White Box _<building block 1>_
+[plantuml, "level2", png]
+----
+Actor User
+package LoMap {
+    component frontend
+    component backend
+    database db
+    
+    frontend <-> backend
+    backend <--> db
+}
 
-[role="arc42help"]
-****
-...describes the internal structure of _building block 1_.
-****
+Folder pod [
+    User's pod
+]
 
-_<white box template>_
+User --> frontend: interacts with
+backend<-right-> pod: obtains data
+----
 
-==== White Box _<building block 2>_
-
-
-_<white box template>_
-
-...
-
-==== White Box _<building block m>_
+Motivation::
+The diagram shows the inner structure of the "LoMap" component.
 
 
-_<white box template>_
+Contained Building Blocks::
+[cols="1,2" options="header"]
+|===
+| **Black boxes** | **Description**
+| Frontend | Application user's interface.
+| Backend | It is in charge of administrate the application logic.
+| DB | Database that stores the information which must be centralised (in order to achieve efficiency).
+|===
 
 
 
