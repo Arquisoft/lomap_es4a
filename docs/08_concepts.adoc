@@ -51,8 +51,12 @@ on this list.
 
 image:images/08_concepts.png[Domain concept]
 
-User: This represents a client of the application. They can add other users as Friends and they have a list of marked places too. We get their information throught the POD
+User: This represents a client of the application. They can add other users as Friends and they have a list of marked places too. We get their information throught the POD.
 
 Mark: This class represents de Marker made by the user with his name, user score and a Location.
 
 Location: This contains the longitud and latitud of the Marker.
+
+### Technical Decisions
+
+The technical decisions taken were explained in more detail in the section 04 of the documentation titled 'Solution Strategy'. For further information about the technical decisions, please check the section https://github.com/Arquisoft/lomap_es4a/blob/master/docs/04_solution_strategy.adoc[04 Solution Strategy].
