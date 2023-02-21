@@ -1,7 +1,5 @@
 [[section-architecture-constraints]]
 == Architecture Constraints
-
-
 [role="arc42help"]
 ****
 .Contents
@@ -17,3 +15,27 @@ If needed you can subdivide them into
 technical constraints, organizational and political constraints and
 conventions (e.g. programming or versioning guidelines, documentation or naming conventions)
 ****
+=== General conventions
+[options="header",cols="1,2"]
+|===
+|Constrains | Description
+| Arc42 | Base template for the documentation. Used for most of the software solutions for its free and open source code.
+| Naming Conventions | The names and nomenclature will follow the constraints of each technology and follow the same naming line in the entire project
+|===
+=== Technology conventions
+[options="header",cols="1,2"]
+|===
+|Constrains | Description
+| Git | Version control management in which will be uploaded all content related to the project. Including documentation, code, records of meetings, documentation of issues or different versions.
+| SOLID | Principles used to build code. Use of pods to store the user's data
+| WebStorm | Main IDE for TypeScript developer. Chosen because of this facility with Git integration and specialization on TypeScript coding
+| GitHub | IDE for version control. Chosen Because our familiarity with it and its easy use.
+|===
+=== Group conventions
+[options="header",cols="1,2"]
+|===
+|Constrains | Description
+| Capacity | Main group formed by four third-grade-developers who are looking for add value to the project.
+| Meeting agreements | Two scheduled meetings per week. One during the class session to update the tasks for the week and another for conflict resolution and routine checks.
+| Time Restriction | This project has to have an approximate duration of one semester.
+| Distribution | Division of the different areas in equitative Full Stack parts. Looking for a complete development and knowledge of all team 
