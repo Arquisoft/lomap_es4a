@@ -39,3 +39,4 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 | Meeting agreements | Two scheduled meetings per week. One during the class session to update the tasks for the week and another for conflict resolution and routine checks.
 | Time Restriction | This project has to have an approximate duration of one semester.
 | Distribution | Division of the different areas in equitative Full Stack parts. Looking for a complete development and knowledge of all team 
+|===
