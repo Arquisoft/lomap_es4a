@@ -8,7 +8,7 @@
 This section describes overall, principal regulations and solution ideas that are
 relevant in multiple parts (= cross-cutting) of your system.
 Such concepts are often related to multiple building blocks.
-They can include many different topics, such as
+They can include many topics, such as
 
 * domain models
 * architecture patterns or design patterns
@@ -55,7 +55,7 @@ User: This represents a client of the application. They can add other users as F
 
 Mark: This class represents de Marker made by the user with his name, user score and a Location.
 
-Location: This contains the longitud and latitud of the Marker.
+Location: This contains the longitude and latitude of the Marker.
 
 ### Technical Decisions
 
