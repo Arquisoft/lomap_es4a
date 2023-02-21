@@ -66,7 +66,7 @@ Tabular or free form text.
 |===
 |Quality requirement | Quality scenario | Priority
 | Usability | Our app have to be easy to use for every kind of user, even for a non-experienced one. The views must be clear and intuitive, and the user has to be able to browse fluently through the entire application. In addition, must be implemented the recquired mechanisms to ease the users use of the app. | High
-| Privacy | Giving the users the control of the information saved and shared, we guarantee that there wouldn't be personal leaks. This is a result of the use of pods adn a very cared system of terms adn privacy options. | Medium-high
+| Privacy | Giving the users the control of the information saved and shared, we guarantee that there wouldn't be personal leaks. This is a result of the use of pods and a very cared system of terms adn privacy options. | Medium-high
 | Efficiency | The conection and browsing speed must be faster enaugh to keep users attention and don't bore them, giving a fluent experience through the app. We are looking a balance with the privacy in terms of storeage of the personal user's information | Medium-high
 | Testability | The application should be able to go through different test and complete them successfully. Besides, the app has to be prepared for all kind of logical uses by the user | Medium-low
 |===
