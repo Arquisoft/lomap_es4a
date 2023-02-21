@@ -69,3 +69,4 @@ Tabular or free form text.
 | Privacy | Giving the users the control of the information saved and shared, we guarantee that there wouldn't be personal leaks. This is a result of the use of pods adn a very cared system of terms adn privacy options. | Medium-high
 | Efficiency | The conection and browsing speed must be faster enaugh to keep users attention and don't bore them, giving a fluent experience through the app. We are looking a balance with the privacy in terms of storeage of the personal user's information | Medium-high
 | Testability | The application should be able to go through different test and complete them successfully. Besides, the app has to be prepared for all kind of logical uses by the user | Medium-low
+|===
