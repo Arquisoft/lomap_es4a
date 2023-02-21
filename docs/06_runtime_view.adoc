@@ -45,7 +45,7 @@ Pod -->App: Information Response
 App --> User: Authentication Response
 App --> User: Load of Information
 App --> User: Confirmation of login
-User --> App: Access to personal files adn use of the app
+User --> App: Access to personal files and use of the app
 ----
 === Map view
 [plantuml,"Sequence diagram2",png]
