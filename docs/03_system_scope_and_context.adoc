@@ -19,4 +19,4 @@ Various options:
 * Lists of communication partners and their interfaces.
 ****
 
-image::images/03_system_scope_context.png[system scope and context diagram]
+image::03_system_scope_context.png[system scope and context diagram]
