@@ -3,7 +3,7 @@
 
 
 [role="arc42help"]
-***
+****
 .Contents
 
 * decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern
@@ -18,7 +18,7 @@ Keep the explanation of these key decisions short.
 Motivate what you have decided and why you decided that way,
 based upon your problem statement, the quality goals and key constraints.
 Refer to details in the following sections.
-
+****
 === Technology decisions
 .TypeScript:
 We decided to use this programming language because it's one of the most suitable to develop SOLID apps. Like JavaScript, it also provides all the capabilities that a language used for the web and it helps the developers by being statically typed. Our team has experience with Java, so a statically typed language is easier to use and understand for us.
