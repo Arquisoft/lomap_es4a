@@ -19,4 +19,5 @@ Various options:
 * Lists of communication partners and their interfaces.
 ****
 
+:imagesdir: images/
 image::03_system_scope_context.png[system scope and context diagram]
