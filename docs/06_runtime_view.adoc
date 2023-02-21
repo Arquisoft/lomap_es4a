@@ -30,28 +30,48 @@ There are many notations for describing scenarios, e.g.
 
 ****
 
-=== <Runtime Scenario 1>
+=== Login
 
-
-* _<insert runtime diagram or textual description of the scenario>_
-* _<insert description of the notable aspects of the interactions between the
-building block instances depicted in this diagram.>_
-
-It is possible to use a sequence diagram:
 
 [plantuml,"Sequence diagram",png]
 ----
-actor Alice
-actor Bob
-database Pod as "Bob's Pod"
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-Alice  --> Pod: Store route
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+actor User
+entity App
+database Pod as "DB"
+User--> App: Login data introduced
+User --> App: Authentication Request
+App --> Pod: Information Request
+Pod -->App: Information Response
+App --> User: Authentication Response
+App --> User: Load of Information
+App --> User: Confirmation of login
+User --> App: Access to personal files adn use of the app
 ----
-=== <Runtime Scenario 2>
+=== Map view
+[plantuml,"Sequence diagram",png]
+----
+actor User
+entity App
+database Pod as "DB"
+User --> App: Request to see the map
+App --> Pod: Request user map data
+Pod --> App: Load of the map
+Pod --> App: Load of personal markers and points
+App --> User: View of the map
+----
+=== New point/Map saved
+[plantuml,"Sequence diagram",png]
+----
+actor User
+entity App
+database Pod as "DB"
+User --> App: Request to create new marker
+App --> User: Creation marker view
+User --> App: Marker data
+App -->App:Local data save
+User -->App: Save request
+App--> Pod: Remote save request
+Pod --> App: DB Response
+App --> User: Response feedback
+----
 
-=== ...
-
-=== <Runtime Scenario n>
