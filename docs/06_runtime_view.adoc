@@ -33,7 +33,7 @@ There are many notations for describing scenarios, e.g.
 === Login
 
 
-[plantuml,"Sequence diagram",png]
+[plantuml,"Sequence diagram1",png]
 ----
 actor User
 entity App
@@ -48,7 +48,7 @@ App --> User: Confirmation of login
 User --> App: Access to personal files adn use of the app
 ----
 === Map view
-[plantuml,"Sequence diagram",png]
+[plantuml,"Sequence diagram2",png]
 ----
 actor User
 entity App
@@ -60,7 +60,7 @@ Pod --> App: Load of personal markers and points
 App --> User: View of the map
 ----
 === New point/Map saved
-[plantuml,"Sequence diagram",png]
+[plantuml,"Sequence diagram3",png]
 ----
 actor User
 entity App
