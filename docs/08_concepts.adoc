@@ -48,8 +48,8 @@ on this list.
 ****
 === Domain Concept
 
-
-image:images/08_concepts.png[Domain concept]
+:imagesdir: images/
+image::08_concepts.png[Domain concept]
 
 User: This represents a client of the application. They can add other users as Friends and they have a list of marked places too. We get their information throught the POD.
 
