@@ -61,7 +61,7 @@ In the best case you will get away with examples or simple signatures.
 ----
 actor User
 folder LoMap
-folder pod as "User's pod
+folder pod as "User's pod"
 
 User -right-> LoMap: interacts with
 LoMap <-right-> pod: obtains data
