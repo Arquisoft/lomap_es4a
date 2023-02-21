@@ -59,9 +59,9 @@ In the best case you will get away with examples or simple signatures.
 
 [plantuml, "level1", png]
 ----
-Actor User
-Folder LoMap
-Folder pod as "User's pod
+actor User
+folder LoMap
+folder pod as "User's pod
 
 User -right-> LoMap: interacts with
 LoMap <-right-> pod: obtains data
@@ -96,7 +96,7 @@ Leave out normal, simple, boring or standardized parts of your system
 
 [plantuml, "level2", png]
 ----
-Actor User
+actor User
 package LoMap {
     component frontend
     component backend
@@ -106,9 +106,7 @@ package LoMap {
     backend <--> db
 }
 
-Folder pod [
-    User's pod
-]
+folder pod as "User's pod"
 
 User --> frontend: interacts with
 backend<-right-> pod: obtains data
