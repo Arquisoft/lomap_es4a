@@ -37,7 +37,7 @@ when your infrastructure is more complex.
 The LoMap system will run for the most part in the user's device, whether it is a smartphone or a personal computer. The system will be deployed using Docker images.
 
 :imagesdir: images/
-image::images/07_deployment_view.png[deployment view diagram]
+image::07_deployment_view.png[deployment view diagram]
 
 The webapp is the part of the system that the users will interact with. The restapi will be in charge of integrating all the other parts of the system. Prometheus and Grafana will monitor and give information about the restapi.
 
