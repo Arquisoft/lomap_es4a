@@ -491,6 +491,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_quality_scenarios">10.2. Quality Scenarios</a></li>
 </ul>
 </li>
+<li><a href="#section-technical-risks">11. Risks and Technical Debts</a>
+<ul class="sectlevel2">
+<li><a href="#_risks">11.1. Risks</a></li>
+</ul>
+</li>
+<li><a href="#section-glossary">12. Glossary</a></li>
 </ul>
 </div>
 </div>
@@ -1078,23 +1084,9 @@ In the best case you will get away with examples or simple signatures.</p>
 </div>
 </div>
 </div>
-<div class="listingblock">
+<div class="imageblock">
 <div class="content">
-<pre>Failed to generate image: PlantUML preprocessing failed: [From &lt;input&gt; (line 4) ]
-
-@startuml
-actor User
-folder LoMap
-folder pod as "User's pod
-^^^^^
- Syntax Error?
-
-actor User
-folder LoMap
-folder pod as "User's pod
-
-User -right-&gt; LoMap: interacts with
-LoMap &lt;-right-&gt; pod: obtains data</pre>
+<img src="./images/level1.png" alt="level1" width="302" height="205">
 </div>
 </div>
 <div class="dlist">
@@ -1375,7 +1367,7 @@ when your infrastructure is more complex.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/images/07_deployment_view.png" alt="deployment view diagram">
+<img src="./images/07_deployment_view.png" alt="deployment view diagram">
 </div>
 </div>
 <div class="paragraph">
@@ -1485,8 +1477,10 @@ on this list.</p>
 </div>
 <div class="sect2">
 <h3 id="_domain_concept">8.1. Domain Concept</h3>
-<div class="paragraph">
-<p><span class="image"><img src="./images/images/08_concepts.png" alt="Domain concept"></span></p>
+<div class="imageblock">
+<div class="content">
+<img src="./images/08_concepts.png" alt="Domain concept">
+</div>
 </div>
 <div class="paragraph">
 <p>User: This represents a client of the application. They can add other users as Friends and they have a list of marked places too. We get their information throught the POD.</p>
@@ -1713,76 +1707,147 @@ more precisely down to a level of scenarios that can be discussed and evaluated.
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Testability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The application should be able to go through different test and complete them successfully. Besides, the app has to be prepared for all kind of logical uses by the user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Medium-low</p>
-<p class="tableblock">&lt;&lt;&lt;&lt;
-<a id="section-technical-risks"></a>
-== Risks and Technical Debts</p>
-<p class="tableblock">[role="arc42help"]
-<strong><strong>*
-.Contents
-A list of identified technical risks or technical debts, ordered by priority</p>
-<p class="tableblock">.Motivation
-“Risk management is project management for grown-ups” (Tim Lister, Atlantic Systems Guild.)</p>
-<p class="tableblock">This should be your motto for systematic detection and evaluation of risks and technical debts in the architecture, which will be needed by management stakeholders (e.g. project managers, product owners) as part of the overall risk analysis and measurement planning.</p>
-<p class="tableblock">.Form
-List of risks and/or technical debts, probably including suggested measures to minimize, mitigate or avoid risks or reduce technical debts.
-</strong><strong></p>
-<p class="tableblock"><mark># Risks</p>
-<p class="tableblock"></mark><mark> Organizational Risks</p>
-<p class="tableblock">* GitHub is a very powerful tool when used correctly. As the developers tasked with developing the LoMap system do not have a lot of experience using GitHub in a professional work environment, it could become an issue. If not used correctly, Git and GitHub could become a liability and could delay development.
-* If the number of meetings is insufficient the team may have difficulties understanding what their responsibilities are and it could pose coordination problems.
-* If the number of meetings greater that the necesary amount, the team may lose time they could spend developing the system.</p>
-<p class="tableblock"></mark>## Technological Risks</p>
-<p class="tableblock">* If the team does not properly understand the technologies used, the system may not satisfy the quality goals.
-* If the data stored centrally contains too much information, the user privacy will not be respected. On the other hand, if all the data is stored in user PODs, the system will be too slow, so a certain balance must be found.</p>
-<p class="tableblock">&lt;&lt;&lt;&lt;
-<a id="section-glossary"></a>
-== Glossary</p>
-<p class="tableblock">[role="arc42help"]
-</strong><strong>
-.Contents
-The most important domain and technical terms that your stakeholders use when discussing the system.</p>
-<p class="tableblock">You can also see the glossary as source for translations if you work in multi-language teams.</p>
-<p class="tableblock">.Motivation
-You should clearly define your terms, so that all stakeholders</p>
-<p class="tableblock">* have an identical understanding of these terms
-* do not use synonyms and homonyms</p>
-<p class="tableblock">.Form
-A table with columns &lt;Term&gt; and &lt;Definition&gt;.</p>
-<p class="tableblock">Potentially more columns in case you need translations.</p>
-<p class="tableblock"></strong></strong>*</p>
-<p class="tableblock">[options="header"]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium-low</p></td>
 </tr>
 </tbody>
 </table>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="section-technical-risks">11. Risks and Technical Debts</h2>
+<div class="sectionbody">
+<div class="sidebarblock arc42help">
+<div class="content">
 <div class="paragraph">
-<p>| Term         | Definition
-| &lt;Term-1&gt;     | &lt;definition-1&gt;
-| &lt;Term-2&gt;     | &lt;definition-2&gt;</p>
+<div class="title">Contents</div>
+<p>A list of identified technical risks or technical debts, ordered by priority</p>
+</div>
+<div class="paragraph">
+<div class="title">Motivation</div>
+<p>“Risk management is project management for grown-ups” (Tim Lister, Atlantic Systems Guild.)</p>
+</div>
+<div class="paragraph">
+<p>This should be your motto for systematic detection and evaluation of risks and technical debts in the architecture, which will be needed by management stakeholders (e.g. project managers, product owners) as part of the overall risk analysis and measurement planning.</p>
+</div>
+<div class="paragraph">
+<div class="title">Form</div>
+<p>List of risks and/or technical debts, probably including suggested measures to minimize, mitigate or avoid risks or reduce technical debts.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_risks">11.1. Risks</h3>
+<div class="sect3">
+<h4 id="_organizational_risks">11.1.1. Organizational Risks</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>GitHub is a very powerful tool when used correctly. As the developers tasked with developing the LoMap system do not have a lot of experience using GitHub in a professional work environment, it could become an issue. If not used correctly, Git and GitHub could become a liability and could delay development.</p>
+</li>
+<li>
+<p>If the number of meetings is insufficient the team may have difficulties understanding what their responsibilities are and it could pose coordination problems.</p>
+</li>
+<li>
+<p>If the number of meetings greater that the necesary amount, the team may lose time they could spend developing the system.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_technological_risks">11.1.2. Technological Risks</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>If the team does not properly understand the technologies used, the system may not satisfy the quality goals.</p>
+</li>
+<li>
+<p>If the data stored centrally contains too much information, the user privacy will not be respected. On the other hand, if all the data is stored in user PODs, the system will be too slow, so a certain balance must be found.</p>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="section-glossary">12. Glossary</h2>
+<div class="sectionbody">
+<div class="sidebarblock arc42help">
+<div class="content">
+<div class="paragraph">
+<div class="title">Contents</div>
+<p>The most important domain and technical terms that your stakeholders use when discussing the system.</p>
+</div>
+<div class="paragraph">
+<p>You can also see the glossary as source for translations if you work in multi-language teams.</p>
+</div>
+<div class="paragraph">
+<div class="title">Motivation</div>
+<p>You should clearly define your terms, so that all stakeholders</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>have an identical understanding of these terms</p>
+</li>
+<li>
+<p>do not use synonyms and homonyms</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Form</div>
+<p>A table with columns &lt;Term&gt; and &lt;Definition&gt;.</p>
+</div>
+<div class="paragraph">
+<p>Potentially more columns in case you need translations.</p>
+</div>
+</div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 100%;">
+<col style="width: 50%;">
+<col style="width: 50%;">
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Term</th>
+<th class="tableblock halign-left valign-top">Definition</th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;&lt;&lt;&lt;
-:homepage: <a href="http://arc42.org" class="bare">http://arc42.org</a></p>
-<p class="tableblock">:keywords: software-architecture, documentation, template, arc42</p>
-<p class="tableblock">:numbered!:
-<strong>About arc42</strong></p>
-<p class="tableblock">[role="lead"]
-arc42, the Template for documentation of
-software and system architecture.</p>
-<p class="tableblock">By Dr. Gernot Starke, Dr. Peter Hruschka and contributors.</p>
-<p class="tableblock">Template Revision: 7.0 EN (based on asciidoc), January 2017</p>
-<p class="tableblock">&#169;
-We acknowledge that this document uses material from the
-arc 42 architecture template, <a href="http://www.arc42.de" class="bare">http://www.arc42.de</a>.
-Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;Term-1&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;definition-1&gt;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;Term-2&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;definition-2&gt;</p></td>
 </tr>
 </tbody>
 </table>
+<div style="page-break-after: always;"></div>
+<div class="paragraph">
+<p><strong>About arc42</strong></p>
+</div>
+<div class="paragraph lead">
+<p>arc42, the Template for documentation of
+software and system architecture.</p>
+</div>
+<div class="paragraph">
+<p>By Dr. Gernot Starke, Dr. Peter Hruschka and contributors.</p>
+</div>
+<div class="paragraph">
+<p>Template Revision: 7.0 EN (based on asciidoc), January 2017</p>
+</div>
+<div class="paragraph">
+<p>&#169;
+We acknowledge that this document uses material from the
+arc 42 architecture template, <a href="http://www.arc42.de" class="bare">http://www.arc42.de</a>.
+Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 </div>
 </div>
 </div>
