@@ -66,7 +66,7 @@ folder api as "Maps' API"
 
 LoMap -up-> api: API request
 User -right-> LoMap: interacts with
-LoMap <-right- pod: obtains data
+LoMap <-right-> pod: obtains data
 ----
 
 Motivation::
