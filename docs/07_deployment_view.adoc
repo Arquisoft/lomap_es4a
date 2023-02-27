@@ -52,4 +52,4 @@ image::07_deployment_view_deployment.png[deployment view diagram in deployment]
 The following image is a legend that can be useful to understand the information shown in the diagrams.
 
 :imagesdir: images/
-image::07_deployment_view_legend.png[deployment view diagram in deployment]
+image::07_deployment_view_legend.png[deployment view diagram legend]
