@@ -8,9 +8,10 @@ import UserList from './components/UserList';
 import  {getUsers} from './api/api';
 import {User} from './shared/shareddtypes';
 import './App.css';
+import SignInSide from './components/SignInSide';
 
 function App(): JSX.Element {
-
+  /*
   const [users,setUsers] = useState<User[]>([]);
 
   const refreshUserList = async () => {
@@ -32,6 +33,9 @@ function App(): JSX.Element {
       </Container>
     </>
   );
+  */
+
+  return <SignInSide />;
 }
 
 export default App;
