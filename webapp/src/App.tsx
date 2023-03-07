@@ -8,24 +8,13 @@ import UserList from './components/UserList';
 import  {getUsers} from './api/api';
 import {User} from './shared/shareddtypes';
 import './App.css';
-import Map from "./components/Map";
-import {loadMapApi} from "./components/utils/GoogleMapsUtils";
+import Map from "./components/Map/Map";
+
+
 
 function App(): JSX.Element {
 
   const [users,setUsers] = useState<User[]>([]);
-
-  // ------------ Para la creación del Mapa
-  const [scriptLoaded, setScriptLoaded] = useState(false);
-  useEffect(() => {
-    // Nos aseguramos de que cargue el Script
-    const googleMapScript = loadMapApi();
-    googleMapScript.addEventListener("load", function () {
-      // Ha cargado
-      setScriptLoaded(true);
-    })
-  },[]);
-  // ----------------------------------------
   const refreshUserList = async () => {
     setUsers(await getUsers());
   }
@@ -42,12 +31,7 @@ function App(): JSX.Element {
         <EmailForm OnUserListChange={refreshUserList}/>        
         <UserList users={users}/>
         <Link href="https://github.com/arquisoft/lomap_0">Source code</Link>
-        {scriptLoaded && (
-            <Map
-                mapType={google.maps.MapTypeId.ROADMAP}
-                mapTypeControl={true}
-            />
-        )}
+        <Map/>
       </Container>
     </>
   );
