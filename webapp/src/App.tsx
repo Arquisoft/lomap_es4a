@@ -9,6 +9,8 @@ import  {getUsers} from './api/api';
 import {User} from './shared/shareddtypes';
 import './App.css';
 import SignInSide from './components/SignInSide';
+import LoginForm from './components/LoginForm';
+import {SessionProvider, useSession} from "@inrupt/solid-ui-react";
 
 function App(): JSX.Element {
   /*
@@ -34,8 +36,23 @@ function App(): JSX.Element {
     </>
   );
   */
+	//We use this state variable
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  return <SignInSide />;
+	//With this we can control the login status for solid
+	const { session } = useSession();
+  
+	//We have logged in
+	session.onLogin( () => setIsLoggedIn(true) );
+  
+	//We have logged out
+	session.onLogout( () => setIsLoggedIn(false));
+  
+	return(
+		<SessionProvider>
+			{(!isLoggedIn) ? <LoginForm/> : <Welcome message="Aquí iría el mapa"/>}
+		</SessionProvider>
+	)
 }
 
 export default App;
