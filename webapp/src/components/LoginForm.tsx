@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { LoginButton } from "@inrupt/solid-ui-react";
-import { Button, TextField, FormGroup, Container } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Grid } from "@mui/material";
 
 function LoginForm() {
   const [podProvider, setPodProvider] = useState("https://inrupt.net");
-  const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
+  const [currentUrl, setCurrentUrl] = useState("http://localhost:3000");
 
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -42,7 +42,7 @@ function LoginForm() {
 
 		<Grid item xs={3}>
 		<LoginButton oidcIssuer={podProvider} redirectUrl={currentUrl}>
-			<Button variant="contained" color="primary">
+			<Button type="submit" fullWidth variant="contained" color="primary">
 				Login
 			</Button>
 		</LoginButton>

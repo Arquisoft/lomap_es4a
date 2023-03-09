@@ -36,21 +36,13 @@ function App(): JSX.Element {
     </>
   );
   */
-	//We use this state variable
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 	//With this we can control the login status for solid
 	const { session } = useSession();
   
-	//We have logged in
-	session.onLogin( () => setIsLoggedIn(true) );
-  
-	//We have logged out
-	session.onLogout( () => setIsLoggedIn(false));
-  
 	return(
 		<SessionProvider>
-			{(!isLoggedIn) ? <LoginForm/> : <Welcome message="Aquí iría el mapa"/>}
+			{(!session.info.isLoggedIn) ? <SignInSide /> : <Welcome message="Aquí iría el mapa"/>}
 		</SessionProvider>
 	)
 }
