@@ -75,15 +75,15 @@ function Navigator(props: DrawerProps) {
   
   return (
     <ThemeProvider theme={theme}>
-    <Box  bgcolor="primary.main"{...other}  >
+    <Drawer {...other}  open={{...other}.open} >
       
       <List disablePadding >
         
-        <ListItem sx={{ ...item, ...itemCategory, bgcolor: '#101F33' ,flexGrow: 1 }}>
-          <ListItemIcon>
+        <ListItem sx={{ ...item, ...itemCategory, bgcolor: '#101F33' ,flexGrow: 1 }}onClick={ () => console.log("cerrar") }>
+          <ListItemIcon >
             <HomeIcon />
           </ListItemIcon>
-          <ListItemText>Lomap_es4a</ListItemText>
+          <ListItemText>Close men</ListItemText>
         </ListItem>
         {categories.map(({ id, children }) => (
           <Box key={id} sx={{ bgcolor: '#101F33' }}>
@@ -102,7 +102,7 @@ function Navigator(props: DrawerProps) {
           </Box>
         ))}
       </List>
-    </Box>
+    </Drawer>
     </ThemeProvider>
   );
 }

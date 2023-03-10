@@ -27,7 +27,7 @@ function App(): JSX.Element {
   useEffect(()=>{
     refreshUserList();
   },[]);
-  
+  //<Box sx={{ gridArea: 'nav',backgroundColor: '#101F33'}}><Navigator /></Box>
   return (
     <>
       <Grid 
@@ -35,16 +35,16 @@ function App(): JSX.Element {
         display: 'grid',
         gridTemplateColumns: 'repeat(9, 1fr)',
         gridTemplateRows: 'auto',
-        gridTemplateAreas: `"nav search search search search search search search search"
-      "nav mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
-      "nav mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
-      "nav mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
-      "nav mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "`,
+        gridTemplateAreas: `"search search search search search search search search search"
+      "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
+      "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
+      "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
+      "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "`,
       
       }}>
 
         <Box sx={{ gridArea: 'search'}}><PrimarySearchAppBar /></Box>
-        <Box sx={{ gridArea: 'nav',backgroundColor: '#101F33'}}><Navigator /></Box>
+        
         <Box sx={{ gridArea: 'mainContainer'}}><Map/></Box>
        
         
