@@ -1,8 +1,8 @@
 import mapStyles from "./mapStyles";
 
 export const containerStyle = {
-  width: '100%',
-  height: '100vh'
+    width: '100%',
+    height: '100vh'
 };
 
 export const center = {
@@ -11,7 +11,7 @@ export const center = {
 };
 
 export const options = {
-  styles: mapStyles,
-  disableDefaultUI: true,
-  zoomControl: true
+    styles: mapStyles,
+    disableDefaultUI: true,
+    zoomControl: true,
 };
