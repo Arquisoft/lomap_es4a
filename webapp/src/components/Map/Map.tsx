@@ -5,6 +5,10 @@ import {useQuery} from "react-query";
 import {fetchNearbyPlaces} from "../../api/api";
 // Map Settings
 import {containerStyle, center, options} from "./settings";
+// SOLID API
+import { PointsService } from "../../solidapi/pointsService";
+import { Session , getDefaultSession, login, handleIncomingRedirect} from '@inrupt/solid-client-authn-browser';
+//import {login} from "../../solidapi/solidapi";
 
 export type MarkerType = {
     id: string,
@@ -15,7 +19,27 @@ export type MarkerType = {
 
 }
 
+const session = new Session();
+
 const Map: React.FC = () => {
+
+
+    handleIncomingRedirect();
+
+    // 2. Start the Login Process if not already logged in.
+    if (!getDefaultSession().info.isLoggedIn) {
+        login({
+            // Specify the URL of the user's Solid Identity Provider;
+            // e.g., "https://login.inrupt.com".
+            oidcIssuer: "https://inrupt.net/",
+            // Specify the URL the Solid Identity Provider should redirect the user once logged in,
+            // e.g., the current page for a single-page app.
+            redirectUrl: "http://localhost:3000/",
+            // Provide a name for the application when sending to the Solid Identity Provider
+            clientName: "LoMap"
+        });
+    }
+
     const {isLoaded} = useJsApiLoader(
         {
         id:'google-map-script',
@@ -49,6 +73,7 @@ const Map: React.FC = () => {
 
     const onMapClick = (e: google.maps.MapMouseEvent) => {
         console.log(e);
+
         //setClickedPos({lat: e.latLng.lat(), lng: e.latLng.lng()});
     };
 
@@ -68,4 +93,5 @@ const Map: React.FC = () => {
         </div>
     );
 };
+
 export default Map;

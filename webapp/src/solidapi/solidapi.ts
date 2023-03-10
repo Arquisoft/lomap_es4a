@@ -1,13 +1,12 @@
 
 import {
     getSolidDataset,
-    getContentType,
     getFile,
     deleteFile,
     saveFileInContainer,
     overwriteFile
-} from "@inrupt/solid-client";
-import { Session } from "@inrupt/solid-client-authn-browser";
+} from '@inrupt/solid-client';
+import { Session } from '@inrupt/solid-client-authn-browser';
 
 
 async function login(identityProvider: string, redirectUrl: string): Promise<Session> {
@@ -28,7 +27,7 @@ async function readData(session: Session, url: string): Promise<File | null> {
         return null;
     }
     let parts = url.split("/");
-    let name = parts.pop();
+    let name = parts[parts.length - 1];
     try {
         let blob = await getFile(
             url,
