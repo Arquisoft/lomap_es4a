@@ -1,7 +1,6 @@
 [[section-system-scope-and-context]]
 == System Scope and Context
 
-
 [role="arc42help"]
 ****
 .Contents
@@ -20,47 +19,18 @@ Various options:
 * Lists of communication partners and their interfaces.
 ****
 
+== Business Context:
 
-=== Business Context
+:imagesdir: images/
+image::03_system_scope_context_business.png[business system scope and context diagram]
 
-[role="arc42help"]
-****
-.Contents
-Specification of *all* communication partners (users, IT-systems, ...) with explanations of domain specific inputs and outputs or interfaces.
-Optionally you can add domain specific formats or communication protocols.
+The main components that the LoMap system interacts with are: Database, Maps API, POD.
 
-.Motivation
-All stakeholders should understand which data are exchanged with the environment of the system.
+The final user has a POD and uses the LoMap system to save and share maps. The LoMap system can also access the user's POD to store information. Due to decitions to increase the throwput of the application, some data will be stored in a database.
 
-.Form
-All kinds of diagrams that show the system as a black box and specify the domain interfaces to communication partners.
+== Technical Context:
 
-Alternatively (or additionally) you can use a table.
-The title of the table is the name of your system, the three columns contain the name of the communication partner, the inputs, and the outputs.
-****
+:imagesdir: images/
+image::03_system_scope_context_technical.png[technical system scope and context diagram]
 
-**<Diagram or Table>**
-
-**<optionally: Explanation of external domain interfaces>**
-
-=== Technical Context
-
-[role="arc42help"]
-****
-.Contents
-Technical interfaces (channels and transmission media) linking your system to its environment. In addition a mapping of domain specific input/output to the channels, i.e. an explanation with I/O uses which channel.
-
-.Motivation
-Many stakeholders make architectural decision based on the technical interfaces between the system and its context. Especially infrastructure or hardware designers decide these technical interfaces.
-
-.Form
-E.g. UML deployment diagram describing channels to neighboring systems,
-together with a mapping table showing the relationships between channels and input/output.
-
-****
-
-**<Diagram or Table>**
-
-**<optionally: Explanation of technical interfaces>**
-
-**<Mapping Input/Output to Channels>**
+The components of the application use certain technologies and communicate with eachother using different channels. The LoMap application will be programmed mostly using TypeScript and the React and Node JS Express frameworks. The Pod will be a SOLID POD and the database will be a MongoDB database. The connections that happen between LoMap, the user's device and the SOLID PODs follow the https protocol, so the information is secure. LoMap will use a Google Maps API, and the connections will use http. Finally, to access the Mongo DB database, LoMap will follow the MongoDB Wire Protocol.

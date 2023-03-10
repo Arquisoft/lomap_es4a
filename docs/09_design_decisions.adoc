@@ -24,3 +24,12 @@ Various options:
 * more detailed in form of separate sections per decision
 * ADR (architecture decision record) for every important decision
 ****
+
+.Desing Decisions ordered by priority (from most to least important)
+[options="header",cols="1,2,2"]
+|===
+|Desing Decision|Advantages|Disadvantages
+| TypeScript | Versatile language to program web applications. | Neither of us has experience with its use.
+| React | Very used javascript library. Easy to learn and use. Reusable components. | We have never worked with a library like this.
+| Node.js | Allows javascript use in the backend. High-performance for Real-time Applications. Easy Scalability. Easy to learn. | We only know PHP as server-side language.
+|===

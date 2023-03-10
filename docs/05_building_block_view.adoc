@@ -57,85 +57,32 @@ In the best case you will get away with examples or simple signatures.
 
 ****
 
-_**<Overview Diagram>**_
+[plantuml, "level1", png]
+----
+actor User
+folder LoMap
+folder pod as "User's pod"
+folder api as "Maps' API"
+
+LoMap -up-> api: API request
+User -right-> LoMap: interacts with
+LoMap <-right-> pod: obtains data
+----
 
 Motivation::
-
-_<text explanation>_
+The diagram shows the external components that interact with the application: the user and its pod.
 
 
 Contained Building Blocks::
-_<Description of contained building block (black boxes)>_
-
-Important Interfaces::
-_<Description of important interfaces>_
-
-[role="arc42help"]
-****
-Insert your explanations of black boxes from level 1:
-
-If you use tabular form you will only describe your black boxes with name and
-responsibility according to the following schema:
-
 [cols="1,2" options="header"]
 |===
-| **Name** | **Responsibility**
-| _<black box 1>_ | _<Text>_
-| _<black box 2>_ | _<Text>_
+| **Black boxes** | **Description**
+| LoMap | Application which extracts data from the pod, obeying the user.
+| User's pod | The place where user's private data is stored.
+|Maps' API | Service that will allow us working with maps.
 |===
 
 
-
-If you use a list of black box descriptions then you fill in a separate black box template for every important building block .
-Its headline is the name of the black box.
-****
-
-
-==== <Name black box 1>
-
-[role="arc42help"]
-****
-Here you describe <black box 1>
-according the the following black box template:
-
-* Purpose/Responsibility
-* Interface(s), when they are not extracted as separate paragraphs. This interfaces may include qualities and performance characteristics.
-* (Optional) Quality-/Performance characteristics of the black box, e.g.availability, run time behavior, ....
-* (Optional) directory/file location
-* (Optional) Fulfilled requirements (if you need traceability to requirements).
-* (Optional) Open issues/problems/risks
-
-****
-
-_<Purpose/Responsibility>_
-
-_<Interface(s)>_
-
-_<(Optional) Quality/Performance Characteristics>_
-
-_<(Optional) Directory/File Location>_
-
-_<(Optional) Fulfilled Requirements>_
-
-_<(optional) Open Issues/Problems/Risks>_
-
-
-
-
-==== <Name black box 2>
-
-_<black box template>_
-
-==== <Name black box n>
-
-_<black box template>_
-
-
-==== <Name interface 1>
-
-...
-
-==== <Name interface m>
 
 
 
@@ -150,26 +97,37 @@ Please prefer relevance over completeness. Specify important, surprising, risky,
 Leave out normal, simple, boring or standardized parts of your system
 ****
 
-==== White Box _<building block 1>_
+[plantuml, "level2", png]
+----
+actor User
+database db
+folder api as "Maps' API"
+folder pod as "User's pod"
+package LoMap {
+    component frontend
+    component backend
+    
+    frontend <-> backend
+}
 
-[role="arc42help"]
-****
-...describes the internal structure of _building block 1_.
-****
+backend -up-> api: API request
+User -up-> frontend: interacts with
+backend<-right-> pod: obtains data
+backend<--> db
+----
 
-_<white box template>_
-
-==== White Box _<building block 2>_
-
-
-_<white box template>_
-
-...
-
-==== White Box _<building block m>_
+Motivation::
+The diagram shows the inner structure of the "LoMap" component.
 
 
-_<white box template>_
+Contained Building Blocks::
+[cols="1,2" options="header"]
+|===
+| **Black boxes** | **Description**
+| Frontend | Application user's interface.
+| Backend | It is in charge of administrate the application logic.
+| DB | Database that stores the information which must be centralised (in order to achieve efficiency).
+|===
 
 
 
