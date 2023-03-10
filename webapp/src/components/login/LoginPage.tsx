@@ -25,11 +25,13 @@ function Copyright(props: any) {
   );
 }
 
+
 const theme = createTheme();
 
-export default function SignInSide() {
+
+export default function LoginPage() {
 	const [podProvider, setPodProvider] = useState("https://inrupt.net");
-	const [currentUrl, setCurrentUrl] = useState("http://localhost:3000");
+	const [currentUrl, setCurrentUrl] = useState("http://localhost:3000"); //TODO: cambiar redirect
   
 	
 	// Cambia el proveedor de pod
@@ -72,6 +74,7 @@ export default function SignInSide() {
             <Typography component="h1" variant="h5">
               Log in
             </Typography>
+
             <Box sx={{ minWidth: 120, padding:"2em" }} >
 				<FormControl fullWidth >
 					<InputLabel id="selectPodProviderLabel">SOLID Pod Provider</InputLabel>
@@ -101,6 +104,7 @@ export default function SignInSide() {
 			</LoginButton>
             <Copyright sx={{ mt: 5 }} />
             </Box>
+			
           </Box>
         </Grid>
       </Grid>
