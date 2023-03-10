@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { AiFillPushpin } from "react-icons/ai";
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -18,7 +19,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import Navigator from '../Navbar/Navigator';
 import { click } from '@testing-library/user-event/dist/click';
 import ReactDOM from 'react-dom/client';
-
+import { AirSharp, Pin, PinchOutlined, PinSharp, Plumbing } from '@mui/icons-material';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -61,7 +62,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
+
 class PrimarySearchAppBar extends React.Component {
+  static clickMenu: any;
   constructor(props:any){
     super(props);
     
@@ -74,6 +77,9 @@ class PrimarySearchAppBar extends React.Component {
     console.log(this.isOpen);
     this.forceUpdate();
   }
+  
+
+  
   render(){
     console.log("renderizando")
     return (
@@ -82,60 +88,40 @@ class PrimarySearchAppBar extends React.Component {
         
         <Box >
         <AppBar position="static" style={{ background: '#101F33' }}>
-          <Toolbar>
-          <IconButton 
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-              onClick={() => { this.clickMenu(); }}
-            >
-              <MenuIcon />
-            </IconButton>
-            
+          <Toolbar >
+            <Box sx={{ flexGrow: 1 }} />
+            <IconButton sx={{color:'white'}}>LoMap_es4a<AiFillPushpin /></IconButton>
+            <Box sx={{ flexGrow: 1 }} />
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
-                placeholder="Search…"
+                placeholder="Search point..."
                 inputProps={{ 'aria-label': 'search' }}
               />
             </Search>
-            <Box sx={{ flexGrow: 1 }} />
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
-            >
-              Usuario
-            </Typography>
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                
-                aria-haspopup="true"
-                
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-            </Box>
             
-            
+            <IconButton 
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ display:'flex', pl:2 }}
+              onClick={() => { this.clickMenu(); }}
+            >
+              <MenuIcon />
+            </IconButton>
           </Toolbar>
         </AppBar></Box>
-        <Box sx={{ gridArea: 'nav'}}><Navigator variant={"temporary"} open={this.isOpen}/></Box>;
+        <Box sx={{ gridArea: 'nav'}}><Navigator variant={"persistent"} open={this.isOpen}/></Box>;
       </Box>
 
     );
     
   }
+  
 }
 /**
  * <IconButton 
@@ -149,4 +135,5 @@ class PrimarySearchAppBar extends React.Component {
             <MenuIcon />
           </IconButton>
  */
+
 export default PrimarySearchAppBar;

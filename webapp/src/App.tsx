@@ -36,6 +36,7 @@ function App(): JSX.Element {
         gridTemplateColumns: 'repeat(9, 1fr)',
         gridTemplateRows: 'auto',
         gridTemplateAreas: `"search search search search search search search search search"
+        "search search search search search search search search search"
       "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
       "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
       "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "

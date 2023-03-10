@@ -17,7 +17,10 @@ import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputCompone
 import TimerIcon from '@mui/icons-material/Timer';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
-import { createTheme, makeStyles, ThemeProvider } from '@mui/material';
+import { createTheme, IconButton, makeStyles, ThemeProvider, Typography } from '@mui/material';
+import Searchbar from '../Searchbar/Searchbar';
+import PrimarySearchAppBar from '../Searchbar/Searchbar';
+import { AccountCircle } from '@mui/icons-material';
 
 const categories = [
   {
@@ -69,22 +72,44 @@ const theme = createTheme({
   }
 });
 
+
 function Navigator(props: DrawerProps) {
    
   const { ...other } = props;
   
+  
+
   return (
     <ThemeProvider theme={theme}>
-    <Drawer {...other}  open={{...other}.open} >
+    <Drawer {...other}  open={{...other}.open} 
+      sx={{ display: { mt:500 } }}>
       
       <List disablePadding >
-        
-        <ListItem sx={{ ...item, ...itemCategory, bgcolor: '#101F33' ,flexGrow: 1 }}onClick={ () => console.log("cerrar") }>
-          <ListItemIcon >
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText>Close men</ListItemText>
-        </ListItem>
+        <ListItemButton>
+        <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: 'none', sm: 'block' , color:'white'} }}
+            >
+              Usuario
+            </Typography>
+            <Box sx={{ display: { xs: 'none', md: 'flex', color:'white' } }}>
+              
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                
+                aria-haspopup="true"
+                
+                color="inherit"
+                
+              >
+                <AccountCircle />
+              </IconButton>
+            </Box>
+        </ListItemButton>       
         {categories.map(({ id, children }) => (
           <Box key={id} sx={{ bgcolor: '#101F33' }}>
             <ListItem sx={{ py: 3, px: 3 }}>
@@ -106,5 +131,12 @@ function Navigator(props: DrawerProps) {
     </ThemeProvider>
   );
 }
-
+/**
+ * <ListItem sx={{ ...item, ...itemCategory, bgcolor: '#101F33' ,flexGrow: 1 }}onClick={ () => }>
+          <ListItemIcon >
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText>Close men</ListItemText>
+        </ListItem>
+ */
 export default Navigator;
