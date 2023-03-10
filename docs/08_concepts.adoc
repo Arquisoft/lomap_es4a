@@ -8,7 +8,7 @@
 This section describes overall, principal regulations and solution ideas that are
 relevant in multiple parts (= cross-cutting) of your system.
 Such concepts are often related to multiple building blocks.
-They can include many different topics, such as
+They can include many topics, such as
 
 * domain models
 * architecture patterns or design patterns
@@ -45,23 +45,22 @@ A potential (but not mandatory) structure for this section could be:
 
 Note: it might be difficult to assign individual concepts to one specific topic
 on this list.
-
-image:08-Crosscutting-Concepts-Structure-EN.png["Possible topics for crosscutting concepts"]
 ****
+=== Domain Concept
 
+:imagesdir: images/
+image::08_concepts.png[Domain concept]
 
-=== Domain model
+User: This represents a client of the application. They can add other users as Friends, and they have a map to mark their favourite places too. We get their information through the POD.
 
-image:UmlDiagram.png["Example UML Diagram"]
+Map: This represents the users map of the app. Contains the markers made by the user.
 
+Mark: This class represents the Marker made by the user with his name, user score, a Location and a list of all times comments.
 
+Comment: This represents a comment made in a marked location by a certain user with all his information including the posting time and rate of the user.
 
-=== _<Concept 2>_
+Location: This contains the longitude and latitude of the Marker.
 
-_<explanation>_
+### Technical Decisions
 
-...
-
-=== _<Concept n>_
-
-_<explanation>_
+The technical decisions taken were explained in more detail in the section 04 of the documentation titled 'Solution Strategy'. For further information about the technical decisions, please check the section https://github.com/Arquisoft/lomap_es4a/blob/master/docs/04_solution_strategy.adoc[04 Solution Strategy].
