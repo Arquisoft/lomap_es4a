@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/.env" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/api/api.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/Map/settings.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Map/settings.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +81,7 @@
       <workItem from="1678219442461" duration="2564000" />
       <workItem from="1678361122293" duration="1720000" />
       <workItem from="1678383991984" duration="5567000" />
-      <workItem from="1678408164233" duration="4133000" />
+      <workItem from="1678408164233" duration="4427000" />
     </task>
     <servers />
   </component>

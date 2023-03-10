@@ -48,6 +48,7 @@ const Map: React.FC = () => {
     };
 
     const onMapClick = (e: google.maps.MapMouseEvent) => {
+        console.log(e);
         //setClickedPos({lat: e.latLng.lat(), lng: e.latLng.lng()});
     };
 
