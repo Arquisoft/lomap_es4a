@@ -17,7 +17,7 @@ import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputCompone
 import TimerIcon from '@mui/icons-material/Timer';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
-import { createTheme, IconButton, makeStyles, ThemeProvider, Typography } from '@mui/material';
+import { Button, createTheme, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, makeStyles, ThemeProvider, Typography } from '@mui/material';
 import Searchbar from '../Searchbar/Searchbar';
 import PrimarySearchAppBar from '../Searchbar/Searchbar';
 import { AccountCircle } from '@mui/icons-material';
@@ -39,7 +39,7 @@ const categories = [
   {
     id: 'Personal Zone',
     children: [
-      { id: 'Configuration', icon: <SettingsIcon /> },
+      { id: 'Configuration', icon: <SettingsIcon />,active: true },
       { id: 'About us', icon: <PhonelinkSetupIcon /> },
     ],
   },
@@ -74,61 +74,96 @@ const theme = createTheme({
 
 
 function Navigator(props: DrawerProps) {
-   
+  const [open, setOpen] = React.useState(false);
   const { ...other } = props;
+  const handleClickOpen = () => {
+    setOpen(true);
+    console.log("a")
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   
   
 
   return (
-    <ThemeProvider theme={theme}>
-    <Drawer {...other}  open={{...other}.open} 
-      sx={{ display: { mt:500 } }}>
-      
-      <List disablePadding >
-        <ListItemButton>
-        <Typography
+    <><ThemeProvider theme={theme}>
+      <Drawer {...other} open={{ ...other }.open}
+        sx={{ display: { mt: 500 } }}>
+
+        <List disablePadding>
+          <ListItemButton>
+            <Typography
               variant="h6"
               noWrap
               component="div"
-              sx={{ display: { xs: 'none', sm: 'block' , color:'white'} }}
+              sx={{ display: { xs: 'none', sm: 'block', color: 'white' } }}
             >
               Usuario
             </Typography>
-            <Box sx={{ display: { xs: 'none', md: 'flex', color:'white' } }}>
-              
+            <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white' } }}>
+
               <IconButton
                 size="large"
                 edge="end"
                 aria-label="account of current user"
-                
+
                 aria-haspopup="true"
-                
+
                 color="inherit"
-                
+
+
               >
                 <AccountCircle />
               </IconButton>
             </Box>
-        </ListItemButton>       
-        {categories.map(({ id, children }) => (
-          <Box key={id} sx={{ bgcolor: '#101F33' }}>
-            <ListItem sx={{ py: 3, px: 3 }}>
-              <ListItemText sx={{ color: '#fff' }}>{id}</ListItemText>
-            </ListItem>
-            {children.map(({ id: childId, icon, active }) => (
-              <ListItem disablePadding key={childId}>
-                <ListItemButton selected={active} sx={item}>
-                  <ListItemIcon>{icon}</ListItemIcon>
-                  <ListItemText>{childId}</ListItemText>
-                </ListItemButton>
+          </ListItemButton>
+          {categories.map(({ id, children }) => (
+            <Box key={id} sx={{ bgcolor: '#101F33' }}>
+              <ListItem sx={{ py: 3, px: 3 }}>
+                <ListItemText sx={{ color: '#fff' }}>{id}</ListItemText>
               </ListItem>
-            ))}
-            <Divider sx={{ mt: 2 }} />
-          </Box>
-        ))}
-      </List>
-    </Drawer>
+              {children.map(({ id: childId, icon, active }) => (
+                <ListItem disablePadding key={childId}>
+                  <ListItemButton selected={active} sx={item} onClick={() => {
+                    if (childId === "About us") {handleClickOpen()}
+                  } }>
+                    <ListItemIcon>{icon}</ListItemIcon>
+                    <ListItemText>{childId}</ListItemText>
+
+                  </ListItemButton>
+                </ListItem>
+              ))}
+              <Divider sx={{ mt: 2 }} />
+            </Box>
+          ))}
+        </List>
+      </Drawer>
     </ThemeProvider>
+    {/*
+      Dialogo al darle a about Us
+    */}
+    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+        <DialogTitle>
+          LoMap_es4a
+        </DialogTitle>
+        <DialogContent dividers>
+          <Typography gutterBottom>
+            Este es un proyecto de la asignatura ASW (2022-2023).Realizado por los alumnos:
+          </Typography>
+          <Typography gutterBottom>- Gonzalo Rodríguez</Typography>
+          <Typography gutterBottom>- Carlos Cesareo</Typography>
+          <Typography gutterBottom>- Diego García</Typography>
+          <Typography gutterBottom>- Manuel Palacios</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleClose} color="primary">
+            Cerrar
+          </Button>
+        </DialogActions>
+      </Dialog>
+      </>
+
   );
 }
 /**
