@@ -1,25 +1,28 @@
 
 import {
+    createSolidDataset,
     getSolidDataset,
     getFile,
     deleteFile,
     saveFileInContainer,
-    overwriteFile
+    overwriteFile, createContainerAt
 } from '@inrupt/solid-client';
 import { Session } from '@inrupt/solid-client-authn-browser';
 
 
-async function login(identityProvider: string, redirectUrl: string): Promise<Session> {
-    let session = new Session();
-    try {
-        await session.login({
-            oidcIssuer: identityProvider,
-            redirectUrl: redirectUrl
-        });
-    } catch (error) {
-        console.log(error);
+async function init(session: Session): Promise<boolean> {
+    if (session.info.webId == null) {
+        return false;
+    } // Check if the webId is undefined
+    let basicUrl = session.info.webId?.split("/").slice(0, 3).join("/");
+    let pointsUrl = basicUrl.concat("/public", "/points");
+    if (!existsUrl(session, pointsUrl)) {
+        createUrl(session, pointsUrl);
+    } else {
+        console.log("Existe la url" + pointsUrl);
     }
-    return session;
+    console.log(basicUrl);
+    return true;
 }
 
 async function readData(session: Session, url: string): Promise<File | null> {
@@ -109,4 +112,8 @@ function existsData(session: Session, url: string, file: File) {
     return false;
 }
 
-export { login, readData, writeData, deleteData };
+function createUrl(session: Session, url: string) {
+    createContainerAt(url);
+}
+
+export { init, readData, writeData, deleteData };
