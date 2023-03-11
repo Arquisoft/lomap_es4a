@@ -115,7 +115,7 @@ class PrimarySearchAppBar extends React.Component {
             </IconButton>
           </Toolbar>
         </AppBar></Box>
-        <Box sx={{ gridArea: 'nav'}}><Navigator variant={"persistent"} open={this.isOpen}/></Box>;
+        <Box sx={{ gridArea: 'nav'}}><Navigator variant={"persistent"} open={this.isOpen}/></Box>
       </Box>
 
     );

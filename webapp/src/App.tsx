@@ -1,66 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Container from '@mui/material/Container';
-import EmailForm from './components/EmailForm';
+import { useState } from 'react';
 import Welcome from './components/Welcome';
-import UserList from './components/UserList';
-import  {getUsers} from './api/api';
-import {User} from './shared/shareddtypes';
 import './App.css';
 import Map from "./components/Map/Map";
-import Navigator from "./components/Navbar/Navigator";
-import PrimarySearchAppBar from './components/Searchbar/Searchbar';
-import { Grid } from '@mui/material';
-
-
+import {QueryClient, QueryClientProvider} from "react-query";
+import LoginPage from './components/login/LoginPage';
+import {SessionProvider, useSession} from "@inrupt/solid-ui-react";
+import MainPage from "./components/MainPage";
 
 function App(): JSX.Element {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [users,setUsers] = useState<User[]>([]);
-  const refreshUserList = async () => {
-    setUsers(await getUsers());
-  }
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-  useEffect(()=>{
-    refreshUserList();
-  },[]);
-  //<Box sx={{ gridArea: 'nav',backgroundColor: '#101F33'}}><Navigator /></Box>
-  return (
-    <>
-      <Grid 
-      sx={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(9, 1fr)',
-        gridTemplateRows: 'auto',
-        gridTemplateAreas: `"search search search search search search search search search"
-        "search search search search search search search search search"
-      "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
-      "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
-      "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
-      "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "`,
-      
-      }}>
 
-        <Box sx={{ gridArea: 'search'}}><PrimarySearchAppBar /></Box>
-        
-        <Box sx={{ gridArea: 'mainContainer'}}><Map/></Box>
-       
-        
-        
-        
-      </Grid>
-    </>
-    /**
-   * <Welcome message="ASW students"/>
-          <Box component="div" sx={{ py: 2}}>This is a basic example of a React application using Typescript. You can add your email to the list filling the form below.</Box>
-          <EmailForm OnUserListChange={refreshUserList}/>        
-          <UserList users={users}/>
-          <Link href="https://github.com/arquisoft/lomap_0">Source code</Link>
-   */
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  //With this we can control the login status for solid
+  const { session } = useSession();
+
+  const queryClient = new QueryClient();
+
+  session.onLogin(() => setIsLoggedIn(true));
+  session.onLogout(() => setIsLoggedIn(false));
+
+  return(
+      <SessionProvider>
+        {(!isLoggedIn) ? <LoginPage /> : <QueryClientProvider client={queryClient}> <MainPage/> </QueryClientProvider>}
+      </SessionProvider>
+  )
 }
 
 export default App;
