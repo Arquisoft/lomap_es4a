@@ -34,11 +34,22 @@ when your infrastructure is more complex.
 * When your (hardware) stakeholders prefer other kinds of diagrams rather than the deployment diagram, let them use any kind that is able to show nodes and channels of the infrastructure.
 ****
 
-The LoMap system will run for the most part in the user's device, whether it is a smartphone or a personal computer. The system will be deployed using Docker images.
+== Development Diagram
+
+While in development, the LoMap system will be run in the developer's computer. The system will be deployed in the developer's computer using Docker images which contain the necesary programs to run the application as a standalone application. Prometheus and Grafana will monitor and give information about the restapi. As it is shown in the diagram, the SOLID PODs, as well as the Maps API, are not part of the LoMap system.
+While the application is being developed, the MongoDB database will be allocated in the developer's computer. This will not be the case when the application is deployed.
 
 :imagesdir: images/
-image::07_deployment_view.png[deployment view diagram]
+image::07_deployment_view_development.png[deployment view diagram in development]
 
-The webapp is the part of the system that the users will interact with. The restapi will be in charge of integrating all the other parts of the system. Prometheus and Grafana will monitor and give information about the restapi.
+== Deployment Diagram
 
-As it is shown in the diagram, the SOLID PODs, as well as the Maps API, are not part of the LoMap system.
+While in deployment run in a Server. The users will connect to this server to access the application for the most part in the user's device, whether it is a smartphone or a personal computer. The system will be deployed using Docker images. The webapp is the part of the system that the users will interact with. The restapi will be in charge of integrating all the other parts of the system and using external components such as MongoDB, SOLID PODs and a Maps API.
+
+:imagesdir: images/
+image::07_deployment_view_deployment.png[deployment view diagram in deployment]
+
+The following image is a legend that can be useful to understand the information shown in the diagrams.
+
+:imagesdir: images/
+image::07_deployment_view_legend.png[deployment view diagram legend]
