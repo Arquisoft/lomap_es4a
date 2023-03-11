@@ -1,0 +1,25 @@
+import Box from "@mui/material/Box";
+import PrimarySearchAppBar from "./Searchbar/Searchbar";
+import Map from "./Map/Map";
+import { Grid } from "@mui/material";
+import React from "react";
+
+export default function MainPage() {
+    return (
+        <Grid
+            sx={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(9, 1fr)',
+                gridTemplateRows: 'auto',
+                gridTemplateAreas: `"search search search search search search search search search"
+                "search search search search search search search search search"
+                "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
+                "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
+                "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
+                "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "`,
+            }}>
+            <Box sx={{ gridArea: 'search'}}><PrimarySearchAppBar /></Box>
+            <Box sx={{ gridArea: 'mainContainer'}}><Map/></Box>
+        </Grid>
+    );
+}
