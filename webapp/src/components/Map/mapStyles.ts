@@ -1,4 +1,3 @@
-// Map Styles from Snazzy Maps
 const mapStyles =  [
     {
         "featureType": "water",

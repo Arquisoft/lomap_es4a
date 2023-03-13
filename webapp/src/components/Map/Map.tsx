@@ -19,6 +19,7 @@ export type MarkerType = {
 }
 
 const Map: React.FC<SessionType> = (session: SessionType) => {
+
     const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
 
     const {isLoaded} = useJsApiLoader(
@@ -84,6 +85,13 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
                 onUnmount={onUnMount}
                 onClick={onMapClick}
                 >
+                {userPoints?.forEach((marker) =>(
+                    <Marker
+                        key={marker.id}
+                        position={{lat: marker.latitude, lng: marker.longitude}}
+
+                    />
+                ))}
                 {clicks?.map((latLng, i) =>(
                     <Marker
                         key={i}
