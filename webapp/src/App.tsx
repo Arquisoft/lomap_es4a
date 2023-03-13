@@ -21,7 +21,7 @@ function App(): JSX.Element {
 
   return(
       <SessionProvider>
-        {(!isLoggedIn) ? <LoginPage /> : <QueryClientProvider client={queryClient}> <MainPage/> </QueryClientProvider>}
+        {(!isLoggedIn) ? <LoginPage /> : <QueryClientProvider client={queryClient}> <MainPage session={session}/> </QueryClientProvider>}
       </SessionProvider>
   )
 }

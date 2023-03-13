@@ -3,8 +3,10 @@ import PrimarySearchAppBar from "./Searchbar/Searchbar";
 import Map from "./Map/Map";
 import { Grid } from "@mui/material";
 import React from "react";
+import { SessionType } from "../solidapi/solidapiAdapter";
 
-export default function MainPage() {
+export default function MainPage({ session }: SessionType): JSX.Element {
+
     return (
         <Grid
             sx={{
@@ -19,7 +21,7 @@ export default function MainPage() {
                 "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "`,
             }}>
             <Box sx={{ gridArea: 'search'}}><PrimarySearchAppBar /></Box>
-            <Box sx={{ gridArea: 'mainContainer'}}><Map/></Box>
+            <Box sx={{ gridArea: 'mainContainer'}}><Map session={session} /></Box>
         </Grid>
     );
 }

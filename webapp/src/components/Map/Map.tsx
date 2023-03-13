@@ -5,6 +5,10 @@ import {useQuery} from "react-query";
 import {fetchNearbyPlaces} from "../../api/api";
 // Map Settings
 import {containerStyle, center, options} from "./settings";
+// SOLID API
+import {retrievePoints, savePoint, SessionType} from "../../solidapi/solidapiAdapter";
+import {forEach} from "@react-google-maps/api/dist/utils/foreach";
+import Point from "../../solidapi/Point";
 
 export type MarkerType = {
     id: string,
@@ -15,7 +19,8 @@ export type MarkerType = {
 
 }
 
-const Map: React.FC = () => {
+const Map: React.FC<SessionType> = (session: SessionType) => {
+
     const {isLoaded} = useJsApiLoader(
         {
             id:'google-map-script',
@@ -39,8 +44,13 @@ const Map: React.FC = () => {
 
     //console.log(nearbyPositions);
 
-    const onLoad = (map: google.maps.Map): void => {
+    const onLoad = (map: google.maps.Map): void => { // TODO: aquí se imprimen los puntos recuperados del pod
         mapRef.current = map;
+        retrievePoints(session.session).then(points => {
+            if (points != null) {
+                points.forEach(point => console.log(point));
+            }
+        });
     }
 
     const onUnMount = (): void => {
@@ -48,7 +58,9 @@ const Map: React.FC = () => {
     };
 
     const onMapClick = (e: google.maps.MapMouseEvent) => {
-        console.log(e);
+        if (e.latLng != null) {
+            savePoint(session.session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
+        }
         //setClickedPos({lat: e.latLng.lat(), lng: e.latLng.lng()});
     };
 
