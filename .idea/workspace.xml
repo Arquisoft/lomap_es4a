@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="">
+    <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Cambios en el gitignore">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/solidapi/solidapi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/solidapi/solidapi.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +20,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -47,7 +52,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\UniOvi\\Tercero\\Segundo Semestre\\ASW\\lomap_es4a\\webapp\\node_modules\\typescript\\lib&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Usuario\\WebstormProjects\\lomap_es4a\\webapp\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -56,10 +61,11 @@
       <recent name="D:\UniOvi\Tercero\Segundo Semestre\ASW\lomap_es4a\webapp\src\components\Map" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Usuario\WebstormProjects\lomap_es4a\webapp\src" />
+      <recent name="C:\Users\Usuario\WebstormProjects\lomap_es4a\webapp" />
       <recent name="D:\Uniovi\Tercero\ASW\Proyecto Final\lomap_es4a\webapp" />
       <recent name="D:\Uniovi\Tercero\ASW\Proyecto Final\lomap_es4a\webapp\src" />
       <recent name="D:\Uniovi\Tercero\ASW\Proyecto Final\lomap_es4a" />
-      <recent name="D:\Uniovi\Tercero\ASW\Proyecto Final\lomap_es4a\webapp\src\components\Map" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -82,10 +88,28 @@
       <workItem from="1678361122293" duration="1720000" />
       <workItem from="1678383991984" duration="5567000" />
       <workItem from="1678408164233" duration="4427000" />
+      <workItem from="1678459321720" duration="1094000" />
+      <workItem from="1678461283072" duration="1064000" />
+      <workItem from="1678462501520" duration="3004000" />
+      <workItem from="1678468020730" duration="3309000" />
+      <workItem from="1678612087750" duration="20227000" />
+      <workItem from="1678713028868" duration="4134000" />
     </task>
+    <task id="LOCAL-00001" summary="Se ha movido el directorio solidapi a webapp">
+      <created>1678459410126</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1678459410126</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Se ha movido el directorio solidapi a webapp" />
+    <option name="LAST_COMMIT_MESSAGE" value="Se ha movido el directorio solidapi a webapp" />
   </component>
 </project>
