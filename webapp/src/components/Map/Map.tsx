@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {GoogleMap, Marker, InfoWindow, useJsApiLoader} from "@react-google-maps/api";
 import {useQuery} from "react-query";
 // API Calls
@@ -19,8 +19,8 @@ export type MarkerType = {
 }
 
 const Map: React.FC<SessionType> = (session: SessionType) => {
-
     const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
+    const [map, setMap] = useState(null);
 
     const {isLoaded} = useJsApiLoader(
         {
@@ -52,10 +52,18 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
         retrievePoints(session.session).then(points => {
             if (points != null) {
                 userPoints = points;
-                userPoints.forEach(point => console.log(point));
+                userPoints.forEach(point => {
+                    console.log(point);
+                    // NUEVO
+                    let marker = new google.maps.Marker({
+                        position: {lat: point.latitude, lng: point.longitude},
+                        map: mapRef.current,
+                        title: point.id
+                    });
+                    marker.setMap(mapRef.current);
+                });
             }
         });
-
     }
 
     const onUnMount = (): void => {
@@ -66,8 +74,15 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
         if (e.latLng != null) {
             setClicks([...clicks, e.latLng!]);
             //setClickedPos({lat: e.latLng.lat(), lng: e.latLng.lng()});
-            savePoint(session.session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
+            let point = savePoint(session.session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
 
+            // NUEVO
+            let marker = new google.maps.Marker({
+                position: {lat: e.latLng.lat(), lng: e.latLng.lng()},
+                map: mapRef.current,
+                title: point?.id
+            });
+            marker.setMap(mapRef.current);
         }
 
     };
@@ -77,6 +92,7 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
     return(
         <div>
             <GoogleMap
+                id="map"
                 mapContainerStyle={containerStyle}
                 options={options as google.maps.MapOptions}
                 center={center}
@@ -84,21 +100,7 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
                 onLoad={onLoad}
                 onUnmount={onUnMount}
                 onClick={onMapClick}
-                >
-                {userPoints?.forEach((marker) =>(
-                    <Marker
-                        key={marker.id}
-                        position={{lat: marker.latitude, lng: marker.longitude}}
-
-                    />
-                ))}
-                {clicks?.map((latLng, i) =>(
-                    <Marker
-                        key={i}
-                        position={latLng}
-
-                    />
-                ))}
+            >
             </GoogleMap>
         </div>
     );
