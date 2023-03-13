@@ -11,6 +11,7 @@ function App(): JSX.Element {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+
   //With this we can control the login status for solid
   const { session } = useSession();
 
@@ -24,6 +25,7 @@ function App(): JSX.Element {
         {(!isLoggedIn) ? <LoginPage /> : <QueryClientProvider client={queryClient}> <MainPage session={session}/> </QueryClientProvider>}
       </SessionProvider>
   )
+
 }
 
 export default App;

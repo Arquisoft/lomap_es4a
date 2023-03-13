@@ -17,7 +17,7 @@ import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputCompone
 import TimerIcon from '@mui/icons-material/Timer';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
-import { Button, createTheme, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, makeStyles, ThemeProvider, Typography } from '@mui/material';
+import { Avatar, Button, createTheme, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, makeStyles, ThemeProvider, Typography } from '@mui/material';
 import Searchbar from '../Searchbar/Searchbar';
 import PrimarySearchAppBar from '../Searchbar/Searchbar';
 import { AccountCircle } from '@mui/icons-material';
@@ -99,23 +99,11 @@ function Navigator(props: DrawerProps) {
               component="div"
               sx={{ display: { xs: 'none', sm: 'block', color: 'white' } }}
             >
-              Usuario
+              Usuario  
             </Typography>
-            <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white' } }}>
-
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-
-                aria-haspopup="true"
-
-                color="inherit"
-
-
-              >
-                <AccountCircle />
-              </IconButton>
+            <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white', padding:"1em"} }}>
+            <Avatar >M</Avatar>
+              
             </Box>
           </ListItemButton>
           {categories.map(({ id, children }) => (
@@ -167,11 +155,22 @@ function Navigator(props: DrawerProps) {
   );
 }
 /**
- * <ListItem sx={{ ...item, ...itemCategory, bgcolor: '#101F33' ,flexGrow: 1 }}onClick={ () => }>
-          <ListItemIcon >
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText>Close men</ListItemText>
-        </ListItem>
+ * <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+
+                aria-haspopup="true"
+
+                color="inherit"
+
+
+              >
+                <AccountCircle />
+              </IconButton>
  */
+
+
+
+              //<Avatar alt="Manu Palacios" src="/static/images/avatar/1.jpg" />//Esto podría salir del pod
 export default Navigator;
