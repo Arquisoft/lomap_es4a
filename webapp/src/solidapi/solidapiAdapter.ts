@@ -1,6 +1,7 @@
 import {Session} from "@inrupt/solid-client-authn-browser";
 import {findDataInContainer, readData, writeData} from "./solidapi";
 import Point from "./Point";
+import {MarkerType} from "../components/Map/Map";
 
 export type SessionType = {
     session: Session;
@@ -28,7 +29,7 @@ export function savePoint(session: Session, lat: number, lng: number) {
     });
 }
 
-export async function retrievePoints(session: Session): Promise<Point[] | null> {
+export async function retrievePoints(session: Session): Promise<Point[] | null>{
     if (session.info.webId == null) {
         return null;
     } // Check if the webId is undefined

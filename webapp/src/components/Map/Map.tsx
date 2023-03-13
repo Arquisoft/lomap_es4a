@@ -2,7 +2,7 @@ import React from "react";
 import {GoogleMap, Marker, InfoWindow, useJsApiLoader} from "@react-google-maps/api";
 import {useQuery} from "react-query";
 // API Calls
-import {fetchNearbyPlaces} from "../../api/api";
+import {fetchNearbyPlaces, fetchUserPlaces} from "../../api/api";
 // Map Settings
 import {containerStyle, center, options} from "./settings";
 // SOLID API
@@ -16,10 +16,10 @@ export type MarkerType = {
     name: string,
     phone_number: string;
     website: string
-
 }
 
 const Map: React.FC<SessionType> = (session: SessionType) => {
+    const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
 
     const {isLoaded} = useJsApiLoader(
         {
@@ -44,13 +44,17 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
 
     //console.log(nearbyPositions);
 
+    let userPoints: Point[]
+    userPoints = [];
     const onLoad = (map: google.maps.Map): void => { // TODO: aquí se imprimen los puntos recuperados del pod
         mapRef.current = map;
         retrievePoints(session.session).then(points => {
             if (points != null) {
-                points.forEach(point => console.log(point));
+                userPoints = points;
+                userPoints.forEach(point => console.log(point));
             }
         });
+
     }
 
     const onUnMount = (): void => {
@@ -59,9 +63,12 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
 
     const onMapClick = (e: google.maps.MapMouseEvent) => {
         if (e.latLng != null) {
+            setClicks([...clicks, e.latLng!]);
+            //setClickedPos({lat: e.latLng.lat(), lng: e.latLng.lng()});
             savePoint(session.session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
+
         }
-        //setClickedPos({lat: e.latLng.lat(), lng: e.latLng.lng()});
+
     };
 
     if(!isLoaded) return <div>Map loading...</div>;
@@ -76,8 +83,17 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
                 onLoad={onLoad}
                 onUnmount={onUnMount}
                 onClick={onMapClick}
-            />
+                >
+                {clicks?.map((latLng, i) =>(
+                    <Marker
+                        key={i}
+                        position={latLng}
+
+                    />
+                ))}
+            </GoogleMap>
         </div>
     );
 };
+
 export default Map;
