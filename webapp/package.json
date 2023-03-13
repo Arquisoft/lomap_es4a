@@ -7,6 +7,7 @@
     "@fontsource/roboto": "^4.5.8",
     "@googlemaps/react-wrapper": "^1.1.35",
     "@googlemaps/typescript-guards": "^2.0.3",
+    "@inrupt/lit-generated-vocab-common": "^0.3.11",
     "@inrupt/solid-client": "^1.25.2",
     "@inrupt/solid-client-authn-browser": "^1.13.3",
     "@inrupt/solid-ui-react": "^2.8.2",

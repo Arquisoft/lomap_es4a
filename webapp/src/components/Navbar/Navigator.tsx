@@ -21,6 +21,10 @@ import { Avatar, Button, createTheme, Dialog, DialogActions, DialogContent, Dial
 import Searchbar from '../Searchbar/Searchbar';
 import PrimarySearchAppBar from '../Searchbar/Searchbar';
 import { AccountCircle } from '@mui/icons-material';
+// Pfp
+import { VCARD } from "@inrupt/lit-generated-vocab-common";
+import {CombinedDataProvider, useSession, Image} from "@inrupt/solid-ui-react";
+import {useState} from "react";
 
 const categories = [
   {
@@ -83,8 +87,10 @@ function Navigator(props: DrawerProps) {
   const handleClose = () => {
     setOpen(false);
   };
-  
-  
+
+  const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
+  const { session } = useSession();
+  const { webId } = session.info;
 
   return (
     <><ThemeProvider theme={theme}>
@@ -102,8 +108,15 @@ function Navigator(props: DrawerProps) {
               Usuario  
             </Typography>
             <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white', padding:"1em"} }}>
-            <Avatar >M</Avatar>
-              
+
+              {session.info.webId ? (
+                  <CombinedDataProvider
+                      datasetUrl={session.info.webId}
+                      thingUrl={session.info.webId}>
+                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture" style={{width:40, height:40, borderRadius:20}}/>
+                  </CombinedDataProvider>
+              ): null }
+
             </Box>
           </ListItemButton>
           {categories.map(({ id, children }) => (
@@ -169,8 +182,4 @@ function Navigator(props: DrawerProps) {
                 <AccountCircle />
               </IconButton>
  */
-
-
-
-              //<Avatar alt="Manu Palacios" src="/static/images/avatar/1.jpg" />//Esto podría salir del pod
 export default Navigator;
