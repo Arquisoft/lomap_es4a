@@ -20,7 +20,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
                 "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
                 "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "`,
             }}>
-            <Box sx={{ gridArea: 'search'}}><PrimarySearchAppBar /></Box>
+            <Box sx={{ gridArea: 'search'}}><PrimarySearchAppBar session={session} /></Box>
             <Box sx={{ gridArea: 'mainContainer'}}><Map session={session} /></Box>
         </Grid>
     );

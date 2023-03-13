@@ -1,6 +1,9 @@
 import {Session} from "@inrupt/solid-client-authn-browser";
-import {findDataInContainer, readData, writeData} from "./solidapi";
+import {findDataInContainer, writeData, readThing} from "./solidapi";
 import Point from "./Point";
+
+import { getSolidDataset, getUrl, getThing } from '@inrupt/solid-client';
+import { VCARD } from "@inrupt/vocab-common-rdf";
 
 export type SessionType = {
     session: Session;
@@ -47,4 +50,37 @@ export async function retrievePoints(session: Session): Promise<Point[] | null> 
         }
     }
     return points;
+}
+
+export async function getProfilePic(session: Session): Promise<string | null> {
+    /*let webId: string = "";
+    let photoUrl: string | null = "";
+    if (session.info.webId != null) {
+        webId = session.info.webId;
+    }
+
+    let profileThing = await readThing(session, webId);
+
+    if (profileThing != null) {
+        photoUrl = getUrl(profileThing, VCARD.hasPhoto);
+    }
+
+    console.log("FASDF AS OFAS FHAOIS DFHOAIS HFOAIS HFP HFS")
+    console.log(photoUrl)
+    return photoUrl;*/
+
+
+    let webId: string = "";
+    if (session.info.webId != null) {
+        webId = session.info.webId;
+    }
+
+    let profileDataset = await getSolidDataset(webId);
+    let profileThing = getThing(profileDataset, webId);
+    let photoUrl: string | null = "";
+    if (profileThing != null) {
+        photoUrl = getUrl(profileThing, VCARD.hasPhoto);
+    }
+
+    return photoUrl;
 }

@@ -4,8 +4,7 @@ import {
     getContainedResourceUrlAll,
     getFile,
     deleteFile,
-    saveFileInContainer,
-    overwriteFile, createContainerAt
+    overwriteFile, getThing, ThingPersisted
 } from '@inrupt/solid-client';
 import { Session } from '@inrupt/solid-client-authn-browser';
 
@@ -131,4 +130,15 @@ function existsData(session: Session, url: string, file: File) {
     return false;
 }
 
-export { findDataInContainer, readData, writeData, deleteData };
+async function readThing(session: Session, url: string): Promise<ThingPersisted | null> {
+    return null;
+    try {
+        let dataset = await getSolidDataset(url);
+        let thing = getThing(dataset, url);
+        return thing;
+    } catch (error) {
+        return null;
+    }
+}
+
+export { readThing, findDataInContainer, readData, writeData, deleteData };

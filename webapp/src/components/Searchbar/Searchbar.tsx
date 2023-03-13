@@ -20,6 +20,11 @@ import Navigator from '../Navbar/Navigator';
 import { click } from '@testing-library/user-event/dist/click';
 import ReactDOM from 'react-dom/client';
 import { AirSharp, Pin, PinchOutlined, PinSharp, Plumbing } from '@mui/icons-material';
+
+// Profile picture
+import {getProfilePic, SessionType} from "../../solidapi/solidapiAdapter";
+import {Session} from "@inrupt/solid-client-authn-browser";
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -63,12 +68,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
-class PrimarySearchAppBar extends React.Component {
+class PrimarySearchAppBar extends React.Component<SessionType> {
   static clickMenu: any;
   constructor(props:any){
     super(props);
-    
-    
   }
   isOpen=false
   
@@ -81,7 +84,6 @@ class PrimarySearchAppBar extends React.Component {
 
   
   render(){
-    console.log("renderizando")
     return (
       
       <Box >
