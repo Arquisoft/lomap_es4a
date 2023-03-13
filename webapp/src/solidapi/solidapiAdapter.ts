@@ -1,16 +1,17 @@
 import {Session} from "@inrupt/solid-client-authn-browser";
 import {findDataInContainer, readData, writeData} from "./solidapi";
 import Point from "./Point";
+import {MarkerType} from "../components/Map/Map";
 
 export type SessionType = {
     session: Session;
 }
 
-export function savePoint(session: Session, lat: number, lng: number) {
+export function savePoint(session: Session, lat: number, lng: number): Point | null {
     let point = new Point(lat, lng);
 
     if (session.info.webId == null) {
-        return false;
+        return null;
     } // Check if the webId is undefined
 
     let basicUrl = session.info.webId?.split("/").slice(0, 3).join("/");
@@ -26,9 +27,11 @@ export function savePoint(session: Session, lat: number, lng: number) {
             console.log("Point " + point.id + " could not be saved correctly");
         }
     });
+
+    return point;
 }
 
-export async function retrievePoints(session: Session): Promise<Point[] | null> {
+export async function retrievePoints(session: Session): Promise<Point[] | null>{
     if (session.info.webId == null) {
         return null;
     } // Check if the webId is undefined

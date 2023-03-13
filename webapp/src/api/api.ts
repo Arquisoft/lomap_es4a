@@ -1,5 +1,8 @@
 import {User} from '../shared/shareddtypes';
 import {MarkerType} from "../components/Map/Map";
+import Point from "../solidapi/Point";
+import {retrievePoints} from "../solidapi/solidapiAdapter";
+import {Session} from "@inrupt/solid-client-authn-browser";
 
 export async function addUser(user:User):Promise<boolean>{
     const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
@@ -44,5 +47,18 @@ export const fetchNearbyPlaces = async (lat:number, lng: number): Promise<Marker
 
     const data = await response.json();
     return data.results;
+};
+
+export const fetchUserPlaces = async (session: Session, lat:number, lng: number): Promise<Point[]> =>{
+    let userPoints: Point[];
+    userPoints = [];
+
+    retrievePoints(session).then(points => {
+        if (points != null) {
+            userPoints = points;
+            userPoints.forEach(point => console.log(point));
+        }
+    });
+    return userPoints;
 };
 // ----------------------------------------------------------------------------------------------------------
