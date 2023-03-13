@@ -15,7 +15,6 @@ class Point {
         this.score = score;
         this.comments = comments;
     }
-
 }
 
 export default Point;
