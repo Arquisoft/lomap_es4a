@@ -37,42 +37,41 @@ There are many notations for describing scenarios, e.g.
 ----
 actor User
 entity App
-database Pod as "DB"
-User--> App: Login data introduced
-User --> App: Authentication Request
-App --> Pod: Information Request
-Pod -->App: Information Response
-App --> User: Authentication Response
-App --> User: Load of Information
-App --> User: Confirmation of login
-User --> App: Access to personal files and use of the app
+entity PodProvider
+User -> App: Choose provider
+App ->PodProvider: Redirects to the provider
+User -> PodProvider: Fills the fields to login
+PodProvider --> App: Returns user information and creates session
+App--> User: Gives personal view
 ----
 === Map view
 [plantuml,"Sequence diagram2",png]
 ----
 actor User
 entity App
-database Pod as "DB"
-User --> App: Request to see the map
-App --> Pod: Request user map data
-Pod --> App: Load of the map
-Pod --> App: Load of personal markers and points
+entity MapsApi
+database Pod 
+User -> App: Login
+App -> MapsApi: Request user map data
+Pod --> MapsApi: Load of markers
+App -> MapsApi: Load of personal markers
+MapsApi--> App : Markers loaded
 App --> User: View of the map
 ----
 === New point/Map saved
 [plantuml,"Sequence diagram3",png]
 ----
+
 actor User
 entity App
-database Pod as "DB"
-User --> App: Request to create new marker
+entity MapsApi
+database Pod 
+
+User -> App: Click the screen
+App -> MapsApi: Request point data
+App -> Pod: Save the point to the pod
+MapsApi --> App: Returns marker 
 App --> User: Creation marker view
-User --> App: Marker data
-App -->App:Local data save
-User -->App: Save request
-App--> Pod: Remote save request
-Pod --> App: DB Response
-App --> User: Response feedback
 ----
 
 
