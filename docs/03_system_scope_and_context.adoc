@@ -19,7 +19,7 @@ Various options:
 * Lists of communication partners and their interfaces.
 ****
 
-== Business Context:
+=== Business Context:
 
 :imagesdir: images/
 image::03_system_scope_context_business.png[business system scope and context diagram]
@@ -28,7 +28,7 @@ The main components that the LoMap system interacts with are: Database, Maps API
 
 The final user has a POD and uses the LoMap system to save and share maps. The LoMap system can also access the user's POD to store information. Due to decitions to increase the throwput of the application, some data will be stored in a database.
 
-== Technical Context:
+=== Technical Context:
 
 :imagesdir: images/
 image::03_system_scope_context_technical.png[technical system scope and context diagram]
