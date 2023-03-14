@@ -25,7 +25,7 @@ import { AccountCircle } from '@mui/icons-material';
 import { VCARD } from "@inrupt/lit-generated-vocab-common";
 import {CombinedDataProvider, useSession, Image} from "@inrupt/solid-ui-react";
 import {useState} from "react";
-
+import LogoutIcon from '@mui/icons-material/Logout';
 const categories = [
   {
     id: 'LoMap',
@@ -45,6 +45,7 @@ const categories = [
     children: [
       { id: 'Configuration', icon: <SettingsIcon />,active: true },
       { id: 'About us', icon: <PhonelinkSetupIcon /> },
+      { id: 'Logout', icon: <LogoutIcon /> },
     ],
   },
 ];
@@ -82,12 +83,17 @@ function Navigator(props: DrawerProps) {
   const { ...other } = props;
   const handleClickOpen = () => {
     setOpen(true);
-    console.log("a")
   };
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleClickLogout = async() => {
+    try {
+      await session.logout();
+    } catch (error) {
+      console.log(`Error logging out: ${error}`);
+    }
+  };
   const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
   const { session } = useSession();
   const { webId } = session.info;
@@ -128,12 +134,14 @@ function Navigator(props: DrawerProps) {
                 <ListItem disablePadding key={childId}>
                   <ListItemButton selected={active} sx={item} onClick={() => {
                     if (childId === "About us") {handleClickOpen()}
+                    else if(childId==="Logout"){handleClickLogout()}
                   } }>
                     <ListItemIcon>{icon}</ListItemIcon>
                     <ListItemText>{childId}</ListItemText>
 
                   </ListItemButton>
                 </ListItem>
+                
               ))}
               <Divider sx={{ mt: 2 }} />
             </Box>
