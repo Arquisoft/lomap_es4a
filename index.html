@@ -456,51 +456,58 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_group_conventions">2.3. Group conventions</a></li>
 </ul>
 </li>
-<li><a href="#section-system-scope-and-context">3. System Scope and Context</a></li>
-<li><a href="#_business_context">4. Business Context:</a></li>
-<li><a href="#_technical_context">5. Technical Context:</a></li>
-<li><a href="#section-solution-strategy">6. Solution Strategy</a>
+<li><a href="#section-system-scope-and-context">3. System Scope and Context</a>
 <ul class="sectlevel2">
-<li><a href="#_technology_decisions">6.1. Technology decisions</a></li>
-<li><a href="#_how_are_the_quality_goals_going_to_be_reached">6.2. How are the quality goals going to be reached?</a></li>
+<li><a href="#_business_context">3.1. Business Context:</a></li>
+<li><a href="#_technical_context">3.2. Technical Context:</a></li>
 </ul>
 </li>
-<li><a href="#section-building-block-view">7. Building Block View</a>
+<li><a href="#section-solution-strategy">4. Solution Strategy</a>
 <ul class="sectlevel2">
-<li><a href="#_whitebox_overall_system">7.1. Whitebox Overall System</a></li>
-<li><a href="#_level_2">7.2. Level 2</a></li>
-<li><a href="#_level_3">7.3. Level 3</a></li>
+<li><a href="#_technology_decisions">4.1. Technology decisions</a></li>
+<li><a href="#_how_are_the_quality_goals_going_to_be_reached">4.2. How are the quality goals going to be reached?</a></li>
 </ul>
 </li>
-<li><a href="#section-runtime-view">8. Runtime View</a>
+<li><a href="#section-building-block-view">5. Building Block View</a>
 <ul class="sectlevel2">
-<li><a href="#_login">8.1. Login</a></li>
-<li><a href="#_map_view">8.2. Map view</a></li>
-<li><a href="#_new_pointmap_saved">8.3. New point/Map saved</a></li>
+<li><a href="#_whitebox_overall_system">5.1. Whitebox Overall System</a></li>
+<li><a href="#_level_2">5.2. Level 2</a></li>
+<li><a href="#_level_3">5.3. Level 3</a></li>
 </ul>
 </li>
-<li><a href="#section-deployment-view">9. Deployment View</a></li>
-<li><a href="#_development_diagram">10. Development Diagram</a></li>
-<li><a href="#_deployment_diagram">11. Deployment Diagram</a></li>
-<li><a href="#section-concepts">12. Cross-cutting Concepts</a>
+<li><a href="#section-runtime-view">6. Runtime View</a>
 <ul class="sectlevel2">
-<li><a href="#_domain_concept">12.1. Domain Concept</a></li>
-<li><a href="#_technical_decisions">12.2. Technical Decisions</a></li>
+<li><a href="#_login">6.1. Login</a></li>
+<li><a href="#_map_view">6.2. Map view</a></li>
+<li><a href="#_new_pointmap_saved">6.3. New point/Map saved</a></li>
 </ul>
 </li>
-<li><a href="#section-design-decisions">13. Design Decisions</a></li>
-<li><a href="#section-quality-scenarios">14. Quality Requirements</a>
+<li><a href="#section-deployment-view">7. Deployment View</a>
 <ul class="sectlevel2">
-<li><a href="#_quality_tree">14.1. Quality Tree</a></li>
-<li><a href="#_quality_scenarios">14.2. Quality Scenarios</a></li>
+<li><a href="#_development_diagram">7.1. Development Diagram</a></li>
+<li><a href="#_deployment_diagram">7.2. Deployment Diagram</a></li>
+<li><a href="#_legend">7.3. Legend</a></li>
 </ul>
 </li>
-<li><a href="#section-technical-risks">15. Risks and Technical Debts</a>
+<li><a href="#section-concepts">8. Cross-cutting Concepts</a>
 <ul class="sectlevel2">
-<li><a href="#_risks">15.1. Risks</a></li>
+<li><a href="#_domain_concept">8.1. Domain Concept</a></li>
+<li><a href="#_technical_decisions">8.2. Technical Decisions</a></li>
 </ul>
 </li>
-<li><a href="#section-glossary">16. Glossary</a></li>
+<li><a href="#section-design-decisions">9. Design Decisions</a></li>
+<li><a href="#section-quality-scenarios">10. Quality Requirements</a>
+<ul class="sectlevel2">
+<li><a href="#_quality_tree">10.1. Quality Tree</a></li>
+<li><a href="#_quality_scenarios">10.2. Quality Scenarios</a></li>
+</ul>
+</li>
+<li><a href="#section-technical-risks">11. Risks and Technical Debts</a>
+<ul class="sectlevel2">
+<li><a href="#_risks">11.1. Risks</a></li>
+</ul>
+</li>
+<li><a href="#section-glossary">12. Glossary</a></li>
 </ul>
 </div>
 </div>
@@ -567,10 +574,20 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <p>In this part of the documentation the development team will describe all the main requirements and general information required to start designing the project&#8217;s architecture.</p>
 </div>
 <div class="paragraph">
-<p>That information will be subdivided in the following sections
-*Requirements Overview, which describes the functionality of the project.
-*Quality Goals, which contains information regarding the level of quality the team aims to achieve.
-*Stakeholders, a sum of the main groups of people interested on the project, and also other groups that need to know the details of this specific architecture.</p>
+<p>That information will be subdivided in the following sections:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Requirements Overview, which describes the functionality of the project.</p>
+</li>
+<li>
+<p>Quality Goals, which contains information regarding the level of quality the team aims to achieve.</p>
+</li>
+<li>
+<p>Stakeholders, a sum of the main groups of people interested on the project, and also other groups that need to know the details of this specific architecture.</p>
+</li>
+</ul>
 </div>
 <div class="sect2">
 <h3 id="_requirements_overview">1.1. Requirements Overview</h3>
@@ -922,11 +939,8 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_business_context">4. Business Context:</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_business_context">3.1. Business Context:</h3>
 <div class="imageblock">
 <div class="content">
 <img src="./images/03_system_scope_context_business.png" alt="business system scope and context diagram">
@@ -939,10 +953,8 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 <p>The final user has a POD and uses the LoMap system to save and share maps. The LoMap system can also access the user&#8217;s POD to store information. Due to decitions to increase the throwput of the application, some data will be stored in a database.</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_technical_context">5. Technical Context:</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_technical_context">3.2. Technical Context:</h3>
 <div class="imageblock">
 <div class="content">
 <img src="./images/03_system_scope_context_technical.png" alt="technical system scope and context diagram">
@@ -954,8 +966,9 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 <div style="page-break-after: always;"></div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="section-solution-strategy">6. Solution Strategy</h2>
+<h2 id="section-solution-strategy">4. Solution Strategy</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
@@ -986,7 +999,7 @@ Refer to details in the following sections.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_technology_decisions">6.1. Technology decisions</h3>
+<h3 id="_technology_decisions">4.1. Technology decisions</h3>
 <div class="paragraph">
 <div class="title">TypeScript:</div>
 <p>We decided to use this programming language because it&#8217;s one of the most suitable to develop SOLID apps. Like JavaScript, it also provides all the capabilities that a language used for the web and it helps the developers by being statically typed. Our team has experience with Java, so a statically typed language is easier to use and understand for us.</p>
@@ -1009,7 +1022,7 @@ Refer to details in the following sections.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_how_are_the_quality_goals_going_to_be_reached">6.2. How are the quality goals going to be reached?</h3>
+<h3 id="_how_are_the_quality_goals_going_to_be_reached">4.2. How are the quality goals going to be reached?</h3>
 <div class="paragraph">
 <div class="title">Usability:</div>
 <p>Our interfaces will be intuitive and easy to use for anyone.</p>
@@ -1032,7 +1045,7 @@ Refer to details in the following sections.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-building-block-view">7. Building Block View</h2>
+<h2 id="section-building-block-view">5. Building Block View</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
@@ -1076,7 +1089,7 @@ Thus it contains the white box description of selected building blocks of level 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_whitebox_overall_system">7.1. Whitebox Overall System</h3>
+<h3 id="_whitebox_overall_system">5.1. Whitebox Overall System</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -1157,7 +1170,7 @@ In the best case you will get away with examples or simple signatures.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_level_2">7.2. Level 2</h3>
+<h3 id="_level_2">5.2. Level 2</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -1212,7 +1225,7 @@ Leave out normal, simple, boring or standardized parts of your system</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_level_3">7.3. Level 3</h3>
+<h3 id="_level_3">5.3. Level 3</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -1225,7 +1238,7 @@ part of arc42 for additional levels.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_white_box_building_block_x_1">7.3.1. White Box &lt;_building block x.1_&gt;</h4>
+<h4 id="_white_box_building_block_x_1">5.3.1. White Box &lt;_building block x.1_&gt;</h4>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -1238,13 +1251,13 @@ part of arc42 for additional levels.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_white_box_building_block_x_2">7.3.2. White Box &lt;_building block x.2_&gt;</h4>
+<h4 id="_white_box_building_block_x_2">5.3.2. White Box &lt;_building block x.2_&gt;</h4>
 <div class="paragraph">
 <p><em>&lt;white box template&gt;</em></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_white_box_building_block_y_1">7.3.3. White Box &lt;_building block y.1_&gt;</h4>
+<h4 id="_white_box_building_block_y_1">5.3.3. White Box &lt;_building block y.1_&gt;</h4>
 <div class="paragraph">
 <p><em>&lt;white box template&gt;</em></p>
 </div>
@@ -1254,7 +1267,7 @@ part of arc42 for additional levels.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-runtime-view">8. Runtime View</h2>
+<h2 id="section-runtime-view">6. Runtime View</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
@@ -1315,26 +1328,26 @@ You will mainly capture scenarios in your documentation to communicate your arch
 </div>
 </div>
 <div class="sect2">
-<h3 id="_login">8.1. Login</h3>
+<h3 id="_login">6.1. Login</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Sequence%20diagram1.png" alt="Sequence diagram1" width="519" height="414">
+<img src="./images/Sequence%20diagram1.png" alt="Sequence diagram1" width="531" height="326">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_map_view">8.2. Map view</h3>
+<h3 id="_map_view">6.2. Map view</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Sequence%20diagram2.png" alt="Sequence diagram2" width="494" height="326">
+<img src="./images/Sequence%20diagram2.png" alt="Sequence diagram2" width="500" height="355">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_new_pointmap_saved">8.3. New point/Map saved</h3>
+<h3 id="_new_pointmap_saved">6.3. New point/Map saved</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Sequence%20diagram3.png" alt="Sequence diagram3" width="436" height="427">
+<img src="./images/Sequence%20diagram3.png" alt="Sequence diagram3" width="422" height="326">
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1342,7 +1355,7 @@ You will mainly capture scenarios in your documentation to communicate your arch
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-deployment-view">9. Deployment View</h2>
+<h2 id="section-deployment-view">7. Deployment View</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
@@ -1394,11 +1407,8 @@ when your infrastructure is more complex.</p>
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_development_diagram">10. Development Diagram</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_development_diagram">7.1. Development Diagram</h3>
 <div class="paragraph">
 <p>While in development, the LoMap system will be run in the developer&#8217;s computer. The system will be deployed in the developer&#8217;s computer using Docker images which contain the necesary programs to run the application as a standalone application. Prometheus and Grafana will monitor and give information about the restapi. As it is shown in the diagram, the SOLID PODs, as well as the Maps API, are not part of the LoMap system.
 While the application is being developed, the MongoDB database will be allocated in the developer&#8217;s computer. This will not be the case when the application is deployed.</p>
@@ -1409,10 +1419,8 @@ While the application is being developed, the MongoDB database will be allocated
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_deployment_diagram">11. Deployment Diagram</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_deployment_diagram">7.2. Deployment Diagram</h3>
 <div class="paragraph">
 <p>While in deployment run in a Server. The users will connect to this server to access the application for the most part in the user&#8217;s device, whether it is a smartphone or a personal computer. The system will be deployed using Docker images. The webapp is the part of the system that the users will interact with. The restapi will be in charge of integrating all the other parts of the system and using external components such as MongoDB, SOLID PODs and a Maps API.</p>
 </div>
@@ -1421,6 +1429,9 @@ While the application is being developed, the MongoDB database will be allocated
 <img src="./images/07_deployment_view_deployment.png" alt="deployment view diagram in deployment">
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_legend">7.3. Legend</h3>
 <div class="paragraph">
 <p>The following image is a legend that can be useful to understand the information shown in the diagrams.</p>
 </div>
@@ -1432,8 +1443,9 @@ While the application is being developed, the MongoDB database will be allocated
 <div style="page-break-after: always;"></div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="section-concepts">12. Cross-cutting Concepts</h2>
+<h2 id="section-concepts">8. Cross-cutting Concepts</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
@@ -1529,7 +1541,7 @@ on this list.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_domain_concept">12.1. Domain Concept</h3>
+<h3 id="_domain_concept">8.1. Domain Concept</h3>
 <div class="imageblock">
 <div class="content">
 <img src="./images/08_concepts.png" alt="Domain concept">
@@ -1552,7 +1564,7 @@ on this list.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_technical_decisions">12.2. Technical Decisions</h3>
+<h3 id="_technical_decisions">8.2. Technical Decisions</h3>
 <div class="paragraph">
 <p>The technical decisions taken were explained in more detail in the section 04 of the documentation titled 'Solution Strategy'. For further information about the technical decisions, please check the section <a href="https://github.com/Arquisoft/lomap_es4a/blob/master/docs/04_solution_strategy.adoc">04 Solution Strategy</a>.</p>
 </div>
@@ -1561,7 +1573,7 @@ on this list.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-design-decisions">13. Design Decisions</h2>
+<h2 id="section-design-decisions">9. Design Decisions</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
@@ -1637,7 +1649,7 @@ here in this central section or whether you better document it locally
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-quality-scenarios">14. Quality Requirements</h2>
+<h2 id="section-quality-scenarios">10. Quality Requirements</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
@@ -1658,7 +1670,7 @@ concrete and measurable.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_quality_tree">14.1. Quality Tree</h3>
+<h3 id="_quality_tree">10.1. Quality Tree</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -1695,7 +1707,7 @@ concrete and measurable.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_quality_scenarios">14.2. Quality Scenarios</h3>
+<h3 id="_quality_scenarios">10.2. Quality Scenarios</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -1775,7 +1787,7 @@ more precisely down to a level of scenarios that can be discussed and evaluated.
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-technical-risks">15. Risks and Technical Debts</h2>
+<h2 id="section-technical-risks">11. Risks and Technical Debts</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
@@ -1797,9 +1809,9 @@ more precisely down to a level of scenarios that can be discussed and evaluated.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_risks">15.1. Risks</h3>
+<h3 id="_risks">11.1. Risks</h3>
 <div class="sect3">
-<h4 id="_organizational_risks">15.1.1. Organizational Risks</h4>
+<h4 id="_organizational_risks">11.1.1. Organizational Risks</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1815,7 +1827,7 @@ more precisely down to a level of scenarios that can be discussed and evaluated.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_technological_risks">15.1.2. Technological Risks</h4>
+<h4 id="_technological_risks">11.1.2. Technological Risks</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1832,7 +1844,7 @@ more precisely down to a level of scenarios that can be discussed and evaluated.
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-glossary">16. Glossary</h2>
+<h2 id="section-glossary">12. Glossary</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
