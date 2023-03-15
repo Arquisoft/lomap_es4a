@@ -9,6 +9,8 @@ import {containerStyle, center, options} from "./settings";
 import {retrievePoints, savePoint, SessionType} from "../../solidapi/solidapiAdapter";
 import {forEach} from "@react-google-maps/api/dist/utils/foreach";
 import Point from "../../solidapi/Point";
+// Images
+import savedMarker from '../../images/markerGuardado.png';
 
 export type MarkerType = {
     id: string,
@@ -58,7 +60,14 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
                     let marker = new google.maps.Marker({
                         position: {lat: point.latitude, lng: point.longitude},
                         map: mapRef.current,
-                        title: point.id
+                        title: point.id,
+                        icon: {
+                            url: savedMarker,
+                            origin: new window.google.maps.Point(0,0),
+                            anchor: new window.google.maps.Point(15,15),
+                            scaledSize: new window.google.maps.Size(30,30)
+
+                        }
                     });
                     marker.setMap(mapRef.current);
                 });
