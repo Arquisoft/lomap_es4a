@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {GoogleMap, Marker, InfoWindow, useJsApiLoader} from "@react-google-maps/api";
 import {useQuery} from "react-query";
 // API Calls
-import {fetchNearbyPlaces, fetchUserPlaces} from "../../api/api";
 // Map Settings
 import {containerStyle, center, options} from "./settings";
 // SOLID API
@@ -11,6 +10,7 @@ import {forEach} from "@react-google-maps/api/dist/utils/foreach";
 import Point from "../../solidapi/Point";
 // Images
 import savedMarker from '../../images/markerGuardado.png';
+import {Button} from "@mui/material";
 
 export type MarkerType = {
     id: string,
@@ -21,8 +21,15 @@ export type MarkerType = {
 }
 
 const Map: React.FC<SessionType> = (session: SessionType) => {
+    // Click en el mapa (Crea un marcador)
     const [click, setClick] = React.useState<google.maps.LatLngLiteral>({} as google.maps.LatLngLiteral);
     const [map, setMap] = useState(null);
+
+    // Devuelve el Marker pulsado
+    const [selectedMark, getSelectedMark] = React.useState<google.maps.Marker> ({} as google.maps.Marker);
+
+    // Create the Infowindow of the Marker
+    const [infoWindow, setInfoWindow] = React.useState<google.maps.InfoWindowOptions>({} as google.maps.InfoWindowOptions);
 
     const {isLoaded} = useJsApiLoader(
         {
@@ -33,28 +40,11 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
     // Save map in ref if we want to access the map
     const mapRef = React.useRef<google.maps.Map | null>(null);
 
-    const [clickedPos, setClickedPos] = React.useState<google.maps.LatLngLiteral>({} as google.maps.LatLngLiteral)
-
-    const {
-        data: nearbyPositions,
-        isLoading,
-        isError
-    } = useQuery([clickedPos.lat, clickedPos.lng], () => fetchNearbyPlaces(clickedPos.lat, clickedPos.lng),
-        {
-            enabled: !!clickedPos.lat,
-            refetchOnWindowFocus: false,
-        });
-
-    //console.log(nearbyPositions);
-
-    let userPoints: Point[]
-    userPoints = [];
     const onLoad = (map: google.maps.Map): void => { // TODO: aquí se imprimen los puntos recuperados del pod
         mapRef.current = map;
         retrievePoints(session.session).then(points => {
             if (points != null) {
-                userPoints = points;
-                userPoints.forEach(point => {
+                points.forEach(point => {
                     console.log(point);
                     // NUEVO
                     let marker = new google.maps.Marker({
@@ -65,15 +55,26 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
                             url: savedMarker,
                             origin: new window.google.maps.Point(0,0),
                             anchor: new window.google.maps.Point(15,15),
-                            scaledSize: new window.google.maps.Size(30,30)
+                            scaledSize: new window.google.maps.Size(40,40)
+                        },
+                        //draggable: true
 
-                        }
                     });
                     marker.setMap(mapRef.current);
+
+                    marker.addListener('click', () => {
+                        // Te devuelve el Marker pulsado
+                        getSelectedMark(marker);
+                    })
                 });
             }
         });
     }
+
+    const deleteMark = (): void => {
+        // TODO: Eliminar el marker del POD
+        selectedMark.setMap(null);
+    };
 
     const onUnMount = (): void => {
         mapRef.current = null;
@@ -82,7 +83,9 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
     const onMapClick = (e: google.maps.MapMouseEvent) => {
         if (e.latLng != null) {
             setClick({lat: e.latLng.lat(), lng: e.latLng.lng()});
-            let point = savePoint(session.session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
+
+            //TODO: Que se no se guarde si no le das al botón de marcar
+            savePoint(session.session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
             /*
             // NUEVO
             let marker = new google.maps.Marker({
@@ -112,6 +115,17 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
                 onClick={onMapClick}
             >
                 <Marker position={click}/>
+                {selectedMark.getPosition! && (
+                    <InfoWindow
+                        position={click}
+                        anchor={selectedMark}
+                    >
+                        <Button autoFocus onClick={deleteMark} color="primary">
+                            Borrar Punto
+                        </Button>
+
+                    </InfoWindow>
+                )}
             </GoogleMap>
         </div>
     );

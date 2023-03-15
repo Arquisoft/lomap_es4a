@@ -24,6 +24,7 @@ import { AirSharp, Pin, PinchOutlined, PinSharp, Plumbing } from '@mui/icons-mat
 // Profile picture
 import {getProfilePic, SessionType} from "../../solidapi/solidapiAdapter";
 import {Session} from "@inrupt/solid-client-authn-browser";
+import {Button} from "@mui/material";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
