@@ -23,7 +23,7 @@ import PrimarySearchAppBar from '../Searchbar/Searchbar';
 import { AccountCircle } from '@mui/icons-material';
 // Pfp
 import { VCARD } from "@inrupt/lit-generated-vocab-common";
-import {CombinedDataProvider, useSession, Image} from "@inrupt/solid-ui-react";
+import {CombinedDataProvider, useSession, Image, Text} from "@inrupt/solid-ui-react";
 import {useState} from "react";
 
 const categories = [
@@ -77,8 +77,9 @@ const theme = createTheme({
 });
 
 
-function Navigator(props: DrawerProps) {
+function Navigator(props: any) {
   const [open, setOpen] = React.useState(false);
+  const callback = props.callback;
   const { ...other } = props;
   const handleClickOpen = () => {
     setOpen(true);
@@ -88,9 +89,8 @@ function Navigator(props: DrawerProps) {
     setOpen(false);
   };
 
-  const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
+  //const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
   const { session } = useSession();
-  const { webId } = session.info;
 
   return (
     <><ThemeProvider theme={theme}>
@@ -105,7 +105,13 @@ function Navigator(props: DrawerProps) {
               component="div"
               sx={{ display: { xs: 'none', sm: 'block', color: 'white' } }}
             >
-              Usuario  
+              {session.info.webId ? (
+                  <CombinedDataProvider
+                      datasetUrl={session.info.webId}
+                      thingUrl={session.info.webId}>
+                    <Text property={VCARD.fn.value }/>
+                  </CombinedDataProvider>
+              ): null }
             </Typography>
             <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white', padding:"1em"} }}>
 
@@ -113,7 +119,7 @@ function Navigator(props: DrawerProps) {
                   <CombinedDataProvider
                       datasetUrl={session.info.webId}
                       thingUrl={session.info.webId}>
-                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture" style={{width:40, height:40, borderRadius:20}}/>
+                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture" style={{width:60, height:60, borderRadius:30}}/>
                   </CombinedDataProvider>
               ): null }
 
@@ -164,7 +170,6 @@ function Navigator(props: DrawerProps) {
         </DialogActions>
       </Dialog>
       </>
-
   );
 }
 /**
