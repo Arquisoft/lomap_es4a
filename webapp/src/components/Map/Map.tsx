@@ -10,6 +10,7 @@ import {forEach} from "@react-google-maps/api/dist/utils/foreach";
 import Point from "../../solidapi/Point";
 // Images
 import savedMarker from '../../images/markerGuardado.png';
+import savedMarker2 from '../../images/markerGuerdado2.png';
 import {Button} from "@mui/material";
 
 export type MarkerType = {
@@ -52,7 +53,7 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
                         map: mapRef.current,
                         title: point.id,
                         icon: {
-                            url: savedMarker,
+                            url: savedMarker2,
                             origin: new window.google.maps.Point(0,0),
                             anchor: new window.google.maps.Point(15,15),
                             scaledSize: new window.google.maps.Size(40,40)
@@ -64,12 +65,27 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
 
                     marker.addListener('click', () => {
                         // Te devuelve el Marker pulsado
+                        map.setCenter(marker.getPosition()!);
                         getSelectedMark(marker);
+                        openInfoView(marker);
                     })
                 });
             }
         });
     }
+
+    const openInfoView = (marker: google.maps.Marker): void => {
+        new google.maps.InfoWindow({
+            content: "<Button autoFocus onClick={deleteMark()} color=\"primary\">\n" +
+                "                            Borrar Punto\n" +
+                "                        </Button>",
+            ariaLabel: "Uluru",
+        }).open(
+            {
+                anchor: marker,
+                map
+            });
+    };
 
     const deleteMark = (): void => {
         // TODO: Eliminar el marker del POD
@@ -115,17 +131,7 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
                 onClick={onMapClick}
             >
                 <Marker position={click}/>
-                {selectedMark.getPosition! && (
-                    <InfoWindow
-                        position={click}
-                        anchor={selectedMark}
-                    >
-                        <Button autoFocus onClick={deleteMark} color="primary">
-                            Borrar Punto
-                        </Button>
 
-                    </InfoWindow>
-                )}
             </GoogleMap>
         </div>
     );
