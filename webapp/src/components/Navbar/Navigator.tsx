@@ -81,6 +81,10 @@ const theme = createTheme({
 function Navigator(props: DrawerProps) {
   const [open, setOpen] = React.useState(false);
   const { ...other } = props;
+  
+  const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
+  const { session } = useSession();
+  const { webId } = session.info;
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -94,10 +98,6 @@ function Navigator(props: DrawerProps) {
       console.log(`Error logging out: ${error}`);
     }
   };
-  const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
-  const { session } = useSession();
-  const { webId } = session.info;
-
   return (
     <><ThemeProvider theme={theme}>
       <Drawer {...other} open={{ ...other }.open}
