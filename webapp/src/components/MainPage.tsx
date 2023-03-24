@@ -2,7 +2,6 @@ import Box from "@mui/material/Box";
 import PrimarySearchAppBar from "./Searchbar/Searchbar";
 import Map from "./Map/Map";
 import { Grid } from "@mui/material";
-import React from "react";
 import { SessionType } from "../solidapi/solidapiAdapter";
 
 export default function MainPage({ session }: SessionType): JSX.Element {

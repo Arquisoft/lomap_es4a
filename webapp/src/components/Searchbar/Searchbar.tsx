@@ -5,25 +5,13 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import Navigator from '../Navbar/Navigator';
-import { click } from '@testing-library/user-event/dist/click';
-import ReactDOM from 'react-dom/client';
-import { AirSharp, Pin, PinchOutlined, PinSharp, Plumbing } from '@mui/icons-material';
 
 // Profile picture
-import {getProfilePic, SessionType} from "../../solidapi/solidapiAdapter";
-import {Session} from "@inrupt/solid-client-authn-browser";
+import {SessionType} from "../../solidapi/solidapiAdapter";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',

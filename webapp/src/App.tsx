@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import Welcome from './components/Welcome';
 import './App.css';
-import Map from "./components/Map/Map";
 import {QueryClient, QueryClientProvider} from "react-query";
 import LoginPage from './components/login/LoginPage';
 import {SessionProvider, useSession} from "@inrupt/solid-ui-react";
