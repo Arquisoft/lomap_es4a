@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import "@inrupt/jest-jsdom-polyfills" // TODO: revisar
 import { LoginButton } from "@inrupt/solid-ui-react";
 import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl } from "@mui/material";
 
