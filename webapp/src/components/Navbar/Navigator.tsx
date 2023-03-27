@@ -23,9 +23,10 @@ import PrimarySearchAppBar from '../Searchbar/Searchbar';
 import { AccountCircle } from '@mui/icons-material';
 // Pfp
 import { VCARD } from "@inrupt/lit-generated-vocab-common";
-import {CombinedDataProvider, useSession, Image} from "@inrupt/solid-ui-react";
-import {useState} from "react";
+import {CombinedDataProvider, useSession, Image, Text} from "@inrupt/solid-ui-react";
+import {useEffect, useState} from "react";
 import LogoutIcon from '@mui/icons-material/Logout';
+import {subscribe, unsubscribe} from "../../event";
 const categories = [
   {
     id: 'LoMap',
@@ -78,10 +79,10 @@ const theme = createTheme({
 });
 
 
-function Navigator(props: DrawerProps) {
+function Navigator() {
+  const [navigatorOpen, setNavigatorOpen] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-  const { ...other } = props;
-  
+
   const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
   const { session } = useSession();
   const { webId } = session.info;
@@ -91,6 +92,19 @@ function Navigator(props: DrawerProps) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const toggleNavigator = () => {
+    setNavigatorOpen(!navigatorOpen);
+  }
+
+  useEffect(() => {
+    subscribe("toggleNavigator", () => toggleNavigator());
+
+    return () => {
+      unsubscribe("toggleNavigator", () => toggleNavigator());
+    }
+  }, []);
+
   const handleClickLogout = async() => {
     try {
       await session.logout();
@@ -98,10 +112,13 @@ function Navigator(props: DrawerProps) {
       console.log(`Error logging out: ${error}`);
     }
   };
+
   return (
     <><ThemeProvider theme={theme}>
-      <Drawer {...other} open={{ ...other }.open}
-        sx={{ display: { mt: 500 } }}>
+      <Drawer disableAutoFocus={true}
+          open={navigatorOpen}
+          sx={{ display: { mt: 500 } }}
+          onClose={toggleNavigator}>
 
         <List disablePadding>
           <ListItemButton>
@@ -111,7 +128,13 @@ function Navigator(props: DrawerProps) {
               component="div"
               sx={{ display: { xs: 'none', sm: 'block', color: 'white' } }}
             >
-              Usuario  
+              {session.info.webId ? (
+                  <CombinedDataProvider
+                      datasetUrl={session.info.webId}
+                      thingUrl={session.info.webId}>
+                    <Text property={VCARD.fn.value }/>
+                  </CombinedDataProvider>
+              ): null }
             </Typography>
             <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white', padding:"1em"} }}>
 
@@ -119,7 +142,7 @@ function Navigator(props: DrawerProps) {
                   <CombinedDataProvider
                       datasetUrl={session.info.webId}
                       thingUrl={session.info.webId}>
-                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture" style={{width:40, height:40, borderRadius:20}}/>
+                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture" style={{width:60, height:60, borderRadius:30}}/>
                   </CombinedDataProvider>
               ): null }
 
@@ -172,22 +195,7 @@ function Navigator(props: DrawerProps) {
         </DialogActions>
       </Dialog>
       </>
-
   );
 }
-/**
- * <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
 
-                aria-haspopup="true"
-
-                color="inherit"
-
-
-              >
-                <AccountCircle />
-              </IconButton>
- */
 export default Navigator;

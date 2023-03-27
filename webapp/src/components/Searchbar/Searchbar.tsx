@@ -21,9 +21,8 @@ import { click } from '@testing-library/user-event/dist/click';
 import ReactDOM from 'react-dom/client';
 import { AirSharp, Pin, PinchOutlined, PinSharp, Plumbing } from '@mui/icons-material';
 
-// Profile picture
-import {getProfilePic, SessionType} from "../../solidapi/solidapiAdapter";
-import {Session} from "@inrupt/solid-client-authn-browser";
+// Custom events
+import { publish } from "../../event";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -68,26 +67,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
-class PrimarySearchAppBar extends React.Component<SessionType> {
-  static clickMenu: any;
-  constructor(props:any){
-    super(props);
+function PrimarySearchAppBar() {
+  const toggleNavigator = () => {
+    publish('toggleNavigator');
   }
-  isOpen=false
-  
-  clickMenu(){
-    this.isOpen=!this.isOpen
-    console.log(this.isOpen);
-    this.forceUpdate();
-  }
-  
 
-  
-  render(){
     return (
-      
       <Box >
-        
         <Box >
         <AppBar position="static" style={{ background: '#101F33' }}>
           <Toolbar >
@@ -111,31 +97,15 @@ class PrimarySearchAppBar extends React.Component<SessionType> {
               color="inherit"
               aria-label="open drawer"
               sx={{ display:'flex', pl:2 }}
-              onClick={() => { this.clickMenu(); }}
+              onClick={ toggleNavigator }
             >
               <MenuIcon />
             </IconButton>
           </Toolbar>
         </AppBar></Box>
-        <Box sx={{ gridArea: 'nav'}}><Navigator variant={"persistent"} open={this.isOpen}/></Box>
       </Box>
 
     );
-    
-  }
-  
 }
-/**
- * <IconButton 
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-            onClick={() => { console.log('pulsado') }}
-          >
-            <MenuIcon />
-          </IconButton>
- */
 
 export default PrimarySearchAppBar;

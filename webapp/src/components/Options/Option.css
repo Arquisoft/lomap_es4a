@@ -1,0 +1,14 @@
+
+.point-fill-field {
+    background: white;
+    font-family: Arial;
+    font-size: large;
+}
+
+textarea.point-fill-field {
+    min-width: 10.5vw;
+    min-height: 5.5vh;
+
+    max-width: 15vw;
+    max-height: 10vh;
+}
