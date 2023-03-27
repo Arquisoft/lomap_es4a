@@ -10,6 +10,9 @@ import {retrievePoints, savePoint, SessionType} from "../../solidapi/solidapiAda
 import {forEach} from "@react-google-maps/api/dist/utils/foreach";
 import Point from "../../solidapi/Point";
 
+// Custom events
+import { publish } from "../../event";
+
 export type MarkerType = {
     id: string,
     location: google.maps.LatLngLiteral,
@@ -24,7 +27,10 @@ function Map(props: any) {
     const [map, setMap] = useState(React.useRef<google.maps.Map | null>(null).current);
 
     const session = props.session;
-    const showAddPointOption = props.callback;
+
+    const showAddOption = () => {
+        publish('showAddOption')
+    }
 
     const {isLoaded} = useJsApiLoader(
         {
@@ -78,18 +84,19 @@ function Map(props: any) {
         if (e.latLng != null) {
             setClicks([...clicks, e.latLng!]);
             //setClickedPos({lat: e.latLng.lat(), lng: e.latLng.lng()});
-            let point = savePoint(session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
+            //let point = savePoint(session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
 
             // NUEVO
+            /*
             let marker = new google.maps.Marker({
                 position: {lat: e.latLng.lat(), lng: e.latLng.lng()},
                 map: map,
                 title: point?.id
             });
             marker.setMap(map);
-
+            */
             // Mostrar menú añadir punto
-            showAddPointOption(point);
+            showAddOption();
         }
 
     };

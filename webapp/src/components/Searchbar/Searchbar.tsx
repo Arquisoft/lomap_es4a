@@ -21,8 +21,8 @@ import { click } from '@testing-library/user-event/dist/click';
 import ReactDOM from 'react-dom/client';
 import { AirSharp, Pin, PinchOutlined, PinSharp, Plumbing } from '@mui/icons-material';
 
-
-import Welcome from "../Welcome";
+// Custom events
+import { publish } from "../../event";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -67,7 +67,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
-function PrimarySearchAppBar({ callback }: any) {
+function PrimarySearchAppBar() {
+  const toggleNavigator = () => {
+    publish('toggleNavigator');
+  }
 
     return (
       <Box >
@@ -94,7 +97,7 @@ function PrimarySearchAppBar({ callback }: any) {
               color="inherit"
               aria-label="open drawer"
               sx={{ display:'flex', pl:2 }}
-              onClick={ () => callback() }
+              onClick={ toggleNavigator }
             >
               <MenuIcon />
             </IconButton>

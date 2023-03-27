@@ -24,8 +24,9 @@ import { AccountCircle } from '@mui/icons-material';
 // Pfp
 import { VCARD } from "@inrupt/lit-generated-vocab-common";
 import {CombinedDataProvider, useSession, Image, Text} from "@inrupt/solid-ui-react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import LogoutIcon from '@mui/icons-material/Logout';
+import {subscribe, unsubscribe} from "../../event";
 const categories = [
   {
     id: 'LoMap',
@@ -78,11 +79,10 @@ const theme = createTheme({
 });
 
 
-function Navigator(props: any) {
+function Navigator() {
+  const [navigatorOpen, setNavigatorOpen] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-  const callback = props.callback;
-  const { ...other } = props;
-  
+
   const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
   const { session } = useSession();
   const { webId } = session.info;
@@ -93,7 +93,17 @@ function Navigator(props: any) {
     setOpen(false);
   };
 
-  //const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
+  const toggleNavigator = () => {
+    setNavigatorOpen(!navigatorOpen);
+  }
+
+  useEffect(() => {
+    subscribe("toggleNavigator", () => toggleNavigator());
+
+    return () => {
+      unsubscribe("toggleNavigator", () => toggleNavigator());
+    }
+  }, []);
 
   const handleClickLogout = async() => {
     try {
@@ -102,10 +112,13 @@ function Navigator(props: any) {
       console.log(`Error logging out: ${error}`);
     }
   };
+
   return (
     <><ThemeProvider theme={theme}>
-      <Drawer {...other} open={{ ...other }.open}
-        sx={{ display: { mt: 500 } }}>
+      <Drawer disableAutoFocus={true}
+          open={navigatorOpen}
+          sx={{ display: { mt: 500 } }}
+          onClose={toggleNavigator}>
 
         <List disablePadding>
           <ListItemButton>
@@ -184,19 +197,5 @@ function Navigator(props: any) {
       </>
   );
 }
-/**
- * <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
 
-                aria-haspopup="true"
-
-                color="inherit"
-
-
-              >
-                <AccountCircle />
-              </IconButton>
- */
 export default Navigator;
