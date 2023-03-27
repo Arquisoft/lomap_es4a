@@ -18,17 +18,31 @@ function App(): JSX.Element {
 
 	session.onLogin(() => setIsLoggedIn(true));
 	session.onLogout(() => setIsLoggedIn(false));
-
-	return(
-		<SessionProvider>
-			<Router>
-				<Routes>
-					<Route path="/" element={<LoginPage/>} />
-					<Route path="/map" element={<QueryClientProvider client={queryClient}><MainPage session={session}/></QueryClientProvider>} />
-				</Routes>
-			</Router>
-		</SessionProvider>
-	);	
+	
+	if (!isLoggedIn)
+		return(
+			<SessionProvider>
+				<Router>
+					<Routes>
+						<Route path="/" element={<LoginPage/>} />
+						
+					</Routes>
+				</Router>
+			</SessionProvider>
+		);
+	else {
+		session.handleIncomingRedirect({ url:"localhost:3000", restorePreviousSession: true });
+		return(
+			<SessionProvider>
+				<Router>
+					<Routes>
+						
+						<Route path="/map" element={<QueryClientProvider client={queryClient}><MainPage session={session}/></QueryClientProvider>} />
+					</Routes>
+				</Router>
+			</SessionProvider>
+		);
+	}
 }
 
 export default App;
