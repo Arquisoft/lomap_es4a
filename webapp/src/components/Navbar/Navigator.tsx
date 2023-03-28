@@ -77,10 +77,11 @@ const theme = createTheme({
     }
   }
 });
-function Navigator() {
+function Navigator({clickPoints}: any) {
+  
   const [navigatorOpen, setNavigatorOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [openPoints, setOpenPoints] = React.useState(false);
+  //const [openPoints, setOpenPoints] = React.useState(false);
 
   const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
   const { session } = useSession();
@@ -104,13 +105,10 @@ function Navigator() {
     }
   }, []);
 
-  const handleClickPoints= async() => {
-    setOpenPoints(true);
-    
+  const handleClickPointsOpen= async() => {
+    clickPoints(true);
   };
-  const handleClickPointsClose = () => {
-    setOpenPoints(false);
-  };
+  
   const handleClickLogout = async() => {
     try {
       await session.logout();
@@ -165,7 +163,7 @@ function Navigator() {
                   <ListItemButton selected={active} sx={item} onClick={() => {
                     if (childId === "About us") {handleClickOpen()}
                     else if(childId==="Logout"){handleClickLogout()}
-                    else if(childId==="Points"){handleClickPoints()}
+                    else if(childId==="Points"){handleClickPointsOpen()}
                   } }>
                     <ListItemIcon>{icon}</ListItemIcon>
                     <ListItemText>{childId}</ListItemText>
@@ -203,7 +201,7 @@ function Navigator() {
         </DialogActions>
       </Dialog>
 
-      <PointsView open={openPoints} onClose={handleClickPointsClose} ></PointsView> 
+      
 
       
       </>

@@ -10,9 +10,19 @@ import Point from "../solidapi/Point";
 
 // Custom events
 import { subscribe, unsubscribe } from "../event";
+import PointsView from "./Navbar/PointsView";
 
 export default function MainPage({ session }: SessionType): JSX.Element {
+    
+    const [pointsState, setPointsState] = React.useState(false);
+    const clickPoints=(visible:boolean)=>{
+        console.log(visible)
+        setPointsState(visible);
+    }
 
+    const handleClickPointsClose = () => {
+        clickPoints(false);
+      };
     return (
         <Grid
             sx={{
@@ -27,8 +37,9 @@ export default function MainPage({ session }: SessionType): JSX.Element {
                 "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "`,
             }}>
             <Box sx={{ gridArea: 'search'}}><PrimarySearchAppBar /></Box>
-            <Box><Navigator/></Box>
+            <Box><Navigator  clickPoints={clickPoints} /></Box>
             <Box><AddPointOption/></Box>
+            <Box><PointsView open={pointsState} onClose={handleClickPointsClose} ></PointsView></Box>
             <Box sx={{ gridArea: 'mainContainer'}}><Map session={session}/></Box>
         </Grid>
     );
