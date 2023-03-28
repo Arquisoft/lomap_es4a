@@ -14,17 +14,12 @@ import PointsView from "./Navbar/PointsView";
 import SearchBar from "./Searchbar/Searchbar";
 
 export default function MainPage({ session }: SessionType): JSX.Element {
-
-    const [navbarOpen, setNavbarOpen] = React.useState(false);
-    const [pointsListOpen, setPointsListOpen] = React.useState(false);
-
-    /*
-    const toggleNavbar = (open: boolean) => {
-        setNavbarOpen(open);
-    }*/
-
-    const toggleNavbar = () => {
-        setNavbarOpen(!navbarOpen);
+    
+    const [pointsState, setPointsState] = React.useState(false);
+    
+    const clickPoints=(visible:boolean)=>{
+        console.log(visible)
+        setPointsState(visible);
     }
 
     const openPointsList = () => {
