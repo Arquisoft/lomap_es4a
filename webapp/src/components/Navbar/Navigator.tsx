@@ -123,7 +123,8 @@ function Navigator() {
       <Drawer disableAutoFocus={true}
           open={navigatorOpen}
           sx={{ display: { mt: 500 } }}
-          onClose={toggleNavigator}>
+          onClose={toggleNavigator}
+          >
 
         <List disablePadding>
           <ListItemButton>
@@ -201,7 +202,7 @@ function Navigator() {
         </DialogActions>
       </Dialog>
 
-      <PointsView open={openPoints} onClose={handleClickPointsClose}></PointsView> 
+      <PointsView open={openPoints} onClose={handleClickPointsClose} ></PointsView> 
 
       
       </>

@@ -44,7 +44,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Drawer anchor="left" open={open} sx={{ display: { mt: 500 } }}>
+      <Drawer anchor="left" open={open} sx={{ display: { mt: 500 } }} >
         <List sx={{ width:'200px' }} disablePadding>
           <ListItem>
             <IconButton onClick={onClose}>
