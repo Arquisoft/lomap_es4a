@@ -46,6 +46,7 @@ const categories = [
     children: [
       { id: 'Configuration', icon: <SettingsIcon />,active: true },
       { id: 'About us', icon: <PhonelinkSetupIcon /> },
+      { id: 'Logout', icon: <LogoutIcon /> },
     ],
   },
 ];
