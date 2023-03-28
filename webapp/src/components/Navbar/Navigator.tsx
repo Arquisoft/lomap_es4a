@@ -7,14 +7,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import HomeIcon from '@mui/icons-material/Home';
+
 import PeopleIcon from '@mui/icons-material/People';
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
-import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual';
+
 import PublicIcon from '@mui/icons-material/Public';
-import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
-import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
-import TimerIcon from '@mui/icons-material/Timer';
+
+
 import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
 import { Avatar, Button, createTheme, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, makeStyles, ThemeProvider, Typography } from '@mui/material';
@@ -23,9 +22,11 @@ import PrimarySearchAppBar from '../Searchbar/Searchbar';
 import { AccountCircle } from '@mui/icons-material';
 // Pfp
 import { VCARD } from "@inrupt/lit-generated-vocab-common";
-import {CombinedDataProvider, useSession, Image} from "@inrupt/solid-ui-react";
-import {useState} from "react";
-
+import {CombinedDataProvider, useSession, Image, Text} from "@inrupt/solid-ui-react";
+import {useEffect, useState} from "react";
+import LogoutIcon from '@mui/icons-material/Logout';
+import {subscribe, unsubscribe} from "../../event";
+import PointsView from './PointsView';
 const categories = [
   {
     id: 'LoMap',
@@ -45,6 +46,7 @@ const categories = [
     children: [
       { id: 'Configuration', icon: <SettingsIcon />,active: true },
       { id: 'About us', icon: <PhonelinkSetupIcon /> },
+      { id: 'Logout', icon: <LogoutIcon /> },
     ],
   },
 ];
@@ -75,27 +77,55 @@ const theme = createTheme({
     }
   }
 });
-
-
-function Navigator(props: DrawerProps) {
-  const [open, setOpen] = React.useState(false);
-  const { ...other } = props;
-  const handleClickOpen = () => {
-    setOpen(true);
-    console.log("a")
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+function Navigator() {
+  const [navigatorOpen, setNavigatorOpen] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [openPoints, setOpenPoints] = React.useState(false);
 
   const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
   const { session } = useSession();
   const { webId } = session.info;
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
+
+  const toggleNavigator = () => {
+    setNavigatorOpen(!navigatorOpen);
+  }
+ 
+  useEffect(() => {
+    subscribe("toggleNavigator", () => toggleNavigator());
+
+    return () => {
+      unsubscribe("toggleNavigator", () => toggleNavigator());
+    }
+  }, []);
+
+  const handleClickPoints= async() => {
+    setOpenPoints(true);
+    
+  };
+  const handleClickPointsClose = () => {
+    setOpenPoints(false);
+  };
+  const handleClickLogout = async() => {
+    try {
+      await session.logout();
+    } catch (error) {
+      console.log(`Error logging out: ${error}`);
+    }
+  };
 
   return (
     <><ThemeProvider theme={theme}>
-      <Drawer {...other} open={{ ...other }.open}
-        sx={{ display: { mt: 500 } }}>
+      <Drawer disableAutoFocus={true}
+          open={navigatorOpen}
+          sx={{ display: { mt: 500 } }}
+          onClose={toggleNavigator}
+          >
 
         <List disablePadding>
           <ListItemButton>
@@ -105,7 +135,13 @@ function Navigator(props: DrawerProps) {
               component="div"
               sx={{ display: { xs: 'none', sm: 'block', color: 'white' } }}
             >
-              Usuario  
+              {session.info.webId ? (
+                  <CombinedDataProvider
+                      datasetUrl={session.info.webId}
+                      thingUrl={session.info.webId}>
+                    <Text property={VCARD.fn.value }/>
+                  </CombinedDataProvider>
+              ): null }
             </Typography>
             <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white', padding:"1em"} }}>
 
@@ -113,7 +149,7 @@ function Navigator(props: DrawerProps) {
                   <CombinedDataProvider
                       datasetUrl={session.info.webId}
                       thingUrl={session.info.webId}>
-                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture" style={{width:40, height:40, borderRadius:20}}/>
+                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture" style={{width:60, height:60, borderRadius:30}}/>
                   </CombinedDataProvider>
               ): null }
 
@@ -128,12 +164,15 @@ function Navigator(props: DrawerProps) {
                 <ListItem disablePadding key={childId}>
                   <ListItemButton selected={active} sx={item} onClick={() => {
                     if (childId === "About us") {handleClickOpen()}
+                    else if(childId==="Logout"){handleClickLogout()}
+                    else if(childId==="Points"){handleClickPoints()}
                   } }>
                     <ListItemIcon>{icon}</ListItemIcon>
                     <ListItemText>{childId}</ListItemText>
 
                   </ListItemButton>
                 </ListItem>
+                
               ))}
               <Divider sx={{ mt: 2 }} />
             </Box>
@@ -144,7 +183,7 @@ function Navigator(props: DrawerProps) {
     {/*
       Dialogo al darle a about Us
     */}
-    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={openDialog}>
         <DialogTitle>
           LoMap_es4a
         </DialogTitle>
@@ -163,23 +202,17 @@ function Navigator(props: DrawerProps) {
           </Button>
         </DialogActions>
       </Dialog>
-      </>
 
+      <PointsView open={openPoints} onClose={handleClickPointsClose} ></PointsView> 
+
+      
+      </>
+    
   );
 }
-/**
- * <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-
-                aria-haspopup="true"
-
-                color="inherit"
-
-
-              >
-                <AccountCircle />
-              </IconButton>
- */
+//<PointsView open={true}></PointsView> 
 export default Navigator;
+function viewPoints(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+

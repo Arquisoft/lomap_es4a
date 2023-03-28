@@ -5,13 +5,16 @@ import {useQuery} from "react-query";
 // Map Settings
 import {containerStyle, center, options} from "./settings";
 // SOLID API
-import {retrievePoints, savePoint, SessionType} from "../../solidapi/solidapiAdapter";
+import {retrievePoints,  SessionType} from "../../solidapi/solidapiAdapter";
 import {forEach} from "@react-google-maps/api/dist/utils/foreach";
 import Point from "../../solidapi/Point";
 // Images
 import savedMarker from '../../images/markerGuardado.png';
 import savedMarker2 from '../../images/markerGuerdado2.png';
 import {Button} from "@mui/material";
+
+// Custom events
+import { publish } from "../../event";
 
 export type MarkerType = {
     id: string,
@@ -21,10 +24,16 @@ export type MarkerType = {
     website: string
 }
 
-const Map: React.FC<SessionType> = (session: SessionType) => {
-    // Click en el mapa (Crea un marcador)
-    const [click, setClick] = React.useState<google.maps.LatLngLiteral>({} as google.maps.LatLngLiteral);
-    const [map, setMap] = useState(null);
+function Map(props: any) {
+    const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
+
+    const [map, setMap] = useState(React.useRef<google.maps.Map | null>(null).current);
+
+    const session = props.session;
+
+    const showAddOption = () => {
+        publish('showAddOption')
+    }
 
     // Devuelve el Marker pulsado
     const [selectedMark, getSelectedMark] = React.useState<google.maps.Marker> ({} as google.maps.Marker);
@@ -39,37 +48,28 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
         })
 
     // Save map in ref if we want to access the map
-    const mapRef = React.useRef<google.maps.Map | null>(null);
+    //const mapRef = React.useRef<google.maps.Map | null>(null);
 
-    const onLoad = (map: google.maps.Map): void => { // TODO: aquí se imprimen los puntos recuperados del pod
-        mapRef.current = map;
-        retrievePoints(session.session).then(points => {
+    const [clickedPos, setClickedPos] = React.useState<google.maps.LatLngLiteral>({} as google.maps.LatLngLiteral)
+
+    //console.log(nearbyPositions);
+
+    let userPoints: Point[]
+    userPoints = [];
+    const onLoad = (googleMap: google.maps.Map): void => { // TODO: aquí se imprimen los puntos recuperados del pod
+        retrievePoints(session).then(points => {
             if (points != null) {
                 points.forEach(point => {
                     console.log(point);
                     // NUEVO
                     let marker = new google.maps.Marker({
                         position: {lat: point.latitude, lng: point.longitude},
-                        map: mapRef.current,
-                        title: point.id,
-                        icon: {
-                            url: savedMarker2,
-                            origin: new window.google.maps.Point(0,0),
-                            anchor: new window.google.maps.Point(15,15),
-                            scaledSize: new window.google.maps.Size(40,40)
-                        },
-                        //draggable: true
-
+                        map: googleMap,
+                        title: point.id
                     });
-                    marker.setMap(mapRef.current);
-
-                    marker.addListener('click', () => {
-                        // Te devuelve el Marker pulsado
-                        map.setCenter(marker.getPosition()!);
-                        getSelectedMark(marker);
-                        openInfoView(marker);
-                    })
+                    marker.setMap(googleMap);
                 });
+                setMap(googleMap);
             }
         });
     }
@@ -93,25 +93,30 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
     };
 
     const onUnMount = (): void => {
-        mapRef.current = null;
+        setMap(null);
     };
 
     const onMapClick = (e: google.maps.MapMouseEvent) => {
         if (e.latLng != null) {
-            setClick({lat: e.latLng.lat(), lng: e.latLng.lng()});
+            setClicks([...clicks, e.latLng!]);
+            //setClickedPos({lat: e.latLng.lat(), lng: e.latLng.lng()});
+            //let point = savePoint(session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
 
             //TODO: Que se no se guarde si no le das al botón de marcar
-            savePoint(session.session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
+            //savePoint(session.session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
             /*
             // NUEVO
+            /*
             let marker = new google.maps.Marker({
 
                 position: {lat: e.latLng.lat(), lng: e.latLng.lng()},
-                map: mapRef.current,
+                map: map,
                 title: point?.id
             });
-            marker.setMap(mapRef.current);
-             */
+            marker.setMap(map);
+            */
+            // Mostrar menú añadir punto
+            showAddOption();
         }
 
     };
@@ -130,7 +135,6 @@ const Map: React.FC<SessionType> = (session: SessionType) => {
                 onUnmount={onUnMount}
                 onClick={onMapClick}
             >
-                <Marker position={click}/>
 
             </GoogleMap>
         </div>
