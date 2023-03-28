@@ -27,6 +27,10 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+    <dismissed value="$PROJECT_DIR$/webapp/package.json" />
+  </component>
   <component name="ProjectId" id="2MMmUmGN0TxQqq4jRUmNh8nD0vX" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -48,7 +52,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\Uniovi\\Tercero\\ASW\\Proyecto Final\\lomap_es4a\\webapp\\node_modules\\typescript\\lib&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\UniOvi\\Tercero\\Segundo Semestre\\ASW\\lomap_es4a\\webapp\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -95,6 +99,8 @@
       <workItem from="1679249728531" duration="38000" />
       <workItem from="1679249808361" duration="501000" />
       <workItem from="1679400044905" duration="255000" />
+      <workItem from="1680019199169" duration="3447000" />
+      <workItem from="1680026270201" duration="1841000" />
     </task>
     <task id="LOCAL-00001" summary="Se ha movido el directorio solidapi a webapp">
       <created>1678459410126</created>

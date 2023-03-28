@@ -38,9 +38,6 @@ function Map(props: any) {
     // Devuelve el Marker pulsado
     const [selectedMark, getSelectedMark] = React.useState<google.maps.Marker> ({} as google.maps.Marker);
 
-    // Create the Infowindow of the Marker
-    const [infoWindow, setInfoWindow] = React.useState<google.maps.InfoWindowOptions>({} as google.maps.InfoWindowOptions);
-
     const {isLoaded} = useJsApiLoader(
         {
             id:'google-map-script',
@@ -65,31 +62,39 @@ function Map(props: any) {
                     let marker = new google.maps.Marker({
                         position: {lat: point.latitude, lng: point.longitude},
                         map: googleMap,
-                        title: point.id
+                        title: point.id,
+                        icon: {
+                            url: savedMarker2,
+                            origin: new window.google.maps.Point(0,0),
+                            anchor: new window.google.maps.Point(15,15),
+                            scaledSize: new window.google.maps.Size(40,40)
+                        }
                     });
                     marker.setMap(googleMap);
+                    marker.addListener('click', () =>{
+                        deleteMark(marker);
+                        //openInfoView(marker);
+                    })
                 });
                 setMap(googleMap);
             }
         });
-    }
-
-    const openInfoView = (marker: google.maps.Marker): void => {
-        new google.maps.InfoWindow({
-            content: "<Button autoFocus onClick={deleteMark()} color=\"primary\">\n" +
-                "                            Borrar Punto\n" +
-                "                        </Button>",
-            ariaLabel: "Uluru",
-        }).open(
-            {
-                anchor: marker,
-                map
-            });
     };
 
-    const deleteMark = (): void => {
+    function deleteMark(marker: google.maps.Marker): void {
         // TODO: Eliminar el marker del POD
-        selectedMark.setMap(null);
+        console.log("Marker: " + marker.getTitle() + " borrado");
+        marker.setMap(null);
+    };
+
+    const openInfoView = (marker: google.maps.Marker): void => {
+        // TODO: Añadir funcion en el onClick de infoWindow
+        let infowindow = new google.maps.InfoWindow({
+            content: '<button onclick="deleteMark()">Borrar Punto</button>',
+            ariaLabel: "Uluru",
+        });
+        //console.log(selectedMark);
+        infowindow.open(map, marker);
     };
 
     const onUnMount = (): void => {
@@ -141,4 +146,5 @@ function Map(props: any) {
     );
 };
 
+// @ts-ignore
 export default Map;
