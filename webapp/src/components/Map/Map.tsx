@@ -6,7 +6,7 @@ import {fetchNearbyPlaces, fetchUserPlaces} from "../../api/api";
 // Map Settings
 import {containerStyle, center, options} from "./settings";
 // SOLID API
-import {retrievePoints, savePoint, SessionType} from "../../solidapi/solidapiAdapter";
+import {retrievePoints,  SessionType} from "../../solidapi/solidapiAdapter";
 import {forEach} from "@react-google-maps/api/dist/utils/foreach";
 import Point from "../../solidapi/Point";
 

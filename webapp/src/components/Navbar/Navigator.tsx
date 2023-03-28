@@ -7,14 +7,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import HomeIcon from '@mui/icons-material/Home';
+
 import PeopleIcon from '@mui/icons-material/People';
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
-import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual';
+
 import PublicIcon from '@mui/icons-material/Public';
-import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
-import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
-import TimerIcon from '@mui/icons-material/Timer';
+
+
 import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
 import { Avatar, Button, createTheme, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, makeStyles, ThemeProvider, Typography } from '@mui/material';
@@ -27,6 +26,7 @@ import {CombinedDataProvider, useSession, Image, Text} from "@inrupt/solid-ui-re
 import {useEffect, useState} from "react";
 import LogoutIcon from '@mui/icons-material/Logout';
 import {subscribe, unsubscribe} from "../../event";
+import PointsView from './PointsView';
 const categories = [
   {
     id: 'LoMap',
@@ -46,7 +46,6 @@ const categories = [
     children: [
       { id: 'Configuration', icon: <SettingsIcon />,active: true },
       { id: 'About us', icon: <PhonelinkSetupIcon /> },
-      { id: 'Logout', icon: <LogoutIcon /> },
     ],
   },
 ];
@@ -77,26 +76,25 @@ const theme = createTheme({
     }
   }
 });
-
-
 function Navigator() {
   const [navigatorOpen, setNavigatorOpen] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [openPoints, setOpenPoints] = React.useState(false);
 
   const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
   const { session } = useSession();
   const { webId } = session.info;
   const handleClickOpen = () => {
-    setOpen(true);
+    setOpenDialog(true);
   };
   const handleClose = () => {
-    setOpen(false);
+    setOpenDialog(false);
   };
 
   const toggleNavigator = () => {
     setNavigatorOpen(!navigatorOpen);
   }
-
+ 
   useEffect(() => {
     subscribe("toggleNavigator", () => toggleNavigator());
 
@@ -105,6 +103,13 @@ function Navigator() {
     }
   }, []);
 
+  const handleClickPoints= async() => {
+    setOpenPoints(true);
+    
+  };
+  const handleClickPointsClose = () => {
+    setOpenPoints(false);
+  };
   const handleClickLogout = async() => {
     try {
       await session.logout();
@@ -158,6 +163,7 @@ function Navigator() {
                   <ListItemButton selected={active} sx={item} onClick={() => {
                     if (childId === "About us") {handleClickOpen()}
                     else if(childId==="Logout"){handleClickLogout()}
+                    else if(childId==="Points"){handleClickPoints()}
                   } }>
                     <ListItemIcon>{icon}</ListItemIcon>
                     <ListItemText>{childId}</ListItemText>
@@ -175,7 +181,7 @@ function Navigator() {
     {/*
       Dialogo al darle a about Us
     */}
-    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={openDialog}>
         <DialogTitle>
           LoMap_es4a
         </DialogTitle>
@@ -194,8 +200,17 @@ function Navigator() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      <PointsView open={openPoints} onClose={handleClickPointsClose}></PointsView> 
+
+      
       </>
+    
   );
 }
-
+//<PointsView open={true}></PointsView> 
 export default Navigator;
+function viewPoints(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+
