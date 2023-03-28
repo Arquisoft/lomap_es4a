@@ -77,9 +77,8 @@ const theme = createTheme({
     }
   }
 });
-function Navigator({clickPoints}: any) {
+function Navbar({open, toggleNavbar, openPointsList}: any) {
   
-  const [navigatorOpen, setNavigatorOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
   //const [openPoints, setOpenPoints] = React.useState(false);
 
@@ -93,20 +92,8 @@ function Navigator({clickPoints}: any) {
     setOpenDialog(false);
   };
 
-  const toggleNavigator = () => {
-    setNavigatorOpen(!navigatorOpen);
-  }
- 
-  useEffect(() => {
-    subscribe("toggleNavigator", () => toggleNavigator());
-
-    return () => {
-      unsubscribe("toggleNavigator", () => toggleNavigator());
-    }
-  }, []);
-
   const handleClickPointsOpen= async() => {
-    clickPoints(true);
+    openPointsList();
   };
   
   const handleClickLogout = async() => {
@@ -120,9 +107,9 @@ function Navigator({clickPoints}: any) {
   return (
     <><ThemeProvider theme={theme}>
       <Drawer disableAutoFocus={true}
-          open={navigatorOpen}
+          open={open}
           sx={{ display: { mt: 500 } }}
-          onClose={toggleNavigator}
+          onClose={toggleNavbar}
           >
 
         <List disablePadding>
@@ -209,7 +196,7 @@ function Navigator({clickPoints}: any) {
   );
 }
 //<PointsView open={true}></PointsView> 
-export default Navigator;
+export default Navbar;
 function viewPoints(arg0: string) {
   throw new Error('Function not implemented.');
 }

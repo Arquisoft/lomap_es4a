@@ -16,7 +16,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import Navigator from '../Navbar/Navigator';
+import Navbar from '../Navbar/Navbar';
 import { click } from '@testing-library/user-event/dist/click';
 import ReactDOM from 'react-dom/client';
 import { AirSharp, Pin, PinchOutlined, PinSharp, Plumbing } from '@mui/icons-material';
@@ -67,10 +67,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
-function PrimarySearchAppBar() {
-  const toggleNavigator = () => {
-    publish('toggleNavigator');
-  }
+function SearchBar({toggleNavbar}: any) {
+
+
 
     return (
       <Box >
@@ -97,7 +96,7 @@ function PrimarySearchAppBar() {
               color="inherit"
               aria-label="open drawer"
               sx={{ display:'flex', pl:2 }}
-              onClick={ toggleNavigator }
+              onClick={ toggleNavbar }
             >
               <MenuIcon />
             </IconButton>
@@ -108,4 +107,4 @@ function PrimarySearchAppBar() {
     );
 }
 
-export default PrimarySearchAppBar;
+export default SearchBar;
