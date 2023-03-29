@@ -14,7 +14,8 @@ import savedMarker2 from '../../images/markerGuerdado2.png';
 import {Button} from "@mui/material";
 
 // Custom events
-import { publish } from "../../event";
+import {publish, subscribe} from "../../event";
+import point from "../../solidapi/Point";
 
 export type MarkerType = {
     id: string,
@@ -34,9 +35,6 @@ function Map(props: any) {
     const showAddOption = () => {
         publish('showAddOption')
     }
-
-    // Devuelve el Marker pulsado
-    const [selectedMark, getSelectedMark] = React.useState<google.maps.Marker> ({} as google.maps.Marker);
 
     const {isLoaded} = useJsApiLoader(
         {
@@ -72,8 +70,9 @@ function Map(props: any) {
                     });
                     marker.setMap(googleMap);
                     marker.addListener('click', () =>{
-                        deleteMark(marker);
-                        //openInfoView(marker);
+
+                        //deleteMark(marker);
+                        openInfoView(marker);
                     })
                 });
                 setMap(googleMap);
@@ -108,20 +107,22 @@ function Map(props: any) {
             //let point = savePoint(session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
 
             //TODO: Que se no se guarde si no le das al botón de marcar
-            //savePoint(session.session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
-            /*
+            //savePoint(session.session, e.latLng.lat(), e.latLng.lng()); //
+            // @ts-ignore
+
             // NUEVO
-            /*
             let marker = new google.maps.Marker({
 
                 position: {lat: e.latLng.lat(), lng: e.latLng.lng()},
                 map: map,
-                title: point?.id
+                title: 'Prueba 1',
+                visible:false,
             });
-            marker.setMap(map);
-            */
+
             // Mostrar menú añadir punto
             showAddOption();
+
+            subscribe('save', () => marker.setVisible(true));
         }
 
     };
@@ -146,5 +147,4 @@ function Map(props: any) {
     );
 };
 
-// @ts-ignore
 export default Map;

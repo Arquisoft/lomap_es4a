@@ -32,8 +32,8 @@ export function savePoint(session: Session, lat: number, lng: number): Point | n
     });
 
     return point;
-}*/
-
+}
+*/
 export async function retrievePoints(session: Session): Promise<Point[] | null>{
     if (session.info.webId == null) {
         return null;
