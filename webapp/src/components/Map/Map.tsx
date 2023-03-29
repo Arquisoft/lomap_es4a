@@ -12,6 +12,7 @@ import Point from "../../solidapi/Point";
 
 // Custom events
 import { publish } from "../../event";
+import { Visibility } from "@mui/icons-material";
 
 export type MarkerType = {
     id: string,
@@ -27,6 +28,7 @@ function Map(props: any) {
     const [map, setMap] = useState(React.useRef<google.maps.Map | null>(null).current);
 
     const session = props.session;
+    const markerList=props.markerList;
 
     const showAddOption = () => {
         publish('showAddOption')
@@ -53,25 +55,34 @@ function Map(props: any) {
             refetchOnWindowFocus: false,
         });
 
-    //console.log(nearbyPositions);
-
+   
+    var mList:google.maps.Marker[]
+    mList=[];
+   
+    const addMarker=(m:google.maps.Marker)=>{
+        mList.push(m)
+    }
     let userPoints: Point[]
     userPoints = [];
     const onLoad = (googleMap: google.maps.Map): void => { // TODO: aquí se imprimen los puntos recuperados del pod
         retrievePoints(session).then(points => {
             if (points != null) {
                 userPoints = points;
+
                 userPoints.forEach(point => {
-                    console.log(point);
+                    
                     // NUEVO
                     let marker = new google.maps.Marker({
                         position: {lat: point.latitude, lng: point.longitude},
                         map: googleMap,
                         title: point.id
+                        
                     });
                     marker.setMap(googleMap);
+                    addMarker(marker);
                 });
                 setMap(googleMap);
+                markerList(mList)
             }
         });
     }
