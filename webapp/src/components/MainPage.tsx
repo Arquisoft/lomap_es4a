@@ -4,20 +4,22 @@ import Map from "./Map/Map";
 import { Grid } from "@mui/material";
 import React, {useEffect} from "react";
 import { SessionType } from "../solidapi/solidapiAdapter";
-import Navbar from "./Navbar/Navbar";
-import AddPointOption from "./Options/AddPointOption";
+import AddPoint from "./Options/AddPoint";
 import Point from "../solidapi/Point";
 
-// Custom events
-import { subscribe, unsubscribe } from "../event";
+import Navbar from "./Navbar/Navbar";
 import PointsView from "./Navbar/PointsView";
+
 import SearchBar from "./Searchbar/Searchbar";
+
 import { Marker } from "@react-google-maps/api";
+
 
 export default function MainPage({ session }: SessionType): JSX.Element {
 
     const [navbarOpen, setNavbarOpen] = React.useState(false);
     const [pointsListOpen, setPointsListOpen] = React.useState(false);
+    const [addPointOpen, setAddPointOpen] = React.useState(false);
     const [markerList, setMarkerlist] = React.useState<google.maps.Marker[]>([]);
 
     /*
@@ -36,8 +38,18 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const closePointsList = () => {
         setPointsListOpen(false);
     }
-    
 
+    const openAddPoints = () => {
+        setAddPointOpen(true);
+    }
+
+    const closeAddPoints = () => {
+        setAddPointOpen(false);
+    }
+
+    const clickMap = (point: Point) => {
+        setAddPointOpen(true);
+    }
     
     /* Solo para mostrar los puntos (a ser llamado al cerrar la lista de puntos y al actualizar la visibilidad de un punto)
     const showPoints = () => {
@@ -60,9 +72,9 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             }}>
             <Box sx={{ gridArea: 'search'}}><SearchBar toggleNavbar={toggleNavbar} /></Box>
             <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} /></Box>
-            <Box><AddPointOption/></Box>
+            <Box><AddPoint open={addPointOpen} closeAddPoints={closeAddPoints} /></Box>
             <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList}></PointsView></Box>
-            <Box sx={{ gridArea: 'mainContainer'}}><Map session={session} markerList={setMarkerlist}/></Box>
+            <Box sx={{ gridArea: 'mainContainer'}}><Map session={session} markerList={setMarkerlist} clickMap={clickMap} /></Box>
         </Grid>
     );
 }

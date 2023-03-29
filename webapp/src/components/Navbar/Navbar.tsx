@@ -72,7 +72,6 @@ const theme = createTheme({
 function Navbar({open, toggleNavbar, openPointsList}: any) {
   
   const [openDialog, setOpenDialog] = React.useState(false);
-  //const [openPoints, setOpenPoints] = React.useState(false);
 
   const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
   const { session } = useSession();
@@ -100,7 +99,7 @@ function Navbar({open, toggleNavbar, openPointsList}: any) {
     <><ThemeProvider theme={theme}>
       <Drawer disableAutoFocus={true}
           open={open}
-          sx={{ display: { mt: 500 } }}
+          sx={{ display: { mt: 500, height: '100vh' } }}
           onClose={toggleNavbar}
           >
 

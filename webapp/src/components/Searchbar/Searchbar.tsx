@@ -16,13 +16,11 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import Navbar from '../Navbar/Navbar';
 import { click } from '@testing-library/user-event/dist/click';
 import ReactDOM from 'react-dom/client';
 import { AirSharp, Pin, PinchOutlined, PinSharp, Plumbing } from '@mui/icons-material';
 
 // Custom events
-import { publish } from "../../event";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -74,7 +72,7 @@ function SearchBar({toggleNavbar}: any) {
     return (
       <Box >
         <Box >
-        <AppBar position="static" style={{ background: '#101F33' }}>
+        <AppBar position="static" style={{ background: '#101F33', height: '7vh' }}>
           <Toolbar >
             <Box sx={{ flexGrow: 1 }} />
             <IconButton sx={{color:'white'}}>LoMap_es4a<AiFillPushpin /></IconButton>

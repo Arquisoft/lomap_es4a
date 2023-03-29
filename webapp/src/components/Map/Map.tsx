@@ -10,10 +10,6 @@ import {retrievePoints,  SessionType} from "../../solidapi/solidapiAdapter";
 import {forEach} from "@react-google-maps/api/dist/utils/foreach";
 import Point from "../../solidapi/Point";
 
-// Custom events
-import { publish } from "../../event";
-import { Visibility } from "@mui/icons-material";
-
 export type MarkerType = {
     id: string,
     location: google.maps.LatLngLiteral,
@@ -22,17 +18,10 @@ export type MarkerType = {
     website: string
 }
 
-function Map(props: any) {
+function Map({session, markerList, clickMap}: any) {
     const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
 
     const [map, setMap] = useState(React.useRef<google.maps.Map | null>(null).current);
-
-    const session = props.session;
-    const markerList=props.markerList;
-
-    const showAddOption = () => {
-        publish('showAddOption')
-    }
 
     const {isLoaded} = useJsApiLoader(
         {
@@ -107,7 +96,7 @@ function Map(props: any) {
             marker.setMap(map);
             */
             // Mostrar menú añadir punto
-            showAddOption();
+            clickMap(null);
         }
 
     };
