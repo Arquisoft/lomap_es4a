@@ -49,8 +49,6 @@ function Map(props: any) {
 
     //console.log(nearbyPositions);
 
-    let userPoints: Point[]
-    userPoints = [];
     const onLoad = (googleMap: google.maps.Map): void => { // TODO: aquí se imprimen los puntos recuperados del pod
         retrievePoints(session).then(points => {
             if (points != null) {
@@ -69,8 +67,8 @@ function Map(props: any) {
                         }
                     });
                     marker.setMap(googleMap);
-                    marker.addListener('click', () =>{
 
+                    marker.addListener('click', () =>{
                         //deleteMark(marker);
                         openInfoView(marker);
                     })
@@ -92,13 +90,15 @@ function Map(props: any) {
             content: '<button onclick="deleteMark()">Borrar Punto</button>',
             ariaLabel: "Uluru",
         });
-        //console.log(selectedMark);
         infowindow.open(map, marker);
     };
 
     const onUnMount = (): void => {
         setMap(null);
     };
+
+    let userPoints: Point[]
+    userPoints = [];
 
     const onMapClick = (e: google.maps.MapMouseEvent) => {
         if (e.latLng != null) {
@@ -107,22 +107,23 @@ function Map(props: any) {
             //let point = savePoint(session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
 
             //TODO: Que se no se guarde si no le das al botón de marcar
-            //savePoint(session.session, e.latLng.lat(), e.latLng.lng()); //
-            // @ts-ignore
-
-            // NUEVO
-            let marker = new google.maps.Marker({
-
-                position: {lat: e.latLng.lat(), lng: e.latLng.lng()},
-                map: map,
-                title: 'Prueba 1',
-                visible:false,
-            });
+            //savePoint(session.session, e.latLng.lat(), e.latLng.lng());
 
             // Mostrar menú añadir punto
             showAddOption();
 
-            subscribe('save', () => marker.setVisible(true));
+            // Se suscribe al evento de guardar
+            subscribe('save', () => {
+                let marker = new google.maps.Marker({
+                    // @ts-ignore
+                    position: {lat: e.latLng.lat(), lng: e.latLng.lng()},
+                    map: null,
+                    title: 'Prueba save',
+                    visible:true,
+                });
+
+                marker.setMap(map);
+            });
         }
 
     };
