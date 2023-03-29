@@ -7,26 +7,18 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-
 import PeopleIcon from '@mui/icons-material/People';
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
-
 import PublicIcon from '@mui/icons-material/Public';
-
-
 import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
 import { Avatar, Button, createTheme, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, makeStyles, ThemeProvider, Typography } from '@mui/material';
-import Searchbar from '../Searchbar/Searchbar';
-import PrimarySearchAppBar from '../Searchbar/Searchbar';
-import { AccountCircle } from '@mui/icons-material';
+
 // Pfp
 import { VCARD } from "@inrupt/lit-generated-vocab-common";
 import {CombinedDataProvider, useSession, Image, Text} from "@inrupt/solid-ui-react";
 import {useEffect, useState} from "react";
 import LogoutIcon from '@mui/icons-material/Logout';
-import {subscribe, unsubscribe} from "../../event";
-import PointsView from './PointsView';
 const categories = [
   {
     id: 'LoMap',
