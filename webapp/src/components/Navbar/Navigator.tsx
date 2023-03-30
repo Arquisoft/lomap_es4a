@@ -7,18 +7,25 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
+import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual';
 import PublicIcon from '@mui/icons-material/Public';
+import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
+import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
+import TimerIcon from '@mui/icons-material/Timer';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
 import { Avatar, Button, createTheme, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, makeStyles, ThemeProvider, Typography } from '@mui/material';
-
+import Searchbar from '../Searchbar/Searchbar';
+import PrimarySearchAppBar from '../Searchbar/Searchbar';
+import { AccountCircle } from '@mui/icons-material';
 // Pfp
 import { VCARD } from "@inrupt/lit-generated-vocab-common";
-import {CombinedDataProvider, useSession, Image, Text} from "@inrupt/solid-ui-react";
-import {useEffect, useState} from "react";
-import LogoutIcon from '@mui/icons-material/Logout';
+import {CombinedDataProvider, useSession, Image} from "@inrupt/solid-ui-react";
+import {useState} from "react";
+
 const categories = [
   {
     id: 'LoMap',
@@ -38,7 +45,6 @@ const categories = [
     children: [
       { id: 'Configuration', icon: <SettingsIcon />,active: true },
       { id: 'About us', icon: <PhonelinkSetupIcon /> },
-      { id: 'Logout', icon: <LogoutIcon /> },
     ],
   },
 ];
@@ -69,39 +75,27 @@ const theme = createTheme({
     }
   }
 });
-function Navbar({open, toggleNavbar, openPointsList}: any) {
-  
-  const [openDialog, setOpenDialog] = React.useState(false);
+
+
+function Navigator(props: DrawerProps) {
+  const [open, setOpen] = React.useState(false);
+  const { ...other } = props;
+  const handleClickOpen = () => {
+    setOpen(true);
+    console.log("a")
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
   const { session } = useSession();
   const { webId } = session.info;
-  const handleClickOpen = () => {
-    setOpenDialog(true);
-  };
-  const handleClose = () => {
-    setOpenDialog(false);
-  };
-
-  const handleClickPointsOpen= async() => {
-    openPointsList();
-  };
-  
-  const handleClickLogout = async() => {
-    try {
-      await session.logout();
-    } catch (error) {
-      console.log(`Error logging out: ${error}`);
-    }
-  };
 
   return (
     <><ThemeProvider theme={theme}>
-      <Drawer disableAutoFocus={true}
-          open={open}
-          sx={{ display: { mt: 500, height: '100vh' } }}
-          onClose={toggleNavbar}
-          >
+      <Drawer {...other} open={{ ...other }.open}
+        sx={{ display: { mt: 500 } }}>
 
         <List disablePadding>
           <ListItemButton>
@@ -111,13 +105,7 @@ function Navbar({open, toggleNavbar, openPointsList}: any) {
               component="div"
               sx={{ display: { xs: 'none', sm: 'block', color: 'white' } }}
             >
-              {session.info.webId ? (
-                  <CombinedDataProvider
-                      datasetUrl={session.info.webId}
-                      thingUrl={session.info.webId}>
-                    <Text property={VCARD.fn.value }/>
-                  </CombinedDataProvider>
-              ): null }
+              Usuario  
             </Typography>
             <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white', padding:"1em"} }}>
 
@@ -125,7 +113,7 @@ function Navbar({open, toggleNavbar, openPointsList}: any) {
                   <CombinedDataProvider
                       datasetUrl={session.info.webId}
                       thingUrl={session.info.webId}>
-                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture" style={{width:60, height:60, borderRadius:30}}/>
+                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture" style={{width:40, height:40, borderRadius:20}}/>
                   </CombinedDataProvider>
               ): null }
 
@@ -140,15 +128,12 @@ function Navbar({open, toggleNavbar, openPointsList}: any) {
                 <ListItem disablePadding key={childId}>
                   <ListItemButton selected={active} sx={item} onClick={() => {
                     if (childId === "About us") {handleClickOpen()}
-                    else if(childId==="Logout"){handleClickLogout()}
-                    else if(childId==="Points"){handleClickPointsOpen()}
                   } }>
                     <ListItemIcon>{icon}</ListItemIcon>
                     <ListItemText>{childId}</ListItemText>
 
                   </ListItemButton>
                 </ListItem>
-                
               ))}
               <Divider sx={{ mt: 2 }} />
             </Box>
@@ -159,7 +144,7 @@ function Navbar({open, toggleNavbar, openPointsList}: any) {
     {/*
       Dialogo al darle a about Us
     */}
-    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={openDialog}>
+    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle>
           LoMap_es4a
         </DialogTitle>
@@ -178,17 +163,23 @@ function Navbar({open, toggleNavbar, openPointsList}: any) {
           </Button>
         </DialogActions>
       </Dialog>
-
-      
-
-      
       </>
-    
+
   );
 }
-//<PointsView open={true}></PointsView> 
-export default Navbar;
-function viewPoints(arg0: string) {
-  throw new Error('Function not implemented.');
-}
+/**
+ * <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
 
+                aria-haspopup="true"
+
+                color="inherit"
+
+
+              >
+                <AccountCircle />
+              </IconButton>
+ */
+export default Navigator;
