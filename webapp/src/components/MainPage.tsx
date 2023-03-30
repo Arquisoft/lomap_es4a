@@ -21,6 +21,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const [pointsListOpen, setPointsListOpen] = React.useState(false);
     const [addPointOpen, setAddPointOpen] = React.useState(false);
     const [markerList, setMarkerlist] = React.useState<google.maps.Marker[]>([]);
+    const [clickedPoint, setClickedPoint] = React.useState({lat:0, lng:0});
 
     /*
     const toggleNavbar = (open: boolean) => {
@@ -47,8 +48,14 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         setAddPointOpen(false);
     }
 
-    const clickMap = (point: Point) => {
+    const clickMap = (lat: number, lng: number) => {
         setAddPointOpen(true);
+        setClickedPoint({lat: lat, lng: lng})
+    }
+
+    const createPoint = (lat: number, lng: number) => {
+        //TODO: Aquí se crearía el punto
+        //TODO: (Idea) recargar el mapa
     }
     
     /* Solo para mostrar los puntos (a ser llamado al cerrar la lista de puntos y al actualizar la visibilidad de un punto)
@@ -72,7 +79,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             }}>
             <Box sx={{ gridArea: 'search'}}><SearchBar toggleNavbar={toggleNavbar} /></Box>
             <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} /></Box>
-            <Box><AddPoint open={addPointOpen} closeAddPoints={closeAddPoints} /></Box>
+            <Box><AddPoint open={addPointOpen} closeAddPoints={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
             <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList}></PointsView></Box>
             <Box sx={{ gridArea: 'mainContainer'}}><Map session={session} markerList={setMarkerlist} clickMap={clickMap} /></Box>
         </Grid>

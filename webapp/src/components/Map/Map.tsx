@@ -2,13 +2,16 @@ import React, {useState} from "react";
 import {GoogleMap, Marker, InfoWindow, useJsApiLoader} from "@react-google-maps/api";
 import {useQuery} from "react-query";
 // API Calls
-import {fetchNearbyPlaces, fetchUserPlaces} from "../../api/api";
 // Map Settings
 import {containerStyle, center, options} from "./settings";
 // SOLID API
 import {retrievePoints,  SessionType} from "../../solidapi/solidapiAdapter";
 import {forEach} from "@react-google-maps/api/dist/utils/foreach";
 import Point from "../../solidapi/Point";
+// Images
+import savedMarker from '../../images/markerGuardado.png';
+import savedMarker2 from '../../images/markerGuerdado2.png';
+import {Button} from "@mui/material";
 
 export type MarkerType = {
     id: string,
@@ -33,17 +36,6 @@ function Map({session, markerList, clickMap}: any) {
     //const mapRef = React.useRef<google.maps.Map | null>(null);
 
     const [clickedPos, setClickedPos] = React.useState<google.maps.LatLngLiteral>({} as google.maps.LatLngLiteral)
-
-    const {
-        data: nearbyPositions,
-        isLoading,
-        isError
-    } = useQuery([clickedPos.lat, clickedPos.lng], () => fetchNearbyPlaces(clickedPos.lat, clickedPos.lng),
-        {
-            enabled: !!clickedPos.lat,
-            refetchOnWindowFocus: false,
-        });
-
    
     var mList:google.maps.Marker[]
     mList=[];
@@ -51,34 +43,59 @@ function Map({session, markerList, clickMap}: any) {
     const addMarker=(m:google.maps.Marker)=>{
         mList.push(m)
     }
-    let userPoints: Point[]
-    userPoints = [];
+
     const onLoad = (googleMap: google.maps.Map): void => { // TODO: aquí se imprimen los puntos recuperados del pod
         retrievePoints(session).then(points => {
             if (points != null) {
-                userPoints = points;
 
-                userPoints.forEach(point => {
+                points.forEach(point => {
                     
                     // NUEVO
                     let marker = new google.maps.Marker({
                         position: {lat: point.latitude, lng: point.longitude},
                         map: googleMap,
-                        title: point.id
-                        
+                        title: point.id,
+                        icon: {
+                            url: savedMarker2,
+                            origin: new window.google.maps.Point(0,0),
+                            anchor: new window.google.maps.Point(15,15),
+                            scaledSize: new window.google.maps.Size(40,40)
+                        }
                     });
                     marker.setMap(googleMap);
                     addMarker(marker);
+                    marker.addListener('click', () =>{
+                        //deleteMark(marker);
+                        openInfoView(marker);
+                    })
                 });
                 setMap(googleMap);
                 markerList(mList)
             }
         });
-    }
+    };
+
+    function deleteMark(marker: google.maps.Marker): void {
+        // TODO: Eliminar el marker del POD
+        console.log("Marker: " + marker.getTitle() + " borrado");
+        marker.setMap(null);
+    };
+
+    const openInfoView = (marker: google.maps.Marker): void => {
+        // TODO: Añadir funcion en el onClick de infoWindow
+        let infowindow = new google.maps.InfoWindow({
+            content: '<button onclick="deleteMark()">Borrar Punto</button>',
+            ariaLabel: "Uluru",
+        });
+        infowindow.open(map, marker);
+    };
 
     const onUnMount = (): void => {
         setMap(null);
     };
+
+    let userPoints: Point[]
+    userPoints = [];
 
     const onMapClick = (e: google.maps.MapMouseEvent) => {
         if (e.latLng != null) {
@@ -86,17 +103,28 @@ function Map({session, markerList, clickMap}: any) {
             //setClickedPos({lat: e.latLng.lat(), lng: e.latLng.lng()});
             //let point = savePoint(session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
 
-            // NUEVO
-            /*
+            //TODO: Que se no se guarde si no le das al botón de marcar
+            //savePoint(session.session, e.latLng.lat(), e.latLng.lng());
+
             let marker = new google.maps.Marker({
+                // @ts-ignore
                 position: {lat: e.latLng.lat(), lng: e.latLng.lng()},
-                map: map,
-                title: point?.id
+                map: null,
+                title: 'Prueba save',
+                icon: {
+                    url: savedMarker,
+                    origin: new window.google.maps.Point(0,0),
+                    anchor: new window.google.maps.Point(15,15),
+                    scaledSize: new window.google.maps.Size(40,40)
+                },
+                visible:true,
             });
+
             marker.setMap(map);
-            */
+            clickMap(e.latLng.lat(), e.latLng.lng());
             // Mostrar menú añadir punto
-            clickMap(null);
+
+
         }
 
     };
@@ -115,6 +143,7 @@ function Map({session, markerList, clickMap}: any) {
                 onUnmount={onUnMount}
                 onClick={onMapClick}
             >
+
             </GoogleMap>
         </div>
     );
