@@ -6,12 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Añadida la lógica para recuperar la imagen de perfil">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/Navbar/Navigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Navbar/Navigator.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/Options/AddPointOption.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Options/AddPointOption.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/Searchbar/Searchbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Searchbar/Searchbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/solidapi/Point.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/solidapi/Point.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/solidapi/solidapi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/solidapi/solidapi.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +54,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Usuario\\WebstormProjects\\lomap_es4a\\webapp\\node_modules\\typescript\\lib&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Usuario\\WebstormProjects\\lomap_es4a\\restapi\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -102,6 +101,8 @@
       <workItem from="1679820849292" duration="6011000" />
       <workItem from="1679850975831" duration="1244000" />
       <workItem from="1679917281987" duration="6774000" />
+      <workItem from="1680161895321" duration="2565000" />
+      <workItem from="1680182403560" duration="3133000" />
     </task>
     <task id="LOCAL-00001" summary="Se ha movido el directorio solidapi a webapp">
       <created>1678459410126</created>

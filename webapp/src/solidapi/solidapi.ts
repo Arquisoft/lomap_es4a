@@ -4,9 +4,20 @@ import {
     getContainedResourceUrlAll,
     getFile,
     deleteFile,
-    overwriteFile, getThing, ThingPersisted
+    getJsonLdParser,
+    overwriteFile,
+    getThing,
+    ThingPersisted,
+    buildThing,
+    createThing,
+    saveSolidDatasetAt,
+    setThing,
+    createSolidDataset,
+    Thing
 } from '@inrupt/solid-client';
 import { Session } from '@inrupt/solid-client-authn-browser';
+import {RDF, SCHEMA_INRUPT} from "@inrupt/vocab-common-rdf";
+import {JsonLd} from "json-ld-types";
 
 async function readData(session: Session, url: string): Promise<File | null> {
     let parts = url.split("/");
@@ -138,6 +149,78 @@ async function readThing(session: Session, url: string): Promise<ThingPersisted 
         return thing;
     } catch (error) {
         return null;
+    }
+}
+
+async function createPlaceDataset(session: Session) {
+    try {
+        let dataset = createSolidDataset();
+        await saveSolidDatasetAt(
+            "https://gonzalo99.inrupt.net/public/test",
+            dataset,
+            { fetch: session.fetch }
+        );
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// plain RDF
+/*
+export async function addPlace(session: Session) {
+    await createPlaceDataset(session);
+
+    try {
+        let url = "https://gonzalo99.inrupt.net/public/test";
+        let dataset = await getSolidDataset(
+            url,
+            { fetch: session.fetch }
+        );
+        let place = buildThing(createThing({name: "sanfran"}))
+            .addStringNoLocale(SCHEMA_INRUPT.name, "Campo de San Francisco")
+            .addStringNoLocale(SCHEMA_INRUPT.latitude, "43.361717")
+            .addStringNoLocale(SCHEMA_INRUPT.longitude, "-5.850186")
+            .addUrl(RDF.type, "https://schema.org/Place")
+            .build();
+        dataset = setThing(dataset, place);
+        await saveSolidDatasetAt(
+            url,
+            dataset,
+            { fetch: session.fetch }
+        );
+    } catch (error) {
+        console.log(error);
+    }
+}
+*/
+
+
+// JSON-LD
+export async function addPlace(session: Session) {
+    await createPlaceDataset(session);
+
+    try {
+        let url = "https://gonzalo99.inrupt.net/public/test";
+        let dataset = await getSolidDataset(
+            url,
+            { fetch: session.fetch }
+        );
+        let place = {
+            "@context": "https://schema.org",
+            "@type": "Place",
+            "name": "Campo de San Francisco",
+            "latitude": "43.361717",
+            "longitude": "10",
+        };
+        let placeToSave = buildThing(createThing(place)).build();
+        dataset = setThing(dataset, placeToSave);
+        await saveSolidDatasetAt(
+            url,
+            dataset,
+            { fetch: session.fetch }
+        );
+    } catch (error) {
+        console.log(error);
     }
 }
 

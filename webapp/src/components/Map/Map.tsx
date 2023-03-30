@@ -6,8 +6,8 @@ import {fetchNearbyPlaces, fetchUserPlaces} from "../../api/api";
 // Map Settings
 import {containerStyle, center, options} from "./settings";
 // SOLID API
-import {retrievePoints,  SessionType} from "../../solidapi/solidapiAdapter";
-import {forEach} from "@react-google-maps/api/dist/utils/foreach";
+import {retrievePoints} from "../../solidapi/solidapiAdapter";
+import {addPlace} from "../../solidapi/solidapi"
 import Point from "../../solidapi/Point";
 
 // Custom events
@@ -94,18 +94,10 @@ function Map(props: any) {
     const onMapClick = (e: google.maps.MapMouseEvent) => {
         if (e.latLng != null) {
             setClicks([...clicks, e.latLng!]);
-            //setClickedPos({lat: e.latLng.lat(), lng: e.latLng.lng()});
-            //let point = savePoint(session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
 
-            // NUEVO
-            /*
-            let marker = new google.maps.Marker({
-                position: {lat: e.latLng.lat(), lng: e.latLng.lng()},
-                map: map,
-                title: point?.id
-            });
-            marker.setMap(map);
-            */
+            // Añadir Place
+            addPlace(session);
+
             // Mostrar menú añadir punto
             showAddOption();
         }

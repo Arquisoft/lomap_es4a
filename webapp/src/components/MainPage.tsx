@@ -4,13 +4,11 @@ import Map from "./Map/Map";
 import { Grid } from "@mui/material";
 import React, {useEffect} from "react";
 import { SessionType } from "../solidapi/solidapiAdapter";
-import Navbar from "./Navbar/Navbar";
 import AddPointOption from "./Options/AddPointOption";
 import Point from "../solidapi/Point";
 
 // Custom events
 import { subscribe, unsubscribe } from "../event";
-import PointsView from "./Navbar/PointsView";
 import SearchBar from "./Searchbar/Searchbar";
 import { Marker } from "@react-google-maps/api";
 
@@ -59,9 +57,6 @@ export default function MainPage({ session }: SessionType): JSX.Element {
                 "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "`,
             }}>
             <Box sx={{ gridArea: 'search'}}><SearchBar toggleNavbar={toggleNavbar} /></Box>
-            <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} /></Box>
-            <Box><AddPointOption/></Box>
-            <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList}></PointsView></Box>
             <Box sx={{ gridArea: 'mainContainer'}}><Map session={session} markerList={setMarkerlist}/></Box>
         </Grid>
     );
