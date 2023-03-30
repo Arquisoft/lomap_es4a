@@ -16,13 +16,11 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import Navigator from '../Navbar/Navigator';
 import { click } from '@testing-library/user-event/dist/click';
 import ReactDOM from 'react-dom/client';
 import { AirSharp, Pin, PinchOutlined, PinSharp, Plumbing } from '@mui/icons-material';
 
 // Custom events
-import { publish } from "../../event";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -67,15 +65,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
-function PrimarySearchAppBar() {
-  const toggleNavigator = () => {
-    publish('toggleNavigator');
-  }
+function SearchBar({toggleNavbar}: any) {
+
+
 
     return (
       <Box >
         <Box >
-        <AppBar position="static" style={{ background: '#101F33' }}>
+        <AppBar position="static" style={{ background: '#101F33', height: '7vh' }}>
           <Toolbar >
             <Box sx={{ flexGrow: 1 }} />
             <IconButton sx={{color:'white'}}>LoMap_es4a<AiFillPushpin /></IconButton>
@@ -97,7 +94,7 @@ function PrimarySearchAppBar() {
               color="inherit"
               aria-label="open drawer"
               sx={{ display:'flex', pl:2 }}
-              onClick={ toggleNavigator }
+              onClick={ toggleNavbar }
             >
               <MenuIcon />
             </IconButton>
@@ -108,4 +105,4 @@ function PrimarySearchAppBar() {
     );
 }
 
-export default PrimarySearchAppBar;
+export default SearchBar;

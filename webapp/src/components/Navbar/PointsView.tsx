@@ -6,15 +6,17 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-import { createTheme, IconButton, ListSubheader, makeStyles, Switch, ThemeProvider } from '@mui/material';
+import { createTheme, Divider, IconButton, ListSubheader, makeStyles, Switch, ThemeProvider } from '@mui/material';
 import GreenSwitch from './GreenSwitch';
+import { IndentStyle } from 'typescript';
 
 interface PointsViewProps {
   open: boolean;
   onClose: () => void;
-}
+  markerList: google.maps.Marker[]
+  }
 
-const theme = createTheme({
+const theme2 = createTheme({
   components: {
     MuiDrawer: {
       styleOverrides: {
@@ -26,45 +28,63 @@ const theme = createTheme({
   }
 });
 
-const PointsView: React.FC<PointsViewProps> = ({ open, onClose }) => {
-  const [toggled, setToggled] = React.useState([false, false, false]);
+const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList }) => {
+  const [encendida, setEncendida] = React.useState<boolean[]>([]);
+
+  const [encendidaAll, setEncendidaAll] = React.useState(true);
+
+  React.useEffect(() => {
+    // Initialize encendida state with an array of false values
+    setEncendida(new Array(markerList.length).fill(true));
+  }, [markerList]);
 
   const handleToggle = (index: number) => {
-    setToggled(prevState => {
+    setEncendida(prevState => {
       const newState = [...prevState];
       newState[index] = !newState[index];
       return newState;
     });
-    console.log('abriendo el punto '+index)
+    markerList[index].setVisible(!encendida[index]);
+    console.log(markerList[index].getVisible() + " " + !encendida[index]);
+  };
+  const handleToggleAll=()=>{
+    setEncendidaAll(!encendidaAll)
+    markerList.forEach((marker, index) => {
+      if(marker.getVisible()==encendidaAll)
+      handleToggle(index);
+    });
+  }
+
+  const generatePointsControl = () => {
+    return markerList.map((marker, index) => (
+      <ListItem key={index}>
+        <ListItemText primary={`Point ${index + 1}`} />
+        <GreenSwitch checked={encendida[index]} onChange={() => handleToggle(index)} />
+      </ListItem>
+    ));
   };
 
-  const handleClose = () => {
-    onClose();
-  };
 
+  
   return (
-    <ThemeProvider theme={theme}>
+    
+    <ThemeProvider theme={theme2}>
       <Drawer anchor="left" open={open} sx={{ display: { mt: 500 } }} >
-        <List sx={{ width:'200px' }} disablePadding>
+        <List sx={{ width:'300px' }} disablePadding>
           <ListItem>
             <IconButton onClick={onClose}>
               <ChevronLeftIcon />
             </IconButton>
             <ListItemText primary="Points List" />
           </ListItem>
-         
           <ListItem>
-            <ListItemText primary="Point 1" />
-            <GreenSwitch checked={toggled[0]} onChange={() => handleToggle(0)} />
+              <ListItemText primary={"Visibilidad de todos"} />
+              <GreenSwitch checked={encendidaAll} onChange={() => handleToggleAll()} />
           </ListItem>
-          <ListItem>
-            <ListItemText primary="Point 2" />
-            <GreenSwitch checked={toggled[1]} onChange={() => handleToggle(1)} />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Point 3" />
-            <GreenSwitch checked={toggled[2]} onChange={() => handleToggle(2)} />
-          </ListItem>
+          <Divider sx={{ mt: 2 }} />
+          {generatePointsControl()}
+          
+
         </List>
       </Drawer>
     </ThemeProvider>

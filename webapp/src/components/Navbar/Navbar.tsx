@@ -7,26 +7,18 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-
 import PeopleIcon from '@mui/icons-material/People';
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
-
 import PublicIcon from '@mui/icons-material/Public';
-
-
 import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
 import { Avatar, Button, createTheme, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, makeStyles, ThemeProvider, Typography } from '@mui/material';
-import Searchbar from '../Searchbar/Searchbar';
-import PrimarySearchAppBar from '../Searchbar/Searchbar';
-import { AccountCircle } from '@mui/icons-material';
+
 // Pfp
 import { VCARD } from "@inrupt/lit-generated-vocab-common";
 import {CombinedDataProvider, useSession, Image, Text} from "@inrupt/solid-ui-react";
 import {useEffect, useState} from "react";
 import LogoutIcon from '@mui/icons-material/Logout';
-import {subscribe, unsubscribe} from "../../event";
-import PointsView from './PointsView';
 const categories = [
   {
     id: 'LoMap',
@@ -77,10 +69,9 @@ const theme = createTheme({
     }
   }
 });
-function Navigator() {
-  const [navigatorOpen, setNavigatorOpen] = React.useState(false);
+function Navbar({open, toggleNavbar, openPointsList}: any) {
+  
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [openPoints, setOpenPoints] = React.useState(false);
 
   const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
   const { session } = useSession();
@@ -92,25 +83,10 @@ function Navigator() {
     setOpenDialog(false);
   };
 
-  const toggleNavigator = () => {
-    setNavigatorOpen(!navigatorOpen);
-  }
- 
-  useEffect(() => {
-    subscribe("toggleNavigator", () => toggleNavigator());
-
-    return () => {
-      unsubscribe("toggleNavigator", () => toggleNavigator());
-    }
-  }, []);
-
-  const handleClickPoints= async() => {
-    setOpenPoints(true);
-    
+  const handleClickPointsOpen= async() => {
+    openPointsList();
   };
-  const handleClickPointsClose = () => {
-    setOpenPoints(false);
-  };
+  
   const handleClickLogout = async() => {
     try {
       await session.logout();
@@ -122,9 +98,9 @@ function Navigator() {
   return (
     <><ThemeProvider theme={theme}>
       <Drawer disableAutoFocus={true}
-          open={navigatorOpen}
-          sx={{ display: { mt: 500 } }}
-          onClose={toggleNavigator}
+          open={open}
+          sx={{ display: { mt: 500, height: '100vh' } }}
+          onClose={toggleNavbar}
           >
 
         <List disablePadding>
@@ -165,7 +141,7 @@ function Navigator() {
                   <ListItemButton selected={active} sx={item} onClick={() => {
                     if (childId === "About us") {handleClickOpen()}
                     else if(childId==="Logout"){handleClickLogout()}
-                    else if(childId==="Points"){handleClickPoints()}
+                    else if(childId==="Points"){handleClickPointsOpen()}
                   } }>
                     <ListItemIcon>{icon}</ListItemIcon>
                     <ListItemText>{childId}</ListItemText>
@@ -203,7 +179,7 @@ function Navigator() {
         </DialogActions>
       </Dialog>
 
-      <PointsView open={openPoints} onClose={handleClickPointsClose} ></PointsView> 
+      
 
       
       </>
@@ -211,7 +187,7 @@ function Navigator() {
   );
 }
 //<PointsView open={true}></PointsView> 
-export default Navigator;
+export default Navbar;
 function viewPoints(arg0: string) {
   throw new Error('Function not implemented.');
 }

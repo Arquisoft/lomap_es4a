@@ -41,10 +41,6 @@ import {VCARD} from "@inrupt/lit-generated-vocab-common";
 import TextField from "@mui/material/TextField";
 import SaveIcon from '@mui/icons-material/Save';
 
-// Custom events
-import {publish, subscribe, unsubscribe} from "../../event";
-import {useEffect} from "react";
-
 // CSS
 import "./Option.css";
 import defaultProps = Table.defaultProps;
@@ -94,35 +90,24 @@ const theme = createTheme({
   }
 });
 
-function AddPointOption() {
-
-  const [open, setOpen] = React.useState(false);
+function AddPoint({open, closeAddPoints}: any) {
 
   const defaultProps = {
     options: ["Bar", "Club", "Sight", "Monument", "Other"]
   };
 
   const cancel = () => {
-    setOpen(false);
-    publish('cancel');
+    closeAddPoints();
   }
 
   const save = () => {
-    setOpen(false);
-    publish('save')
+    closeAddPoints();
   }
-
-  useEffect(() => {
-    subscribe("showAddOption", () => setOpen(true));
-
-    return () => {
-      unsubscribe("showAddOption", () => setOpen(true));
-    }
-  }, []);
 
   return (
       <ThemeProvider theme={theme}>
-        <Drawer open={open}
+        <Drawer disableAutoFocus={true}
+                open={open}
                 sx={{ display: { mt: 500 } }}
                 onClose={cancel}>
           <List disablePadding>
@@ -132,7 +117,7 @@ function AddPointOption() {
               Add a New Place
             </ListItemText>
             <ListItem>
-              <TextField size={"medium"} variant="standard" className="point-fill-field" label="Name" placeholder="NewPoint" contentEditable={true} color='primary'
+              <TextField size={"medium"} variant="standard" className="point-fill-field" label="Name" placeholder="NewPoint" color='primary'
                          sx={{
                            width: '10.8vw',
                            "& .MuiInputBase-root": {
@@ -141,7 +126,8 @@ function AddPointOption() {
                          }}/>
             </ListItem>
             <ListItem>
-              <TextareaAutosize onResize={undefined} onResizeCapture={undefined} className="point-fill-field" placeholder="Comments" contentEditable={true} color='primary'/>
+              <TextareaAutosize className="point-fill-field" placeholder="Comments" color='primary' onResize={()=>{}}
+                                onResizeCapture={()=>{}}/>
             </ListItem>
             <ListItem>
               <Autocomplete
@@ -161,7 +147,7 @@ function AddPointOption() {
               />
             </ListItem>
             <ListItem>
-              <TextField size={"medium"} variant="standard" className="point-fill-field" label="Score"  contentEditable={true} color='primary' type="number"
+              <TextField size={"medium"} variant="standard" className="point-fill-field" label="Score" color='primary' type="number"
                          InputProps={{ inputProps: { min: 0, max: 5 } }}
                          sx={{
                            width: '10.8vw',
@@ -170,12 +156,12 @@ function AddPointOption() {
                            }
                          }}/>
             </ListItem>
-            <ListItemButton onClick={ cancel }>Cancel</ListItemButton>
-            <ListItemButton onClick={ save }>Save Place</ListItemButton>
+            <ListItemButton onClick={cancel}>Cancel</ListItemButton>
+            <ListItemButton onClick={save}>Save Place</ListItemButton>
           </List>
         </Drawer>
       </ThemeProvider>
 );
 }
 
-export default AddPointOption;
+export default AddPoint;

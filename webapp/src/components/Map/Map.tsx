@@ -13,10 +13,6 @@ import savedMarker from '../../images/markerGuardado.png';
 import savedMarker2 from '../../images/markerGuerdado2.png';
 import {Button} from "@mui/material";
 
-// Custom events
-import {publish, subscribe} from "../../event";
-import point from "../../solidapi/Point";
-
 export type MarkerType = {
     id: string,
     location: google.maps.LatLngLiteral,
@@ -25,16 +21,10 @@ export type MarkerType = {
     website: string
 }
 
-function Map(props: any) {
+function Map({session, markerList, clickMap}: any) {
     const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
 
     const [map, setMap] = useState(React.useRef<google.maps.Map | null>(null).current);
-
-    const session = props.session;
-
-    const showAddOption = () => {
-        publish('showAddOption')
-    }
 
     const {isLoaded} = useJsApiLoader(
         {
@@ -46,14 +36,20 @@ function Map(props: any) {
     //const mapRef = React.useRef<google.maps.Map | null>(null);
 
     const [clickedPos, setClickedPos] = React.useState<google.maps.LatLngLiteral>({} as google.maps.LatLngLiteral)
-
-    //console.log(nearbyPositions);
+   
+    var mList:google.maps.Marker[]
+    mList=[];
+   
+    const addMarker=(m:google.maps.Marker)=>{
+        mList.push(m)
+    }
 
     const onLoad = (googleMap: google.maps.Map): void => { // TODO: aquí se imprimen los puntos recuperados del pod
         retrievePoints(session).then(points => {
             if (points != null) {
+
                 points.forEach(point => {
-                    console.log(point);
+                    
                     // NUEVO
                     let marker = new google.maps.Marker({
                         position: {lat: point.latitude, lng: point.longitude},
@@ -67,13 +63,14 @@ function Map(props: any) {
                         }
                     });
                     marker.setMap(googleMap);
-
+                    addMarker(marker);
                     marker.addListener('click', () =>{
                         //deleteMark(marker);
                         openInfoView(marker);
                     })
                 });
                 setMap(googleMap);
+                markerList(mList)
             }
         });
     };
@@ -110,20 +107,17 @@ function Map(props: any) {
             //savePoint(session.session, e.latLng.lat(), e.latLng.lng());
 
             // Mostrar menú añadir punto
-            showAddOption();
-
-            // Se suscribe al evento de guardar
-            subscribe('save', () => {
-                let marker = new google.maps.Marker({
-                    // @ts-ignore
-                    position: {lat: e.latLng.lat(), lng: e.latLng.lng()},
-                    map: null,
-                    title: 'Prueba save',
-                    visible:true,
-                });
-
-                marker.setMap(map);
+            let marker = new google.maps.Marker({
+                // @ts-ignore
+                position: {lat: e.latLng.lat(), lng: e.latLng.lng()},
+                map: null,
+                title: 'Prueba save',
+                visible:true,
             });
+
+            marker.setMap(map);
+            
+            clickMap(null);
         }
 
     };
