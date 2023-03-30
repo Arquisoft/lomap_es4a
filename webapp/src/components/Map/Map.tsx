@@ -106,18 +106,25 @@ function Map({session, markerList, clickMap}: any) {
             //TODO: Que se no se guarde si no le das al botón de marcar
             //savePoint(session.session, e.latLng.lat(), e.latLng.lng());
 
-            // Mostrar menú añadir punto
             let marker = new google.maps.Marker({
                 // @ts-ignore
                 position: {lat: e.latLng.lat(), lng: e.latLng.lng()},
                 map: null,
                 title: 'Prueba save',
+                icon: {
+                    url: savedMarker,
+                    origin: new window.google.maps.Point(0,0),
+                    anchor: new window.google.maps.Point(15,15),
+                    scaledSize: new window.google.maps.Size(40,40)
+                },
                 visible:true,
             });
 
             marker.setMap(map);
-            
-            clickMap(null);
+            clickMap(e.latLng.lat(), e.latLng.lng());
+            // Mostrar menú añadir punto
+
+
         }
 
     };

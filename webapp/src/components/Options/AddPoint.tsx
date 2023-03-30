@@ -90,7 +90,7 @@ const theme = createTheme({
   }
 });
 
-function AddPoint({open, closeAddPoints}: any) {
+function AddPoint({open, closeAddPoints, clickedPoint, createPoint}: any) {
 
   const defaultProps = {
     options: ["Bar", "Club", "Sight", "Monument", "Other"]
@@ -102,6 +102,8 @@ function AddPoint({open, closeAddPoints}: any) {
 
   const save = () => {
     closeAddPoints();
+    //TODO: Implementar funcionalidad
+    createPoint(clickedPoint.lat, clickedPoint.lng);
   }
 
   return (
