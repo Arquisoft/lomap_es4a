@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Añadida la lógica para recuperar la imagen de perfil">
+    <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Preuba JSON-LD">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/solidapi/solidapi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/solidapi/solidapi.ts" afterDir="false" />
     </list>
@@ -103,6 +102,9 @@
       <workItem from="1679917281987" duration="6774000" />
       <workItem from="1680161895321" duration="2565000" />
       <workItem from="1680182403560" duration="3133000" />
+      <workItem from="1680274908776" duration="4793000" />
+      <workItem from="1680457272288" duration="1822000" />
+      <workItem from="1680510356592" duration="5102000" />
     </task>
     <task id="LOCAL-00001" summary="Se ha movido el directorio solidapi a webapp">
       <created>1678459410126</created>

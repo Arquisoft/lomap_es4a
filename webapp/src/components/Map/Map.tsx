@@ -7,7 +7,7 @@ import {fetchNearbyPlaces, fetchUserPlaces} from "../../api/api";
 import {containerStyle, center, options} from "./settings";
 // SOLID API
 import {retrievePoints} from "../../solidapi/solidapiAdapter";
-import {addPlace} from "../../solidapi/solidapi"
+import {addMap, addPlace, getPlace} from "../../solidapi/solidapi"
 import Point from "../../solidapi/Point";
 
 // Custom events
@@ -96,7 +96,7 @@ function Map(props: any) {
             setClicks([...clicks, e.latLng!]);
 
             // Añadir Place
-            addPlace(session);
+            addMap(session);
 
             // Mostrar menú añadir punto
             showAddOption();
