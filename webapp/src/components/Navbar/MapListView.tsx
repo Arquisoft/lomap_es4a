@@ -18,9 +18,14 @@ interface MapListViewProps {
 function MapListView(props: MapListViewProps): JSX.Element {
 
     const [currentMap, setCurrentMap] = useState("");
+    const [currentNewMap, setCurrentNewMap] = useState("");
 
     const handleMapChange = (event: SelectChangeEvent) => {
         setCurrentMap(event.target.value);
+    };
+    
+    const handleNewMapChange = (event: any) => {
+        setCurrentNewMap(event.target.value);
     };
 
     const handleLoadMapClick = () => {
@@ -29,8 +34,11 @@ function MapListView(props: MapListViewProps): JSX.Element {
     };
 
     const handleCreateMapClick = () => {
-        // TODO: Se debe de crear el nuevo mapa con el nombre escogido
-        props.onClose();
+        // TODO: Se debe de crear el nuevo mapa con el nombre escogido (y validar el nuevo nombre)
+        if (currentNewMap != null && currentNewMap.trim() !== "") {
+            setCurrentNewMap("");
+            props.onClose();
+        }
     };
 
     const theme = createTheme({
@@ -69,7 +77,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
                 </ListItem>
                 <ListItem>
                     <ThemeProvider theme={darkTheme}>
-                        <TextField id="mapNameField" label="New map's name" variant="filled" fullWidth />
+                        <TextField id="mapNameField" label="New map's name" variant="filled" fullWidth onChange={handleNewMapChange}/>
                     </ThemeProvider>
                 </ListItem>
                 <ListItem>
