@@ -9,7 +9,7 @@ import { VCARD } from "@inrupt/vocab-common-rdf";
 export type SessionType = {
     session: Session;
 }
-
+/*
 export function savePoint(session: Session, lat: number, lng: number): Point | null {
     let point = new Point(lat, lng);
 
@@ -33,7 +33,7 @@ export function savePoint(session: Session, lat: number, lng: number): Point | n
 
     return point;
 }
-
+*/
 export async function retrievePoints(session: Session): Promise<Point[] | null>{
     if (session.info.webId == null) {
         return null;

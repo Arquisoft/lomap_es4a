@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { AiFillPushpin } from "react-icons/ai";
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -8,10 +7,8 @@ import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import Navigator from '../Navbar/Navigator';
 
-// Profile picture
-import {SessionType} from "../../solidapi/solidapiAdapter";
+// Custom events
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,28 +53,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
-class PrimarySearchAppBar extends React.Component<SessionType> {
-  static clickMenu: any;
-  constructor(props:any){
-    super(props);
-  }
-  isOpen=false
-  
-  clickMenu(){
-    this.isOpen=!this.isOpen
-    console.log(this.isOpen);
-    this.forceUpdate();
-  }
-  
+function SearchBar({toggleNavbar}: any) {
 
-  
-  render(){
+
+
     return (
-      
       <Box >
-        
         <Box >
-        <AppBar position="static" style={{ background: '#101F33' }}>
+        <AppBar position="static" style={{ background: '#101F33', height: '7vh' }}>
           <Toolbar >
             <Box sx={{ flexGrow: 1 }} />
             <IconButton sx={{color:'white'}}>LoMap_es4a<AiFillPushpin /></IconButton>
@@ -99,31 +82,15 @@ class PrimarySearchAppBar extends React.Component<SessionType> {
               color="inherit"
               aria-label="open drawer"
               sx={{ display:'flex', pl:2 }}
-              onClick={() => { this.clickMenu(); }}
+              onClick={ toggleNavbar }
             >
               <MenuIcon />
             </IconButton>
           </Toolbar>
         </AppBar></Box>
-        <Box sx={{ gridArea: 'nav'}}><Navigator variant={"persistent"} open={this.isOpen}/></Box>
       </Box>
 
     );
-    
-  }
-  
 }
-/**
- * <IconButton 
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-            onClick={() => { console.log('pulsado') }}
-          >
-            <MenuIcon />
-          </IconButton>
- */
 
-export default PrimarySearchAppBar;
+export default SearchBar;
