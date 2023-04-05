@@ -94,8 +94,6 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList}: any) {
     }
   };
 
-  const handleClickMapList = () => {};
-
   return (
     <><ThemeProvider theme={theme}>
       <Drawer disableAutoFocus={true}

@@ -5,7 +5,9 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl, createTheme, ThemeProvider, IconButton } from "@mui/material";
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import FindReplaceIcon from '@mui/icons-material/FindReplace';
+import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl, createTheme, ThemeProvider, IconButton, Divider, TextField } from "@mui/material";
 
 
 interface MapListViewProps {
@@ -19,6 +21,16 @@ function MapListView(props: MapListViewProps): JSX.Element {
 
     const handleMapChange = (event: SelectChangeEvent) => {
         setCurrentMap(event.target.value);
+    };
+
+    const handleLoadMapClick = () => {
+        // TODO: Se debe de cargar la lista de puntos correspondiente al mapa seleccionado
+        props.onClose();
+    };
+
+    const handleCreateMapClick = () => {
+        // TODO: Se debe de crear el nuevo mapa con el nombre escogido
+        props.onClose();
     };
 
     const theme = createTheme({
@@ -50,6 +62,32 @@ function MapListView(props: MapListViewProps): JSX.Element {
                     </IconButton>
                     <ListItemText primary="Map List" />
                 </ListItem>
+                <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
+                <ListItem>
+                    <AddBoxIcon />
+                    <ListItemText primary="Create a new map" />
+                </ListItem>
+                <ListItem>
+                    <ThemeProvider theme={darkTheme}>
+                        <TextField id="mapNameField" label="New map's name" variant="filled" fullWidth />
+                    </ThemeProvider>
+                </ListItem>
+                <ListItem>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mb: 4 }}
+                        onClick={handleCreateMapClick}
+                    >
+                        Create new Map
+                    </Button>
+                </ListItem>
+                <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
+                <ListItem>
+                    <FindReplaceIcon />
+                    <ListItemText primary="Load an existent map" />
+                </ListItem>
                 <ListItem>
                     <ThemeProvider theme={darkTheme}>
                         <FormControl fullWidth >
@@ -74,7 +112,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
+                        onClick={handleLoadMapClick}
                     >
                         Load Map
                     </Button>
