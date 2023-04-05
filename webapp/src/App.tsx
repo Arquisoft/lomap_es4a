@@ -3,8 +3,8 @@ import './App.css';
 import {QueryClient, QueryClientProvider} from "react-query";
 import LoginPage from './components/login/LoginPage';
 import {SessionProvider, useSession} from "@inrupt/solid-ui-react";
+// import { handleIncomingRedirect } from '@inrupt/solid-client-authn-browser';
 import MainPage from "./components/MainPage";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
 function App(): JSX.Element {
 
@@ -19,30 +19,15 @@ function App(): JSX.Element {
 	session.onLogin(() => setIsLoggedIn(true));
 	session.onLogout(() => setIsLoggedIn(false));
 	
-	if (!isLoggedIn)
-		return(
-			<SessionProvider>
-				<Router>
-					<Routes>
-						<Route path="/" element={<LoginPage/>} />
-						
-					</Routes>
-				</Router>
-			</SessionProvider>
-		);
-	else {
-		session.handleIncomingRedirect({ url:"localhost:3000", restorePreviousSession: true });
-		return(
-			<SessionProvider>
-				<Router>
-					<Routes>
-						
-						<Route path="/map" element={<QueryClientProvider client={queryClient}><MainPage session={session}/></QueryClientProvider>} />
-					</Routes>
-				</Router>
-			</SessionProvider>
-		);
-	}
+	// TODO: handleIncomingRedirect({restorePreviousSession: true});
+
+	return(
+		<SessionProvider>
+			{(!isLoggedIn) 
+		  		? <LoginPage /> 
+				: <QueryClientProvider client={queryClient}> <MainPage session={session}/> </QueryClientProvider>}
+		</SessionProvider>
+	);	
 }
 
 export default App;

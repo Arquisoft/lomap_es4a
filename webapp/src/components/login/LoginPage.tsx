@@ -32,7 +32,7 @@ const theme = createTheme();
 
 export default function LoginPage() {
 	const [podProvider, setPodProvider] = useState("https://inrupt.net");
-	const [currentUrl] = useState("http://localhost:3000/map");
+	const [currentUrl] = useState("http://localhost:3000");
   
 	
 	// Cambia el proveedor de pod
