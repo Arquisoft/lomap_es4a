@@ -14,7 +14,7 @@ interface PointsViewProps {
   open: boolean;
   onClose: () => void;
   markerList: google.maps.Marker[]
-  }
+}
 
 const theme2 = createTheme({
   components: {

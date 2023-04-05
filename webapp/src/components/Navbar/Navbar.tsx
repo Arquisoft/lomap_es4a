@@ -9,9 +9,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import PeopleIcon from '@mui/icons-material/People';
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
-import PublicIcon from '@mui/icons-material/Public';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
+import MapIcon from '@mui/icons-material/Map';
 import { Avatar, Button, createTheme, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, makeStyles, ThemeProvider, Typography } from '@mui/material';
 
 // Pfp
@@ -29,7 +29,7 @@ const categories = [
         active: true,
       },
       { id: 'Points', icon: <DnsRoundedIcon /> },
-      { id: 'MapsList', icon: <PublicIcon /> },
+      { id: 'MapList', icon: <MapIcon /> },
       
     ],
   },
@@ -63,13 +63,12 @@ const theme = createTheme({
       styleOverrides: {
         paper: {
           backgroundColor: "#101F33"
-          
         }
       }
     }
   }
 });
-function Navbar({open, toggleNavbar, openPointsList}: any) {
+function Navbar({open, toggleNavbar, openPointsList, openMapList}: any) {
   
   const [openDialog, setOpenDialog] = React.useState(false);
 
@@ -94,6 +93,8 @@ function Navbar({open, toggleNavbar, openPointsList}: any) {
       console.log(`Error logging out: ${error}`);
     }
   };
+
+  const handleClickMapList = () => {};
 
   return (
     <><ThemeProvider theme={theme}>
@@ -142,8 +143,9 @@ function Navbar({open, toggleNavbar, openPointsList}: any) {
                     if (childId === "About us") {handleClickOpen()}
                     else if(childId==="Logout"){handleClickLogout()}
                     else if(childId==="Points"){handleClickPointsOpen()}
+                    else if(childId==="MapList"){openMapList()}
                   } }>
-                    <ListItemIcon>{icon}</ListItemIcon>
+                    <ListItemIcon sx={{color: "white"}}>{icon}</ListItemIcon>
                     <ListItemText>{childId}</ListItemText>
 
                   </ListItemButton>

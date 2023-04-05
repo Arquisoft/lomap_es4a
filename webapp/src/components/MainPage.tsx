@@ -9,6 +9,7 @@ import Point from "../solidapi/Point";
 
 import Navbar from "./Navbar/Navbar";
 import PointsView from "./Navbar/PointsView";
+import MapListView from "./Navbar/MapListView";
 
 import SearchBar from "./Searchbar/Searchbar";
 
@@ -20,6 +21,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const [navbarOpen, setNavbarOpen] = React.useState(false);
     const [pointsListOpen, setPointsListOpen] = React.useState(false);
     const [addPointOpen, setAddPointOpen] = React.useState(false);
+    const [mapListOpen, setMapListOpen] = React.useState(false);
     const [markerList, setMarkerlist] = React.useState<google.maps.Marker[]>([]);
     const [clickedPoint, setClickedPoint] = React.useState({lat:0, lng:0});
 
@@ -38,6 +40,14 @@ export default function MainPage({ session }: SessionType): JSX.Element {
 
     const closePointsList = () => {
         setPointsListOpen(false);
+    }
+
+    const openMapList = () => {
+        setMapListOpen(true);
+    }
+
+    const closeMapList = () => {
+        setMapListOpen(false);
     }
 
     const openAddPoints = () => {
@@ -78,9 +88,10 @@ export default function MainPage({ session }: SessionType): JSX.Element {
                 "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "`,
             }}>
             <Box sx={{ gridArea: 'search'}}><SearchBar toggleNavbar={toggleNavbar} /></Box>
-            <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} /></Box>
+            <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} /></Box>
             <Box><AddPoint open={addPointOpen} closeAddPoints={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
             <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList}></PointsView></Box>
+            <Box><MapListView open={mapListOpen} onClose={closeMapList} ></MapListView></Box>
             <Box sx={{ gridArea: 'mainContainer'}}><Map session={session} markerList={setMarkerlist} clickMap={clickMap} /></Box>
         </Grid>
     );

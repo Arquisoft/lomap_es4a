@@ -37,7 +37,7 @@ export default function LoginPage() {
 	
 	// Cambia el proveedor de pod
 	const handleChange = (event: SelectChangeEvent) => {
-	  setPodProvider(event.target.value as string);
+	  setPodProvider(event.target.value);
 	};
 
 
