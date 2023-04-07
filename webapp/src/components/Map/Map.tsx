@@ -21,7 +21,7 @@ export type MarkerType = {
     website: string
 }
 
-function Map({session, markerList, clickMap}: any) {
+function Mapa({session, markerList, clickMap}: any) {
     const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
 
     const [map, setMap] = useState(React.useRef<google.maps.Map | null>(null).current);
@@ -151,4 +151,4 @@ function Map({session, markerList, clickMap}: any) {
     );
 };
 
-export default Map;
+export default Mapa;

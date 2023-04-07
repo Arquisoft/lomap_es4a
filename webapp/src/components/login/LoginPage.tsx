@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+//import "@inrupt/jest-jsdom-polyfills" // TODO: revisar
 import { LoginButton } from "@inrupt/solid-ui-react";
 import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl } from "@mui/material";
 
@@ -31,12 +32,12 @@ const theme = createTheme();
 
 export default function LoginPage() {
 	const [podProvider, setPodProvider] = useState("https://inrupt.net");
-	const [currentUrl, setCurrentUrl] = useState("http://localhost:3000"); //TODO: cambiar redirect
+	const [currentUrl] = useState("http://localhost:3000");
   
 	
 	// Cambia el proveedor de pod
 	const handleChange = (event: SelectChangeEvent) => {
-	  setPodProvider(event.target.value as string);
+	  setPodProvider(event.target.value);
 	};
 
 
