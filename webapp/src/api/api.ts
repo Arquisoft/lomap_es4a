@@ -1,7 +1,6 @@
 import {User} from '../shared/shareddtypes';
 import {MarkerType} from "../components/Map/Map";
 import Point from "../solidapi/Point";
-import {retrievePoints} from "../solidapi/solidapiAdapter";
 import {Session} from "@inrupt/solid-client-authn-browser";
 
 export async function addUser(user:User):Promise<boolean>{

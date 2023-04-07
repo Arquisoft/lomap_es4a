@@ -19,6 +19,7 @@ import { VCARD } from "@inrupt/lit-generated-vocab-common";
 import {CombinedDataProvider, useSession, Image, Text} from "@inrupt/solid-ui-react";
 import {useEffect, useState} from "react";
 import LogoutIcon from '@mui/icons-material/Logout';
+import {FOAF} from "@inrupt/vocab-common-rdf";
 const categories = [
   {
     id: 'LoMap',
@@ -114,7 +115,11 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList}: any) {
                   <CombinedDataProvider
                       datasetUrl={session.info.webId}
                       thingUrl={session.info.webId}>
-                    <Text property={VCARD.fn.value }/>
+                    {FOAF.name !== null && FOAF.name !== 'undefined' ?
+                        (<Text property={ FOAF.name }/>):
+                        (<Typography>User</Typography>)
+                    }
+
                   </CombinedDataProvider>
               ): null }
             </Typography>

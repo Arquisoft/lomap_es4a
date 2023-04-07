@@ -44,6 +44,7 @@ import SaveIcon from '@mui/icons-material/Save';
 // CSS
 import "./Option.css";
 import defaultProps = Table.defaultProps;
+import Point from "../../solidapi/Point";
 
 const categories = [
   {
@@ -92,6 +93,10 @@ const theme = createTheme({
 
 function AddPoint({open, closeAddPoints, clickedPoint, createPoint}: any) {
 
+  let name = "";
+  let description = "";
+  let category = "";
+
   const defaultProps = {
     options: ["Bar", "Club", "Sight", "Monument", "Other"]
   };
@@ -103,7 +108,8 @@ function AddPoint({open, closeAddPoints, clickedPoint, createPoint}: any) {
   const save = () => {
     closeAddPoints();
     //TODO: Implementar funcionalidad
-    createPoint(clickedPoint.lat, clickedPoint.lng);
+    let point: Point = new Point("", name, category, clickedPoint.lat, clickedPoint.lng, description);
+    createPoint(point);
   }
 
   return (
@@ -125,10 +131,20 @@ function AddPoint({open, closeAddPoints, clickedPoint, createPoint}: any) {
                            "& .MuiInputBase-root": {
                              height: '4.8vh'
                            }
-                         }}/>
+                         }}
+              onChange={(e) => {
+                if (e.target.value !== null) {
+                  name = e.target.value;
+                }
+              }
+              }/>
             </ListItem>
             <ListItem>
-              <TextareaAutosize className="point-fill-field" placeholder="Comments" color='primary' onResize={()=>{}}
+              <TextareaAutosize className="point-fill-field" placeholder="Description" color='primary' onChange={(e) => {
+                if (e.target.value !== null) {
+                  description = e.target.value;
+                }
+              }} onResize={()=>{}}
                                 onResizeCapture={()=>{}}/>
             </ListItem>
             <ListItem>
@@ -138,7 +154,12 @@ function AddPoint({open, closeAddPoints, clickedPoint, createPoint}: any) {
                   autoComplete
                   includeInputInList
                   renderInput={(params) => (
-                      <TextField {...params} label="Category" variant="standard"/>
+                      <TextField {...params} label="Category" variant="standard" onChange={(e) => {
+                        if (e.target.value !== null) {
+                          category = e.target.value;
+                        }
+                      }
+                      }/>
                   )}
                   sx={{
                     width: '10.8vw',
@@ -147,16 +168,6 @@ function AddPoint({open, closeAddPoints, clickedPoint, createPoint}: any) {
                     }
                   }}
               />
-            </ListItem>
-            <ListItem>
-              <TextField size={"medium"} variant="standard" className="point-fill-field" label="Score" color='primary' type="number"
-                         InputProps={{ inputProps: { min: 0, max: 5 } }}
-                         sx={{
-                           width: '10.8vw',
-                           "& .MuiInputBase-root": {
-                             height: '4.8vh'
-                           }
-                         }}/>
             </ListItem>
             <ListItemButton onClick={cancel}>Cancel</ListItemButton>
             <ListItemButton onClick={save}>Save Place</ListItemButton>
