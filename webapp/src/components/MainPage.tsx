@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import PrimarySearchAppBar from "./Searchbar/Searchbar";
-import Map from "./Map/Map";
+import Mapa from "./Map/Map";
 import { Grid } from "@mui/material";
 import React, {useEffect} from "react";
 import { SessionType } from "../solidapi/solidapiAdapter";
@@ -94,7 +94,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             <Box><AddPoint open={addPointOpen} closeAddPoints={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
             <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList}></PointsView></Box>
             <Box><MapListView open={mapListOpen} onClose={closeMapList} ></MapListView></Box>
-            <Box sx={{ gridArea: 'mainContainer'}}><Map session={session} markerList={setMarkerlist} clickMap={clickMap} /></Box>
+            <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markerList={setMarkerlist} clickMap={clickMap} /></Box>
         </Grid>
     );
 }
