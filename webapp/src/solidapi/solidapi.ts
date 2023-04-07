@@ -5,7 +5,6 @@ import {
     overwriteFile, getContainedResourceUrlAll, getSolidDataset, getThing, getUrl
 } from '@inrupt/solid-client';
 import { Session } from '@inrupt/solid-client-authn-browser';
-import {JsonLdDocument} from "jsonld/jsonld";
 import Point from "./Point";
 
 function checkSession(session: Session): boolean {
@@ -90,13 +89,13 @@ export async function createMap(session: Session): Promise<boolean> {
     let url = mapUrlFor(session);
 
     try {
-        let persona: JsonLdDocument = {
+        let persona  = {
             "@context": "https://schema.org/",
             "@type": "Person",
             "identifier": session.info.webId
         }
 
-        let mapa: JsonLdDocument = {
+        let mapa = {
             "@context": "https://schema.org/",
             "@type": "Map",
             "id": "0",
