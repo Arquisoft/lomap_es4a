@@ -183,7 +183,6 @@ export async function retrievePoints(session: Session): Promise<Point[]> {
         map.spatialCoverage.forEach((point: Point) => {
             points.push(point);
         });
-        console.log(points.length);
         return points;
     } catch (error) {
         return [];
