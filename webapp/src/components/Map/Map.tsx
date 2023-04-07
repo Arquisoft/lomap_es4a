@@ -5,13 +5,13 @@ import {useQuery} from "react-query";
 // Map Settings
 import {containerStyle, center, options} from "./settings";
 // SOLID API
-import {retrievePoints,  SessionType} from "../../solidapi/solidapiAdapter";
 import {forEach} from "@react-google-maps/api/dist/utils/foreach";
 import Point from "../../solidapi/Point";
 // Images
 import savedMarker from '../../images/markerGuardado.png';
 import savedMarker2 from '../../images/markerGuerdado2.png';
 import {Button} from "@mui/material";
+import {addPoint, createMap, retrievePoints} from "../../solidapi/solidapi";
 
 export type MarkerType = {
     id: string,
@@ -45,11 +45,13 @@ function Map({session, markerList, clickMap}: any) {
     }
 
     const onLoad = (googleMap: google.maps.Map): void => { // TODO: aquí se imprimen los puntos recuperados del pod
+        createMap(session);
+
         retrievePoints(session).then(points => {
             if (points != null) {
 
                 points.forEach(point => {
-                    
+
                     // NUEVO
                     let marker = new google.maps.Marker({
                         position: {lat: point.latitude, lng: point.longitude},

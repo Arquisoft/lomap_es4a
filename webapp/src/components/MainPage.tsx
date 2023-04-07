@@ -13,6 +13,7 @@ import PointsView from "./Navbar/PointsView";
 import SearchBar from "./Searchbar/Searchbar";
 
 import { Marker } from "@react-google-maps/api";
+import {addPoint} from "../solidapi/solidapi";
 
 
 export default function MainPage({ session }: SessionType): JSX.Element {
@@ -53,8 +54,9 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         setClickedPoint({lat: lat, lng: lng})
     }
 
-    const createPoint = (lat: number, lng: number) => {
+    const createPoint = (point: Point) => {
         //TODO: Aquí se crearía el punto
+        addPoint(session, point);
         //TODO: (Idea) recargar el mapa
     }
     
