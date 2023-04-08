@@ -21,3 +21,5 @@ app.listen(port, ():void => {
     console.error('Error occured: ' + error.message);
 });
 
+require("./routes/maps.ts")(app);
+

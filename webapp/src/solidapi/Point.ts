@@ -24,6 +24,7 @@ class Point {
         this.reviewScore = reviewScore;
         this.date = date;
     }
+
 }
 
 export default Point;

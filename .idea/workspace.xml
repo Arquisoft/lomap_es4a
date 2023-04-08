@@ -8,10 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/Navbar/Navigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Navbar/Navigator.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/Options/AddPointOption.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Options/AddPointOption.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/Searchbar/Searchbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Searchbar/Searchbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/solidapi/Point.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/solidapi/Point.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/components/Options/AddPoint.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Options/AddPoint.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +20,6 @@
       <list>
         <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
-        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -33,6 +29,10 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+    <dismissed value="$PROJECT_DIR$/webapp/package.json" />
+  </component>
   <component name="ProjectId" id="2MMmUmGN0TxQqq4jRUmNh8nD0vX" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -41,24 +41,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/UniOvi/Tercero/Segundo Semestre/ASW/PruebaMaps-React/js-samples&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Usuario\\WebstormProjects\\lomap_es4a\\webapp\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "API-Markers(MAPS)",
+    "last_opened_file_path": "D:/UniOvi/Tercero/Segundo Semestre/ASW/PruebaMaps-React/js-samples",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "D:\\UniOvi\\Tercero\\Segundo Semestre\\ASW\\lomap_es4a\\restapi\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\UniOvi\Tercero\Segundo Semestre\ASW\lomap_es4a\webapp\src\components\Map" />
@@ -97,11 +97,13 @@
       <workItem from="1678468020730" duration="3309000" />
       <workItem from="1678612087750" duration="20227000" />
       <workItem from="1678713028868" duration="4134000" />
-      <workItem from="1679743685931" duration="2926000" />
-      <workItem from="1679767648564" duration="5282000" />
-      <workItem from="1679820849292" duration="6011000" />
-      <workItem from="1679850975831" duration="1244000" />
-      <workItem from="1679917281987" duration="6774000" />
+      <workItem from="1678889137145" duration="1925000" />
+      <workItem from="1678891120607" duration="4912000" />
+      <workItem from="1679249728531" duration="38000" />
+      <workItem from="1679249808361" duration="501000" />
+      <workItem from="1679400044905" duration="255000" />
+      <workItem from="1680019199169" duration="3447000" />
+      <workItem from="1680026270201" duration="1841000" />
     </task>
     <task id="LOCAL-00001" summary="Se ha movido el directorio solidapi a webapp">
       <created>1678459410126</created>

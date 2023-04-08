@@ -41,13 +41,10 @@ import {VCARD} from "@inrupt/lit-generated-vocab-common";
 import TextField from "@mui/material/TextField";
 import SaveIcon from '@mui/icons-material/Save';
 
-// Custom events
-import {publish, subscribe, unsubscribe} from "../../event";
-import {useEffect} from "react";
-
 // CSS
 import "./Option.css";
 import defaultProps = Table.defaultProps;
+import Point from "../../solidapi/Point";
 
 const categories = [
   {
@@ -94,35 +91,31 @@ const theme = createTheme({
   }
 });
 
-function AddPointOption() {
+function AddPoint({open, closeAddPoints, clickedPoint, createPoint}: any) {
 
-  const [open, setOpen] = React.useState(false);
+  let name = "";
+  let description = "";
+  let category = "";
 
   const defaultProps = {
     options: ["Bar", "Club", "Sight", "Monument", "Other"]
   };
 
   const cancel = () => {
-    setOpen(false);
-    publish('cancel');
+    closeAddPoints();
   }
 
   const save = () => {
-    setOpen(false);
-    publish('save')
+    closeAddPoints();
+    //TODO: Implementar funcionalidad
+    let point: Point = new Point("", name, category, clickedPoint.lat, clickedPoint.lng, description);
+    createPoint(point);
   }
-
-  useEffect(() => {
-    subscribe("showAddOption", () => setOpen(true));
-
-    return () => {
-      unsubscribe("showAddOption", () => setOpen(true));
-    }
-  }, []);
 
   return (
       <ThemeProvider theme={theme}>
-        <Drawer open={open}
+        <Drawer disableAutoFocus={true}
+                open={open}
                 sx={{ display: { mt: 500 } }}
                 onClose={cancel}>
           <List disablePadding>
@@ -132,16 +125,27 @@ function AddPointOption() {
               Add a New Place
             </ListItemText>
             <ListItem>
-              <TextField size={"medium"} variant="standard" className="point-fill-field" label="Name" placeholder="NewPoint" contentEditable={true} color='primary'
+              <TextField size={"medium"} variant="standard" className="point-fill-field" label="Name" placeholder="NewPoint" color='primary'
                          sx={{
                            width: '10.8vw',
                            "& .MuiInputBase-root": {
                              height: '4.8vh'
                            }
-                         }}/>
+                         }}
+              onChange={(e) => {
+                if (e.target.value !== null) {
+                  name = e.target.value;
+                }
+              }
+              }/>
             </ListItem>
             <ListItem>
-              <TextareaAutosize onResize={undefined} onResizeCapture={undefined} className="point-fill-field" placeholder="Comments" contentEditable={true} color='primary'/>
+              <TextareaAutosize className="point-fill-field" placeholder="Description" color='primary' onChange={(e) => {
+                if (e.target.value !== null) {
+                  description = e.target.value;
+                }
+              }} onResize={()=>{}}
+                                onResizeCapture={()=>{}}/>
             </ListItem>
             <ListItem>
               <Autocomplete
@@ -150,7 +154,12 @@ function AddPointOption() {
                   autoComplete
                   includeInputInList
                   renderInput={(params) => (
-                      <TextField {...params} label="Category" variant="standard"/>
+                      <TextField {...params} label="Category" variant="standard" onChange={(e) => {
+                        if (e.target.value !== null) {
+                          category = e.target.value;
+                        }
+                      }
+                      }/>
                   )}
                   sx={{
                     width: '10.8vw',
@@ -160,22 +169,12 @@ function AddPointOption() {
                   }}
               />
             </ListItem>
-            <ListItem>
-              <TextField size={"medium"} variant="standard" className="point-fill-field" label="Score"  contentEditable={true} color='primary' type="number"
-                         InputProps={{ inputProps: { min: 0, max: 5 } }}
-                         sx={{
-                           width: '10.8vw',
-                           "& .MuiInputBase-root": {
-                             height: '4.8vh'
-                           }
-                         }}/>
-            </ListItem>
-            <ListItemButton onClick={ cancel }>Cancel</ListItemButton>
-            <ListItemButton onClick={ save }>Save Place</ListItemButton>
+            <ListItemButton onClick={cancel}>Cancel</ListItemButton>
+            <ListItemButton onClick={save}>Save Place</ListItemButton>
           </List>
         </Drawer>
       </ThemeProvider>
 );
 }
 
-export default AddPointOption;
+export default AddPoint;
