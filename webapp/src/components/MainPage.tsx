@@ -113,8 +113,8 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         delete markerList[id];
         //markerList.splice(index,1);
 
-        setPointsListOpen(!pointsListOpen);
-        setOpenDialog(true);
+        setPointsListOpen(!pointsListOpen)
+        setOpenDialog(true)
         
     }
 
@@ -150,14 +150,14 @@ export default function MainPage({ session }: SessionType): JSX.Element {
 
 
             <Dialog onClose={handleCloseDialog} aria-labelledby="customized-dialog-title" open={openDialog}>
-                <DialogContent dividers>
-                    <Typography gutterBottom>The Place has been deleted</Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={handleCloseDialog} color="primary">
-                    OK
-                    </Button>
-                </DialogActions>
+            <DialogContent dividers>
+            <Typography gutterBottom>The Place has been deleted</Typography>
+            </DialogContent>
+            <DialogActions>
+            <Button autoFocus onClick={handleCloseDialog} color="primary">
+            OK
+            </Button>
+            </DialogActions>
             </Dialog>
         </Grid>
     );

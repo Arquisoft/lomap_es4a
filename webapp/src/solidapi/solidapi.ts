@@ -119,6 +119,9 @@ export async function createMap(session: Session): Promise<boolean> {
 }
 
 export async function addPoint(session: Session, point: Point): Promise<boolean> {
+
+    console.log(JSON.stringify(point));
+
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return false;
     } // Check if the webId is undefined
