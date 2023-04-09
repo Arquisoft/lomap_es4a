@@ -21,7 +21,7 @@ export type MarkerType = {
     website: string
 }
 
-function Mapa({session, markerList, clickMap}: any) {
+function Mapa({session, markerList, clickMap, currentMapName}: any) {
     const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
 
     const [map, setMap] = useState(React.useRef<google.maps.Map | null>(null).current);
@@ -45,9 +45,9 @@ function Mapa({session, markerList, clickMap}: any) {
     }
 
     const onLoad = (googleMap: google.maps.Map): void => { // TODO: aquí se imprimen los puntos recuperados del pod
-        createMap(session);
+        createMap(session, currentMapName);
 
-        retrievePoints(session).then(points => {
+        retrievePoints(session, currentMapName).then(points => {
             if (points != null) {
 
                 points.forEach(point => {
