@@ -2,18 +2,18 @@ import * as React from 'react';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-
-import { createTheme, Divider, IconButton, ListSubheader, makeStyles, Switch, ThemeProvider } from '@mui/material';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { createTheme, Divider, IconButton, ListItemButton, ListSubheader, makeStyles, Switch, ThemeProvider } from '@mui/material';
 import GreenSwitch from './GreenSwitch';
-import { IndentStyle } from 'typescript';
+import { deletePoint } from '../../solidapi/solidapi';
 
 interface PointsViewProps {
   open: boolean;
   onClose: () => void;
   markerList: google.maps.Marker[]
+  deletePoint:(index:number)=>void
 }
 
 const theme2 = createTheme({
@@ -28,7 +28,9 @@ const theme2 = createTheme({
   }
 });
 
-const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList }) => {
+
+
+const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,deletePoint }) => {
   const [encendida, setEncendida] = React.useState<boolean[]>([]);
 
   const [encendidaAll, setEncendidaAll] = React.useState(true);
@@ -54,12 +56,19 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList }) => 
       handleToggle(index);
     });
   }
+  const handleDeleteButton=(index:number)=>{
 
+    deletePoint(index)
+    
+  }
   const generatePointsControl = () => {
     return markerList.map((marker, index) => (
       <ListItem key={index}>
         <ListItemText primary={`Point ${index + 1}`} />
         <GreenSwitch checked={encendida[index]} onChange={() => handleToggle(index)} />
+        <ListItemButton onClick={() =>{handleDeleteButton(index)} }>
+          <DeleteForeverIcon/>
+          </ListItemButton>
       </ListItem>
     ));
   };

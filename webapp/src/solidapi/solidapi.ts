@@ -158,6 +158,46 @@ export async function addPoint(session: Session, point: Point): Promise<boolean>
     return true;
 }
 
+export async function deletePoint(session: Session, pointIndex: number): Promise<boolean> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+      return false;
+    } // Check if the webId is undefined
+  
+    let url = mapUrlFor(session);
+  
+    if (!await checkStructure(session)) {
+      return false;
+    }
+  
+    try {
+      let mapBlob = await getFile(
+        url,
+        { fetch: session.fetch }
+      );
+  
+      let map = JSON.parse(await mapBlob.text());
+  
+      if (pointIndex < 0 || pointIndex >= map.spatialCoverage.length) {
+        return false;
+      }
+  
+      map.spatialCoverage.splice(pointIndex, 1);
+  
+      let blob = new Blob([JSON.stringify(map)], { type: "application/ld+json" });
+      let file = new File([blob], map.name + ".jsonld", { type: blob.type });
+  
+      await overwriteFile(
+        url,
+        file,
+        { contentType: file.type, fetch: session.fetch }
+      );
+    } catch (error) {
+      return false;
+    }
+    return true;
+  }
+  
+
 export async function retrievePoints(session: Session): Promise<Point[]> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return [];
