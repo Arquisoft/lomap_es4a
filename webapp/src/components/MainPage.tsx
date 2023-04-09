@@ -68,9 +68,15 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         markerToAdd?.setVisible(false);
     }
 
-    const closeEditPoints = () => {
-        setAddPointOpen(false);
+    const closeEditPoint = () => {
+        setEditPointOpen(false);
+        setPointsListOpen(true);
         markerToAdd?.setVisible(false);
+    }
+
+    const openEditPoint = () => {
+        setPointsListOpen(false);
+        setEditPointOpen(true);
     }
 
     const clickMap = (lat: number, lng: number) => {
@@ -94,8 +100,10 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     }
 
     const editPoint = (point: Point) => {
-
+        closeEditPoint()
+        console.log("editing point") // TODO
     }
+
     const [pointsViewCounter, setPointsViewCounter] = React.useState(0);
 
     
@@ -137,8 +145,8 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             <Box sx={{ gridArea: 'search'}}><SearchBar toggleNavbar={toggleNavbar} /></Box>
             <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} /></Box>
             <Box><AddPoint open={addPointOpen} onClose={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
-            <Box><EditPoint open={editPointOpen} onClose={closeEditPoints} point={point} editPoint={editPoint}/></Box>
-            <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} deletePoint={eliminatePoint}></PointsView></Box>
+            <Box><EditPoint open={editPointOpen} onClose={closeEditPoint} point={point} editPoint={editPoint}/></Box>
+            <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}></PointsView></Box>
             <Box><MapListView open={mapListOpen} onClose={closeMapList} ></MapListView></Box>
             <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markerList={setMarkerlist} clickMap={clickMap} markerToAdd={setMarkerToAdd}/></Box>
 
@@ -147,7 +155,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
 
             <Dialog onClose={handleCloseDialog} aria-labelledby="customized-dialog-title" open={openDialog}>
             <DialogContent dividers>
-            <Typography gutterBottom>Se ha eliminado el punto </Typography>
+            <Typography gutterBottom>The Place has been deleted</Typography>
             </DialogContent>
             <DialogActions>
             <Button autoFocus onClick={handleCloseDialog} color="primary">

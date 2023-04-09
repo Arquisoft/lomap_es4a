@@ -70,7 +70,7 @@ function EditPoint({open, onClose, point, editPoint}: any) {
     onClose();
 
     let pointToEdit: Point = new Point(point.id, pointName, pointCategory, point.latitude, point.longitude, pointDescription);
-    editPoint(point);
+    editPoint(pointToEdit);
   }
 
   return (

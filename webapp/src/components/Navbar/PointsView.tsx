@@ -8,11 +8,13 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { createTheme, Divider, IconButton, ListItemButton, ListSubheader, makeStyles, Switch, ThemeProvider } from '@mui/material';
 import GreenSwitch from './GreenSwitch';
 import EditIcon from '@mui/icons-material/Edit';
+import Point from "../../solidapi/Point";
 interface PointsViewProps {
-  open: boolean;
-  onClose: () => void;
-  markerList: google.maps.Marker[]
-  deletePoint:(index:number)=>void
+    open: boolean;
+    onClose: () => void;
+    markerList: google.maps.Marker[]
+    openEditPoint: ()=>void;
+    deletePoint:(index:number)=>void;
 }
 
 const theme = createTheme({
@@ -30,7 +32,7 @@ const theme = createTheme({
 
 
 
-const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,deletePoint }) => {
+const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,openEditPoint,deletePoint }) => {
   
   const [encendida, setEncendida] = React.useState<boolean[]>([]);
 
@@ -64,9 +66,9 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,delete
   }
 
   const handleEditButton=(index:number)=>{
-
-    console.log("Editando el "+index)
+    openEditPoint();
   }
+
   const generatePointsControl = () => {
     return markerList.map((marker, index) => (
       <ListItem key={index}>
@@ -88,7 +90,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,delete
   return (
     
     <ThemeProvider theme={theme}>
-      <Drawer anchor="left" open={open} sx={{ display: { mt: 500 } }} >
+      <Drawer anchor="left" open={open} onClose={onClose} sx={{ display: { mt: 500 } }} >
         <List sx={{ width:'300px' }} disablePadding>
           <ListItem>
             <IconButton onClick={onClose} >
