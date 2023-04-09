@@ -25,6 +25,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const [mapListOpen, setMapListOpen] = React.useState(false);
     const [markerList, setMarkerlist] = React.useState<google.maps.Marker[]>([]);
     const [clickedPoint, setClickedPoint] = React.useState({lat:0, lng:0});
+    const [isMarkerSaved, setIsMarkerSaved] = React.useState(false);
 
     /*
     const toggleNavbar = (open: boolean) => {
@@ -57,15 +58,18 @@ export default function MainPage({ session }: SessionType): JSX.Element {
 
     const closeAddPoints = () => {
         setAddPointOpen(false);
+        //setIsMarkerSaved();
     }
 
-    const clickMap = (lat: number, lng: number) => {
+    const clickMap = (lat: number, lng: number) : boolean => {
         setAddPointOpen(true);
-        setClickedPoint({lat: lat, lng: lng})
+        setClickedPoint({lat: lat, lng: lng});
+        return isMarkerSaved;
     }
 
     const createPoint = (point: Point) => {
         //TODO: Aquí se crearía el punto
+        setIsMarkerSaved(true);
         addPoint(session, point);
         //TODO: (Idea) recargar el mapa
     }
@@ -94,7 +98,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             <Box><AddPoint open={addPointOpen} closeAddPoints={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
             <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList}></PointsView></Box>
             <Box><MapListView open={mapListOpen} onClose={closeMapList} ></MapListView></Box>
-            <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markerList={setMarkerlist} clickMap={clickMap} /></Box>
+            <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markerList={setMarkerlist} clickMap={clickMap} isMarkerSaved={isMarkerSaved} /></Box>
         </Grid>
     );
 }

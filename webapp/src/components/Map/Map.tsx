@@ -21,7 +21,7 @@ export type MarkerType = {
     website: string
 }
 
-function Mapa({session, markerList, clickMap}: any) {
+function Mapa({session, markerList, clickMap, isMarkerSaved}: any) {
     const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
 
     const [map, setMap] = useState(React.useRef<google.maps.Map | null>(null).current);
@@ -34,8 +34,6 @@ function Mapa({session, markerList, clickMap}: any) {
 
     // Save map in ref if we want to access the map
     //const mapRef = React.useRef<google.maps.Map | null>(null);
-
-    const [clickedPos, setClickedPos] = React.useState<google.maps.LatLngLiteral>({} as google.maps.LatLngLiteral)
    
     var mList:google.maps.Marker[]
     mList=[];
@@ -65,11 +63,11 @@ function Mapa({session, markerList, clickMap}: any) {
                         }
                     });
                     marker.setMap(googleMap);
-                    addMarker(marker);
                     marker.addListener('click', () =>{
-                        //deleteMark(marker);
                         openInfoView(marker);
                     })
+
+                    addMarker(marker);
                 });
                 setMap(googleMap);
                 markerList(mList)
@@ -77,16 +75,11 @@ function Mapa({session, markerList, clickMap}: any) {
         });
     };
 
-    function deleteMark(marker: google.maps.Marker): void {
-        // TODO: Eliminar el marker del POD
-        console.log("Marker: " + marker.getTitle() + " borrado");
-        marker.setMap(null);
-    };
-
     const openInfoView = (marker: google.maps.Marker): void => {
         // TODO: Añadir funcion en el onClick de infoWindow
         let infowindow = new google.maps.InfoWindow({
-            content: '<button onclick="deleteMark()">Borrar Punto</button>',
+            // Es HTML por lo tanto no funciona el deleteMark()-
+            content: '<button onclick="">Borrar Punto</button>',
             ariaLabel: "Uluru",
         });
         infowindow.open(map, marker);
@@ -96,18 +89,11 @@ function Mapa({session, markerList, clickMap}: any) {
         setMap(null);
     };
 
-    let userPoints: Point[]
-    userPoints = [];
-
     const onMapClick = (e: google.maps.MapMouseEvent) => {
         if (e.latLng != null) {
             setClicks([...clicks, e.latLng!]);
-            //setClickedPos({lat: e.latLng.lat(), lng: e.latLng.lng()});
-            //let point = savePoint(session, e.latLng.lat(), e.latLng.lng()); // TODO: aquí se imprime el punto que resulta de un click del usuario en el mapa
 
             //TODO: Que se no se guarde si no le das al botón de marcar
-            //savePoint(session.session, e.latLng.lat(), e.latLng.lng());
-
             let marker = new google.maps.Marker({
                 // @ts-ignore
                 position: {lat: e.latLng.lat(), lng: e.latLng.lng()},
@@ -121,11 +107,15 @@ function Mapa({session, markerList, clickMap}: any) {
                 },
                 visible:true,
             });
-
             marker.setMap(map);
-            clickMap(e.latLng.lat(), e.latLng.lng());
             // Mostrar menú añadir punto
-
+            clickMap(e.latLng.lat(), e.latLng.lng());
+            
+            if(isMarkerSaved){
+                marker.setIcon(savedMarker2)
+            } else{
+                marker.setMap(null);
+            }
 
         }
 
@@ -140,15 +130,13 @@ function Mapa({session, markerList, clickMap}: any) {
                 mapContainerStyle={containerStyle}
                 options={options as google.maps.MapOptions}
                 center={center}
-                zoom={12}
+                zoom={10}
                 onLoad={onLoad}
                 onUnmount={onUnMount}
                 onClick={onMapClick}
             >
-
             </GoogleMap>
         </div>
     );
-};
-
+}
 export default Mapa;
