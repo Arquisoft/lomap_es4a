@@ -119,6 +119,9 @@ export async function createMap(session: Session): Promise<boolean> {
 }
 
 export async function addPoint(session: Session, point: Point): Promise<boolean> {
+
+    console.log(JSON.stringify(point));
+
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return false;
     } // Check if the webId is undefined
@@ -158,34 +161,41 @@ export async function addPoint(session: Session, point: Point): Promise<boolean>
     return true;
 }
 
-export async function deletePoint(session: Session, pointIndex: number): Promise<boolean> {
+export async function deletePoint(session: Session, id: string): Promise<boolean> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
-      return false;
+        return false;
     } // Check if the webId is undefined
   
     let url = mapUrlFor(session);
   
     if (!await checkStructure(session)) {
-      return false;
+        return false;
     }
   
     try {
-      let mapBlob = await getFile(
-        url,
-        { fetch: session.fetch }
-      );
-  
-      let map = JSON.parse(await mapBlob.text());
-  
-      if (pointIndex < 0 || pointIndex >= map.spatialCoverage.length) {
-        return false;
-      }
-  
-      map.spatialCoverage.splice(pointIndex, 1);
-  
+        let mapBlob = await getFile(
+            url,
+            { fetch: session.fetch }
+        );
+
+        let map = JSON.parse(await mapBlob.text());
+
+      // if (pointIndex < 0 || pointIndex >= map.spatialCoverage.length) {
+      //   return false;
+      // }
+
+        let count = 0;
+          map.spatialCoverage.forEach((point: Point) => {
+              if (point.id === id) {
+                    map.spatialCoverage.splice(count, 1);
+                    return;
+                }
+              count++;
+            });
+
       let blob = new Blob([JSON.stringify(map)], { type: "application/ld+json" });
       let file = new File([blob], map.name + ".jsonld", { type: blob.type });
-  
+
       await overwriteFile(
         url,
         file,
