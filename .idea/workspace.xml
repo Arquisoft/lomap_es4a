@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Añadida la lógica para recuperar la imagen de perfil">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/images/markerGuerdado2.png" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/images/markerGuerdado2.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +104,7 @@
       <workItem from="1680019199169" duration="3447000" />
       <workItem from="1680026270201" duration="1841000" />
       <workItem from="1680958534508" duration="919000" />
-      <workItem from="1681039379012" duration="9567000" />
+      <workItem from="1681039379012" duration="9753000" />
     </task>
     <task id="LOCAL-00001" summary="Se ha movido el directorio solidapi a webapp">
       <created>1678459410126</created>
