@@ -61,7 +61,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
 
     const closeAddPoints = () => {
         setAddPointOpen(false);
-
+        markerToAdd?.setVisible(false);
     }
 
     const clickMap = (lat: number, lng: number, marker: google.maps.Marker) => {
@@ -74,8 +74,8 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const createPoint = (point: Point) => {
         //TODO: Aquí se crearía el punto
         addPoint(session, point);
-        markerToAdd?.setVisible(true);
         markerToAdd?.setIcon(savedMarker2);
+        markerToAdd?.setVisible(true);
         //TODO: (Idea) recargar el mapa
     }
     

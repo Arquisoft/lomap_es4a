@@ -22,7 +22,7 @@ export type MarkerType = {
 }
 
 function Mapa({session, markerList, clickMap, markerToAdd}: any) {
-    const [click, setClicks] = React.useState<google.maps.LatLng>();
+    const [click, setClick] = React.useState<google.maps.LatLng>();
 
     const [map, setMap] = useState(React.useRef<google.maps.Map | null>(null).current);
 
@@ -56,10 +56,7 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
                         map: googleMap,
                         title: point.id,
                         icon: {
-                            url: savedMarker2,
-                            origin: new window.google.maps.Point(0,0),
-                            anchor: new window.google.maps.Point(15,15),
-                            scaledSize: new window.google.maps.Size(40,40)
+                            url: savedMarker2
                         }
                     });
                     marker.setMap(googleMap);
@@ -91,25 +88,26 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
 
     const onMapClick = (e: google.maps.MapMouseEvent) => {
         if (e.latLng != null) {
-            setClicks(e.latLng!);
-
+            setClick(e.latLng!);
             //TODO: Que se no se guarde si no le das al botón de marcar
             let marker = new google.maps.Marker({
                 // @ts-ignore
                 position: {lat: e.latLng.lat(), lng: e.latLng.lng()},
-                map: null,
+                map: map,
                 title: 'Prueba save',
                 icon: {
                     url: savedMarker,
                 },
                 visible:false,
             });
-            marker.setMap(map);
 
+            marker.addListener('click', () =>{
+                openInfoView(marker);
+            })
+            // Punto a añadir si guardamos
             markerToAdd(marker);
             // Mostrar menú añadir punto
             clickMap(e.latLng.lat(), e.latLng.lng(), marker);
-
         }
 
     };
