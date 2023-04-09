@@ -54,7 +54,7 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
                     let marker = new google.maps.Marker({
                         position: {lat: point.latitude, lng: point.longitude},
                         map: googleMap,
-                        title: point.id,
+                        title: point.name,
                         icon: {
                             url: savedMarker2
                         }
