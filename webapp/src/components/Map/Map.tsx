@@ -103,6 +103,7 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
 
             marker.addListener('click', () =>{
                 openInfoView(marker);
+
             })
             // Punto a añadir si guardamos
             markerToAdd(marker);

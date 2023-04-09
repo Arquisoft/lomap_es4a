@@ -25,6 +25,10 @@ class Point {
         this.date = date;
     }
 
+    public getId(): string {
+        return this.id;
+    }
+
 }
 
 export default Point;

@@ -17,6 +17,7 @@ import { Marker } from "@react-google-maps/api";
 import {addPoint} from "../solidapi/solidapi";
 
 import savedMarker2 from '../images/markerGuerdado2.png';
+import EditPoint from "./Options/EditPoint";
 
 
 export default function MainPage({ session }: SessionType): JSX.Element {
@@ -24,9 +25,11 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const [navbarOpen, setNavbarOpen] = React.useState(false);
     const [pointsListOpen, setPointsListOpen] = React.useState(false);
     const [addPointOpen, setAddPointOpen] = React.useState(false);
+    const [editPointOpen, setEditPointOpen] = React.useState(false);
     const [mapListOpen, setMapListOpen] = React.useState(false);
     const [markerList, setMarkerlist] = React.useState<google.maps.Marker[]>([]);
     const [clickedPoint, setClickedPoint] = React.useState({lat:0, lng:0});
+    const [point, setPoint] = React.useState(null);
     const [markerToAdd, setMarkerToAdd] = React.useState<google.maps.Marker>();
 
 
@@ -55,11 +58,12 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         setMapListOpen(false);
     }
 
-    const openAddPoints = () => {
-        setAddPointOpen(true);
+    const closeAddPoints = () => {
+        setAddPointOpen(false);
+        markerToAdd?.setVisible(false);
     }
 
-    const closeAddPoints = () => {
+    const closeEditPoints = () => {
         setAddPointOpen(false);
         markerToAdd?.setVisible(false);
     }
@@ -71,11 +75,14 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     }
 
     const createPoint = (point: Point) => {
-        //TODO: Aquí se crearía el punto
         addPoint(session, point);
         markerToAdd?.setIcon(savedMarker2);
         markerToAdd?.setVisible(true);
         //TODO: (Idea) recargar el mapa
+    }
+
+    const editPoint = (point: Point) => {
+
     }
     
     /* Solo para mostrar los puntos (a ser llamado al cerrar la lista de puntos y al actualizar la visibilidad de un punto)
@@ -99,7 +106,8 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             }}>
             <Box sx={{ gridArea: 'search'}}><SearchBar toggleNavbar={toggleNavbar} /></Box>
             <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} /></Box>
-            <Box><AddPoint open={addPointOpen} closeAddPoints={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
+            <Box><AddPoint open={addPointOpen} onClose={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
+            <Box><EditPoint open={editPointOpen} onClose={closeEditPoints} point={point} editPoint={editPoint}/></Box>
             <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList}></PointsView></Box>
             <Box><MapListView open={mapListOpen} onClose={closeMapList} ></MapListView></Box>
             <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markerList={setMarkerlist} clickMap={clickMap} markerToAdd={setMarkerToAdd}/></Box>

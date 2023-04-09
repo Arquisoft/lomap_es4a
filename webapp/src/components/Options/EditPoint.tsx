@@ -3,6 +3,7 @@ import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
 import {
@@ -19,8 +20,6 @@ import Point from "../../solidapi/Point";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import {ChangeEvent, useState} from "react";
-
-import {v4 as uuidv4} from 'uuid';
 
 const theme = createTheme({
   components: {
@@ -41,11 +40,11 @@ const darkTheme = createTheme({
   }
 });
 
-function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
+function EditPoint({open, onClose, point, editPoint}: any) {
 
-  const [pointName, setPointName] = useState("");
-  const [pointDescription, setPointDescription] = useState("");
-  const [pointCategory, setPointCategory] = useState("");
+  const [pointName, setPointName] = useState(point.name);
+  const [pointDescription, setPointDescription] = useState(point.description);
+  const [pointCategory, setPointCategory] = useState(point.category);
 
   const handleNameChange = (event: ChangeEvent) => {
     setPointName(event.target.textContent? event.target.textContent : "");
@@ -69,8 +68,9 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
 
   const save = () => {
     onClose();
-    let point: Point = new Point(uuidv4(), pointName, pointCategory, clickedPoint.lat, clickedPoint.lng, pointDescription);
-    createPoint(point);
+
+    let pointToEdit: Point = new Point(point.id, pointName, pointCategory, point.latitude, point.longitude, pointDescription);
+    editPoint(point);
   }
 
   return (
@@ -81,7 +81,7 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
               <IconButton onClick={onClose}>
                 <ChevronLeftIcon sx={{color: "white"}} />
               </IconButton>
-              <ListItemText primary="Add Place" />
+              <ListItemText primary="Edit Place" />
             </ListItem>
             <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
             <ListItem>
@@ -120,7 +120,7 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
           </List>
         </Drawer>
       </ThemeProvider>
-);
+  );
 }
 
-export default AddPoint;
+export default EditPoint;
