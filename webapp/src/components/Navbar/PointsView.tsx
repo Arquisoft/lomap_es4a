@@ -33,52 +33,28 @@ const theme = createTheme({
 
 
 const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,openEditPoint,deletePoint }) => {
-  
-  const [encendida, setEncendida] = React.useState<{[id: string]: boolean}>({});
-      const [checked, setChecked] = React.useState<{[id: string]: boolean}>({});
-  const [encendidaAll, setEncendidaAll] = React.useState(true);
 
-  
-  React.useEffect(() => {
-    setEncendida((prevState) => {
-      const newEncendida = { ...prevState };
-      Object.keys(markerList).forEach((id) => {
-        if (!newEncendida.hasOwnProperty(id)) {
-          newEncendida[id] = true;
-        }
-      });
-      return newEncendida;
-    });
-  }, [markerList]);
+    const [encendida, setEncendida] = React.useState<{[id: string]: boolean}>({});
+    const [checked, setChecked] = React.useState<{[id: string]: boolean}>({});
+    const [encendidaAll, setEncendidaAll] = React.useState(true);
 
-  const handleToggle = (id: string) => {
-    let newEncendida = {...encendida};
-    newEncendida[id] = !encendida[id];
-    setEncendida(newEncendida);
-  
-    markerList[id].setVisible(!markerList[id].getVisible());
-  
-    let newChecked = {...checked};
-    newChecked[id] = !checked[id];
-    setChecked(newChecked);
-  };
-  const handleToggleAll = () => {
-    setEncendidaAll(!encendidaAll);
-    let newEncendida = {...encendida};
-    let newChecked = {...checked};
-    Object.keys(markerList).forEach((id) => {
-      if (markerList[id].getVisible() === encendidaAll) {
-        newEncendida[id] = !newEncendida[id];
-        newChecked[id] = !newChecked[id];
-        markerList[id].setVisible(!markerList[id].getVisible());
-      }
-    });
-    setEncendida(newEncendida);
-    setChecked(newChecked);
-  };
-  const handleDeleteButton=(id: string)=>{
-    deletePoint(id)
-  }
+
+    React.useEffect(() => {
+        setEncendida((prevState) => {
+            const newEncendida = { ...prevState };
+            Object.keys(markerList).forEach((id) => {
+                if (!newEncendida.hasOwnProperty(id)) {
+                    newEncendida[id] = true;
+                }
+            });
+            return newEncendida;
+        });
+    }, [markerList]);
+
+    const handleToggle = (id: string) => {
+        let newEncendida = {...encendida};
+        newEncendida[id] = !encendida[id];
+        setEncendida(newEncendida);
 
         markerList[id].setVisible(!markerList[id].getVisible());
 
@@ -104,20 +80,9 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,openEd
         deletePoint(id)
     }
 
-  const generatePointsControl = () => {
-    return Object.keys(markerList).map((id) => (
-      <ListItem key={id}>
-        <ListItemText primary={markerList[id].getTitle() +": "} />
-        <GreenSwitch onChange={() => handleToggle(id)} checked={!checked[id]} />
-        <ListItemButton onClick={() =>{handleEditButton()} }>
-          <EditIcon/>
-        </ListItemButton>
-        <ListItemButton onClick={() =>{handleDeleteButton(id)} }>
-          <DeleteForeverIcon/>
-        </ListItemButton>
-      </ListItem>
-    ));
-  };
+    const handleEditButton=()=>{
+        openEditPoint();
+    }
 
     let x = [true, true, true];
 
@@ -167,3 +132,4 @@ export default PointsView;
 function forceUpdate() {
     throw new Error('Function not implemented.');
 }
+
