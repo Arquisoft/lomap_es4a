@@ -21,7 +21,7 @@ export type MarkerType = {
     website: string
 }
 
-function Mapa({session, markerList, clickMap, isMarkerSaved}: any) {
+function Mapa({session, markerList, clickMap, markerToAdd}: any) {
     const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
 
     const [map, setMap] = useState(React.useRef<google.maps.Map | null>(null).current);
@@ -105,17 +105,13 @@ function Mapa({session, markerList, clickMap, isMarkerSaved}: any) {
                     anchor: new window.google.maps.Point(15,15),
                     scaledSize: new window.google.maps.Size(40,40)
                 },
-                visible:true,
+                visible:false,
             });
             marker.setMap(map);
+
+            markerToAdd(marker);
             // Mostrar menú añadir punto
-            clickMap(e.latLng.lat(), e.latLng.lng());
-            
-            if(isMarkerSaved){
-                marker.setIcon(savedMarker2)
-            } else{
-                marker.setMap(null);
-            }
+            clickMap(e.latLng.lat(), e.latLng.lng(), marker);
 
         }
 

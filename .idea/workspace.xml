@@ -8,7 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/solidapi/solidapi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/solidapi/solidapi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/images/markerGuerdado2.png" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/images/markerGuerdado2.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +106,7 @@
       <workItem from="1680019199169" duration="3447000" />
       <workItem from="1680026270201" duration="1841000" />
       <workItem from="1680958534508" duration="919000" />
-      <workItem from="1681039379012" duration="6781000" />
+      <workItem from="1681039379012" duration="9567000" />
     </task>
     <task id="LOCAL-00001" summary="Se ha movido el directorio solidapi a webapp">
       <created>1678459410126</created>
