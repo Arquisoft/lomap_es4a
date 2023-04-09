@@ -98,7 +98,7 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
                 icon: {
                     url: savedMarker,
                 },
-                visible:false,
+                visible:true,
             });
 
             marker.addListener('click', () =>{
@@ -107,7 +107,7 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
             // Punto a añadir si guardamos
             markerToAdd(marker);
             // Mostrar menú añadir punto
-            clickMap(e.latLng.lat(), e.latLng.lng(), marker);
+            clickMap(e.latLng.lat(), e.latLng.lng());
         }
 
     };

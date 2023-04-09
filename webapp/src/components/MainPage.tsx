@@ -64,10 +64,9 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         markerToAdd?.setVisible(false);
     }
 
-    const clickMap = (lat: number, lng: number, marker: google.maps.Marker) => {
+    const clickMap = (lat: number, lng: number) => {
         setAddPointOpen(true);
         setClickedPoint({lat: lat, lng: lng});
-        marker.setVisible(true);
 
     }
 
