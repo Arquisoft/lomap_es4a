@@ -29,7 +29,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const [mapListOpen, setMapListOpen] = React.useState(false);
     const [markerList, setMarkerlist] = React.useState<google.maps.Marker[]>([]);
     const [clickedPoint, setClickedPoint] = React.useState({lat:0, lng:0});
-    const [point, setPoint] = React.useState(null);
+    const [point, setPoint] = React.useState(new Point("", "", "", 0, 0, ""));
     const [markerToAdd, setMarkerToAdd] = React.useState<google.maps.Marker>();
 
 
