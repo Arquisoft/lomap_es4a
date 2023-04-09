@@ -7,8 +7,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { createTheme, Divider, IconButton, ListItemButton, ListSubheader, makeStyles, Switch, ThemeProvider } from '@mui/material';
 import GreenSwitch from './GreenSwitch';
-import { deletePoint } from '../../solidapi/solidapi';
-
+import EditIcon from '@mui/icons-material/Edit';
 interface PointsViewProps {
   open: boolean;
   onClose: () => void;
@@ -16,24 +15,27 @@ interface PointsViewProps {
   deletePoint:(index:number)=>void
 }
 
-const theme2 = createTheme({
+const theme = createTheme({
   components: {
-    MuiDrawer: {
-      styleOverrides: {
-        paper: {
-          backgroundColor: "#2b5387"
-        }
+      MuiDrawer: {
+          styleOverrides: {
+              paper: {
+                  backgroundColor: "#101F33",
+                  color: "white"
+              }
+          }
       }
-    }
   }
 });
 
 
 
 const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,deletePoint }) => {
+  
   const [encendida, setEncendida] = React.useState<boolean[]>([]);
 
   const [encendidaAll, setEncendidaAll] = React.useState(true);
+
 
   React.useEffect(() => {
     // Initialize encendida state with an array of false values
@@ -59,30 +61,38 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,delete
   const handleDeleteButton=(index:number)=>{
 
     deletePoint(index)
-    
+  }
+
+  const handleEditButton=(index:number)=>{
+
+    console.log("Editando el "+index)
   }
   const generatePointsControl = () => {
     return markerList.map((marker, index) => (
       <ListItem key={index}>
         <ListItemText primary={`Point ${index + 1}`} />
         <GreenSwitch checked={encendida[index]} onChange={() => handleToggle(index)} />
+        <ListItemButton onClick={() =>{handleEditButton(index)} }>
+          <EditIcon/>
+          </ListItemButton>
         <ListItemButton onClick={() =>{handleDeleteButton(index)} }>
           <DeleteForeverIcon/>
           </ListItemButton>
+          
       </ListItem>
     ));
   };
 
-
+  
   
   return (
     
-    <ThemeProvider theme={theme2}>
+    <ThemeProvider theme={theme}>
       <Drawer anchor="left" open={open} sx={{ display: { mt: 500 } }} >
         <List sx={{ width:'300px' }} disablePadding>
           <ListItem>
-            <IconButton onClick={onClose}>
-              <ChevronLeftIcon />
+            <IconButton onClick={onClose} >
+              <ChevronLeftIcon sx={{color: "#808b96"}}/>
             </IconButton>
             <ListItemText primary="Points List" />
           </ListItem>
@@ -90,7 +100,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,delete
               <ListItemText primary={"Visibilidad de todos"} />
               <GreenSwitch checked={encendidaAll} onChange={() => handleToggleAll()} />
           </ListItem>
-          <Divider sx={{ mt: 2 }} />
+          <Divider sx={{backgroundColor: "#808b96"}} />
           {generatePointsControl()}
           
 
@@ -101,3 +111,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,delete
 };
 
 export default PointsView;
+function forceUpdate() {
+  throw new Error('Function not implemented.');
+}
+
