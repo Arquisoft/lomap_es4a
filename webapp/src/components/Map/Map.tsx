@@ -34,12 +34,11 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
 
     // Save map in ref if we want to access the map
     //const mapRef = React.useRef<google.maps.Map | null>(null);
+
+    let mList: { [id: string]: google.maps.Marker } = {};
    
-    var mList:google.maps.Marker[]
-    mList=[];
-   
-    const addMarker=(m:google.maps.Marker)=>{
-        mList.push(m)
+    const addMarker=(pointId: string, m:google.maps.Marker)=>{
+        mList[pointId] = m;
     }
 
     const onLoad = (googleMap: google.maps.Map): void => { // TODO: aquí se imprimen los puntos recuperados del pod
@@ -64,10 +63,10 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
                         openInfoView(marker);
                     })
 
-                    addMarker(marker);
+                    addMarker(point.id, marker);
                 });
                 setMap(googleMap);
-                markerList(mList)
+                markerList(mList);
             }
         });
     };

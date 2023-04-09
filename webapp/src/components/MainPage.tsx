@@ -28,7 +28,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const [addPointOpen, setAddPointOpen] = React.useState(false);
     const [editPointOpen, setEditPointOpen] = React.useState(false);
     const [mapListOpen, setMapListOpen] = React.useState(false);
-    const [markerList, setMarkerlist] = React.useState<google.maps.Marker[]>([]);
+    const [markerList, setMarkerlist] = React.useState<{[id: string]: google.maps.Marker}>({});
     const [clickedPoint, setClickedPoint] = React.useState({lat:0, lng:0});
     const [point, setPoint] = React.useState(new Point("", "", "", 0, 0, ""));
     const [markerToAdd, setMarkerToAdd] = React.useState<google.maps.Marker>();
@@ -94,9 +94,8 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         addPoint(session, point);
         markerToAdd?.setIcon(savedMarker2);
         markerToAdd?.setVisible(true);
-        markerToAdd?.setTitle(point.name)
-        markerList.push(markerToAdd!)
-        //TODO: (Idea) recargar el mapa
+        markerToAdd?.setTitle(point.name);
+        markerList[point.id] = (markerToAdd!);
     }
 
     const editPoint = (point: Point) => {
@@ -107,16 +106,13 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const [pointsViewCounter, setPointsViewCounter] = React.useState(0);
 
     
-    const eliminatePoint=(index:number)=>{
-       
-        
-         
+    const eliminatePoint = (id: string)=>{
+        deletePoint(session, id);
+        markerList[id].setMap(null);
 
-        deletePoint(session,index);
-        markerList[index].setMap(null);
-        //console.log("Antes de eliminar "+markerList.length)
-        markerList.splice(index,1);
-       // console.log("Despues de eliminar "+markerList.length)
+        delete markerList[id];
+        //markerList.splice(index,1);
+
         setPointsListOpen(!pointsListOpen)
         setOpenDialog(true)
         

@@ -12,9 +12,9 @@ import Point from "../../solidapi/Point";
 interface PointsViewProps {
     open: boolean;
     onClose: () => void;
-    markerList: google.maps.Marker[]
+    markerList: {[id: string]: google.maps.Marker};
     openEditPoint: ()=>void;
-    deletePoint:(index:number)=>void;
+    deletePoint:(id:string)=>void;
 }
 
 const theme = createTheme({
@@ -34,50 +34,61 @@ const theme = createTheme({
 
 const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,openEditPoint,deletePoint }) => {
   
-  const [encendida, setEncendida] = React.useState<boolean[]>([]);
+  const [encendida, setEncendida] = React.useState<{[id: string]: boolean}>({});
 
   const [encendidaAll, setEncendidaAll] = React.useState(true);
 
-
   React.useEffect(() => {
     // Initialize encendida state with an array of false values
-    setEncendida(new Array(markerList.length).fill(true));
+      let dict: {[id: string]: boolean} = {};
+      Object.keys(markerList).forEach((id: string) => {
+          dict[id] = true;
+      });
+    setEncendida(dict);
   }, [markerList]);
 
-  const handleToggle = (index: number) => {
-    setEncendida(prevState => {
-      const newState = [...prevState];
-      newState[index] = !newState[index];
-      return newState;
-    });
-    markerList[index].setVisible(!encendida[index]);
-    console.log(markerList[index].getVisible() + " " + !encendida[index]);
+  const handleToggle = (id: string) => {
+      let newEncendida = encendida;
+      encendida[id] = !encendida[id];
+      setEncendida(newEncendida);
+
+      markerList[id].setVisible(!markerList[id].getVisible());
+      // setEncendida(prevState => {
+      //     const newState = [...prevState];
+      //     newState[index] = !newState[index];
+      //     return newState;
+      // });
+      // markerList[index].setVisible(!encendida[index]);
+      // console.log(markerList[index].getVisible() + " " + !encendida[index]);
   };
   const handleToggleAll=()=>{
     setEncendidaAll(!encendidaAll)
-    markerList.forEach((marker, index) => {
-      if(marker.getVisible()==encendidaAll)
-      handleToggle(index);
+      Object.keys(markerList).forEach((id) => {
+          if (markerList[id].getVisible()==encendidaAll) {
+              handleToggle(id);
+          }
     });
   }
-  const handleDeleteButton=(index:number)=>{
-
-    deletePoint(index)
+  const handleDeleteButton=(id: string)=>{
+    deletePoint(id)
   }
 
-  const handleEditButton=(index:number)=>{
+  const handleEditButton=()=>{
     openEditPoint();
   }
 
+  let x = [true, true, true];
+
   const generatePointsControl = () => {
-    return markerList.map((marker, index) => (
-      <ListItem key={index}>
-        <ListItemText primary={marker.getTitle() +": "} />
-        <GreenSwitch checked={encendida[index]} onChange={() => handleToggle(index)} />
-        <ListItemButton onClick={() =>{handleEditButton(index)} }>
+    return Object.keys(markerList).map((id) => (
+      <ListItem key={id}>
+        <ListItemText primary={markerList[id].getTitle() +": "} />
+        {/*<GreenSwitch checked={encendida[index]} onChange={() => handleToggle(index)} />*/}
+          <GreenSwitch onChange={() => handleToggle(id)} checked={encendida[id]} />
+        <ListItemButton onClick={() =>{handleEditButton()} }>
           <EditIcon/>
           </ListItemButton>
-        <ListItemButton onClick={() =>{handleDeleteButton(index)} }>
+        <ListItemButton onClick={() =>{handleDeleteButton(id)} }>
           <DeleteForeverIcon/>
           </ListItemButton>
           

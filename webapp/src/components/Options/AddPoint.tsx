@@ -48,15 +48,15 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
   const [pointCategory, setPointCategory] = useState("");
 
   const handleNameChange = (event: ChangeEvent) => {
-    setPointName(event.target.textContent? event.target.textContent : "");
+    setPointName("PointX");
   }
 
   const handleDescriptionChange = (event: ChangeEvent) => {
-    setPointDescription(event.target.textContent? event.target.textContent : "");
+    setPointDescription("Desc");
   }
 
   const handleCategoryChange = (event: ChangeEvent) => {
-    setPointCategory(event.target.textContent? event.target.textContent : "");
+    setPointCategory("Bar");
   }
 
   const defaultProps = {
