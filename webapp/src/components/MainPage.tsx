@@ -43,11 +43,13 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     }
 
     const openPointsList = () => {
+        setNavbarOpen(false);
         setPointsListOpen(true);
     }
 
     const closePointsList = () => {
         setPointsListOpen(false);
+        setNavbarOpen(true);
     }
 
     const openMapList = () => {
@@ -83,6 +85,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         addPoint(session, point);
         markerToAdd?.setIcon(savedMarker2);
         markerToAdd?.setVisible(true);
+        markerToAdd?.setTitle(point.name)
         markerList.push(markerToAdd!)
         //TODO: (Idea) recargar el mapa
     }
