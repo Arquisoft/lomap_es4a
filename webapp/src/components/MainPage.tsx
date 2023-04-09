@@ -43,11 +43,13 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     }
 
     const openPointsList = () => {
+        setNavbarOpen(false);
         setPointsListOpen(true);
     }
 
     const closePointsList = () => {
         setPointsListOpen(false);
+        setNavbarOpen(true);
     }
 
     const openMapList = () => {
