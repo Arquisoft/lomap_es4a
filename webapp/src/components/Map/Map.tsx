@@ -45,35 +45,36 @@ function Mapa({session, markerList, clickMap, currentMapName}: any) {
     }
 
     const onLoad = (googleMap: google.maps.Map): void => { // TODO: aquí se imprimen los puntos recuperados del pod
-        createMap(session, currentMapName);
+        createMap(session, currentMapName).then(() => {
 
-        retrievePoints(session, currentMapName).then(points => {
-            if (points != null) {
+            retrievePoints(session, currentMapName).then(points => {
+                if (points != null) {
 
-                points.forEach(point => {
+                    points.forEach(point => {
 
-                    // NUEVO
-                    let marker = new google.maps.Marker({
-                        position: {lat: point.latitude, lng: point.longitude},
-                        map: googleMap,
-                        title: point.id,
-                        icon: {
-                            url: savedMarker2,
-                            origin: new window.google.maps.Point(0,0),
-                            anchor: new window.google.maps.Point(15,15),
-                            scaledSize: new window.google.maps.Size(40,40)
-                        }
+                        // NUEVO
+                        let marker = new google.maps.Marker({
+                            position: {lat: point.latitude, lng: point.longitude},
+                            map: googleMap,
+                            title: point.id,
+                            icon: {
+                                url: savedMarker2,
+                                origin: new window.google.maps.Point(0,0),
+                                anchor: new window.google.maps.Point(15,15),
+                                scaledSize: new window.google.maps.Size(40,40)
+                            }
+                        });
+                        marker.setMap(googleMap);
+                        addMarker(marker);
+                        marker.addListener('click', () =>{
+                            //deleteMark(marker);
+                            openInfoView(marker);
+                        })
                     });
-                    marker.setMap(googleMap);
-                    addMarker(marker);
-                    marker.addListener('click', () =>{
-                        //deleteMark(marker);
-                        openInfoView(marker);
-                    })
-                });
-                setMap(googleMap);
-                markerList(mList)
-            }
+                    setMap(googleMap);
+                    markerList(mList)
+                }
+            });
         });
     };
 
@@ -132,7 +133,7 @@ function Mapa({session, markerList, clickMap, currentMapName}: any) {
     };
 
     if(!isLoaded) return <div>Map loading...</div>;
-
+    
     return(
         <div>
             <GoogleMap

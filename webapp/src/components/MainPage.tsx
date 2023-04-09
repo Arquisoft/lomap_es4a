@@ -94,7 +94,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} /></Box>
             <Box><AddPoint open={addPointOpen} closeAddPoints={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
             <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList}></PointsView></Box>
-            <Box><MapListView open={mapListOpen} onClose={closeMapList} ></MapListView></Box>
+            <Box><MapListView open={mapListOpen} onClose={closeMapList} currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} session={session} ></MapListView></Box>
             <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markerList={setMarkerlist} clickMap={clickMap} currentMapName={currentMapName} /></Box>
         </Grid>
     );

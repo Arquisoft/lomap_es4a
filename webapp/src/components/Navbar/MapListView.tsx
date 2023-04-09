@@ -9,11 +9,16 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import FindReplaceIcon from '@mui/icons-material/FindReplace';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl, createTheme, ThemeProvider, IconButton, Divider, TextField } from "@mui/material";
+import { retrieveMapNames } from '../../solidapi/solidapi';
+import { Session } from '@inrupt/solid-client-authn-browser';
 
 
 interface MapListViewProps {
     open: boolean;
     onClose: () => void;
+    currentMapName: string;
+    setCurrentMapName: React.Dispatch<React.SetStateAction<string>>;
+    session: Session;
 }
 
 function MapListView(props: MapListViewProps): JSX.Element {
@@ -21,6 +26,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
     const [currentLoadMap, setCurrentLoadMap] = useState(""); // info del mapa a cargar
     const [currentNewMap, setCurrentNewMap] = useState(""); // info del mapa a crear
     const [currentDeleteMap, setCurrentDeleteMap] = useState(""); // info del mapa a borrar
+    const [mapNames, setMapNames] = useState<string[]>([]); // lista de nombres sacados del pod
 
     const handleLoadMapChange = (event: SelectChangeEvent) => {
         setCurrentLoadMap(event.target.value);
@@ -34,8 +40,9 @@ function MapListView(props: MapListViewProps): JSX.Element {
         setCurrentDeleteMap(event.target.value);
     };
 
+    // Carga la lista de puntos correspondiente al mapa seleccionado
     const handleLoadMapClick = () => {
-        // TODO: Se debe de cargar la lista de puntos correspondiente al mapa seleccionado
+        props.setCurrentMapName(currentLoadMap); // TODO: Hacer que se recarguen los puntos en el mapa
         setCurrentLoadMap("");
         props.onClose();
     };
@@ -46,13 +53,27 @@ function MapListView(props: MapListViewProps): JSX.Element {
         props.onClose();
     };
 
+    // Crea el nuevo mapa con el nombre escogido (validando el nuevo nombre)
     const handleNewMapClick = () => {
-        // TODO: Se debe de crear el nuevo mapa con el nombre escogido (y validar el nuevo nombre)
         if (currentNewMap != null && currentNewMap.trim() !== "") {
+            props.setCurrentMapName(currentNewMap);
             setCurrentNewMap("");
             props.onClose();
         }
     };
+
+    const handleOpenSelect = () => {
+        retrieveMapNames(props.session)
+            .then(names => setMapNames(names));
+    }
+
+    // Devuelve los menu items correspondientes a los nombres de los 
+    // mapas existentes en el pod del usuario
+    const generateMapSelectMenuItems = (): JSX.Element[] => {        
+        return (mapNames.map((mapName:string) => 
+            <MenuItem key={mapName} value={mapName}>{mapName}</MenuItem>
+        ));
+    }
 
     const theme = createTheme({
         components: {
@@ -119,11 +140,9 @@ function MapListView(props: MapListViewProps): JSX.Element {
                                 id="selectMap"
                                 value={currentLoadMap}
                                 onChange={handleLoadMapChange}
+                                onOpen={handleOpenSelect}
                             >
-                                <MenuItem value={"Mapa1"}>Mapa1</MenuItem>
-                                <MenuItem value={"Mapa2"}>Mapa2</MenuItem>
-                                <MenuItem value={"Mapa3"}>Mapa3</MenuItem>
-                                <MenuItem value={"Mapa4"}>Mapa4</MenuItem>
+                                {generateMapSelectMenuItems()}
                             </Select>                        
                         </FormControl>
                     </ThemeProvider>
@@ -154,11 +173,9 @@ function MapListView(props: MapListViewProps): JSX.Element {
                                 id="selectDeleteMap"
                                 value={currentDeleteMap}
                                 onChange={handleDeleteMapChange}
+                                onOpen={handleOpenSelect}
                             >
-                                <MenuItem value={"Mapa1"}>Mapa1</MenuItem>
-                                <MenuItem value={"Mapa2"}>Mapa2</MenuItem>
-                                <MenuItem value={"Mapa3"}>Mapa3</MenuItem>
-                                <MenuItem value={"Mapa4"}>Mapa4</MenuItem>
+                                {generateMapSelectMenuItems()}
                             </Select>                        
                         </FormControl>
                     </ThemeProvider>

@@ -203,3 +203,19 @@ export async function retrievePoints(session: Session, mapName:string): Promise<
         return [];
     }
 }
+
+// Devuelve los nombres de los mapas que tiene el usuario
+export async function retrieveMapNames(session: Session): Promise<string[]> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return [];
+    } // Check if the webId is undefined
+
+    let url = session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/lomap");
+
+    let dataset = await getSolidDataset(url, { fetch: session.fetch });
+    let mapUrls = getContainedResourceUrlAll(dataset); // urls de los mapas del usuario
+    
+    return mapUrls.map(mapUrl =>
+        mapUrl.split("/lomap/")[1]
+    );
+}
