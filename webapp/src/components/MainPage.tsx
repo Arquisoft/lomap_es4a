@@ -83,6 +83,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         addPoint(session, point);
         markerToAdd?.setIcon(savedMarker2);
         markerToAdd?.setVisible(true);
+        markerToAdd?.setTitle(point.name)
         markerList.push(markerToAdd!)
         //TODO: (Idea) recargar el mapa
     }

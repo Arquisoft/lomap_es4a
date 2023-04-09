@@ -70,7 +70,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,delete
   const generatePointsControl = () => {
     return markerList.map((marker, index) => (
       <ListItem key={index}>
-        <ListItemText primary={`Point ${index + 1}`} />
+        <ListItemText primary={marker.getTitle() +": "} />
         <GreenSwitch checked={encendida[index]} onChange={() => handleToggle(index)} />
         <ListItemButton onClick={() =>{handleEditButton(index)} }>
           <EditIcon/>
