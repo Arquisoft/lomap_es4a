@@ -7,9 +7,11 @@ import ListItemText from '@mui/material/ListItemText';
 
 import {
   Autocomplete, Button,
-  createTheme,
+  createTheme, Dialog, DialogActions,
+  DialogContent,
   IconButton,
   ThemeProvider,
+  Typography,
 } from '@mui/material';
 import TextField from "@mui/material/TextField";
 
@@ -46,17 +48,18 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
   const [pointName, setPointName] = useState("");
   const [pointDescription, setPointDescription] = useState("");
   const [pointCategory, setPointCategory] = useState("");
+  const [openDialog, setOpenDialog] = React.useState(false);
 
-  const handleNameChange = (event: ChangeEvent) => {
-    setPointName("PointX");
+  const handleNameChange = (event: any) => {
+    setPointName(event.target.value);
   }
 
-  const handleDescriptionChange = (event: ChangeEvent) => {
-    setPointDescription("Desc");
+  const handleDescriptionChange = (event: any) => {
+    setPointDescription(event.target.value);
   }
 
-  const handleCategoryChange = (event: ChangeEvent) => {
-    setPointCategory("Bar");
+  const handleCategoryChange = (event: any) => {
+    setPointCategory(event.target.value);
   }
 
   const defaultProps = {
@@ -68,10 +71,21 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
   }
 
   const save = () => {
-    onClose();
-    let point: Point = new Point(uuidv4(), pointName, pointCategory, clickedPoint.lat, clickedPoint.lng, pointDescription);
-    createPoint(point);
+    if (pointName === "" || pointCategory === "") {
+      setOpenDialog(true);
+    } else {
+      onClose();
+      setPointName("");
+      setPointDescription("");
+      setPointCategory("");
+      let point: Point = new Point(uuidv4(), pointName, pointCategory, clickedPoint.lat, clickedPoint.lng, pointDescription);
+      createPoint(point);
+    }
   }
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
 
   return (
       <ThemeProvider theme={theme}>
@@ -106,7 +120,7 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
                   includeInputInList
                   fullWidth
                   renderInput={(params) => (
-                      <TextField {...params} label="New point's category" variant="filled" fullWidth onChange={handleCategoryChange} />
+                      <TextField {...params} label="New point's category" variant="filled" fullWidth onSelect={handleCategoryChange} />
                   )}
               />
             </ListItem>
@@ -119,6 +133,17 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
             </ListItem>
           </List>
         </Drawer>
+
+        <Dialog onClose={handleCloseDialog} aria-labelledby="customized-dialog-title" open={openDialog}>
+          <DialogContent dividers>
+            <Typography gutterBottom>The Place must have a name and a category</Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button autoFocus onClick={handleCloseDialog} color="primary">
+              OK
+            </Button>
+          </DialogActions>
+        </Dialog>
       </ThemeProvider>
 );
 }

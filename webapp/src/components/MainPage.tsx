@@ -35,7 +35,6 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const [openDialog, setOpenDialog] = React.useState(false);
 
 
-
     /*
     const toggleNavbar = (open: boolean) => {
         setNavbarOpen(open);
