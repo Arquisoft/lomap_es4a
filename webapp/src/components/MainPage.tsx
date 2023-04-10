@@ -14,7 +14,7 @@ import MapListView from "./Navbar/MapListView";
 import SearchBar from "./Searchbar/Searchbar";
 
 import { Marker } from "@react-google-maps/api";
-import {addPoint,deletePoint} from "../solidapi/solidapi";
+import {addPoint, deletePoint, getPoint, updatePoint} from "../solidapi/solidapi";
 
 import savedMarker2 from '../images/markerGuerdado2.png';
 import EditPoint from "./Options/EditPoint";
@@ -33,7 +33,6 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const [point, setPoint] = React.useState(new Point("", "", "", 0, 0, ""));
     const [markerToAdd, setMarkerToAdd] = React.useState<google.maps.Marker>();
     const [openDialog, setOpenDialog] = React.useState(false);
-
 
 
     /*
@@ -74,9 +73,14 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         markerToAdd?.setVisible(false);
     }
 
-    const openEditPoint = () => {
-        setPointsListOpen(false);
-        setEditPointOpen(true);
+    const openEditPoint = (id: string) => {
+        getPoint(session, id).then(point => {
+            if (point !== null) {
+                setPoint(point);
+            }
+            setPointsListOpen(false);
+            setEditPointOpen(true);
+        });
     }
 
     const clickMap = (lat: number, lng: number) => {
@@ -99,12 +103,11 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     }
 
     const editPoint = (point: Point) => {
-        closeEditPoint()
-        console.log("editing point") // TODO
+        updatePoint(session, point);
+        closeEditPoint();
+
+        markerList[point.id].setTitle(point.name);
     }
-
-    const [pointsViewCounter, setPointsViewCounter] = React.useState(0);
-
     
     const eliminatePoint = (id: string)=>{
         deletePoint(session, id);

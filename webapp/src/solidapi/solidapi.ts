@@ -118,10 +118,40 @@ export async function createMap(session: Session): Promise<boolean> {
     return true;
 }
 
+export async function getPoint(session: Session, id: string): Promise<Point | null> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return null;
+    } // Check if the webId is undefined
+
+    let url = mapUrlFor(session);
+
+    if (!await checkStructure(session)) {
+        return null;
+    }
+
+    try {
+        let mapBlob = await getFile(
+            url,
+            { fetch: session.fetch }
+        );
+
+        let map = JSON.parse(await mapBlob.text());
+
+        let pointToGet: Point | null = null;
+        map.spatialCoverage.forEach((point: Point) => {
+            if (point.id === id) {
+                pointToGet = point;
+                return;
+            }
+        });
+
+        return pointToGet;
+    } catch (error) {
+        return null;
+    }
+}
+
 export async function addPoint(session: Session, point: Point): Promise<boolean> {
-
-    console.log(JSON.stringify(point));
-
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return false;
     } // Check if the webId is undefined
@@ -185,13 +215,13 @@ export async function deletePoint(session: Session, id: string): Promise<boolean
       // }
 
         let count = 0;
-          map.spatialCoverage.forEach((point: Point) => {
-              if (point.id === id) {
-                    map.spatialCoverage.splice(count, 1);
-                    return;
-                }
-              count++;
-            });
+        map.spatialCoverage.forEach((point: Point) => {
+            if (point.id === id) {
+                map.spatialCoverage.splice(count, 1);
+                return;
+            }
+            count++;
+        });
 
       let blob = new Blob([JSON.stringify(map)], { type: "application/ld+json" });
       let file = new File([blob], map.name + ".jsonld", { type: blob.type });
@@ -206,6 +236,52 @@ export async function deletePoint(session: Session, id: string): Promise<boolean
     }
     return true;
   }
+
+export async function updatePoint(session: Session, pointToUpdate: Point): Promise<boolean> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return false;
+    } // Check if the webId is undefined
+
+    let url = mapUrlFor(session);
+
+    if (!await checkStructure(session)) {
+        return false;
+    }
+
+    let pointToSave = JSON.parse(JSON.stringify(pointToUpdate));
+    pointToSave["@context"] = "https://schema.org/";
+    pointToSave["@type"] = "Point";
+
+    try {
+        let mapBlob = await getFile(
+            url,
+            { fetch: session.fetch }
+        );
+
+        let map = JSON.parse(await mapBlob.text());
+
+        let count = 0;
+        map.spatialCoverage.forEach((point: Point) => {
+            if (point.id === pointToUpdate.id) {
+                map.spatialCoverage[count] = pointToSave;
+                return;
+            }
+            count++;
+        });
+
+        let blob = new Blob([JSON.stringify(map)], { type: "application/ld+json" });
+        let file = new File([blob], map.name + ".jsonld", { type: blob.type });
+
+        await overwriteFile(
+            url,
+            file,
+            { contentType: file.type, fetch: session.fetch }
+        );
+    } catch (error) {
+        return false;
+    }
+    return true;
+}
   
 
 export async function retrievePoints(session: Session): Promise<Point[]> {

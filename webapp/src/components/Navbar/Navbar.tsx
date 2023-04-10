@@ -115,7 +115,7 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList}: any) {
                   <CombinedDataProvider
                       datasetUrl={session.info.webId}
                       thingUrl={session.info.webId}>
-                    {FOAF.name !== null && FOAF.name !== 'undefined' ?
+                    {FOAF.name !== null && FOAF.name !== undefined ?
                         (<Text property={ FOAF.name }/>):
                         (<Typography>User</Typography>)
                     }
