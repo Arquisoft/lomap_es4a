@@ -9,7 +9,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import FindReplaceIcon from '@mui/icons-material/FindReplace';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl, createTheme, ThemeProvider, IconButton, Divider, TextField } from "@mui/material";
-import { retrieveMapNames } from '../../solidapi/solidapi';
+import { deleteMap, retrieveMapNames } from '../../solidapi/solidapi';
 import { Session } from '@inrupt/solid-client-authn-browser';
 
 
@@ -47,10 +47,19 @@ function MapListView(props: MapListViewProps): JSX.Element {
         props.onClose();
     };
 
+    // Elimina el mapa seleccionado
     const handleDeleteMapClick = () => {
-        // TODO: Se debe de eliminar el mapa seleccionado
-        setCurrentDeleteMap("");
-        props.onClose();
+        // Si el mapa actual es el que se a a borrar, se carga un nuevo mapa.
+        // Si no hay más mapas, se crea el mapa "Map1"
+        if (props.currentMapName === currentDeleteMap) {
+            retrieveMapNames(props.session)
+                .then(names => props.setCurrentMapName(names.length > 0 ? names[0] : "Map1"));
+        }
+        deleteMap(props.session, currentDeleteMap)
+            .then(() => {
+                setCurrentDeleteMap("");
+                props.onClose();
+            });
     };
 
     // Crea el nuevo mapa con el nombre escogido (validando el nuevo nombre)

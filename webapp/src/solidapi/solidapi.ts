@@ -21,7 +21,9 @@ function checkSession(session: Session): boolean {
 }
 
 function checkMapNameIsValid(mapName:string): boolean {
-    return typeof mapName !== "undefined" && mapName !== null;
+    const regex = /\W/; // equivalente a [^A-Za-z0-9_]+
+    return typeof mapName !== "undefined" && mapName !== null
+        && mapName.match(regex) === null;
 }
 
 function mapUrlFor(session: Session, mapName:string): string {
@@ -218,4 +220,29 @@ export async function retrieveMapNames(session: Session): Promise<string[]> {
     return mapUrls.map(mapUrl =>
         mapUrl.split("/lomap/")[1]
     );
+}
+
+// Borra el mapa cuyo nombre se pasa como parámetro
+export async function deleteMap(session: Session, mapName: string): Promise<boolean> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return false;
+    } // Check if the webId is undefined
+
+    if (!checkMapNameIsValid) {
+        return false;
+    }
+  
+    let url = mapUrlFor(session, mapName);
+  
+    try {
+        await deleteFile(
+            url,
+            { fetch: session.fetch }
+        );
+
+        return true;
+
+    } catch (error) {
+      return false;
+    }
 }
