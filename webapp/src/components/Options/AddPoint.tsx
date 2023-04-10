@@ -5,11 +5,14 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import {
+  Alert,
   Autocomplete, Button,
   createTheme, Dialog, DialogActions,
   DialogContent,
   IconButton,
+  Snackbar,
   ThemeProvider,
   Typography,
 } from '@mui/material';
@@ -49,7 +52,15 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
   const [pointDescription, setPointDescription] = useState("");
   const [pointCategory, setPointCategory] = useState("");
   const [openDialog, setOpenDialog] = React.useState(false);
-
+  const [errorName, setErrorName] = useState(false);
+  const [errorCategory, setErrorCategory] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlert(false);
+  }
   const handleNameChange = (event: any) => {
     setPointName(event.target.value);
   }
@@ -71,8 +82,19 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
   }
 
   const save = () => {
-    if (pointName === "" || pointCategory === "") {
-      setOpenDialog(true);
+    if (pointName === '' ){
+      if(pointCategory !== ''){
+        setErrorCategory(false);
+      }
+      setErrorName(true);
+
+    } else if(pointCategory === '') {
+      if (pointName !== '' ){
+        setErrorName(false);
+      }
+      setErrorCategory(true);
+      
+      //setOpenDialog(true);
     } else {
       onClose();
       setPointName("");
@@ -80,6 +102,7 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
       setPointCategory("");
       let point: Point = new Point(uuidv4(), pointName, pointCategory, clickedPoint.lat, clickedPoint.lng, pointDescription);
       createPoint(point);
+      setOpenAlert(true);
     }
   }
 
@@ -104,7 +127,8 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField id="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth onChange={handleNameChange}/>
+                <TextField id="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth onChange={handleNameChange} error={errorName} 
+                            helperText={errorName ? 'Empty name' : ''} />
               </ThemeProvider>
             </ListItem>
             <ListItem>
@@ -120,7 +144,10 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
                   includeInputInList
                   fullWidth
                   renderInput={(params) => (
-                      <TextField {...params} label="New point's category" variant="filled" fullWidth onSelect={handleCategoryChange} />
+                    
+                      <TextField {...params} label="New point's category" variant="filled" fullWidth onSelect={handleCategoryChange} error={errorCategory} 
+                      helperText={errorCategory ? 'Empty category. Select one' : ''} />
+                    
                   )}
               />
             </ListItem>
@@ -134,17 +161,16 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
           </List>
         </Drawer>
 
-        <Dialog onClose={handleCloseDialog} aria-labelledby="customized-dialog-title" open={openDialog}>
-          <DialogContent dividers>
-            <Typography gutterBottom>The Place must have a name and a category</Typography>
-          </DialogContent>
-          <DialogActions>
-            <Button autoFocus onClick={handleCloseDialog} color="primary">
-              OK
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <Snackbar open={openAlert} onClose={handleCloseAlert} autoHideDuration={3000} >
+        <Alert severity="success" 
+          sx={{ width: '100%', backgroundColor: 'green', color: 'white'  }}  
+            iconMapping={{ success: <CheckCircleOutlineIcon sx={{ color: 'white' }} />,}}>Place added correctly!
+        </Alert>
+        </Snackbar>
+        
       </ThemeProvider>
+
+
 );
 }
 

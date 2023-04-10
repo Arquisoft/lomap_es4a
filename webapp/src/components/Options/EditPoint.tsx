@@ -4,11 +4,13 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import {
+  Alert,
   Autocomplete, Button,
   createTheme, Dialog, DialogActions, DialogContent,
   IconButton,
+  Snackbar,
   ThemeProvider, Typography,
 } from '@mui/material';
 import TextField from "@mui/material/TextField";
@@ -43,37 +45,44 @@ const darkTheme = createTheme({
 function EditPoint({open, onClose, point, editPoint}: any) {
 
   const options = ["Bar", "Club", "Sight", "Monument", "Other"];
-
-  const [currentPoint, setCurrentPoint] = useState(point);
+  const [openAlert, setOpenAlert] = useState(false);
   const [pointName, setPointName] = useState(point.name);
   const [pointDescription, setPointDescription] = useState(point.description);
   const [pointCategoryValue, setPointCategoryValue] = useState(point.category);
   const [pointCategoryInputValue, setPointCategoryInputValue] = useState(point.category);
   const [openDialog, setOpenDialog] = useState(false);
-
+  const [errorName, setErrorName] = useState(false);
+  const [errorCategory, setErrorCategory] = useState(false);
   useEffect(() => {
-    if (point.id != currentPoint.id) {
-      setCurrentPoint(point);
       setPointName(point.name);
       setPointDescription(point.description);
       setPointCategoryInputValue(point.category);
-    }
-  });
+    
+  },[point]);
 
   const cancel = () => {
     onClose();
   }
 
   const save = () => {
-    if (pointName === "" || pointCategoryInputValue === "") {
-      setOpenDialog(true);
+    if (errorName || errorCategory) {
+      
     } else {
       onClose();
       let pointToEdit: Point = new Point(point.id, pointName, pointCategoryInputValue, point.latitude, point.longitude, pointDescription);
       editPoint(pointToEdit);
+      setOpenAlert(true);
     }
   }
 
+  
+  const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
@@ -98,7 +107,11 @@ function EditPoint({open, onClose, point, editPoint}: any) {
                 <TextField id="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth defaultValue={point.name}
                            onChange={(event: any) => {
                              setPointName(event.target.value);
-                           }}/>
+                             setErrorName(event.target.value.trim() === '');
+                           }}
+                           error={errorName} 
+                            helperText={errorName ? 'Empty name' : ''} 
+                            />
               </ThemeProvider>
             </ListItem>
             <ListItem>
@@ -110,6 +123,7 @@ function EditPoint({open, onClose, point, editPoint}: any) {
               </ThemeProvider>
             </ListItem>
             <ListItem>
+            
               <Autocomplete
                   options={options}
                   className="point-fill-field"
@@ -119,6 +133,7 @@ function EditPoint({open, onClose, point, editPoint}: any) {
                     if (newValue !== null) {
                       setPointCategoryValue(newValue);
                     }
+                    setErrorCategory(newValue === null);
                   }}
                   inputValue={pointCategoryInputValue}
                   onInputChange={(event, newInputValue) => {
@@ -127,9 +142,15 @@ function EditPoint({open, onClose, point, editPoint}: any) {
                   fullWidth
                   isOptionEqualToValue={(option, value) => option === value}
                   renderInput={(params) => (
-                      <TextField {...params} label="New point's category" variant="filled" fullWidth />
+                    
+                      <TextField {...params} label="New point's category" variant="filled" fullWidth  error={errorCategory} 
+                      helperText={errorCategory ? 'Empty category. Select one' : ''} />
+                    
                   )}
+                  
               />
+              
+
             </ListItem>
             <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
             <ListItem>
@@ -151,7 +172,21 @@ function EditPoint({open, onClose, point, editPoint}: any) {
             </Button>
           </DialogActions>
         </Dialog>
+
+
+        <Snackbar open={openAlert} onClose={handleCloseAlert} autoHideDuration={3000} >
+            <Alert 
+            
+            severity="success" 
+            sx={{ width: '100%', backgroundColor: 'green', color: 'white'  }}  
+            iconMapping={{ success: <CheckCircleOutlineIcon sx={{ color: 'white' }} />,}}>
+             Place edited correctly!
+            </Alert>
+        </Snackbar>
+        
       </ThemeProvider>
+
+      
   );
 }
 
