@@ -1,38 +1,15 @@
 [[section-solution-strategy]]
 == Solution Strategy
 
-
-[role="arc42help"]
-****
-.Contents
-
-* decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern
-* relevant organizational decisions, e.g. selecting a development process or delegating certain tasks to third parties.
-
-.Motivation
-These decisions form the cornerstones for your architecture. They are the basis for many other detailed decisions or implementation rules.
-
-.Form
-Keep the explanation of these key decisions short.
-
-Motivate what you have decided and why you decided that way,
-based upon your problem statement, the quality goals and key constraints.
-Refer to details in the following sections.
-
-[role="arc42help"]
-****
 === Technology decisions
 .TypeScript:
-We decided to use this programming language because it's one of the most suitable to develop SOLID apps. Like JavaScript, it also provides all the capabilities that a language used for the web and it helps the developers by being statically typed. Our team has experience with Java, so a statically typed language is easier to use and understand for us.
+We decided to use this programming language because it's one of the most suitable to develop web apps. Like JavaScript, it provides all the capabilities that a language used for the web and it helps the developers by being statically typed. Our team has experience with Java, so a statically typed language is easier to use and understand for us.
 
-.MongoDB:
-Relational databases may not be the best solution as NoSQL is best fitted when the schema is flexible. MongoDB provides an easy-to-use documental database. It is also implemented in the skeleton provided for the project.
+.Docker containers:
+The docker containers can be used during development as they provide a uniform enviroment to run the application.
 
-.Docker app:
-The docker app configures the system to work with the docker environment.
-
-.WebStorm: 
-We will use this IDE to develop our project
+.WebStorm or Visual Studio Colde:
+We will use either WebStorm or Visual Studio Colde develop our project, each member of the development team can choose to work with either one of them.
 
 .Github Desktop:
 Some members of the team will use Github IDEs such as Github Destopk, Github Kraken or native Github
@@ -45,9 +22,9 @@ Our interfaces will be intuitive and easy to use for anyone.
 The essential information will be stored in SOLID PODs providing a strong privacy.
 
 .Eficiency:
-The performance will be smooth, by using technologies that improve it.
+The performance will be smooth, by using the SOLID PODs correctly.
 
 .Testability:
-We will test the app manually and automatically 
+The team will test the app manually and automatically 
 
 ***

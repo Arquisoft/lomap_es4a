@@ -1,42 +1,25 @@
 [[section-architecture-constraints]]
 == Architecture Constraints
-[role="arc42help"]
-****
-.Contents
-Any requirement that constrains software architects in their freedom of design and implementation decisions or decision about the development process. These constraints sometimes go beyond individual systems and are valid for whole organizations and companies.
 
-.Motivation
-Architects should know exactly where they are free in their design decisions and where they must adhere to constraints.
-Constraints must always be dealt with; they may be negotiable, though.
-
-.Form
-Simple tables of constraints with explanations.
-If needed you can subdivide them into
-technical constraints, organizational and political constraints and
-conventions (e.g. programming or versioning guidelines, documentation or naming conventions)
-****
-=== General conventions
+=== General constraints
 [options="header",cols="1,2"]
 |===
 |Constrains | Description
-| Arc42 | Base template for the documentation. Used for most of the software solutions for its free and open source code.
-| Naming Conventions | The names and nomenclature will follow the constraints of each technology and follow the same naming line in the entire project
+| Arc42 | It will be the base template followed by the documentation.
+| Git & GitHub | A version control management has to be used so that the software can be versioned and all developers have access to the project. GitHub is a tool that has to be used so the professors can evaluate the project.
 |===
 === Technology conventions
 [options="header",cols="1,2"]
 |===
 |Constrains | Description
-| Git | Version control management in which will be uploaded all content related to the project. Including documentation, code, records of meetings, documentation of issues or different versions.
-| SOLID | Principles used to build code. Use of pods to store the user's data
-| WebStorm | Main IDE for TypeScript developer. Chosen because of this facility with Git integration and specialization on TypeScript coding
-| GitHub | IDE for version control. Chosen Because our familiarity with it and its easy use.
+| SOLID | The use of pods to store the user's data is mandatory.
+| Web | The developed software solution must be accesible by the users through a web application so the project has to be deployed in a server.
 |===
 === Group conventions
 [options="header",cols="1,2"]
 |===
 |Constrains | Description
-| Capacity | Main group formed by four third-grade-developers who are looking for add value to the project.
-| Meeting agreements | Two scheduled meetings per week. One during the class session to update the tasks for the week and another for conflict resolution and routine checks.
+| Capacity | The group must have between 5 and 8 members (5 members in this case).
+| Meetings | One scheduled meetings per week is mandatory. It will take place during the lab sessions More meetings can be arranged.
 | Time Restriction | This project has to have an approximate duration of one semester.
-| Distribution | Division of the different areas in equitative Full Stack parts. Looking for a complete development and knowledge of all team 
 |===

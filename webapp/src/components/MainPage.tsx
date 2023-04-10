@@ -1,8 +1,5 @@
-import Box from "@mui/material/Box";
-import PrimarySearchAppBar from "./Searchbar/Searchbar";
 import Mapa from "./Map/Map";
-import { Grid } from "@mui/material";
-import React, {useEffect} from "react";
+import React from "react";
 import { SessionType } from "../solidapi/solidapiAdapter";
 import AddPoint from "./Options/AddPoint";
 import Point from "../solidapi/Point";
@@ -13,35 +10,39 @@ import MapListView from "./Navbar/MapListView";
 
 import SearchBar from "./Searchbar/Searchbar";
 
-import { Marker } from "@react-google-maps/api";
-import {addPoint} from "../solidapi/solidapi";
+import {addPoint, deletePoint, getPoint, updatePoint} from "../solidapi/solidapi";
 
+import savedMarker2 from '../images/markerGuerdado2.png';
+import EditPoint from "./Options/EditPoint";
+
+import {Button, Grid, Typography, Box, Dialog, DialogActions, DialogContent} from '@mui/material';
 
 export default function MainPage({ session }: SessionType): JSX.Element {
 
     const [navbarOpen, setNavbarOpen] = React.useState(false);
     const [pointsListOpen, setPointsListOpen] = React.useState(false);
     const [addPointOpen, setAddPointOpen] = React.useState(false);
+    const [editPointOpen, setEditPointOpen] = React.useState(false);
     const [mapListOpen, setMapListOpen] = React.useState(false);
-    const [markerList, setMarkerlist] = React.useState<google.maps.Marker[]>([]);
+    const [markerList, setMarkerlist] = React.useState<{[id: string]: google.maps.Marker}>({});
     const [clickedPoint, setClickedPoint] = React.useState({lat:0, lng:0});
     const [currentMapName, setCurrentMapName] = React.useState("Map"); // nombre del mapa que está cargado
-
-    /*
-    const toggleNavbar = (open: boolean) => {
-        setNavbarOpen(open);
-    }*/
+    const [point, setPoint] = React.useState(new Point("", "", "", 0, 0, ""));
+    const [markerToAdd, setMarkerToAdd] = React.useState<google.maps.Marker>();
+    const [openDialog, setOpenDialog] = React.useState(false);
 
     const toggleNavbar = () => {
         setNavbarOpen(!navbarOpen);
     }
 
     const openPointsList = () => {
+        setNavbarOpen(false);
         setPointsListOpen(true);
     }
 
     const closePointsList = () => {
         setPointsListOpen(false);
+        setNavbarOpen(true);
     }
 
     const openMapList = () => {
@@ -52,24 +53,64 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         setMapListOpen(false);
     }
 
-    const openAddPoints = () => {
-        setAddPointOpen(true);
-    }
-
     const closeAddPoints = () => {
         setAddPointOpen(false);
+        markerToAdd?.setVisible(false);
+    }
+
+    const closeEditPoint = () => {
+        setEditPointOpen(false);
+        setPointsListOpen(true);
+        markerToAdd?.setVisible(false);
+    }
+
+    const openEditPoint = (id: string) => {
+        getPoint(session, currentMapName, id).then(point => {
+            if (point !== null) {
+                setPoint(point);
+            }
+            setPointsListOpen(false);
+            setEditPointOpen(true);
+        });
     }
 
     const clickMap = (lat: number, lng: number) => {
         setAddPointOpen(true);
-        setClickedPoint({lat: lat, lng: lng})
+        setClickedPoint({lat: lat, lng: lng});
+
     }
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+        
+        setPointsListOpen(!pointsListOpen)
+      };
 
     const createPoint = (point: Point) => {
-        //TODO: Aquí se crearía el punto
         addPoint(session, currentMapName, point);
-        //TODO: (Idea) recargar el mapa
+        markerToAdd?.setIcon(savedMarker2);
+        markerToAdd?.setVisible(true);
+        markerToAdd?.setTitle(point.name);
+        markerList[point.id] = (markerToAdd!);
     }
+
+    const editPoint = (point: Point) => {
+        updatePoint(session, currentMapName, point);
+        closeEditPoint();
+
+        markerList[point.id].setTitle(point.name);
+    }
+    
+    const eliminatePoint = (id: string)=>{
+        deletePoint(session, currentMapName, id);
+        markerList[id].setMap(null);
+
+        delete markerList[id];
+
+        setPointsListOpen(!pointsListOpen)
+        setOpenDialog(true)
+        
+    }
+
     
     /* Solo para mostrar los puntos (a ser llamado al cerrar la lista de puntos y al actualizar la visibilidad de un punto)
     const showPoints = () => {
@@ -92,10 +133,22 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             }}>
             <Box sx={{ gridArea: 'search'}}><SearchBar toggleNavbar={toggleNavbar} /></Box>
             <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} /></Box>
-            <Box><AddPoint open={addPointOpen} closeAddPoints={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
-            <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList}></PointsView></Box>
+            <Box><AddPoint open={addPointOpen} onClose={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
+            <Box><EditPoint open={editPointOpen} onClose={closeEditPoint} point={point} editPoint={editPoint}/></Box>
+            <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}></PointsView></Box>
             <Box><MapListView open={mapListOpen} onClose={closeMapList} currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} session={session} ></MapListView></Box>
-            <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markers={markerList} markerList={setMarkerlist} clickMap={clickMap} currentMapName={currentMapName} /></Box>
+            <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markers={markerList} markerList={setMarkerlist} clickMap={clickMap} setMarkerToAdd={setMarkerToAdd} currentMapName={currentMapName} /></Box>
+
+            <Dialog onClose={handleCloseDialog} aria-labelledby="customized-dialog-title" open={openDialog}>
+            <DialogContent dividers>
+            <Typography gutterBottom>The Place has been deleted</Typography>
+            </DialogContent>
+            <DialogActions>
+            <Button autoFocus onClick={handleCloseDialog} color="primary">
+            OK
+            </Button>
+            </DialogActions>
+            </Dialog>
         </Grid>
     );
 }

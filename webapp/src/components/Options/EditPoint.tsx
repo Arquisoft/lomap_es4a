@@ -7,11 +7,9 @@ import ListItemText from '@mui/material/ListItemText';
 
 import {
   Autocomplete, Button,
-  createTheme, Dialog, DialogActions,
-  DialogContent,
+  createTheme, Dialog, DialogActions, DialogContent,
   IconButton,
-  ThemeProvider,
-  Typography,
+  ThemeProvider, Typography,
 } from '@mui/material';
 import TextField from "@mui/material/TextField";
 
@@ -21,8 +19,7 @@ import Point from "../../solidapi/Point";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import {ChangeEvent, useEffect, useState} from "react";
-
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuidv4} from "uuid";
 
 const theme = createTheme({
   components: {
@@ -43,43 +40,37 @@ const darkTheme = createTheme({
   }
 });
 
-function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
+function EditPoint({open, onClose, point, editPoint}: any) {
 
-  const [pointName, setPointName] = useState("");
-  const [pointDescription, setPointDescription] = useState("");
-  const [pointCategory, setPointCategory] = useState("");
-  const [openDialog, setOpenDialog] = React.useState(false);
+  const options = ["Bar", "Club", "Sight", "Monument", "Other"];
 
-  const handleNameChange = (event: any) => {
-    setPointName(event.target.value);
-  }
+  const [currentPoint, setCurrentPoint] = useState(point);
+  const [pointName, setPointName] = useState(point.name);
+  const [pointDescription, setPointDescription] = useState(point.description);
+  const [pointCategoryValue, setPointCategoryValue] = useState(point.category);
+  const [pointCategoryInputValue, setPointCategoryInputValue] = useState(point.category);
+  const [openDialog, setOpenDialog] = useState(false);
 
-  const handleDescriptionChange = (event: any) => {
-    setPointDescription(event.target.value);
-  }
-
-  const handleCategoryChange = (event: any) => {
-    setPointCategory(event.target.value);
-  }
-
-  const defaultProps = {
-    options: ["Bar", "Club", "Sight", "Monument", "Other"]
-  };
+  useEffect(() => {
+    if (point.id != currentPoint.id) {
+      setCurrentPoint(point);
+      setPointName(point.name);
+      setPointDescription(point.description);
+      setPointCategoryInputValue(point.category);
+    }
+  });
 
   const cancel = () => {
     onClose();
   }
 
   const save = () => {
-    if (pointName === "" || pointCategory === "") {
+    if (pointName === "" || pointCategoryInputValue === "") {
       setOpenDialog(true);
     } else {
       onClose();
-      setPointName("");
-      setPointDescription("");
-      setPointCategory("");
-      let point: Point = new Point(uuidv4(), pointName, pointCategory, clickedPoint.lat, clickedPoint.lng, pointDescription);
-      createPoint(point);
+      let pointToEdit: Point = new Point(point.id, pointName, pointCategoryInputValue, point.latitude, point.longitude, pointDescription);
+      editPoint(pointToEdit);
     }
   }
 
@@ -95,32 +86,48 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
               <IconButton onClick={onClose}>
                 <ChevronLeftIcon sx={{color: "white"}} />
               </IconButton>
-              <ListItemText primary="Add Place" />
+              <ListItemText primary="Edit Place" />
             </ListItem>
             <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
             <ListItem>
               <AddBoxIcon />
-              <ListItemText primary="Add a new place" />
+              <ListItemText primary="Edit a place" />
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField id="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth onChange={handleNameChange}/>
+                <TextField id="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth defaultValue={point.name}
+                           onChange={(event: any) => {
+                             setPointName(event.target.value);
+                           }}/>
               </ThemeProvider>
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField id="pointDescriptionField" label="New point's description" variant="filled" placeholder="Description" fullWidth multiline onChange={handleDescriptionChange}/>
+                <TextField id="pointDescriptionField" label="New point's description" variant="filled" placeholder="Description" fullWidth multiline defaultValue={point.description}
+                           onChange={(event: any) => {
+                             setPointDescription(event.target.value);
+                           }}/>
               </ThemeProvider>
             </ListItem>
             <ListItem>
               <Autocomplete
-                  {...defaultProps}
+                  options={options}
                   className="point-fill-field"
-                  autoComplete
                   includeInputInList
+                  defaultValue={point.category}
+                  onChange={(event: any, newValue: string | null) => {
+                    if (newValue !== null) {
+                      setPointCategoryValue(newValue);
+                    }
+                  }}
+                  inputValue={pointCategoryInputValue}
+                  onInputChange={(event, newInputValue) => {
+                    setPointCategoryInputValue(newInputValue);
+                  }}
                   fullWidth
+                  isOptionEqualToValue={(option, value) => option === value}
                   renderInput={(params) => (
-                      <TextField {...params} label="New point's category" variant="filled" fullWidth onSelect={handleCategoryChange} />
+                      <TextField {...params} label="New point's category" variant="filled" fullWidth />
                   )}
               />
             </ListItem>
@@ -145,7 +152,7 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
           </DialogActions>
         </Dialog>
       </ThemeProvider>
-);
+  );
 }
 
-export default AddPoint;
+export default EditPoint;

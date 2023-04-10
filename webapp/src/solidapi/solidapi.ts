@@ -7,19 +7,6 @@ import {
 import { Session } from '@inrupt/solid-client-authn-browser';
 import Point from "./Point";
 
-function checkSession(session: Session): boolean {
-    if (session === null || typeof session === "undefined") {
-        return false;
-    }
-    if (session.info === null || typeof session.info === "undefined") {
-        return false;
-    }
-    if (session.info.webId === null || typeof session.info.webId === "undefined") {
-        return false;
-    }
-    return true;
-}
-
 function checkMapNameIsValid(mapName:string): boolean {
     const regex = /\W | ^-/; // \W es equivalente a [^A-Za-z0-9_]+
     return typeof mapName !== "undefined" && mapName !== null
@@ -32,30 +19,6 @@ function mapUrlFor(session: Session, mapName:string): string {
     }
     return "";
 }
-
-// async function existsUrl(session: Session, url: string): Promise<boolean> {
-//     // let urls = getContainedResourceUrlAll(url);
-//     // let files: Array<File> = [];
-//     // for (let i = 0; i < urls.length; i++) {
-//     //     let file = await readData(session, urls[i]);
-//     //     if (file != null) {
-//     //         files.push(file);
-//     //     }
-//     // }
-//     // return files;
-//
-//     let file = await getFile(url, {fetch: session.fetch});
-//     return file !== null;
-//
-//     return await getFile(
-//         url,
-//         {fetch: session.fetch}
-//     ).catch(_ => {
-//         return false;
-//     }).then(_ => {
-//         return true;
-//     });
-// }
 
 async function checkStructure(session: Session, mapName: string): Promise<boolean> {
     let publicUrl = "";
@@ -128,6 +91,39 @@ export async function createMap(session: Session, mapName:string): Promise<boole
     return true;
 }
 
+export async function getPoint(session: Session, mapName:string, id: string): Promise<Point | null> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return null;
+    } // Check if the webId is undefined
+
+    let url = mapUrlFor(session, mapName);
+
+    if (!await checkStructure(session, mapName)) {
+        return null;
+    }
+
+    try {
+        let mapBlob = await getFile(
+            url,
+            { fetch: session.fetch }
+        );
+
+        let map = JSON.parse(await mapBlob.text());
+
+        let pointToGet: Point | null = null;
+        map.spatialCoverage.forEach((point: Point) => {
+            if (point.id === id) {
+                pointToGet = point;
+                return;
+            }
+        });
+
+        return pointToGet;
+    } catch (error) {
+        return null;
+    }
+}
+
 export async function addPoint(session: Session, mapName:string, point: Point): Promise<boolean> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return false;
@@ -157,6 +153,94 @@ export async function addPoint(session: Session, mapName:string, point: Point): 
         let map = JSON.parse(await mapBlob.text());
 
         map.spatialCoverage.push(pointToSave);
+
+        let blob = new Blob([JSON.stringify(map)], { type: "application/ld+json" });
+        let file = new File([blob], map.name + ".jsonld", { type: blob.type });
+
+        await overwriteFile(
+            url,
+            file,
+            { contentType: file.type, fetch: session.fetch }
+        );
+    } catch (error) {
+        return false;
+    }
+    return true;
+}
+
+export async function deletePoint(session: Session,mapName:string, id: string): Promise<boolean> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return false;
+    } // Check if the webId is undefined
+  
+    let url = mapUrlFor(session, mapName);
+  
+    if (!await checkStructure(session, mapName)) {
+        return false;
+    }
+  
+    try {
+        let mapBlob = await getFile(
+            url,
+            { fetch: session.fetch }
+        );
+
+        let map = JSON.parse(await mapBlob.text());
+
+        let count = 0;
+        map.spatialCoverage.forEach((point: Point) => {
+            if (point.id === id) {
+                map.spatialCoverage.splice(count, 1);
+                return;
+            }
+            count++;
+        });
+
+      let blob = new Blob([JSON.stringify(map)], { type: "application/ld+json" });
+      let file = new File([blob], map.name + ".jsonld", { type: blob.type });
+
+      await overwriteFile(
+        url,
+        file,
+        { contentType: file.type, fetch: session.fetch }
+      );
+    } catch (error) {
+      return false;
+    }
+    return true;
+  }
+
+export async function updatePoint(session: Session, mapName:string, pointToUpdate: Point): Promise<boolean> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return false;
+    } // Check if the webId is undefined
+
+    let url = mapUrlFor(session, mapName);
+
+    if (!await checkStructure(session, mapName)) {
+        return false;
+    }
+
+    let pointToSave = JSON.parse(JSON.stringify(pointToUpdate));
+    pointToSave["@context"] = "https://schema.org/";
+    pointToSave["@type"] = "Point";
+
+    try {
+        let mapBlob = await getFile(
+            url,
+            { fetch: session.fetch }
+        );
+
+        let map = JSON.parse(await mapBlob.text());
+
+        let count = 0;
+        map.spatialCoverage.forEach((point: Point) => {
+            if (point.id === pointToUpdate.id) {
+                map.spatialCoverage[count] = pointToSave;
+                return;
+            }
+            count++;
+        });
 
         let blob = new Blob([JSON.stringify(map)], { type: "application/ld+json" });
         let file = new File([blob], map.name + ".jsonld", { type: blob.type });
