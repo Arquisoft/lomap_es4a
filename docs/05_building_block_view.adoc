@@ -61,7 +61,6 @@ Contained Building Blocks::
 | **Black boxes** | **Description**
 | Frontend | Application user's interface.
 | Backend | It is in charge of administrate the application logic.
-| POD | SOLID pod that stores the information of the user's points.
 |===
 
 
