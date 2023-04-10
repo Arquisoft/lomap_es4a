@@ -206,7 +206,6 @@ export async function deletePoint(session: Session, id: string): Promise<boolean
     }
     return true;
   }
-  
 
 export async function retrievePoints(session: Session): Promise<Point[]> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {

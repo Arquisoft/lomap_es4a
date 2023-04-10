@@ -75,7 +75,7 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
         // TODO: Añadir funcion en el onClick de infoWindow
         let infowindow = new google.maps.InfoWindow({
             // Es HTML por lo tanto no funciona el deleteMark()-
-            content: '<button onclick="">Borrar Punto</button>',
+            content: 'Not implemented yet',
             ariaLabel: "Uluru",
         });
         infowindow.open(map, marker);
@@ -99,10 +99,8 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
                 },
                 visible:true,
             });
-
             marker.addListener('click', () =>{
                 openInfoView(marker);
-
             })
             // Punto a añadir si guardamos
             markerToAdd(marker);
