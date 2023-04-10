@@ -5,11 +5,14 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import {
+  Alert,
   Autocomplete, Button,
   createTheme, Dialog, DialogActions,
   DialogContent,
   IconButton,
+  Snackbar,
   ThemeProvider,
   Typography,
 } from '@mui/material';
@@ -45,41 +48,48 @@ const darkTheme = createTheme({
 
 function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
 
+  const options = ["Bar", "Club", "Sight", "Monument", "Other"];
   const [pointName, setPointName] = useState("");
   const [pointDescription, setPointDescription] = useState("");
-  const [pointCategory, setPointCategory] = useState("");
+  const [pointCategoryValue, setPointCategoryValue] = useState("");
+  const [pointCategoryInputValue, setPointCategoryInputValue] = useState("");
   const [openDialog, setOpenDialog] = React.useState(false);
-
-  const handleNameChange = (event: any) => {
-    setPointName(event.target.value);
+  const [errorName, setErrorName] = useState(false);
+  const [errorCategory, setErrorCategory] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlert(false);
   }
-
-  const handleDescriptionChange = (event: any) => {
-    setPointDescription(event.target.value);
-  }
-
-  const handleCategoryChange = (event: any) => {
-    setPointCategory(event.target.value);
-  }
-
-  const defaultProps = {
-    options: ["Bar", "Club", "Sight", "Monument", "Other"]
-  };
 
   const cancel = () => {
     onClose();
   }
 
   const save = () => {
-    if (pointName === "" || pointCategory === "") {
-      setOpenDialog(true);
+    if (pointName === '' ){
+      if(pointCategoryInputValue !== ''){
+        setErrorCategory(false);
+      }
+      setErrorName(true);
+
+    } else if(pointCategoryInputValue === '') {
+      if (pointName !== '' ){
+        setErrorName(false);
+      }
+      setErrorCategory(true);
+      
+      //setOpenDialog(true);
     } else {
       onClose();
       setPointName("");
       setPointDescription("");
-      setPointCategory("");
-      let point: Point = new Point(uuidv4(), pointName, pointCategory, clickedPoint.lat, clickedPoint.lng, pointDescription);
+      setPointCategoryInputValue("");
+      let point: Point = new Point(uuidv4(), pointName, pointCategoryInputValue, clickedPoint.lat, clickedPoint.lng, pointDescription);
       createPoint(point);
+      setOpenAlert(true);
     }
   }
 
@@ -104,25 +114,52 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField id="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth onChange={handleNameChange}/>
+                <TextField id="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth
+                           onChange={(event: any) => {
+                             setPointName(event.target.value);
+                             setErrorName(event.target.value.trim() === '');
+                           }}
+                           error={errorName}
+                           helperText={errorName ? 'Empty name' : ''}
+                />
               </ThemeProvider>
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField id="pointDescriptionField" label="New point's description" variant="filled" placeholder="Description" fullWidth multiline onChange={handleDescriptionChange}/>
+                <TextField id="pointDescriptionField" label="New point's description" variant="filled" placeholder="Description" fullWidth multiline
+                           onChange={(event: any) => {
+                             setPointDescription(event.target.value);
+                           }}/>
               </ThemeProvider>
             </ListItem>
             <ListItem>
+
               <Autocomplete
-                  {...defaultProps}
+                  options={options}
                   className="point-fill-field"
-                  autoComplete
                   includeInputInList
+                  onChange={(event: any, newValue: string | null) => {
+                    if (newValue !== null) {
+                      setPointCategoryValue(newValue);
+                    }
+                    setErrorCategory(newValue === null);
+                  }}
+                  inputValue={pointCategoryInputValue}
+                  onInputChange={(event, newInputValue) => {
+                    setPointCategoryInputValue(newInputValue);
+                  }}
                   fullWidth
+                  isOptionEqualToValue={(option, value) => option === value}
                   renderInput={(params) => (
-                      <TextField {...params} label="New point's category" variant="filled" fullWidth onSelect={handleCategoryChange} />
+
+                      <TextField {...params} label="New point's category" variant="filled" fullWidth  error={errorCategory}
+                                 helperText={errorCategory ? 'Empty category. Select one' : ''} />
+
                   )}
+
               />
+
+
             </ListItem>
             <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
             <ListItem>
@@ -134,17 +171,16 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
           </List>
         </Drawer>
 
-        <Dialog onClose={handleCloseDialog} aria-labelledby="customized-dialog-title" open={openDialog}>
-          <DialogContent dividers>
-            <Typography gutterBottom>The Place must have a name and a category</Typography>
-          </DialogContent>
-          <DialogActions>
-            <Button autoFocus onClick={handleCloseDialog} color="primary">
-              OK
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <Snackbar open={openAlert} onClose={handleCloseAlert} autoHideDuration={3000} >
+        <Alert severity="success" 
+          sx={{ width: '100%', backgroundColor: 'green', color: 'white'  }}  
+            iconMapping={{ success: <CheckCircleOutlineIcon sx={{ color: 'white' }} />,}}>Place added correctly!
+        </Alert>
+        </Snackbar>
+        
       </ThemeProvider>
+
+
 );
 }
 
