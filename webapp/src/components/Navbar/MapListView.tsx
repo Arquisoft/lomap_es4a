@@ -8,8 +8,11 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import FindReplaceIcon from '@mui/icons-material/FindReplace';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl, createTheme, ThemeProvider, IconButton, Divider, TextField } from "@mui/material";
-import { deleteMap, retrieveMapNames } from '../../solidapi/solidapi';
+import { deleteMap, retrieveMapNames, checkMapNameIsValid } from '../../solidapi/solidapi';
 import { Session } from '@inrupt/solid-client-authn-browser';
 
 
@@ -27,6 +30,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
     const [currentNewMap, setCurrentNewMap] = useState(""); // info del mapa a crear
     const [currentDeleteMap, setCurrentDeleteMap] = useState(""); // info del mapa a borrar
     const [mapNames, setMapNames] = useState<string[]>([]); // lista de nombres sacados del pod
+    const [openAlert, setOpenAlert] = useState(false);
 
     const handleLoadMapChange = (event: SelectChangeEvent) => {
         setCurrentLoadMap(event.target.value);
@@ -55,7 +59,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
             .then(() => {
                 retrieveMapNames(props.session).then(names => {
                     if (props.currentMapName === currentDeleteMap) { // comprueba si se borra el mapa actual
-                        props.setCurrentMapName(names.length > 0 ? names[0] : props.currentMapName+"-new");
+                        props.setCurrentMapName(names.length > 0 ? names[0] : props.currentMapName+"_new");
                     }
                     else if (names.length === 0) { // Comprueba si quedan mapas
                         props.setCurrentMapName("Map1");
@@ -68,8 +72,9 @@ function MapListView(props: MapListViewProps): JSX.Element {
 
     // Crea el nuevo mapa con el nombre escogido (validando el nuevo nombre)
     const handleNewMapClick = () => {
-        if (currentNewMap != null && currentNewMap.trim() !== "") {
+        if (checkMapNameIsValid(currentNewMap)) {            
             props.setCurrentMapName(currentNewMap);
+            setOpenAlert(true);
             setCurrentNewMap("");
             props.onClose();
         }
@@ -86,6 +91,14 @@ function MapListView(props: MapListViewProps): JSX.Element {
         return (mapNames.map((mapName:string) => 
             <MenuItem key={mapName} value={mapName}>{mapName}</MenuItem>
         ));
+    }
+
+    // Maneja el cierre de la alerta
+    const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setOpenAlert(false);
     }
 
     const theme = createTheme({
@@ -205,6 +218,16 @@ function MapListView(props: MapListViewProps): JSX.Element {
                 </ListItem>
             </List>
         </Drawer>
+
+        <Snackbar open={openAlert} onClose={handleCloseAlert} autoHideDuration={1000} >
+            <Alert severity="success" 
+                sx={{ width: '100%', backgroundColor: 'green', color: 'white'  }}  
+                iconMapping={{ success: <CheckCircleOutlineIcon sx={{ color: 'white' }} />,}}
+                >
+                    Map created correctly!
+            </Alert>
+        </Snackbar>
+
     </ThemeProvider>
   );
 }

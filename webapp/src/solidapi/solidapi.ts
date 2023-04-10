@@ -2,14 +2,15 @@
 import {
     getFile,
     deleteFile,
-    overwriteFile, getContainedResourceUrlAll, getSolidDataset, getThing, getUrl
+    overwriteFile, getContainedResourceUrlAll, getSolidDataset
 } from '@inrupt/solid-client';
 import { Session } from '@inrupt/solid-client-authn-browser';
 import Point from "./Point";
 
-function checkMapNameIsValid(mapName:string): boolean {
-    const regex = /\W | ^-/; // \W es equivalente a [^A-Za-z0-9_]+
+export function checkMapNameIsValid(mapName:string): boolean {
+    const regex = /\W+/; // \W es equivalente a [^A-Za-z0-9_]+
     return typeof mapName !== "undefined" && mapName !== null
+        && mapName.trim() !== ""
         && mapName.match(regex) === null;
 }
 
@@ -51,7 +52,7 @@ export async function createMap(session: Session, mapName:string): Promise<boole
         return false;
     } // Check if the webId is undefined
 
-    if (!checkMapNameIsValid) {
+    if (!checkMapNameIsValid(mapName)) {
         return false;
     } // Check if map name is valid
 
@@ -129,7 +130,7 @@ export async function addPoint(session: Session, mapName:string, point: Point): 
         return false;
     } // Check if the webId is undefined
 
-    if (!checkMapNameIsValid) {
+    if (!checkMapNameIsValid(mapName)) {
         return false;
     }
 
@@ -261,7 +262,7 @@ export async function retrievePoints(session: Session, mapName:string): Promise<
         return [];
     } // Check if the webId is undefined
 
-    if (!checkMapNameIsValid) {
+    if (!checkMapNameIsValid(mapName)) {
         return [];
     }
 
@@ -312,7 +313,7 @@ export async function deleteMap(session: Session, mapName: string): Promise<bool
         return false;
     } // Check if the webId is undefined
 
-    if (!checkMapNameIsValid) {
+    if (!checkMapNameIsValid(mapName)) {
         return false;
     }
   
