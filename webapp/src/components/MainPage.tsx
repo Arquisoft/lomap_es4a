@@ -10,7 +10,6 @@ import Point from "../solidapi/Point";
 import Navbar from "./Navbar/Navbar";
 import PointsView from "./Navbar/PointsView";
 import MapListView from "./Navbar/MapListView";
-
 import SearchBar from "./Searchbar/Searchbar";
 
 import { Marker } from "@react-google-maps/api";
@@ -18,8 +17,8 @@ import {addPoint, deletePoint, getPoint, updatePoint} from "../solidapi/solidapi
 
 import savedMarker2 from '../images/markerGuerdado2.png';
 import EditPoint from "./Options/EditPoint";
-
 import {Dialog, DialogActions, DialogContent, DialogTitle} from '@mui/material';
+import MyFriendsListView from "./Navbar/MyFriendsListView";
 
 export default function MainPage({ session }: SessionType): JSX.Element {
 
@@ -28,6 +27,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const [addPointOpen, setAddPointOpen] = React.useState(false);
     const [editPointOpen, setEditPointOpen] = React.useState(false);
     const [mapListOpen, setMapListOpen] = React.useState(false);
+    const [myFriendsListOpen, setMyFriendsListOpen] = React.useState(false);
     const [markerList, setMarkerlist] = React.useState<{[id: string]: google.maps.Marker}>({});
     const [clickedPoint, setClickedPoint] = React.useState({lat:0, lng:0});
     const [point, setPoint] = React.useState(new Point("", "", "", 0, 0, ""));
@@ -60,6 +60,14 @@ export default function MainPage({ session }: SessionType): JSX.Element {
 
     const closeMapList = () => {
         setMapListOpen(false);
+    }
+
+    const openMyFriendsList = () => {
+        setMyFriendsListOpen(true);
+    }
+
+    const closeMyFriendsList = () => {
+        setMyFriendsListOpen(false);
     }
 
     const closeAddPoints = () => {
@@ -142,11 +150,12 @@ export default function MainPage({ session }: SessionType): JSX.Element {
                 "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "`,
             }}>
             <Box sx={{ gridArea: 'search'}}><SearchBar toggleNavbar={toggleNavbar} /></Box>
-            <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} /></Box>
+            <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} openMyFriendsList={openMyFriendsList} /></Box>
             <Box><AddPoint open={addPointOpen} onClose={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
             <Box><EditPoint open={editPointOpen} onClose={closeEditPoint} point={point} editPoint={editPoint}/></Box>
             <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}></PointsView></Box>
             <Box><MapListView open={mapListOpen} onClose={closeMapList} ></MapListView></Box>
+            <Box><MyFriendsListView open={myFriendsListOpen} onClose={closeMyFriendsList} ></MyFriendsListView></Box>
             <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markerList={setMarkerlist} clickMap={clickMap} markerToAdd={setMarkerToAdd}/></Box>
 
 

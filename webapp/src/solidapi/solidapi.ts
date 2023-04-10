@@ -6,6 +6,8 @@ import {
 } from '@inrupt/solid-client';
 import { Session } from '@inrupt/solid-client-authn-browser';
 import Point from "./Point";
+import { fetchDocument } from "tripledoc";
+import { foaf } from "rdf-namespaces";
 
 function checkSession(session: Session): boolean {
     if (session === null || typeof session === "undefined") {
@@ -312,4 +314,16 @@ export async function retrievePoints(session: Session): Promise<Point[]> {
     } catch (error) {
         return [];
     }
+}
+
+export async function myFriends(session: Session): Promise<string[]> {
+    if (checkSession(session)) {
+        const webIdDoc = await fetchDocument(session.info.webId!);
+        let profile = webIdDoc.getSubject(session.info.webId!)
+        if(profile == null){
+            return [];
+        }
+        return profile.getAllRefs(foaf.knows);
+    }
+    return [];
 }

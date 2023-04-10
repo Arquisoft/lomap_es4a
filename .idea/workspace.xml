@@ -7,7 +7,8 @@
     <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Añadida la lógica para recuperar la imagen de perfil">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendsListView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendsListView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/components/Options/AddPoint.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Options/AddPoint.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +30,6 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="PackageJsonUpdateNotifier">
-    <dismissed value="$PROJECT_DIR$/package.json" />
     <dismissed value="$PROJECT_DIR$/webapp/package.json" />
   </component>
   <component name="ProjectId" id="2MMmUmGN0TxQqq4jRUmNh8nD0vX" />
@@ -47,7 +47,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;API-Markers(MAPS)&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Amigos-POD&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/UniOvi/Tercero/Segundo Semestre/ASW/PruebaMaps-React/js-samples&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -106,6 +106,8 @@
       <workItem from="1680026270201" duration="1841000" />
       <workItem from="1680958534508" duration="919000" />
       <workItem from="1681039379012" duration="13013000" />
+      <workItem from="1681131161431" duration="14742000" />
+      <workItem from="1681164662781" duration="715000" />
     </task>
     <task id="LOCAL-00001" summary="Se ha movido el directorio solidapi a webapp">
       <created>1678459410126</created>
