@@ -87,7 +87,6 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
 
     const onMapClick = (e: google.maps.MapMouseEvent) => {
         if (e.latLng != null) {
-            setClick(e.latLng!);
             //TODO: Que se no se guarde si no le das al botón de marcar
             let marker = new google.maps.Marker({
                 // @ts-ignore

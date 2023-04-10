@@ -30,8 +30,6 @@ const theme = createTheme({
     }
 });
 
-
-
 const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,openEditPoint,deletePoint }) => {
 
     const [encendida, setEncendida] = React.useState<{[id: string]: boolean}>({});
@@ -101,8 +99,6 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,openEd
         ));
     };
 
-
-
     return (
 
         <ThemeProvider theme={theme}>
@@ -120,8 +116,6 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,openEd
                     </ListItem>
                     <Divider sx={{backgroundColor: "#808b96"}} />
                     {generatePointsControl()}
-
-
                 </List>
             </Drawer>
         </ThemeProvider>

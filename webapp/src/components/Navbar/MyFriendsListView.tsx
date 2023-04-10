@@ -8,6 +8,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import FindReplaceIcon from '@mui/icons-material/FindReplace';
 import DeleteIcon from '@mui/icons-material/Delete';
+import {myFriends} from "../../solidapi/solidapi";
+
 import {
     SelectChangeEvent,
     InputLabel,
@@ -19,11 +21,15 @@ import {
     IconButton,
     Divider,
     TextField,
-    Typography
+    Typography, ListItemButton
 } from "@mui/material";
-import {CombinedDataProvider, Text, useSession} from "@inrupt/solid-ui-react";
-import {FOAF} from "@inrupt/vocab-common-rdf";
+import {CombinedDataProvider, Image, Text, useSession} from "@inrupt/solid-ui-react";
+
 import * as React from "react";
+import {VCARD} from "@inrupt/lit-generated-vocab-common";
+import GreenSwitch from "./GreenSwitch";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 
 interface MyFriendsListView {
@@ -32,8 +38,16 @@ interface MyFriendsListView {
 }
 
 function MyFriendsListView(props: MyFriendsListView): JSX.Element {
-
-    const { session } = useSession();
+    const {session} = useSession();
+    const seeMyFriends = () => {
+        return myFriends(session).then((array:string[]) => {
+            array.forEach(friend =>{
+                <ListItem>
+                    <ListItemText primary={friend.toString()} />
+                </ListItem>
+            })
+        });
+    };
 
     const theme = createTheme({
         components: {
@@ -56,36 +70,24 @@ function MyFriendsListView(props: MyFriendsListView): JSX.Element {
 
     return (
         <ThemeProvider theme={theme}>
-            <Drawer anchor="left" open={props.open} onClose={props.onClose} >
-                <List sx={{ width:'20em' }} disablePadding>
+            <Drawer anchor="left" open={props.open} onClose={props.onClose}>
+                <List sx={{width: '20em'}} disablePadding>
                     <ListItem>
                         <IconButton onClick={props.onClose}>
-                            <ChevronLeftIcon sx={{color: "white"}} />
+                            <ChevronLeftIcon sx={{color: "white"}}/>
                         </IconButton>
-                        <ListItemText primary="Your friends list" />
+                        <ListItemText primary="Your friends list"/>
                     </ListItem>
                     <Typography
                         variant="h6"
                         noWrap
                         component="div"
-                        sx={{ display: { xs: 'none', sm: 'block', color: 'white' } }}
+                        sx={{display: {xs: 'none', sm: 'block', color: 'white'}}}
                     >
-                        {session.info.webId ? (
-                            <CombinedDataProvider
-                                datasetUrl={session.info.webId}
-                                thingUrl={session.info.webId}>
-                                {FOAF.knows !== null && FOAF.knows !== 'undefined' ?
-                                    (<Text property={ FOAF.knows }/>):
-                                    (<Typography>You don't have any friends</Typography>)
-                                }
-
-                            </CombinedDataProvider>
-                        ): null }
                     </Typography>
                 </List>
             </Drawer>
         </ThemeProvider>
     );
 }
-
 export default MyFriendsListView;
