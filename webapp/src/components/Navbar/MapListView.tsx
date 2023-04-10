@@ -51,14 +51,18 @@ function MapListView(props: MapListViewProps): JSX.Element {
     const handleDeleteMapClick = () => {
         // Si el mapa actual es el que se a a borrar, se carga un nuevo mapa.
         // Si no hay más mapas, se crea el mapa "Map1"
-        if (props.currentMapName === currentDeleteMap) {
-            retrieveMapNames(props.session)
-                .then(names => props.setCurrentMapName(names.length > 0 ? names[0] : "Map1"));
-        }
         deleteMap(props.session, currentDeleteMap)
             .then(() => {
-                setCurrentDeleteMap("");
-                props.onClose();
+                retrieveMapNames(props.session).then(names => {
+                    if (props.currentMapName === currentDeleteMap) { // comprueba si se borra el mapa actual
+                        props.setCurrentMapName(names.length > 0 ? names[0] : props.currentMapName+"-new");
+                    }
+                    else if (names.length === 0) { // Comprueba si quedan mapas
+                        props.setCurrentMapName("Map1");
+                    }
+                    setCurrentDeleteMap("");
+                    props.onClose();
+                });
             });
     };
 

@@ -25,7 +25,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const [mapListOpen, setMapListOpen] = React.useState(false);
     const [markerList, setMarkerlist] = React.useState<google.maps.Marker[]>([]);
     const [clickedPoint, setClickedPoint] = React.useState({lat:0, lng:0});
-    const [currentMapName, setCurrentMapName] = React.useState("Map1"); // nombre del mapa que está cargado
+    const [currentMapName, setCurrentMapName] = React.useState("Map"); // nombre del mapa que está cargado
 
     /*
     const toggleNavbar = (open: boolean) => {

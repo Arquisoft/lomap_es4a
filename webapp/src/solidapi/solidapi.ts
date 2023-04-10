@@ -21,7 +21,7 @@ function checkSession(session: Session): boolean {
 }
 
 function checkMapNameIsValid(mapName:string): boolean {
-    const regex = /\W/; // equivalente a [^A-Za-z0-9_]+
+    const regex = /\W | ^-/; // \W es equivalente a [^A-Za-z0-9_]+
     return typeof mapName !== "undefined" && mapName !== null
         && mapName.match(regex) === null;
 }
