@@ -13,7 +13,7 @@ interface PointsViewProps {
     open: boolean;
     onClose: () => void;
     markerList: {[id: string]: google.maps.Marker};
-    openEditPoint: ()=>void;
+    openEditPoint: (id: string)=>void;
     deletePoint:(id:string)=>void;
 }
 
@@ -37,7 +37,6 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,openEd
     const [encendida, setEncendida] = React.useState<{[id: string]: boolean}>({});
     const [checked, setChecked] = React.useState<{[id: string]: boolean}>({});
     const [encendidaAll, setEncendidaAll] = React.useState(true);
-
 
     React.useEffect(() => {
         setEncendida((prevState) => {
@@ -80,8 +79,8 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,openEd
         deletePoint(id)
     }
 
-    const handleEditButton=()=>{
-        openEditPoint();
+    const handleEditButton=(id: string)=>{
+        openEditPoint(id);
     }
 
     let x = [true, true, true];
@@ -91,7 +90,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,openEd
             <ListItem key={id}>
                 <ListItemText primary={markerList[id].getTitle() +": "} />
                 <GreenSwitch onChange={() => handleToggle(id)} checked={!checked[id]} />
-                <ListItemButton onClick={() =>{handleEditButton()} }>
+                <ListItemButton onClick={() =>{handleEditButton(id)} }>
                     <EditIcon/>
                 </ListItemButton>
                 <ListItemButton onClick={() =>{handleDeleteButton(id)} }>
@@ -115,7 +114,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,openEd
                         <ListItemText primary="Points List" />
                     </ListItem>
                     <ListItem>
-                        <ListItemText primary={"Visibilidad de todos"} />
+                        <ListItemText primary={"Show / Hide all"} />
                         <GreenSwitch checked={encendidaAll} onChange={() => handleToggleAll()} />
                     </ListItem>
                     <Divider sx={{backgroundColor: "#808b96"}} />

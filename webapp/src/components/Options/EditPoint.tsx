@@ -3,14 +3,13 @@ import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
 import {
   Autocomplete, Button,
-  createTheme,
+  createTheme, Dialog, DialogActions, DialogContent,
   IconButton,
-  ThemeProvider,
+  ThemeProvider, Typography,
 } from '@mui/material';
 import TextField from "@mui/material/TextField";
 
@@ -19,7 +18,8 @@ import "./Option.css";
 import Point from "../../solidapi/Point";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
+import {v4 as uuidv4} from "uuid";
 
 const theme = createTheme({
   components: {
@@ -42,36 +42,41 @@ const darkTheme = createTheme({
 
 function EditPoint({open, onClose, point, editPoint}: any) {
 
+  const options = ["Bar", "Club", "Sight", "Monument", "Other"];
+
+  const [currentPoint, setCurrentPoint] = useState(point);
   const [pointName, setPointName] = useState(point.name);
   const [pointDescription, setPointDescription] = useState(point.description);
-  const [pointCategory, setPointCategory] = useState(point.category);
+  const [pointCategoryValue, setPointCategoryValue] = useState(point.category);
+  const [pointCategoryInputValue, setPointCategoryInputValue] = useState(point.category);
+  const [openDialog, setOpenDialog] = useState(false);
 
-  const handleNameChange = (event: ChangeEvent) => {
-    setPointName(event.target.textContent? event.target.textContent : "");
-  }
-
-  const handleDescriptionChange = (event: ChangeEvent) => {
-    setPointDescription(event.target.textContent? event.target.textContent : "");
-  }
-
-  const handleCategoryChange = (event: ChangeEvent) => {
-    setPointCategory(event.target.textContent? event.target.textContent : "");
-  }
-
-  const defaultProps = {
-    options: ["Bar", "Club", "Sight", "Monument", "Other"]
-  };
+  useEffect(() => {
+    if (point.id != currentPoint.id) {
+      setCurrentPoint(point);
+      setPointName(point.name);
+      setPointDescription(point.description);
+      setPointCategoryInputValue(point.category);
+    }
+  });
 
   const cancel = () => {
     onClose();
   }
 
   const save = () => {
-    onClose();
-
-    let pointToEdit: Point = new Point(point.id, pointName, pointCategory, point.latitude, point.longitude, pointDescription);
-    editPoint(pointToEdit);
+    if (pointName === "" || pointCategoryInputValue === "") {
+      setOpenDialog(true);
+    } else {
+      onClose();
+      let pointToEdit: Point = new Point(point.id, pointName, pointCategoryInputValue, point.latitude, point.longitude, pointDescription);
+      editPoint(pointToEdit);
+    }
   }
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
 
   return (
       <ThemeProvider theme={theme}>
@@ -86,27 +91,43 @@ function EditPoint({open, onClose, point, editPoint}: any) {
             <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
             <ListItem>
               <AddBoxIcon />
-              <ListItemText primary="Add a new place" />
+              <ListItemText primary="Edit a place" />
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField id="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth onChange={handleNameChange}/>
+                <TextField id="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth defaultValue={point.name}
+                           onChange={(event: any) => {
+                             setPointName(event.target.value);
+                           }}/>
               </ThemeProvider>
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField id="pointDescriptionField" label="New point's description" variant="filled" placeholder="Description" fullWidth multiline onChange={handleDescriptionChange}/>
+                <TextField id="pointDescriptionField" label="New point's description" variant="filled" placeholder="Description" fullWidth multiline defaultValue={point.description}
+                           onChange={(event: any) => {
+                             setPointDescription(event.target.value);
+                           }}/>
               </ThemeProvider>
             </ListItem>
             <ListItem>
               <Autocomplete
-                  {...defaultProps}
+                  options={options}
                   className="point-fill-field"
-                  autoComplete
                   includeInputInList
+                  defaultValue={point.category}
+                  onChange={(event: any, newValue: string | null) => {
+                    if (newValue !== null) {
+                      setPointCategoryValue(newValue);
+                    }
+                  }}
+                  inputValue={pointCategoryInputValue}
+                  onInputChange={(event, newInputValue) => {
+                    setPointCategoryInputValue(newInputValue);
+                  }}
                   fullWidth
+                  isOptionEqualToValue={(option, value) => option === value}
                   renderInput={(params) => (
-                      <TextField {...params} label="New point's category" variant="filled" fullWidth onChange={handleCategoryChange} />
+                      <TextField {...params} label="New point's category" variant="filled" fullWidth />
                   )}
               />
             </ListItem>
@@ -119,6 +140,17 @@ function EditPoint({open, onClose, point, editPoint}: any) {
             </ListItem>
           </List>
         </Drawer>
+
+        <Dialog onClose={handleCloseDialog} aria-labelledby="customized-dialog-title" open={openDialog}>
+          <DialogContent dividers>
+            <Typography gutterBottom>The Place must have a name and a category</Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button autoFocus onClick={handleCloseDialog} color="primary">
+              OK
+            </Button>
+          </DialogActions>
+        </Dialog>
       </ThemeProvider>
   );
 }
