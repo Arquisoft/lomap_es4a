@@ -39,15 +39,9 @@ interface MyFriendsListView {
 
 function MyFriendsListView(props: MyFriendsListView): JSX.Element {
     const {session} = useSession();
-    const seeMyFriends = () => {
-        return myFriends(session).then((array:string[]) => {
-            array.forEach(friend =>{
-                <ListItem>
-                    <ListItemText primary={friend.toString()} />
-                </ListItem>
-            })
-        });
-    };
+
+    //TODO: Mirar como sacar los datos de la promise
+    //let friends = await myFriends(session);
 
     const theme = createTheme({
         components: {

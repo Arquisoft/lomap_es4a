@@ -10,7 +10,6 @@ import Point from "../solidapi/Point";
 import Navbar from "./Navbar/Navbar";
 import PointsView from "./Navbar/PointsView";
 import MapListView from "./Navbar/MapListView";
-
 import SearchBar from "./Searchbar/Searchbar";
 
 import { Marker } from "@react-google-maps/api";
@@ -18,7 +17,6 @@ import {addPoint, deletePoint, getPoint, updatePoint} from "../solidapi/solidapi
 
 import savedMarker2 from '../images/markerGuerdado2.png';
 import EditPoint from "./Options/EditPoint";
-
 import {Dialog, DialogActions, DialogContent, DialogTitle} from '@mui/material';
 import MyFriendsListView from "./Navbar/MyFriendsListView";
 
