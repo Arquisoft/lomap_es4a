@@ -42,7 +42,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
 
     // Carga la lista de puntos correspondiente al mapa seleccionado
     const handleLoadMapClick = () => {
-        props.setCurrentMapName(currentLoadMap); // TODO: Hacer que se recarguen los puntos en el mapa
+        props.setCurrentMapName(currentLoadMap);
         setCurrentLoadMap("");
         props.onClose();
     };

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {GoogleMap, Marker, InfoWindow, useJsApiLoader} from "@react-google-maps/api";
 import {useQuery} from "react-query";
 // API Calls
@@ -21,7 +21,7 @@ export type MarkerType = {
     website: string
 }
 
-function Mapa({session, markerList, clickMap, currentMapName}: any) {
+function Mapa({session, markers, markerList, clickMap, currentMapName}: any) {
     const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
 
     const [map, setMap] = useState(React.useRef<google.maps.Map | null>(null).current);
@@ -37,6 +37,17 @@ function Mapa({session, markerList, clickMap, currentMapName}: any) {
 
     const [clickedPos, setClickedPos] = React.useState<google.maps.LatLngLiteral>({} as google.maps.LatLngLiteral)
    
+    // Elimina todos los puntos del mapa y llama de nuevo al loadMap.
+    // Se ejecuta al renderizar el componente, solamente si cambia el currentMapName.
+    useEffect(() => {
+        if (map !== null) {
+            markers.forEach((element: google.maps.Marker) => {
+                element.setMap(null);
+            });
+            onLoad(map);
+        }
+    }, [currentMapName]);
+
     var mList:google.maps.Marker[]
     mList=[];
    
