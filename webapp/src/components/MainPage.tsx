@@ -56,10 +56,12 @@ export default function MainPage({ session }: SessionType): JSX.Element {
 
     const openMyFriendsList = () => {
         setMyFriendsListOpen(true);
+        setNavbarOpen(false);
     }
 
     const closeMyFriendsList = () => {
         setMyFriendsListOpen(false);
+        setNavbarOpen(true);
     }
 
     const closeAddPoints = () => {
