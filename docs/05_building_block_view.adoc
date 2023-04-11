@@ -35,7 +35,6 @@ Contained Building Blocks::
 [plantuml, "level2", png]
 ----
 actor User
-database db
 folder api as "Maps' API"
 folder pod as "User's pod"
 package LoMap {
@@ -48,7 +47,6 @@ package LoMap {
 backend -up-> api: API request
 User -up-> frontend: interacts with
 backend<-right-> pod: obtains data
-backend<--> db
 ----
 
 Motivation::

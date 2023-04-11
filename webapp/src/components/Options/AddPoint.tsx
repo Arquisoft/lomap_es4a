@@ -9,12 +9,10 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import {
   Alert,
   Autocomplete, Button,
-  createTheme, Dialog, DialogActions,
-  DialogContent,
+  createTheme,
   IconButton,
   Snackbar,
   ThemeProvider,
-  Typography,
 } from '@mui/material';
 import TextField from "@mui/material/TextField";
 
@@ -23,7 +21,7 @@ import "./Option.css";
 import Point from "../../solidapi/Point";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import {ChangeEvent, useEffect, useState} from "react";
+import {useState} from "react";
 
 import {v4 as uuidv4} from 'uuid';
 
@@ -80,8 +78,8 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
         setErrorName(false);
       }
       setErrorCategory(true);
-
       //setOpenDialog(true);
+      
     } else {
       onClose();
       setPointName("");

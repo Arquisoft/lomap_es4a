@@ -1,8 +1,5 @@
-import Box from "@mui/material/Box";
-import PrimarySearchAppBar from "./Searchbar/Searchbar";
 import Mapa from "./Map/Map";
-import { Button, Grid, Typography } from "@mui/material";
-import React, {useEffect} from "react";
+import React from "react";
 import { SessionType } from "../solidapi/solidapiAdapter";
 import AddPoint from "./Options/AddPoint";
 import Point from "../solidapi/Point";
@@ -12,12 +9,12 @@ import PointsView from "./Navbar/PointsView";
 import MapListView from "./Navbar/MapListView";
 import SearchBar from "./Searchbar/Searchbar";
 
-import { Marker } from "@react-google-maps/api";
 import {addPoint, deletePoint, getPoint, updatePoint} from "../solidapi/solidapi";
 
 import savedMarker2 from '../images/markerGuerdado2.png';
 import EditPoint from "./Options/EditPoint";
-import {Dialog, DialogActions, DialogContent, DialogTitle} from '@mui/material';
+
+import {Button, Grid, Typography, Box, Dialog, DialogActions, DialogContent} from '@mui/material';
 import MyFriendsListView from "./Navbar/MyFriendsListView";
 
 export default function MainPage({ session }: SessionType): JSX.Element {
@@ -30,15 +27,10 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const [myFriendsListOpen, setMyFriendsListOpen] = React.useState(false);
     const [markerList, setMarkerlist] = React.useState<{[id: string]: google.maps.Marker}>({});
     const [clickedPoint, setClickedPoint] = React.useState({lat:0, lng:0});
+    const [currentMapName, setCurrentMapName] = React.useState("Map"); // nombre del mapa que está cargado
     const [point, setPoint] = React.useState(new Point("", "", "", 0, 0, ""));
     const [markerToAdd, setMarkerToAdd] = React.useState<google.maps.Marker>();
     const [openDialog, setOpenDialog] = React.useState(false);
-
-
-    /*
-    const toggleNavbar = (open: boolean) => {
-        setNavbarOpen(open);
-    }*/
 
     const toggleNavbar = () => {
         setNavbarOpen(!navbarOpen);
@@ -82,7 +74,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     }
 
     const openEditPoint = (id: string) => {
-        getPoint(session, id).then(point => {
+        getPoint(session, currentMapName, id).then(point => {
             if (point !== null) {
                 setPoint(point);
             }
@@ -103,7 +95,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
       };
 
     const createPoint = (point: Point) => {
-        addPoint(session, point);
+        addPoint(session, currentMapName, point);
         markerToAdd?.setIcon(savedMarker2);
         markerToAdd?.setVisible(true);
         markerToAdd?.setTitle(point.name);
@@ -111,18 +103,17 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     }
 
     const editPoint = (point: Point) => {
-        updatePoint(session, point);
+        updatePoint(session, currentMapName, point);
         closeEditPoint();
 
         markerList[point.id].setTitle(point.name);
     }
     
     const eliminatePoint = (id: string)=>{
-        deletePoint(session, id);
+        deletePoint(session, currentMapName, id);
         markerList[id].setMap(null);
 
         delete markerList[id];
-        //markerList.splice(index,1);
 
         setPointsListOpen(!pointsListOpen)
         setOpenDialog(true)
@@ -154,11 +145,9 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             <Box><AddPoint open={addPointOpen} onClose={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
             <Box><EditPoint open={editPointOpen} onClose={closeEditPoint} point={point} editPoint={editPoint}/></Box>
             <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}></PointsView></Box>
-            <Box><MapListView open={mapListOpen} onClose={closeMapList} ></MapListView></Box>
             <Box><MyFriendsListView open={myFriendsListOpen} onClose={closeMyFriendsList} ></MyFriendsListView></Box>
-            <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markerList={setMarkerlist} clickMap={clickMap} markerToAdd={setMarkerToAdd}/></Box>
-
-
+            <Box><MapListView open={mapListOpen} onClose={closeMapList} currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} session={session} ></MapListView></Box>
+            <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markers={markerList} markerList={setMarkerlist} clickMap={clickMap} setMarkerToAdd={setMarkerToAdd} currentMapName={currentMapName} /></Box>
 
 
             <Dialog onClose={handleCloseDialog} aria-labelledby="customized-dialog-title" open={openDialog}>
