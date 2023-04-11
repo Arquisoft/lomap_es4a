@@ -451,7 +451,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#section-architecture-constraints">2. Architecture Constraints</a>
 <ul class="sectlevel2">
-<li><a href="#_general_conventions">2.1. General conventions</a></li>
+<li><a href="#_general_constraints">2.1. General constraints</a></li>
 <li><a href="#_technology_conventions">2.2. Technology conventions</a></li>
 <li><a href="#_group_conventions">2.3. Group conventions</a></li>
 </ul>
@@ -550,70 +550,8 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <div class="sect1">
 <h2 id="section-introduction-and-goals">1. Introduction and Goals</h2>
 <div class="sectionbody">
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<p>Describes the relevant requirements and the driving forces that software architects and development team must consider. These include</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>underlying business goals, essential features and functional requirements for the system</p>
-</li>
-<li>
-<p>quality goals for the architecture</p>
-</li>
-<li>
-<p>relevant stakeholders and their expectations</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>In this part of the documentation the development team will describe all the main requirements and general information required to start designing the project&#8217;s architecture.</p>
-</div>
-<div class="paragraph">
-<p>That information will be subdivided in the following sections:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Requirements Overview, which describes the functionality of the project.</p>
-</li>
-<li>
-<p>Quality Goals, which contains information regarding the level of quality the team aims to achieve.</p>
-</li>
-<li>
-<p>Stakeholders, a sum of the main groups of people interested on the project, and also other groups that need to know the details of this specific architecture.</p>
-</li>
-</ul>
-</div>
 <div class="sect2">
 <h3 id="_requirements_overview">1.1. Requirements Overview</h3>
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<div class="title">Contents</div>
-<p>Short description of the functional requirements, driving forces, extract (or abstract)
-of requirements. Link to (hopefully existing) requirements documents
-(with version number and information where to find it).</p>
-</div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>From the point of view of the end users a system is created or modified to
-improve support of a business activity and/or improve the quality.</p>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>Short textual description, probably in tabular use-case format.
-If requirements documents exist this overview should refer to these documents.</p>
-</div>
-<div class="paragraph">
-<p>Keep these excerpts as short as possible. Balance readability of this document with potential redundancy w.r.t to requirements documents.</p>
-</div>
-</div>
-</div>
 <div class="paragraph">
 <p>The LoMap system is a software solution that allows the citizens of a city to share places of interest as well as allow businesses to share their locations to potential clients. These places are part of a map, and the users can give feedback about them to other users.</p>
 </div>
@@ -651,23 +589,6 @@ If requirements documents exist this overview should refer to these documents.</
 </div>
 <div class="sect2">
 <h3 id="_quality_goals">1.2. Quality Goals</h3>
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<div class="title">Contents</div>
-<p>The top three (max five) quality goals for the architecture whose fulfillment is of highest importance to the major stakeholders. We really mean quality goals for the architecture. Don&#8217;t confuse them with project goals. They are not necessarily identical.</p>
-</div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>You should know the quality goals of your most important stakeholders, since they will influence fundamental architectural decisions. Make sure to be very concrete about these qualities, avoid buzzwords.
-If you as an architect do not know how the quality of your work will be judged …</p>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>A table with quality goals and concrete scenarios, ordered by priorities</p>
-</div>
-</div>
-</div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Quality goals ordered by priority (from most to least important)</caption>
 <colgroup>
@@ -702,43 +623,6 @@ If you as an architect do not know how the quality of your work will be judged �
 </div>
 <div class="sect2">
 <h3 id="_stakeholders">1.3. Stakeholders</h3>
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<div class="title">Contents</div>
-<p>Explicit overview of stakeholders of the system, i.e. all person, roles or organizations that</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>should know the architecture</p>
-</li>
-<li>
-<p>have to be convinced of the architecture</p>
-</li>
-<li>
-<p>have to work with the architecture or with code</p>
-</li>
-<li>
-<p>need the documentation of the architecture for their work</p>
-</li>
-<li>
-<p>have to come up with decisions about the system or its development</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>You should know all parties involved in development of the system or affected by the system.
-Otherwise, you may get nasty surprises later in the development process.
-These stakeholders determine the extent and the level of detail of your work and its results.</p>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>Table with role names, person names, and their expectations with respect to the architecture and its documentation.</p>
-</div>
-</div>
-</div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -792,28 +676,8 @@ These stakeholders determine the extent and the level of detail of your work and
 <div class="sect1">
 <h2 id="section-architecture-constraints">2. Architecture Constraints</h2>
 <div class="sectionbody">
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<div class="title">Contents</div>
-<p>Any requirement that constrains software architects in their freedom of design and implementation decisions or decision about the development process. These constraints sometimes go beyond individual systems and are valid for whole organizations and companies.</p>
-</div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>Architects should know exactly where they are free in their design decisions and where they must adhere to constraints.
-Constraints must always be dealt with; they may be negotiable, though.</p>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>Simple tables of constraints with explanations.
-If needed you can subdivide them into
-technical constraints, organizational and political constraints and
-conventions (e.g. programming or versioning guidelines, documentation or naming conventions)</p>
-</div>
-</div>
-</div>
 <div class="sect2">
-<h3 id="_general_conventions">2.1. General conventions</h3>
+<h3 id="_general_constraints">2.1. General constraints</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -828,11 +692,11 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Arc42</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Base template for the documentation. Used for most of the software solutions for its free and open source code.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">It will be the base template followed by the documentation.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Naming Conventions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The names and nomenclature will follow the constraints of each technology and follow the same naming line in the entire project</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Git &amp; GitHub</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A version control management has to be used so that the software can be versioned and all developers have access to the project. GitHub is a tool that has to be used so the professors can evaluate the project.</p></td>
 </tr>
 </tbody>
 </table>
@@ -852,20 +716,12 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Git</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Version control management in which will be uploaded all content related to the project. Including documentation, code, records of meetings, documentation of issues or different versions.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SOLID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Principles used to build code. Use of pods to store the user&#8217;s data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The use of pods to store the user&#8217;s data is mandatory.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">WebStorm</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Main IDE for TypeScript developer. Chosen because of this facility with Git integration and specialization on TypeScript coding</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">GitHub</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IDE for version control. Chosen Because our familiarity with it and its easy use.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Web</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The developed software solution must be accesible by the users through a web application so the project has to be deployed in a server.</p></td>
 </tr>
 </tbody>
 </table>
@@ -886,19 +742,15 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Capacity</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Main group formed by four third-grade-developers who are looking for add value to the project.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The group must have between 5 and 8 members (5 members in this case).</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Meeting agreements</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Two scheduled meetings per week. One during the class session to update the tasks for the week and another for conflict resolution and routine checks.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Meetings</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One scheduled meetings per week is mandatory. It will take place during the lab sessions More meetings can be arranged.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Time Restriction</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">This project has to have an approximate duration of one semester.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Distribution</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Division of the different areas in equitative Full Stack parts. Looking for a complete development and knowledge of all team</p></td>
 </tr>
 </tbody>
 </table>
@@ -909,36 +761,6 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 <div class="sect1">
 <h2 id="section-system-scope-and-context">3. System Scope and Context</h2>
 <div class="sectionbody">
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<div class="title">Contents</div>
-<p>System scope and context - as the name suggests - delimits your system (i.e. your scope) from all its communication partners
-(neighboring systems and users, i.e. the context of your system). It thereby specifies the external interfaces.</p>
-</div>
-<div class="paragraph">
-<p>If necessary, differentiate the business context (domain specific inputs and outputs) from the technical context (channels, protocols, hardware).</p>
-</div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>The domain interfaces and technical interfaces to communication partners are among your system&#8217;s most critical aspects. Make sure that you completely understand them.</p>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>Various options:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Context diagrams</p>
-</li>
-<li>
-<p>Lists of communication partners and their interfaces.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
 <div class="sect2">
 <h3 id="_business_context">3.1. Business Context:</h3>
 <div class="imageblock">
@@ -950,7 +772,7 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 <p>The main components that the LoMap system interacts with are: Database, Maps API, POD.</p>
 </div>
 <div class="paragraph">
-<p>The final user has a POD and uses the LoMap system to save and share maps. The LoMap system can also access the user&#8217;s POD to store information. Due to decitions to increase the throwput of the application, some data will be stored in a database.</p>
+<p>The final user has a POD and uses the LoMap system to save and share maps. The LoMap system can also access the user&#8217;s POD to store information.</p>
 </div>
 </div>
 <div class="sect2">
@@ -961,7 +783,7 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 </div>
 </div>
 <div class="paragraph">
-<p>The components of the application use certain technologies and communicate with eachother using different channels. The LoMap application will be programmed mostly using TypeScript and the React and Node JS Express frameworks. The Pod will be a SOLID POD and the database will be a MongoDB database. The connections that happen between LoMap, the user&#8217;s device and the SOLID PODs follow the https protocol, so the information is secure. LoMap will use a Google Maps API, and the connections will use http. Finally, to access the Mongo DB database, LoMap will follow the MongoDB Wire Protocol.</p>
+<p>The components of the application use certain technologies and communicate with eachother using different channels. The LoMap application will be programmed mostly using TypeScript and the React and Node JS Express frameworks. The Pod will be a SOLID POD. The connections that happen between LoMap and the user&#8217;s device follow the http protocol and the connection between the user&#8217;s device and the SOLID PODs follow the https protocol, so the information is secure. LoMap will use a Google Maps API, and the connections will use http.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -970,51 +792,19 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 <div class="sect1">
 <h2 id="section-solution-strategy">4. Solution Strategy</h2>
 <div class="sectionbody">
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="ulist">
-<div class="title">Contents</div>
-<ul>
-<li>
-<p>decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern</p>
-</li>
-<li>
-<p>relevant organizational decisions, e.g. selecting a development process or delegating certain tasks to third parties.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>These decisions form the cornerstones for your architecture. They are the basis for many other detailed decisions or implementation rules.</p>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>Keep the explanation of these key decisions short.</p>
-</div>
-<div class="paragraph">
-<p>Motivate what you have decided and why you decided that way,
-based upon your problem statement, the quality goals and key constraints.
-Refer to details in the following sections.</p>
-</div>
-</div>
-</div>
 <div class="sect2">
 <h3 id="_technology_decisions">4.1. Technology decisions</h3>
 <div class="paragraph">
 <div class="title">TypeScript:</div>
-<p>We decided to use this programming language because it&#8217;s one of the most suitable to develop SOLID apps. Like JavaScript, it also provides all the capabilities that a language used for the web and it helps the developers by being statically typed. Our team has experience with Java, so a statically typed language is easier to use and understand for us.</p>
+<p>We decided to use this programming language because it&#8217;s one of the most suitable to develop web apps. Like JavaScript, it provides all the capabilities that a language used for the web and it helps the developers by being statically typed. Our team has experience with Java, so a statically typed language is easier to use and understand for us.</p>
 </div>
 <div class="paragraph">
-<div class="title">MongoDB:</div>
-<p>Relational databases may not be the best solution as NoSQL is best fitted when the schema is flexible. MongoDB provides an easy-to-use documental database. It is also implemented in the skeleton provided for the project.</p>
+<div class="title">Docker containers:</div>
+<p>The docker containers can be used during development as they provide a uniform enviroment to run the application.</p>
 </div>
 <div class="paragraph">
-<div class="title">Docker app:</div>
-<p>The docker app configures the system to work with the docker environment.</p>
-</div>
-<div class="paragraph">
-<div class="title">WebStorm:</div>
-<p>We will use this IDE to develop our project</p>
+<div class="title">WebStorm or Visual Studio Colde:</div>
+<p>We will use either WebStorm or Visual Studio Colde develop our project, each member of the development team can choose to work with either one of them.</p>
 </div>
 <div class="paragraph">
 <div class="title">Github Desktop:</div>
@@ -1033,11 +823,11 @@ Refer to details in the following sections.</p>
 </div>
 <div class="paragraph">
 <div class="title">Eficiency:</div>
-<p>The performance will be smooth, by using technologies that improve it.</p>
+<p>The performance will be smooth, by using the SOLID PODs correctly.</p>
 </div>
 <div class="paragraph">
 <div class="title">Testability:</div>
-<p>We will test the app manually and automatically</p>
+<p>The team will test the app manually and automatically</p>
 </div>
 <hr>
 <div style="page-break-after: always;"></div>
@@ -1047,87 +837,8 @@ Refer to details in the following sections.</p>
 <div class="sect1">
 <h2 id="section-building-block-view">5. Building Block View</h2>
 <div class="sectionbody">
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<div class="title">Content</div>
-<p>The building block view shows the static decomposition of the system into building blocks (modules, components, subsystems, classes,
-interfaces, packages, libraries, frameworks, layers, partitions, tiers, functions, macros, operations,
-datas structures, &#8230;&#8203;) as well as their dependencies (relationships, associations, &#8230;&#8203;)</p>
-</div>
-<div class="paragraph">
-<p>This view is mandatory for every architecture documentation.
-In analogy to a house this is the <em>floor plan</em>.</p>
-</div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>Maintain an overview of your source code by making its structure understandable through
-abstraction.</p>
-</div>
-<div class="paragraph">
-<p>This allows you to communicate with your stakeholder on an abstract level without disclosing implementation details.</p>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>The building block view is a hierarchical collection of black boxes and white boxes
-(see figure below) and their descriptions.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/05_building_blocks-EN.png" alt="Hierarchy of building blocks"></span></p>
-</div>
-<div class="paragraph">
-<p><strong>Level 1</strong> is the white box description of the overall system together with black
-box descriptions of all contained building blocks.</p>
-</div>
-<div class="paragraph">
-<p><strong>Level 2</strong> zooms into some building blocks of level 1.
-Thus it contains the white box description of selected building blocks of level 1, together with black box descriptions of their internal building blocks.</p>
-</div>
-<div class="paragraph">
-<p><strong>Level 3</strong> zooms into selected building blocks of level 2, and so on.</p>
-</div>
-</div>
-</div>
 <div class="sect2">
 <h3 id="_whitebox_overall_system">5.1. Whitebox Overall System</h3>
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<p>Here you describe the decomposition of the overall system using the following white box template. It contains</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>an overview diagram</p>
-</li>
-<li>
-<p>a motivation for the decomposition</p>
-</li>
-<li>
-<p>black box descriptions of the contained building blocks. For these we offer you alternatives:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>use <em>one</em> table for a short and pragmatic overview of all contained building blocks and their interfaces</p>
-</li>
-<li>
-<p>use a list of black box descriptions of the building blocks according to the black box template (see below).
-Depending on your choice of tool this list could be sub-chapters (in text files), sub-pages (in a Wiki) or nested elements (in a modeling tool).</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>(optional:) important interfaces, that are not explained in the black box templates of a building block, but are very important for understanding the white box.
-Since there are so many ways to specify interfaces why do not provide a specific template for them.
- In the worst case you have to specify and describe syntax, semantics, protocols, error handling,
- restrictions, versions, qualities, necessary compatibilities and many things more.
-In the best case you will get away with examples or simple signatures.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/level1.png" alt="level1" width="461" height="217">
@@ -1171,18 +882,6 @@ In the best case you will get away with examples or simple signatures.</p>
 </div>
 <div class="sect2">
 <h3 id="_level_2">5.2. Level 2</h3>
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<p>Here you can specify the inner structure of (some) building blocks from level 1 as white boxes.</p>
-</div>
-<div class="paragraph">
-<p>You have to decide which building blocks of your system are important enough to justify such a detailed description.
-Please prefer relevance over completeness. Specify important, surprising, risky, complex or volatile building blocks.
-Leave out normal, simple, boring or standardized parts of your system</p>
-</div>
-</div>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/level2.png" alt="level2" width="484" height="365">
@@ -1217,35 +916,13 @@ Leave out normal, simple, boring or standardized parts of your system</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Backend</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"> It is in charge of administrate the application logic.</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"> Database that stores the information which must be centralised (in order to achieve efficiency).</p></td>
-</tr>
 </tbody>
 </table>
 </div>
 <div class="sect2">
 <h3 id="_level_3">5.3. Level 3</h3>
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<p>Here you can specify the inner structure of (some) building blocks from level 2 as white boxes.</p>
-</div>
-<div class="paragraph">
-<p>When you need more detailed levels of your architecture please copy this
-part of arc42 for additional levels.</p>
-</div>
-</div>
-</div>
 <div class="sect3">
 <h4 id="_white_box_building_block_x_1">5.3.1. White Box &lt;_building block x.1_&gt;</h4>
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<p>Specifies the internal structure of <em>building block x.1</em>.</p>
-</div>
-</div>
-</div>
 <div class="paragraph">
 <p><em>&lt;white box template&gt;</em></p>
 </div>
@@ -1269,64 +946,6 @@ part of arc42 for additional levels.</p>
 <div class="sect1">
 <h2 id="section-runtime-view">6. Runtime View</h2>
 <div class="sectionbody">
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<div class="title">Contents</div>
-<p>The runtime view describes concrete behavior and interactions of the system’s building blocks in form of scenarios from the following areas:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>important use cases or features: how do building blocks execute them?</p>
-</li>
-<li>
-<p>interactions at critical external interfaces: how do building blocks cooperate with users and neighboring systems?</p>
-</li>
-<li>
-<p>operation and administration: launch, start-up, stop</p>
-</li>
-<li>
-<p>error and exception scenarios</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Remark: The main criterion for the choice of possible scenarios (sequences, workflows) is their <strong>architectural relevance</strong>. It is <strong>not</strong> important to describe a large number of scenarios. You should rather document a representative selection.</p>
-</div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>You should understand how (instances of) building blocks of your system perform their job and communicate at runtime.
-You will mainly capture scenarios in your documentation to communicate your architecture to stakeholders that are less willing or able to read and understand the static models (building block view, deployment view).</p>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>There are many notations for describing scenarios, e.g.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>numbered list of steps (in natural language)</p>
-</li>
-<li>
-<p>activity diagrams or flow charts</p>
-</li>
-<li>
-<p>sequence diagrams</p>
-</li>
-<li>
-<p>BPMN or EPCs (event process chains)</p>
-</li>
-<li>
-<p>state machines</p>
-</li>
-<li>
-<p>&#8230;&#8203;</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
 <div class="sect2">
 <h3 id="_login">6.1. Login</h3>
 <div class="imageblock">
@@ -1339,7 +958,7 @@ You will mainly capture scenarios in your documentation to communicate your arch
 <h3 id="_map_view">6.2. Map view</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Sequence%20diagram2.png" alt="Sequence diagram2" width="500" height="355">
+<img src="./images/Sequence%20diagram2.png" alt="Sequence diagram2" width="487" height="326">
 </div>
 </div>
 </div>
@@ -1357,56 +976,6 @@ You will mainly capture scenarios in your documentation to communicate your arch
 <div class="sect1">
 <h2 id="section-deployment-view">7. Deployment View</h2>
 <div class="sectionbody">
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<div class="title">Content</div>
-<p>The deployment view describes:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>the technical infrastructure used to execute your system, with infrastructure elements like geographical locations, environments, computers, processors, channels and net topologies as well as other infrastructure elements and</p>
-</li>
-<li>
-<p>the mapping of (software) building blocks to that infrastructure elements.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>Often systems are executed in different environments, e.g. development environment, test environment, production environment. In such cases you should document all relevant environments.</p>
-</div>
-<div class="paragraph">
-<p>Especially document the deployment view when your software is executed as distributed system with more then one computer, processor, server or container or when you design and construct your own hardware processors and chips.</p>
-</div>
-<div class="paragraph">
-<p>From a software perspective it is sufficient to capture those elements of the infrastructure that are needed to show the deployment of your building blocks. Hardware architects can go beyond that and describe the infrastructure to any level of detail they need to capture.</p>
-</div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>Software does not run without hardware.
-This underlying infrastructure can and will influence your system and/or some
-cross-cutting concepts. Therefore, you need to know the infrastructure.</p>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>Maybe the highest level deployment diagram is already contained in section 3.2. as
-technical context with your own infrastructure as ONE black box. In this section you will
-zoom into this black box using additional deployment diagrams:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>UML offers deployment diagrams to express that view. Use it, probably with nested diagrams,
-when your infrastructure is more complex.</p>
-</li>
-<li>
-<p>When your (hardware) stakeholders prefer other kinds of diagrams rather than the deployment diagram, let them use any kind that is able to show nodes and channels of the infrastructure.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
 <div class="sect2">
 <h3 id="_development_diagram">7.1. Development Diagram</h3>
 <div class="paragraph">
@@ -1422,7 +991,7 @@ While the application is being developed, the MongoDB database will be allocated
 <div class="sect2">
 <h3 id="_deployment_diagram">7.2. Deployment Diagram</h3>
 <div class="paragraph">
-<p>While in deployment run in a Server. The users will connect to this server to access the application for the most part in the user&#8217;s device, whether it is a smartphone or a personal computer. The system will be deployed using Docker images. The webapp is the part of the system that the users will interact with. The restapi will be in charge of integrating all the other parts of the system and using external components such as MongoDB, SOLID PODs and a Maps API.</p>
+<p>While in deployment run in a Server. The users will connect to this server to access the application for the most part in the user&#8217;s device, whether it is a smartphone or a personal computer. The system will be deployed using Docker images. The webapp is the part of the system that the users will interact with. The restapi will be in charge of integrating all the other parts of the system and using external components such as SOLID PODs and a Maps API.</p>
 </div>
 <div class="imageblock">
 <div class="content">
