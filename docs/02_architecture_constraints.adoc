@@ -1,0 +1,25 @@
+[[section-architecture-constraints]]
+== Architecture Constraints
+
+=== General constraints
+[options="header",cols="1,2"]
+|===
+|Constrains | Description
+| Arc42 | It will be the base template followed by the documentation.
+| Git & GitHub | A version control management has to be used so that the software can be versioned and all developers have access to the project. GitHub is a tool that has to be used so the professors can evaluate the project.
+|===
+=== Technology conventions
+[options="header",cols="1,2"]
+|===
+|Constrains | Description
+| SOLID | The use of pods to store the user's data is mandatory.
+| Web | The developed software solution must be accesible by the users through a web application so the project has to be deployed in a server.
+|===
+=== Group conventions
+[options="header",cols="1,2"]
+|===
+|Constrains | Description
+| Capacity | The group must have between 5 and 8 members (5 members in this case).
+| Meetings | One scheduled meetings per week is mandatory. It will take place during the lab sessions More meetings can be arranged.
+| Time Restriction | This project has to have an approximate duration of one semester.
+|===

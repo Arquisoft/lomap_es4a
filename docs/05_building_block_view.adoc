@@ -1,0 +1,81 @@
+[[section-building-block-view]]
+
+
+== Building Block View
+
+=== Whitebox Overall System
+
+[plantuml, "level1", png]
+----
+actor User
+folder LoMap
+folder pod as "User's pod"
+folder api as "Maps' API"
+
+LoMap -up-> api: API request
+User -right-> LoMap: interacts with
+LoMap <-right-> pod: obtains data
+----
+
+Motivation::
+The diagram shows the external components that interact with the application: the user and its pod.
+
+
+Contained Building Blocks::
+[cols="1,2" options="header"]
+|===
+| **Black boxes** | **Description**
+| LoMap | Application which extracts data from the pod, obeying the user.
+| User's pod | The place where user's private data is stored.
+|Maps' API | Service that will allow us working with maps.
+|===
+
+=== Level 2
+
+[plantuml, "level2", png]
+----
+actor User
+folder api as "Maps' API"
+folder pod as "User's pod"
+package LoMap {
+    component frontend
+    component backend
+    
+    frontend <-> backend
+}
+
+backend -up-> api: API request
+User -up-> frontend: interacts with
+backend<-right-> pod: obtains data
+----
+
+Motivation::
+The diagram shows the inner structure of the "LoMap" component.
+
+
+Contained Building Blocks::
+[cols="1,2" options="header"]
+|===
+| **Black boxes** | **Description**
+| Frontend | Application user's interface.
+| Backend | It is in charge of administrate the application logic.
+|===
+
+
+
+=== Level 3
+
+==== White Box <_building block x.1_>
+
+_<white box template>_
+
+
+==== White Box <_building block x.2_>
+
+_<white box template>_
+
+
+
+==== White Box <_building block y.1_>
+
+_<white box template>_

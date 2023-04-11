@@ -1,0 +1,42 @@
+[[section-introduction-and-goals]]
+== Introduction and Goals
+
+=== Requirements Overview
+
+The LoMap system is a software solution that allows the citizens of a city to share places of interest as well as allow businesses to share their locations to potential clients. These places are part of a map, and the users can give feedback about them to other users.
+
+The LoMap system must accomplish the following requirements:
+
+* Users must be able to add locations of different categories, including bars, restaurants, shops, sights and monuments.
+*	Users must be able to show the locations in a map window.
+*	Users must be able to add review scores, comments and pictures about added places.
+*	Users must be able to manage the information that is accessible with other users, which can be part of their friends or a group of friends.
+*	The information about the places of each user should not be fully centralized.
+*	The privacy of each user should be respected as much as possible without interfering with other aspects of the application such as the performance.
+*	Users must be able to see places of their friends.
+*	Users must be able to filter the places they see in the map by friends or category.
+
+=== Quality Goals
+
+.Quality goals ordered by priority (from most to least important)
+[options="header",cols="1,3"]
+|===
+|Quality Goal|Description
+| Usability | Non technical users must be able to use the app easily. Aesthetics must be familiar and understandable to them.
+| Privacy | Users can control the data that is shared with the app thanks to SOLID principles and the use of pods.
+| Efficiency | There must be a medium point between privacy and efficiency (all the information may not be stored inside the pods due to decreases in performance.
+| Testability | The application should be able to go through different test and complete them successfully.
+|===
+
+=== Stakeholders
+
+[options="header",cols="1,2,2"]
+|===
+|Role/Name|Contact|Expectations
+| Deployment city/ Client | Brussels City Hall | Have a functional application that adds value to the community, obtaining a benefit for local businesses and tourism.
+| Responsible company | HappySw | Development of a generic project expandable to other cities.
+| Main beneficiaries | Public users | Have an easily accessible and useful consultation and discovery service for premises or businesses.
+| Side beneficiaries | Businesses benefited | Obtain greater visibility and approach to the public, especially to the tourists of the city.
+| Project managers | Subject teachers | Development by the students of a functional application that meets the established criteria and can serve as a prototype for a real service.
+| Developers | Lomap_es4a team | Carrying out a serious project with a view to the future in which to develop your potential and show your technical skills.
+|===
