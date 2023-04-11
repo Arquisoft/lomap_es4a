@@ -2,7 +2,7 @@
 import {
     getFile,
     deleteFile,
-    overwriteFile, getContainedResourceUrlAll, getSolidDataset, getThing, getUrl
+    overwriteFile, getContainedResourceUrlAll, getSolidDataset
 } from '@inrupt/solid-client';
 import { Session } from '@inrupt/solid-client-authn-browser';
 import Point from "./Point";
@@ -22,45 +22,28 @@ function checkSession(session: Session): boolean {
     return true;
 }
 
-function mapUrlFor(session: Session): string {
-    if (typeof session.info.webId !== "undefined") {
-        return session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/lomap", "/map");
+export function checkMapNameIsValid(mapName:string): boolean {
+    const regex = /\W+/; // \W es equivalente a [^A-Za-z0-9_]+
+    return typeof mapName !== "undefined" && mapName !== null
+        && mapName.trim() !== ""
+        && mapName.match(regex) === null;
+}
+
+function mapUrlFor(session: Session, mapName:string): string {
+    if (typeof session.info.webId !== "undefined" && checkMapNameIsValid(mapName)) {
+        return session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/lomap", "/", mapName);
     }
     return "";
 }
 
-// async function existsUrl(session: Session, url: string): Promise<boolean> {
-//     // let urls = getContainedResourceUrlAll(url);
-//     // let files: Array<File> = [];
-//     // for (let i = 0; i < urls.length; i++) {
-//     //     let file = await readData(session, urls[i]);
-//     //     if (file != null) {
-//     //         files.push(file);
-//     //     }
-//     // }
-//     // return files;
-//
-//     let file = await getFile(url, {fetch: session.fetch});
-//     return file !== null;
-//
-//     return await getFile(
-//         url,
-//         {fetch: session.fetch}
-//     ).catch(_ => {
-//         return false;
-//     }).then(_ => {
-//         return true;
-//     });
-// }
-
-async function checkStructure(session: Session): Promise<boolean> {
+async function checkStructure(session: Session, mapName: string): Promise<boolean> {
     let publicUrl = "";
     let lomapUrl = "";
     let mapUrl = "";
-    if (typeof session.info.webId !== "undefined") {
+    if (typeof session.info.webId !== "undefined" && checkMapNameIsValid(mapName)) {
         publicUrl = session.info.webId.split("/").slice(0, 3).join("/").concat("/public/");
         lomapUrl = publicUrl.concat("lomap/");
-        mapUrl = lomapUrl.concat("map");
+        mapUrl = lomapUrl.concat(mapName);
     } else {
         return false;
     }
@@ -79,16 +62,20 @@ async function checkStructure(session: Session): Promise<boolean> {
     }
 }
 
-export async function createMap(session: Session): Promise<boolean> {
+export async function createMap(session: Session, mapName:string): Promise<boolean> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return false;
     } // Check if the webId is undefined
 
-    if (await checkStructure(session)) {
+    if (!checkMapNameIsValid(mapName)) {
+        return false;
+    } // Check if map name is valid
+
+    if (await checkStructure(session, mapName)) {
         return false;
     } // Check if there's a structure for the map already created
 
-    let url = mapUrlFor(session);
+    let url = mapUrlFor(session, mapName);
 
     try {
         let persona  = {
@@ -101,7 +88,7 @@ export async function createMap(session: Session): Promise<boolean> {
             "@context": "https://schema.org/",
             "@type": "Map",
             "id": "0",
-            "name": "Mapa Propio",
+            "name": mapName,
             "author": persona,
             "spatialCoverage": []
         }
@@ -120,14 +107,14 @@ export async function createMap(session: Session): Promise<boolean> {
     return true;
 }
 
-export async function getPoint(session: Session, id: string): Promise<Point | null> {
+export async function getPoint(session: Session, mapName:string, id: string): Promise<Point | null> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return null;
     } // Check if the webId is undefined
 
-    let url = mapUrlFor(session);
+    let url = mapUrlFor(session, mapName);
 
-    if (!await checkStructure(session)) {
+    if (!await checkStructure(session, mapName)) {
         return null;
     }
 
@@ -153,14 +140,18 @@ export async function getPoint(session: Session, id: string): Promise<Point | nu
     }
 }
 
-export async function addPoint(session: Session, point: Point): Promise<boolean> {
+export async function addPoint(session: Session, mapName:string, point: Point): Promise<boolean> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return false;
     } // Check if the webId is undefined
 
-    let url = mapUrlFor(session);
+    if (!checkMapNameIsValid(mapName)) {
+        return false;
+    }
 
-    if (!await checkStructure(session)) {
+    let url = mapUrlFor(session, mapName);
+
+    if (!await checkStructure(session, mapName)) {
         return false;
     }
 
@@ -193,14 +184,14 @@ export async function addPoint(session: Session, point: Point): Promise<boolean>
     return true;
 }
 
-export async function deletePoint(session: Session, id: string): Promise<boolean> {
+export async function deletePoint(session: Session,mapName:string, id: string): Promise<boolean> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return false;
     } // Check if the webId is undefined
   
-    let url = mapUrlFor(session);
+    let url = mapUrlFor(session, mapName);
   
-    if (!await checkStructure(session)) {
+    if (!await checkStructure(session, mapName)) {
         return false;
     }
   
@@ -211,10 +202,6 @@ export async function deletePoint(session: Session, id: string): Promise<boolean
         );
 
         let map = JSON.parse(await mapBlob.text());
-
-      // if (pointIndex < 0 || pointIndex >= map.spatialCoverage.length) {
-      //   return false;
-      // }
 
         let count = 0;
         map.spatialCoverage.forEach((point: Point) => {
@@ -239,14 +226,14 @@ export async function deletePoint(session: Session, id: string): Promise<boolean
     return true;
   }
 
-export async function updatePoint(session: Session, pointToUpdate: Point): Promise<boolean> {
+export async function updatePoint(session: Session, mapName:string, pointToUpdate: Point): Promise<boolean> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return false;
     } // Check if the webId is undefined
 
-    let url = mapUrlFor(session);
+    let url = mapUrlFor(session, mapName);
 
-    if (!await checkStructure(session)) {
+    if (!await checkStructure(session, mapName)) {
         return false;
     }
 
@@ -284,16 +271,19 @@ export async function updatePoint(session: Session, pointToUpdate: Point): Promi
     }
     return true;
 }
-  
 
-export async function retrievePoints(session: Session): Promise<Point[]> {
+export async function retrievePoints(session: Session, mapName:string): Promise<Point[]> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return [];
     } // Check if the webId is undefined
 
-    let url = mapUrlFor(session);
+    if (!checkMapNameIsValid(mapName)) {
+        return [];
+    }
 
-    if (!await checkStructure(session)) {
+    let url = mapUrlFor(session, mapName);
+
+    if (!await checkStructure(session, mapName)) {
         return [];
     }
 
@@ -313,6 +303,47 @@ export async function retrievePoints(session: Session): Promise<Point[]> {
         return points;
     } catch (error) {
         return [];
+    }
+}
+
+// Devuelve los nombres de los mapas que tiene el usuario
+export async function retrieveMapNames(session: Session): Promise<string[]> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return [];
+    } // Check if the webId is undefined
+
+    let url = session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/lomap");
+
+    let dataset = await getSolidDataset(url, { fetch: session.fetch });
+    let mapUrls = getContainedResourceUrlAll(dataset); // urls de los mapas del usuario
+    
+    return mapUrls.map(mapUrl =>
+        mapUrl.split("/lomap/")[1]
+    );
+}
+
+// Borra el mapa cuyo nombre se pasa como parámetro
+export async function deleteMap(session: Session, mapName: string): Promise<boolean> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return false;
+    } // Check if the webId is undefined
+
+    if (!checkMapNameIsValid(mapName)) {
+        return false;
+    }
+  
+    let url = mapUrlFor(session, mapName);
+  
+    try {
+        await deleteFile(
+            url,
+            { fetch: session.fetch }
+        );
+
+        return true;
+
+    } catch (error) {
+      return false;
     }
 }
 
