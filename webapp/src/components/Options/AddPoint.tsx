@@ -78,8 +78,8 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
         setErrorName(false);
       }
       setErrorCategory(true);
-      
       //setOpenDialog(true);
+      
     } else {
       onClose();
       setPointName("");
@@ -170,16 +170,16 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
         </Drawer>
 
         <Snackbar open={openAlert} onClose={handleCloseAlert} autoHideDuration={3000} >
-        <Alert severity="success" 
-          sx={{ width: '100%', backgroundColor: 'green', color: 'white'  }}  
-            iconMapping={{ success: <CheckCircleOutlineIcon sx={{ color: 'white' }} />,}}>Place added correctly!
-        </Alert>
+          <Alert severity="success"
+                 sx={{ width: '100%', backgroundColor: 'green', color: 'white'  }}
+                 iconMapping={{ success: <CheckCircleOutlineIcon sx={{ color: 'white' }} />,}}>Place added correctly!
+          </Alert>
         </Snackbar>
-        
+
       </ThemeProvider>
 
 
-);
+  );
 }
 
 export default AddPoint;

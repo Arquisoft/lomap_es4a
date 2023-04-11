@@ -6,6 +6,21 @@ import {
 } from '@inrupt/solid-client';
 import { Session } from '@inrupt/solid-client-authn-browser';
 import Point from "./Point";
+import { fetchDocument } from "tripledoc";
+import { foaf } from "rdf-namespaces";
+
+function checkSession(session: Session): boolean {
+    if (session === null || typeof session === "undefined") {
+        return false;
+    }
+    if (session.info === null || typeof session.info === "undefined") {
+        return false;
+    }
+    if (session.info.webId === null || typeof session.info.webId === "undefined") {
+        return false;
+    }
+    return true;
+}
 
 export function checkMapNameIsValid(mapName:string): boolean {
     const regex = /\W+/; // \W es equivalente a [^A-Za-z0-9_]+
@@ -330,4 +345,16 @@ export async function deleteMap(session: Session, mapName: string): Promise<bool
     } catch (error) {
       return false;
     }
+}
+
+export async function myFriends(session: Session): Promise<string[]> {
+    if (checkSession(session)) {
+        const webIdDoc = await fetchDocument(session.info.webId!);
+        let profile = webIdDoc.getSubject(session.info.webId!)
+        if(profile == null){
+            return [];
+        }
+        return profile.getAllRefs(foaf.knows);
+    }
+    return [];
 }
