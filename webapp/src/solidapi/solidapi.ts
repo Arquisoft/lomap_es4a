@@ -2,12 +2,13 @@
 import {
     getFile,
     deleteFile,
-    overwriteFile, getContainedResourceUrlAll, getSolidDataset
+    overwriteFile, getContainedResourceUrlAll, getSolidDataset, saveSolidDatasetAt, setThing, addIri, getThing
 } from '@inrupt/solid-client';
 import { Session } from '@inrupt/solid-client-authn-browser';
 import Point from "./Point";
 import { fetchDocument } from "tripledoc";
 import { foaf } from "rdf-namespaces";
+import {FOAF} from "@inrupt/vocab-common-rdf";
 
 function checkSession(session: Session): boolean {
     if (session === null || typeof session === "undefined") {
@@ -347,14 +348,32 @@ export async function deleteMap(session: Session, mapName: string): Promise<bool
     }
 }
 
-export async function myFriends(session: Session): Promise<string[]> {
+export async function myFriends(session: Session){
     if (checkSession(session)) {
         const webIdDoc = await fetchDocument(session.info.webId!);
         let profile = webIdDoc.getSubject(session.info.webId!)
         if(profile == null){
             return [];
         }
-        return profile.getAllRefs(foaf.knows);
+        return profile.getAllRefs(FOAF.knows);
     }
     return [];
 }
+
+/*
+//Function that adds a new friend to the user's profile
+async function addNewFriend(webId, session, friendWebId) {
+    // Get the Solid dataset of the profile
+    const profileDataset = await getSolidDataset(webId);
+
+    const thing = getThing(profileDataset, webId);
+
+    const updatedThing = addIri(thing, FOAF.knows, friendWebId);
+
+    const updatedProfileDataset = setThing(profileDataset, updatedThing);
+
+    const storedProfileDataset = await saveSolidDatasetAt(webId, updatedProfileDataset, {
+        fetch: session.fetch,
+    });
+}
+ */

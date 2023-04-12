@@ -1,47 +1,47 @@
-import {useState} from 'react';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import FindReplaceIcon from '@mui/icons-material/FindReplace';
-import DeleteIcon from '@mui/icons-material/Delete';
 import {myFriends} from "../../solidapi/solidapi";
 
 import {
-    SelectChangeEvent,
-    InputLabel,
-    MenuItem,
-    Select,
-    FormControl,
     createTheme,
     ThemeProvider,
     IconButton,
     Divider,
-    TextField,
-    Typography, ListItemButton
+    Typography
 } from "@mui/material";
-import {CombinedDataProvider, Image, Text, useSession} from "@inrupt/solid-ui-react";
+import {useSession} from "@inrupt/solid-ui-react";
 
 import * as React from "react";
-import {VCARD} from "@inrupt/lit-generated-vocab-common";
-import GreenSwitch from "./GreenSwitch";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 
-interface MyFriendsListView {
+interface MyFriendsListViewProps {
     open: boolean;
     onClose: () => void;
 }
 
-function MyFriendsListView(props: MyFriendsListView): JSX.Element {
+function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
     const {session} = useSession();
 
-    //TODO: Mirar como sacar los datos de la promise
-    //let friends = await myFriends(session);
+    let actualFriends:string[];
+    actualFriends = [];
+
+    const loadFriends = () => {
+        myFriends(session).then((friends) => {
+            // COMPROBADO, LOS SACA BIEN
+            actualFriends = friends;
+        })
+        seeMyFriends();
+    };
+
+    const seeMyFriends = () => {
+        actualFriends.forEach(friend => {
+            console.log(friend);
+        });
+    }
 
     const theme = createTheme({
         components: {
@@ -53,12 +53,6 @@ function MyFriendsListView(props: MyFriendsListView): JSX.Element {
                     }
                 }
             }
-        }
-    });
-
-    const darkTheme = createTheme({
-        palette: {
-            mode: "dark"
         }
     });
 
@@ -79,6 +73,8 @@ function MyFriendsListView(props: MyFriendsListView): JSX.Element {
                         sx={{display: {xs: 'none', sm: 'block', color: 'white'}}}
                     >
                     </Typography>
+                    <Divider sx={{backgroundColor: "#808b96"}} />
+                    <Button onClick={loadFriends}>Cargar amigos</Button>
                 </List>
             </Drawer>
         </ThemeProvider>
