@@ -9,7 +9,7 @@ import PointsView from "./Navbar/PointsView";
 import MapListView from "./Navbar/MapListView";
 import SearchBar from "./Searchbar/Searchbar";
 
-import {addPoint, deletePoint, getPoint, updatePoint} from "../solidapi/solidapi";
+import {addPoint, checkPointCategory, deletePoint, getPoint, updatePoint} from "../solidapi/solidapi";
 
 import savedMarker2 from '../images/markerGuerdado2.png';
 import EditPoint from "./Options/EditPoint";
@@ -122,6 +122,15 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         
     }
 
+    const comprobarCat = async (id: string, cat: string) => {
+        const result = await checkPointCategory(session, currentMapName, id, cat);
+        console.log(result+" "+id);
+        return result;
+    }
+      
+
+    
+
     
     /* Solo para mostrar los puntos (a ser llamado al cerrar la lista de puntos y al actualizar la visibilidad de un punto)
     const showPoints = () => {
@@ -142,7 +151,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
                 "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
                 "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "`,
             }}>
-            <Box sx={{ gridArea: 'search'}}><SearchBar toggleNavbar={toggleNavbar} /></Box>
+            <Box sx={{ gridArea: 'search'}}><SearchBar toggleNavbar={toggleNavbar} markers={markerList} comprobarCat={comprobarCat}/></Box>
             <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} openMyFriendsList={openMyFriendsList} /></Box>
             <Box><AddPoint open={addPointOpen} onClose={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
             <Box><EditPoint open={editPointOpen} onClose={closeEditPoint} point={point} editPoint={editPoint}/></Box>
