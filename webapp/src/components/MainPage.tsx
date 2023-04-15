@@ -86,7 +86,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         });
     }
 
-    const openDetailsPoint = (id: string) => {
+    const clickMarker = () => {
         setDetailsPointOpen(true);
     }
 
@@ -159,7 +159,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             <Box><DetailsPoint open={detailsPointOpen} onClose={closeDetailsPoint} point={point}/></Box>
             <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}></PointsView></Box>
             <Box><MapListView open={mapListOpen} onClose={closeMapList} ></MapListView></Box>
-            <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markerList={setMarkerlist} clickMap={clickMap} markerToAdd={setMarkerToAdd}/></Box>
+            <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markerList={setMarkerlist} clickMap={clickMap} clickMarker={clickMarker} markerToAdd={setMarkerToAdd}/></Box>
 
 
 

@@ -21,7 +21,7 @@ export type MarkerType = {
     website: string
 }
 
-function Mapa({session, markerList, clickMap, markerToAdd}: any) {
+function Mapa({session, markerList, clickMap, clickMarker, markerToAdd}: any) {
     const [click, setClick] = React.useState<google.maps.LatLng>();
 
     const [map, setMap] = useState(React.useRef<google.maps.Map | null>(null).current);
@@ -60,7 +60,8 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
                     });
                     marker.setMap(googleMap);
                     marker.addListener('click', () =>{
-                        openInfoView(marker);
+                        //openInfoView(marker);
+                        clickMarker();
                     })
 
                     addMarker(point.id, marker);
@@ -71,15 +72,15 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
         });
     };
 
-    const openInfoView = (marker: google.maps.Marker): void => {
-        // TODO: Añadir funcion en el onClick de infoWindow
-        let infowindow = new google.maps.InfoWindow({
-            // Es HTML por lo tanto no funciona el deleteMark()-
-            content: '<button onclick="">Borrar Punto</button>',
-            ariaLabel: "Uluru",
-        });
-        infowindow.open(map, marker);
-    };
+    // const openInfoView = (marker: google.maps.Marker): void => {
+    //     // TODO: Añadir funcion en el onClick de infoWindow
+    //     let infowindow = new google.maps.InfoWindow({
+    //         // Es HTML por lo tanto no funciona el deleteMark()-
+    //         content: '<button onclick="">Borrar Punto</button>',
+    //         ariaLabel: "Uluru",
+    //     });
+    //     infowindow.open(map, marker);
+    // };
 
     const onUnMount = (): void => {
         setMap(null);
@@ -101,7 +102,8 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
             });
 
             marker.addListener('click', () =>{
-                openInfoView(marker);
+                //openInfoView(marker);
+                clickMarker();
 
             })
             // Punto a añadir si guardamos

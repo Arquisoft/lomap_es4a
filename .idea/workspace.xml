@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Añadidos ficheros de webstorm al gitignore">
-      <change afterPath="$PROJECT_DIR$/webapp/src/components/Options/DetailsPoint.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Modificación de MainPage.tsx para tener opción detalles" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -128,7 +125,21 @@
       <option name="project" value="LOCAL" />
       <updated>1681553808112</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Creación del componente DetailsPoint.tsx (sin imágenes ni reviews)">
+      <created>1681555402024</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1681555402024</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Modificación de MainPage.tsx para tener opción detalles">
+      <created>1681555618345</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1681555618345</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -138,6 +149,8 @@
     <MESSAGE value="Se ha movido el directorio solidapi a webapp" />
     <MESSAGE value="Eliminado solidapiAdapter" />
     <MESSAGE value="Añadidos ficheros de webstorm al gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="Añadidos ficheros de webstorm al gitignore" />
+    <MESSAGE value="Creación del componente DetailsPoint.tsx (sin imágenes ni reviews)" />
+    <MESSAGE value="Modificación de MainPage.tsx para tener opción detalles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modificación de MainPage.tsx para tener opción detalles" />
   </component>
 </project>
