@@ -1,17 +1,12 @@
-import React, {useState} from "react";
-import {GoogleMap, Marker, InfoWindow, useJsApiLoader} from "@react-google-maps/api";
-import {useQuery} from "react-query";
+import React, {useEffect, useState} from "react";
+import {GoogleMap, useJsApiLoader} from "@react-google-maps/api";
 // API Calls
 // Map Settings
 import {containerStyle, center, options} from "./settings";
-// SOLID API
-import {forEach} from "@react-google-maps/api/dist/utils/foreach";
-import Point from "../../solidapi/Point";
 // Images
 import savedMarker from '../../images/markerGuardado.png';
 import savedMarker2 from '../../images/markerGuerdado2.png';
-import {Button} from "@mui/material";
-import {addPoint, createMap, retrievePoints} from "../../solidapi/solidapi";
+import {createMap, retrievePoints} from "../../solidapi/solidapi";
 
 export type MarkerType = {
     id: string,
@@ -21,9 +16,8 @@ export type MarkerType = {
     website: string
 }
 
-function Mapa({session, markerList, clickMap, markerToAdd}: any) {
-    const [click, setClick] = React.useState<google.maps.LatLng>();
-
+function Mapa({session, markers, markerList, clickMap, setMarkerToAdd, currentMapName}: any): JSX.Element {
+    
     const [map, setMap] = useState(React.useRef<google.maps.Map | null>(null).current);
 
     const {isLoaded} = useJsApiLoader(
@@ -34,49 +28,60 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
 
     // Save map in ref if we want to access the map
     //const mapRef = React.useRef<google.maps.Map | null>(null);
+
+    let mList: { [id: string]: google.maps.Marker } = {};
    
-    var mList:google.maps.Marker[]
-    mList=[];
+    // Elimina todos los puntos del mapa y llama de nuevo al loadMap.
+    // Se ejecuta al renderizar el componente, solamente si cambia el currentMapName.
+    useEffect(() => {
+        if (map !== null) {
+            Object.keys(markers).forEach((id: string) => {
+                markers[id].setMap(null);
+            });
+            onLoad(map);
+        }
+    }, [currentMapName]);
    
-    const addMarker=(m:google.maps.Marker)=>{
-        mList.push(m)
+    const addMarker=(pointId: string, m:google.maps.Marker)=>{
+        mList[pointId] = m;
     }
 
     const onLoad = (googleMap: google.maps.Map): void => { // TODO: aquí se imprimen los puntos recuperados del pod
-        createMap(session);
+        createMap(session, currentMapName).then(() => {
 
-        retrievePoints(session).then(points => {
-            if (points != null) {
+            retrievePoints(session, currentMapName).then(points => {
+                if (points != null) {
 
-                points.forEach(point => {
+                    points.forEach(point => {
 
-                    // NUEVO
-                    let marker = new google.maps.Marker({
-                        position: {lat: point.latitude, lng: point.longitude},
-                        map: googleMap,
-                        title: point.id,
-                        icon: {
-                            url: savedMarker2
-                        }
+                        // NUEVO
+                        let marker = new google.maps.Marker({
+                            position: {lat: point.latitude, lng: point.longitude},
+                            map: googleMap,
+                            title: point.name,
+                            icon: {
+                                url: savedMarker2
+                            }
+                        });
+                        marker.setMap(googleMap);
+                        marker.addListener('click', () =>{
+                            openInfoView(marker);
+                        })
+
+                        addMarker(point.id, marker);
                     });
-                    marker.setMap(googleMap);
-                    marker.addListener('click', () =>{
-                        openInfoView(marker);
-                    })
-
-                    addMarker(marker);
-                });
-                setMap(googleMap);
-                markerList(mList)
-            }
+                    setMap(googleMap);
+                    markerList(mList);
+                }
+            });
         });
-    };
+    }
 
     const openInfoView = (marker: google.maps.Marker): void => {
         // TODO: Añadir funcion en el onClick de infoWindow
         let infowindow = new google.maps.InfoWindow({
             // Es HTML por lo tanto no funciona el deleteMark()-
-            content: '<button onclick="">Borrar Punto</button>',
+            content: 'Not implemented yet',
             ariaLabel: "Uluru",
         });
         infowindow.open(map, marker);
@@ -88,7 +93,6 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
 
     const onMapClick = (e: google.maps.MapMouseEvent) => {
         if (e.latLng != null) {
-            setClick(e.latLng!);
             //TODO: Que se no se guarde si no le das al botón de marcar
             let marker = new google.maps.Marker({
                 // @ts-ignore
@@ -100,12 +104,11 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
                 },
                 visible:true,
             });
-
             marker.addListener('click', () =>{
                 openInfoView(marker);
             })
             // Punto a añadir si guardamos
-            markerToAdd(marker);
+            setMarkerToAdd(marker);
             // Mostrar menú añadir punto
             clickMap(e.latLng.lat(), e.latLng.lng());
         }
@@ -113,7 +116,7 @@ function Mapa({session, markerList, clickMap, markerToAdd}: any) {
     };
 
     if(!isLoaded) return <div>Map loading...</div>;
-
+    
     return(
         <div>
             <GoogleMap

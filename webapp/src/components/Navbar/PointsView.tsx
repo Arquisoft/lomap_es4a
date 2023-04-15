@@ -8,110 +8,124 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { createTheme, Divider, IconButton, ListItemButton, ListSubheader, makeStyles, Switch, ThemeProvider } from '@mui/material';
 import GreenSwitch from './GreenSwitch';
 import EditIcon from '@mui/icons-material/Edit';
+import Point from "../../solidapi/Point";
+
 interface PointsViewProps {
-  open: boolean;
-  onClose: () => void;
-  markerList: google.maps.Marker[]
-  deletePoint:(index:number)=>void
+    open: boolean;
+    onClose: () => void;
+    markerList: {[id: string]: google.maps.Marker};
+    openEditPoint: (id: string)=>void;
+    deletePoint:(id:string)=>void;
 }
 
 const theme = createTheme({
-  components: {
+    components: {
       MuiDrawer: {
-          styleOverrides: {
-              paper: {
-                  backgroundColor: "#101F33",
-                  color: "white"
-              }
+        styleOverrides: {
+          paper: {
+            backgroundColor: "#101F33",
+            color: "white"
           }
+        }
       }
-  }
-});
+    }
+  });
 
 
+const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,openEditPoint,deletePoint }) => {
 
-const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,deletePoint }) => {
-  
-  const [encendida, setEncendida] = React.useState<boolean[]>([]);
+    const [encendida, setEncendida] = React.useState<{[id: string]: boolean}>({});
+    const [checked, setChecked] = React.useState<{[id: string]: boolean}>({});
+    const [encendidaAll, setEncendidaAll] = React.useState(true);
 
-  const [encendidaAll, setEncendidaAll] = React.useState(true);
+    React.useEffect(() => {
+        setEncendida((prevState) => {
+            const newEncendida = { ...prevState };
+            Object.keys(markerList).forEach((id) => {
+                if (!newEncendida.hasOwnProperty(id)) {
+                    newEncendida[id] = true;
+                }
+            });
+            return newEncendida;
+        });
+    }, [markerList]);
 
+    const handleToggle = (id: string) => {
+        let newEncendida = {...encendida};
+        newEncendida[id] = !encendida[id];
+        setEncendida(newEncendida);
 
-  React.useEffect(() => {
-    // Initialize encendida state with an array of false values
-    setEncendida(new Array(markerList.length).fill(true));
-  }, [markerList]);
+        markerList[id].setVisible(!markerList[id].getVisible());
 
-  const handleToggle = (index: number) => {
-    setEncendida(prevState => {
-      const newState = [...prevState];
-      newState[index] = !newState[index];
-      return newState;
-    });
-    markerList[index].setVisible(!encendida[index]);
-    console.log(markerList[index].getVisible() + " " + !encendida[index]);
-  };
-  const handleToggleAll=()=>{
-    setEncendidaAll(!encendidaAll)
-    markerList.forEach((marker, index) => {
-      if(marker.getVisible()==encendidaAll)
-      handleToggle(index);
-    });
-  }
-  const handleDeleteButton=(index:number)=>{
+        let newChecked = {...checked};
+        newChecked[id] = !checked[id];
+        setChecked(newChecked);
+    };
+    const handleToggleAll = () => {
+        setEncendidaAll(!encendidaAll);
+        let newEncendida = {...encendida};
+        let newChecked = {...checked};
+        Object.keys(markerList).forEach((id) => {
+            if (markerList[id].getVisible() === encendidaAll) {
+                newEncendida[id] = !newEncendida[id];
+                newChecked[id] = !newChecked[id];
+                markerList[id].setVisible(!markerList[id].getVisible());
+            }
+        });
+        setEncendida(newEncendida);
+        setChecked(newChecked);
+    };
+    const handleDeleteButton=(id: string)=>{
+        deletePoint(id)
+    }
 
-    deletePoint(index)
-  }
+    const handleEditButton=(id: string)=>{
+        openEditPoint(id);
+    }
 
-  const handleEditButton=(index:number)=>{
+    let x = [true, true, true];
 
-    console.log("Editando el "+index)
-  }
-  const generatePointsControl = () => {
-    return markerList.map((marker, index) => (
-      <ListItem key={index}>
-        <ListItemText primary={marker.getTitle() +": "} />
-        <GreenSwitch checked={encendida[index]} onChange={() => handleToggle(index)} />
-        <ListItemButton onClick={() =>{handleEditButton(index)} }>
-          <EditIcon/>
-          </ListItemButton>
-        <ListItemButton onClick={() =>{handleDeleteButton(index)} }>
-          <DeleteForeverIcon/>
-          </ListItemButton>
-          
-      </ListItem>
-    ));
-  };
+    const generatePointsControl = () => {
+        return Object.keys(markerList).map((id) => (
+            
+            <ListItem key={id}>
+                <ListItemText primary={markerList[id].getTitle() +": "} />
+                
+                <Switch color="success" className='s1' onChange={() => handleToggle(id)} checked={!checked[id]} />
+                <ListItemButton onClick={() =>{handleEditButton(id)} }>
+                    <EditIcon/>
+                </ListItemButton>
+                <ListItemButton onClick={() =>{handleDeleteButton(id)} }>
+                    <DeleteForeverIcon/>
+                </ListItemButton>
+            </ListItem>
+        ));
+    };
 
-  
-  
-  return (
-    
-    <ThemeProvider theme={theme}>
-      <Drawer anchor="left" open={open} sx={{ display: { mt: 500 } }} >
-        <List sx={{ width:'300px' }} disablePadding>
-          <ListItem>
-            <IconButton onClick={onClose} >
-              <ChevronLeftIcon sx={{color: "#808b96"}}/>
-            </IconButton>
-            <ListItemText primary="Points List" />
-          </ListItem>
-          <ListItem>
-              <ListItemText primary={"Visibilidad de todos"} />
-              <GreenSwitch checked={encendidaAll} onChange={() => handleToggleAll()} />
-          </ListItem>
-          <Divider sx={{backgroundColor: "#808b96"}} />
-          {generatePointsControl()}
-          
+    return (
 
-        </List>
-      </Drawer>
-    </ThemeProvider>
-  );
+        <ThemeProvider theme={theme}>
+            <Drawer anchor="left" open={open} onClose={onClose} sx={{ display: { mt: 500 } }} >
+                <List sx={{ width:'300px' }} disablePadding>
+                    <ListItem>
+                        <IconButton onClick={onClose} >
+                            <ChevronLeftIcon sx={{color: "#808b96"}}/>
+                        </IconButton>
+                        <ListItemText primary="Points List" />
+                    </ListItem>
+                    <ListItem>
+                        <ListItemText primary={"Show / Hide all"} />
+                        <Switch color="success" className='s1' checked={encendidaAll} onChange={() => handleToggleAll()} />
+                    </ListItem>
+                    <Divider sx={{backgroundColor: "#808b96"}} />
+                    {generatePointsControl()}
+                </List>
+            </Drawer>
+        </ThemeProvider>
+    );
 };
 
 export default PointsView;
 function forceUpdate() {
-  throw new Error('Function not implemented.');
+    throw new Error('Function not implemented.');
 }
-

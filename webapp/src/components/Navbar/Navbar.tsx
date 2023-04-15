@@ -69,7 +69,7 @@ const theme = createTheme({
     }
   }
 });
-function Navbar({open, toggleNavbar, openPointsList, openMapList}: any) {
+function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsList}: any) {
   
   const [openDialog, setOpenDialog] = React.useState(false);
 
@@ -86,7 +86,11 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList}: any) {
   const handleClickPointsOpen= async() => {
     openPointsList();
   };
-  
+
+  const handleClickMyFriends= async() => {
+    openMyFriendsList();
+  };
+
   const handleClickLogout = async() => {
     try {
       await session.logout();
@@ -115,7 +119,7 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList}: any) {
                   <CombinedDataProvider
                       datasetUrl={session.info.webId}
                       thingUrl={session.info.webId}>
-                    {FOAF.name !== null && FOAF.name !== 'undefined' ?
+                    {FOAF.name !== null && FOAF.name !== undefined ?
                         (<Text property={ FOAF.name }/>):
                         (<Typography>User</Typography>)
                     }
@@ -146,6 +150,7 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList}: any) {
                     if (childId === "About us") {handleClickOpen()}
                     else if(childId==="Logout"){handleClickLogout()}
                     else if(childId==="Points"){handleClickPointsOpen()}
+                    else if(childId==="MyFriends"){handleClickMyFriends()}
                     else if(childId==="MapList"){openMapList()}
                   } }>
                     <ListItemIcon sx={{color: "white"}}>{icon}</ListItemIcon>
@@ -173,7 +178,7 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList}: any) {
             Este es un proyecto de la asignatura ASW (2022-2023).Realizado por los alumnos:
           </Typography>
           <Typography gutterBottom>- Gonzalo Rodríguez</Typography>
-          <Typography gutterBottom>- Carlos Cesareo</Typography>
+          <Typography gutterBottom>- Carlos Cesáreo</Typography>
           <Typography gutterBottom>- Diego García</Typography>
           <Typography gutterBottom>- Manuel Palacios</Typography>
         </DialogContent>
