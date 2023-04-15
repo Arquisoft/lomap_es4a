@@ -140,6 +140,39 @@ export async function getPoint(session: Session, mapName:string, id: string): Pr
     }
 }
 
+export async function getPointFromCoords(session: Session, mapName:string, lat: number, lng: number): Promise<Point | null> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return null;
+    } // Check if the webId is undefined
+
+    let url = mapUrlFor(session, mapName);
+
+    if (!await checkStructure(session, mapName)) {
+        return null;
+    }
+
+    try {
+        let mapBlob = await getFile(
+            url,
+            { fetch: session.fetch }
+        );
+
+        let map = JSON.parse(await mapBlob.text());
+
+        let pointToGet: Point | null = null;
+        map.spatialCoverage.forEach((point: Point) => {
+            if (point.latitude === lat && point.longitude === lng) {
+                pointToGet = point;
+                return;
+            }
+        });
+
+        return pointToGet;
+    } catch (error) {
+        return null;
+    }
+}
+
 export async function addPoint(session: Session, mapName:string, point: Point): Promise<boolean> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return false;

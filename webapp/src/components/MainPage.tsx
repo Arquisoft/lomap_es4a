@@ -9,7 +9,7 @@ import PointsView from "./Navbar/PointsView";
 import MapListView from "./Navbar/MapListView";
 import SearchBar from "./Searchbar/Searchbar";
 
-import {addPoint, deletePoint, getPoint, updatePoint} from "../solidapi/solidapi";
+import {addPoint, deletePoint, getPoint, getPointFromCoords, updatePoint} from "../solidapi/solidapi";
 
 import savedMarker2 from '../images/markerGuerdado2.png';
 import EditPoint from "./Options/EditPoint";
@@ -88,8 +88,12 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     }
 
     const clickMarker = (lat: number, lng: number) => {
-        //getPoint()
-        setDetailsPointOpen(true);
+        getPointFromCoords(session, currentMapName, lat, lng).then(point => {
+            if (point !== null) {
+                setPoint(point);
+            }
+            setDetailsPointOpen(true);
+        });
     }
 
     const closeDetailsPoint = () => {
