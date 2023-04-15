@@ -124,10 +124,13 @@ export default function MainPage({ session }: SessionType): JSX.Element {
 
     const comprobarCat = async (id: string, cat: string) => {
         const result = await checkPointCategory(session, currentMapName, id, cat);
-        console.log(result+" "+id);
+        //console.log(result+" "+id);
         return result;
     }
-      
+    
+    const getNombreMapa= ()=>{
+        return currentMapName
+    }
 
     
 
@@ -151,11 +154,11 @@ export default function MainPage({ session }: SessionType): JSX.Element {
                 "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
                 "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "`,
             }}>
-            <Box sx={{ gridArea: 'search'}}><SearchBar toggleNavbar={toggleNavbar} markers={markerList} comprobarCat={comprobarCat}/></Box>
+            <Box sx={{ gridArea: 'search'}}><SearchBar toggleNavbar={toggleNavbar} markers={markerList} nombreMapa={getNombreMapa}/></Box>
             <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} openMyFriendsList={openMyFriendsList} /></Box>
             <Box><AddPoint open={addPointOpen} onClose={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
             <Box><EditPoint open={editPointOpen} onClose={closeEditPoint} point={point} editPoint={editPoint}/></Box>
-            <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}></PointsView></Box>
+            <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}  comprobarCat={comprobarCat}></PointsView></Box>
             <Box><MyFriendsListView open={myFriendsListOpen} onClose={closeMyFriendsList} ></MyFriendsListView></Box>
             <Box><MapListView open={mapListOpen} onClose={closeMapList} currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} session={session} ></MapListView></Box>
             <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markers={markerList} markerList={setMarkerlist} clickMap={clickMap} setMarkerToAdd={setMarkerToAdd} currentMapName={currentMapName} /></Box>

@@ -14,8 +14,8 @@ import { Typography } from "@mui/material";
 
 interface SearchBarProps {
   toggleNavbar: ()=>void;
-  comprobarCat: (id:string,cat:string) => Promise<boolean>;
   markers: {[id: string]: google.maps.Marker};
+  nombreMapa:()=>string;
 }
 
 // Custom events
@@ -63,81 +63,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
-const SearchBar: React.FC<SearchBarProps> = ({ toggleNavbar, comprobarCat,markers }) =>  {
-  
-  const [selectedFilters, setSelectedFilters] = useState([
-    { id: 'Bar', isActive: true },
-    { id: 'Club', isActive: true },
-    { id: 'Slight', isActive: true },
-    { id: 'Monument', isActive: true },
-    { id: 'Other', isActive: true }
-  ]);
-  
-  
-const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  const filterId = event.target.name;
-  setSelectedFilters(filters => filters.map(filter => {
-    if (filter.id === filterId) {
-      return { ...filter, isActive: event.target.checked };
-    }
-    return filter;
-  }));
-};
-  const activar=(cat:string)=>{
-    Object.keys(markers).map(async (id) =>{
-
-      
-        if(await comprobarCat(id, cat)){
-          markers[id].setVisible(true)
-        }
-      });
-    
-   
-  }
-
-  const desactivar=(cat:string)=>{
-    
-    
-    Object.keys(markers).map(async (id) =>{      
-        if(await comprobarCat(id, cat))markers[id].setVisible(false)
-      });
-    
-  }
-  const handleFilterClick = () => {
-
-    selectedFilters.map(filter=>{
-      if(filter.isActive)activar(filter.id)
-      else desactivar(filter.id)
-
-    });
-    /*
-    // Aquí puedes implementar la lógica para aplicar los filtros
-    //console.log(selectedFilters);
-    if(selectedFilters.filter1){//bars
-      //console.log('Bar')
-      activar('Bar');
-    }else desactivar('Bar');
-    
-    if(selectedFilters.filter2){//clubs
-      activar('Club');
-    }else desactivar('Club');
-    
-    if(selectedFilters.filter3){//slights
-      activar('Slight');
-    }else desactivar('Slight');
-    if(selectedFilters.filter4){//monuments
-      activar('Monument');
-    }else desactivar('Monument');
-    if(selectedFilters.filter5){//otro
-      activar('Other');
-    }else desactivar('Other');
-    */
-    
-
-
-    
-  };
-
+const SearchBar: React.FC<SearchBarProps> = ({ toggleNavbar ,markers,nombreMapa }) =>  {
 
     return (
       <Box >
@@ -147,77 +73,14 @@ const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
             <Box sx={{ flexGrow: 1 }} />
             <IconButton sx={{color:'white'}}>LoMap_es4a<AiFillPushpin /></IconButton>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-
-                        <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
-                          <Checkbox
-                            checked={selectedFilters.find(filter => filter.id === 'Bar')?.isActive}
-                            onChange={handleFilterChange}
-                            name="Bar"
-                            sx={{color:'white'}}
-                          />
-                          <Typography variant="body2">Bars</Typography>
-                        </Box>
-
-
-                        <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
-                          <Checkbox
-                            checked={selectedFilters.find(filter => filter.id === 'Club')?.isActive}
-                            onChange={handleFilterChange}
-                            name="Club"
-                            sx={{color:'white'}}
-                          />
-                          <Typography variant="body2">Clubs</Typography>
-                        </Box>
-
-
-                        <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
-                          <Checkbox
-                            checked={selectedFilters.find(filter => filter.id === 'Slight')?.isActive}
-                            onChange={handleFilterChange}
-                            name="Slight"
-                            sx={{color:'white'}}
-                          />
-                          <Typography variant="body2">Slights</Typography>
-                        </Box>
-
-                        <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
-                          <Checkbox
-                            checked={selectedFilters.find(filter => filter.id === 'Monument')?.isActive}
-                            onChange={handleFilterChange}
-                            name="Monument"
-                            sx={{color:'white'}}
-                          />
-                          <Typography variant="body2">Monuments</Typography>
-                        </Box>
-
-                        <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
-                          <Checkbox
-                            checked={selectedFilters.find(filter => filter.id === 'Other')?.isActive}
-                            onChange={handleFilterChange}
-                            name="Other"
-                            sx={{color:'white'}}
-                          />
-                          <Typography variant="body2">Others</Typography>
-                        </Box>
-
                         
-                        <Button
-                          variant="contained"
-                          onClick={handleFilterClick}
-                          sx={{ ml: 2 }}
-                        >
-                          Filter
-                        </Button>
-
-              </Box>
-
-            
             <Box sx={{ flexGrow: 1 }} />
 
             
            
-           
+            <Typography variant="body2">Mapa actual:  </Typography>
+            
+            <Typography variant="body2">{nombreMapa()}</Typography>
             <IconButton 
               size="large"
               edge="start"

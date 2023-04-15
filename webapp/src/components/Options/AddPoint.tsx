@@ -46,7 +46,26 @@ const darkTheme = createTheme({
 
 function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
 
-  const options = ["Bar", "Club", "Sight", "Monument", "Other"];
+  const options = [
+    "academicInstitution",
+    "bar",
+    "clinic",
+    "entertainment",
+    "hotel",
+    "landscape",
+    "museum",
+    "other",
+    "park",
+    "policeStation",
+    "publicInstitution",
+    "restaurant",
+    "shop",
+    "sportsClub",
+    "supermarket",
+    "transportCentre",
+    "cinema"
+  ];
+  
   const [pointName, setPointName] = useState("");
   const [pointDescription, setPointDescription] = useState("");
   const [pointCategoryValue, setPointCategoryValue] = useState("");

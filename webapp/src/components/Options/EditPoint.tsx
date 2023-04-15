@@ -44,7 +44,26 @@ const darkTheme = createTheme({
 
 function EditPoint({open, onClose, point, editPoint}: any) {
 
-  const options = ["Bar", "Club", "Sight", "Monument", "Other"];
+  const options = [
+    "academicInstitution",
+    "bar",
+    "clinic",
+    "entertainment",
+    "hotel",
+    "landscape",
+    "museum",
+    "other",
+    "park",
+    "policeStation",
+    "publicInstitution",
+    "restaurant",
+    "shop",
+    "sportsClub",
+    "supermarket",
+    "transportCentre",
+    "cinema"
+  ];
+  
   const [openAlert, setOpenAlert] = useState(false);
   const [pointName, setPointName] = useState(point.name);
   const [pointDescription, setPointDescription] = useState(point.description);
