@@ -20,6 +20,8 @@ import savedMarker2 from '../images/markerGuerdado2.png';
 import EditPoint from "./Options/EditPoint";
 
 import {Dialog, DialogActions, DialogContent, DialogTitle} from '@mui/material';
+import detailsPoint from "./Options/DetailsPoint";
+import DetailsPoint from "./Options/DetailsPoint";
 
 export default function MainPage({ session }: SessionType): JSX.Element {
 
@@ -27,6 +29,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const [pointsListOpen, setPointsListOpen] = React.useState(false);
     const [addPointOpen, setAddPointOpen] = React.useState(false);
     const [editPointOpen, setEditPointOpen] = React.useState(false);
+    const [detailsPointOpen, setDetailsPointOpen] = React.useState(false);
     const [mapListOpen, setMapListOpen] = React.useState(false);
     const [markerList, setMarkerlist] = React.useState<{[id: string]: google.maps.Marker}>({});
     const [clickedPoint, setClickedPoint] = React.useState({lat:0, lng:0});
@@ -81,6 +84,14 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             setPointsListOpen(false);
             setEditPointOpen(true);
         });
+    }
+
+    const openDetailsPoint = (id: string) => {
+        setDetailsPointOpen(true);
+    }
+
+    const closeDetailsPoint = () => {
+        setDetailsPointOpen(false);
     }
 
     const clickMap = (lat: number, lng: number) => {
@@ -145,6 +156,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} /></Box>
             <Box><AddPoint open={addPointOpen} onClose={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
             <Box><EditPoint open={editPointOpen} onClose={closeEditPoint} point={point} editPoint={editPoint}/></Box>
+            <Box><DetailsPoint open={detailsPointOpen} onClose={closeDetailsPoint} point={point}/></Box>
             <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}></PointsView></Box>
             <Box><MapListView open={mapListOpen} onClose={closeMapList} ></MapListView></Box>
             <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markerList={setMarkerlist} clickMap={clickMap} markerToAdd={setMarkerToAdd}/></Box>
