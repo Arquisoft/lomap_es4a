@@ -3,7 +3,7 @@ import PrimarySearchAppBar from "./Searchbar/Searchbar";
 import Mapa from "./Map/Map";
 import { Button, Grid, Typography } from "@mui/material";
 import React, {useEffect} from "react";
-import { SessionType } from "../solidapi/solidapiAdapter";
+import { SessionType } from "../shared/shareddtypes";
 import AddPoint from "./Options/AddPoint";
 import Point from "../solidapi/Point";
 
