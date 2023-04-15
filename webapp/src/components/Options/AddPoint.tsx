@@ -49,7 +49,7 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
   const options = [
     "academicInstitution",
     "bar",
-    "clinic",
+    "hospital",
     "entertainment",
     "hotel",
     "landscape",

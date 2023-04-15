@@ -39,7 +39,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,compro
     const [selectedFilters, setSelectedFilters] = React.useState([
         { id: 'academicInstitution', isActive: true },
         { id: 'bar', isActive: true },
-        { id: 'clinic', isActive: true },
+        { id: 'hospital', isActive: true },
         { id: 'entertainment', isActive: true },
         { id: 'hotel', isActive: true },
         { id: 'landscape', isActive: true },
@@ -221,16 +221,16 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,compro
                           <Typography variant="body2">Bar</Typography>
                         </Box>
 
-
                         <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
                           <Checkbox
-                            checked={selectedFilters.find(filter => filter.id === 'clinic')?.isActive}
+                            checked={selectedFilters.find(filter => filter.id === 'cinema')?.isActive}
                             onChange={handleFilterChange}
-                            name="clinic"
+                            name="cinema"
                             sx={{color:'white'}}
                           />
-                          <Typography variant="body2">Clinic</Typography>
-                        </Box>
+                          <Typography variant="body2">Cinema</Typography>
+                        </Box>      
+                       
 
                         <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
                           <Checkbox
@@ -240,6 +240,16 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,compro
                             sx={{color:'white'}}
                           />
                           <Typography variant="body2">Entertainment</Typography>
+                        </Box>
+
+                        <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
+                          <Checkbox
+                            checked={selectedFilters.find(filter => filter.id === 'hospital')?.isActive}
+                            onChange={handleFilterChange}
+                            name="hospital"
+                            sx={{color:'white'}}
+                          />
+                          <Typography variant="body2">Hospital</Typography>
                         </Box>
 
                         <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
@@ -361,15 +371,8 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,compro
                           <Typography variant="body2">Trasnsport Centre</Typography>
                         </Box>
 
-                        <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
-                          <Checkbox
-                            checked={selectedFilters.find(filter => filter.id === 'cinema')?.isActive}
-                            onChange={handleFilterChange}
-                            name="cinema"
-                            sx={{color:'white'}}
-                          />
-                          <Typography variant="body2">Cinema</Typography>
-                        </Box>
+                        
+                        
                         
 
                         

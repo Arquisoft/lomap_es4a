@@ -47,8 +47,8 @@ function EditPoint({open, onClose, point, editPoint}: any) {
   const options = [
     "academicInstitution",
     "bar",
-    "clinic",
     "entertainment",
+    "hospital",
     "hotel",
     "landscape",
     "museum",
