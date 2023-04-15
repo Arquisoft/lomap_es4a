@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Modificación de MainPage.tsx para tener opción detalles" />
+    <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Cambios Map y MainPage para abrir y cerrar Details">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/components/Options/DetailsPoint.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Options/DetailsPoint.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -139,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681555618345</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Cambios Map y MainPage para abrir y cerrar Details">
+      <created>1681556513252</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1681556513252</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -151,6 +161,7 @@
     <MESSAGE value="Añadidos ficheros de webstorm al gitignore" />
     <MESSAGE value="Creación del componente DetailsPoint.tsx (sin imágenes ni reviews)" />
     <MESSAGE value="Modificación de MainPage.tsx para tener opción detalles" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modificación de MainPage.tsx para tener opción detalles" />
+    <MESSAGE value="Cambios Map y MainPage para abrir y cerrar Details" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cambios Map y MainPage para abrir y cerrar Details" />
   </component>
 </project>

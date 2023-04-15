@@ -72,17 +72,17 @@ function DetailsPoint({open, onClose, point}: any) {
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField id="pointNameField" label="Point's name" variant="filled" placeholder="Name" fullWidth defaultValue={point.name} contentEditable={false}/>
+                <TextField InputProps={{readOnly: true, }} id="pointNameField" label="Point's name" variant="filled" placeholder="Name" fullWidth defaultValue={point.name} contentEditable={false}/>
               </ThemeProvider>
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField id="pointDescriptionField" label="Point's description" variant="filled" placeholder="Description" fullWidth multiline defaultValue={point.description} contentEditable={false}/>
+                <TextField InputProps={{readOnly: true, }} id="pointDescriptionField" label="Point's description" variant="filled" placeholder="Description" fullWidth multiline defaultValue={point.description} contentEditable={false}/>
               </ThemeProvider>
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField id="pointCategoryField" label="Point's category" variant="filled" placeholder="Category" fullWidth multiline defaultValue={point.category} contentEditable={false}/>
+                <TextField InputProps={{readOnly: true, }} id="pointCategoryField" label="Point's category" variant="filled" placeholder="Category" fullWidth multiline defaultValue={point.category} contentEditable={false}/>
               </ThemeProvider>
             </ListItem>
             <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
