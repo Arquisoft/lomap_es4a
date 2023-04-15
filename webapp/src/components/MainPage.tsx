@@ -9,7 +9,7 @@ import PointsView from "./Navbar/PointsView";
 import MapListView from "./Navbar/MapListView";
 import SearchBar from "./Searchbar/Searchbar";
 
-import {addPoint, checkPointCategory, deletePoint, getPoint, updatePoint} from "../solidapi/solidapi";
+import {addPoint, getPointsCategory, deletePoint, getPoint, updatePoint} from "../solidapi/solidapi";
 
 import savedMarker2 from '../images/markerGuerdado2.png';
 import EditPoint from "./Options/EditPoint";
@@ -122,8 +122,8 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         
     }
 
-    const comprobarCat = async (id: string, cat: string) => {
-        const result = await checkPointCategory(session, currentMapName, id, cat);
+    const getPuntosCategoria = async (cat: string[]) => {
+        const result = await getPointsCategory(session, currentMapName,  cat);
         //console.log(result+" "+id);
         return result;
     }
@@ -158,7 +158,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} openMyFriendsList={openMyFriendsList} /></Box>
             <Box><AddPoint open={addPointOpen} onClose={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
             <Box><EditPoint open={editPointOpen} onClose={closeEditPoint} point={point} editPoint={editPoint}/></Box>
-            <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}  comprobarCat={comprobarCat}></PointsView></Box>
+            <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}  getPointsCategory={getPuntosCategoria}></PointsView></Box>
             <Box><MyFriendsListView open={myFriendsListOpen} onClose={closeMyFriendsList} ></MyFriendsListView></Box>
             <Box><MapListView open={mapListOpen} onClose={closeMapList} currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} session={session} ></MapListView></Box>
             <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markers={markerList} markerList={setMarkerlist} clickMap={clickMap} setMarkerToAdd={setMarkerToAdd} currentMapName={currentMapName} /></Box>

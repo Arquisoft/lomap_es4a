@@ -10,13 +10,15 @@ import GreenSwitch from './GreenSwitch';
 import EditIcon from '@mui/icons-material/Edit';
 import Point from "../../solidapi/Point";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { width } from 'rdf-namespaces/dist/as';
+import { getPointsCategory } from '../../solidapi/solidapi';
 interface PointsViewProps {
     open: boolean;
     onClose: () => void;
     markerList: {[id: string]: google.maps.Marker};
     openEditPoint: (id: string)=>void;
     deletePoint:(id:string)=>void;
-    comprobarCat: (id:string,cat:string) => Promise<boolean>;
+    getPointsCategory: (cat:string[]) => Promise<Point[]>;
 }
 
 const theme = createTheme({
@@ -33,7 +35,7 @@ const theme = createTheme({
   });
 
 
-const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,comprobarCat,openEditPoint,deletePoint }) => {
+const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPointsCategory,openEditPoint,deletePoint }) => {
     //FILTROS
 
     const [selectedFilters, setSelectedFilters] = React.useState([
@@ -56,12 +58,14 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,compro
         { id: 'cinema', isActive: true }
       
       ]);
+      const listaFiltros:string[]=[];
+
       const [allOptions, setAllOptions] = React.useState([
         { id: 'markAll', isActive: false },
         { id: 'unmarkAll', isActive: false }
       ])
 
-
+      
       
       
     const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,34 +77,46 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,compro
         return filter;
       }));
     };
-      const activar=(cat:string)=>{
-        
-        Object.keys(markerList).map(async (id) =>{
-    
-          
-            if(await comprobarCat(id, cat)){
-                markerList[id].setVisible(true)
-            }
-          });
+
+
+      const activar=async (cat:string[])=>{
+        const listaPuntosCategoria=await getPointsCategory(cat);
+
+        Object.keys(markerList).forEach((id) => {
+            if(listaPuntosCategoria.map(p=>p.id).includes(id))markerList[id].setVisible(true)
+            else markerList[id].setVisible(false)
+        });
+        /*
+        listaPuntosCategoria.forEach( p => {
+            markerList[p.id].setVisible(true)
+        });
+
+       */
         
        
       }
-    
-      const desactivar=(cat:string)=>{
+      /*
+      const desactivar=async (cat:string)=>{
         
-        
-        Object.keys(markerList).map(async (id) =>{      
-            if(await comprobarCat(id, cat))markerList[id].setVisible(false)
-          });
+        const listaPuntosCategoria=await getPointsCategory(cat);
+
+        listaPuntosCategoria.forEach( p => {
+            markerList[p.id].setVisible(false)
+        });
         
       }
+      */
       const handleFilterClick = () => {
-    
         selectedFilters.map(filter=>{
+            if(filter.isActive)listaFiltros.push(filter.id)
+
+            /*
           if(filter.isActive)activar(filter.id)
           else desactivar(filter.id)
-    
+            */
         });
+
+        activar(listaFiltros);
       }
 
       const handleMarkAll = () => {
@@ -378,8 +394,8 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,compro
                         
                         
                 </Box>
-                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', alignItems: 'center', justifyContent: 'flex-end' }}>
-                        <Button variant="contained" onClick={handleMarkAll} name="markAll" sx={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', fontSize: '0.5rem', mx: 'auto' }}>
+                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', alignItems: 'center', justifyContent: 'flex-end', mt:'1em' }}>
+                        <Button variant="contained" onClick={handleMarkAll} name="markAll" sx={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', fontSize: '0.9rem', mx: 'auto' }}>
                             Mark All
                         </Button>
 
@@ -388,7 +404,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,compro
                         </Button>
 
 
-                        <Button variant="contained" onClick={handleUnmarkAll} name="unmarkAll" sx={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', fontSize: '0.5rem', mx: 'auto' }} >
+                        <Button variant="contained" onClick={handleUnmarkAll} name="unmarkAll" sx={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', fontSize: '0.9rem', mx: 'auto' }} >
                             Unmark All
                         </Button>
                 </Box>
@@ -404,25 +420,29 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,compro
     const generatePointsControl = () => {
         return Object.keys(markerList).map((id) => (
             
-            <ListItem key={id}>
-                <ListItemText primary={markerList[id].getTitle() +": "} />
+            <ListItem key={id} sx={{display:'grid', gridTemplateColumns: 'repeat(5, 1fr)',gridTemplateAreas: `"nombre nombre  visibilidad editar borrar"`,gridTemplateRows: 'auto',}}>
                 
-                <Switch color="success" className='s1' onChange={() => handleToggle(id)} checked={!checked[id]} />
-                <ListItemButton onClick={() =>{handleEditButton(id)} }>
+                <ListItemText primary={markerList[id].getTitle() +": "} sx={{ gridArea: 'nombre'}}/>
+                
+                <Switch color="success" className='s1' onChange={() => handleToggle(id)} checked={!checked[id]} sx={{ gridArea: 'visibilidad'}}/>
+                <ListItemButton onClick={() =>{handleEditButton(id)} } sx={{ gridArea: 'editar'}}>
                     <EditIcon/>
                 </ListItemButton>
-                <ListItemButton onClick={() =>{handleDeleteButton(id)} }>
+                <ListItemButton onClick={() =>{handleDeleteButton(id)} }   sx={{ gridArea: 'borrar'}}>
                     <DeleteForeverIcon/>
                 </ListItemButton>
+                
             </ListItem>
+            
+            
         ));
     };
 
     return (
 
         <ThemeProvider theme={theme}>
-            <Drawer anchor="left" open={open} onClose={onClose} sx={{ display: { mt: 500 } }} >
-                <List sx={{ width:'300px' }} disablePadding>
+            <Drawer anchor="left" open={open} onClose={onClose} sx={{ display: { mt: 500 }  }} >
+                <List sx={{ width:'45vh' }} disablePadding>
                     <ListItem>
                         <IconButton onClick={onClose} >
                             <ChevronLeftIcon sx={{color: "#808b96"}}/>
@@ -430,49 +450,53 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,compro
                         <ListItemText primary="Points List" />
                     </ListItem>
                     <Divider sx={{backgroundColor: "#808b96"}} />
-                    <ListItem>
+                    <ListItemButton onClick={handleFiltersSubmenu}>
                         <ListItemText primary="Filters" />
-                        <IconButton onClick={handleFiltersSubmenu} >
+                        <IconButton  >
                             <ExpandMoreIcon sx={{color: "#808b96"}}/>
                         </IconButton>
-                    </ListItem>
-                    <Divider sx={{backgroundColor: "#808b96"}} />
+                    </ListItemButton>
+                    
                     <Collapse in={filtersOpen} timeout="auto" unmountOnExit>
+                    <Divider sx={{backgroundColor: "black"}} />
                         <List component="div" disablePadding>
                             
-                            <ListItem>
+                            <ListItemButton onClick={handleFiltersCategoriesSubmenu} >
                                 <ListItemText primary="Categories" />
-                                    <IconButton onClick={handleFiltersCategoriesSubmenu} >
+                                    <IconButton >
                                         <ExpandMoreIcon sx={{color: "#808b96"}}/>
                                     </IconButton>
-                                </ListItem>
+                                </ListItemButton>
                                 <Collapse in={filtersCategoriesOpen} timeout="auto" unmountOnExit>
+                                <Divider sx={{backgroundColor: "black"}} />
                                     {generateFiltersCategories()}
                                    
                                 </Collapse>
                             
                             
-                            <ListItem>
+                            <ListItemButton>
                                 <ListItemText primary="Otrosubmenuconfiltros" />
-                            </ListItem>
+                            </ListItemButton>
                         </List>
                     </Collapse>
 
                     <Divider sx={{backgroundColor: "#808b96"}} />
-                    <ListItem>
+                    <ListItemButton onClick={handleVisibilitySubmenu}>
                         <ListItemText primary="Points edition" />
-                        <IconButton onClick={handleVisibilitySubmenu} >
+                        <IconButton>
                             <ExpandMoreIcon sx={{color: "#808b96"}}/>
                         </IconButton>
-                    </ListItem>
-                    <Divider sx={{backgroundColor: "#808b96"}} />
+                    </ListItemButton>
+                    
                     <Collapse in={visibilityOpen} timeout="auto" unmountOnExit>
+                    <Divider sx={{backgroundColor: "black"}} />
                     <ListItem>
                         <ListItemText primary={"Show / Hide all"} />
                         <Switch color="success" className='s1' checked={encendidaAll} onChange={() => handleToggleAll()} />
                     </ListItem>
-                    <Divider sx={{backgroundColor: "#808b96"}} />
-                    {generatePointsControl()}
+                   
+                        {generatePointsControl()}
+                    
                     </Collapse>
 
                     

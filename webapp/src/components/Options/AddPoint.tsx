@@ -24,6 +24,7 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import {useState} from "react";
 
 import {v4 as uuidv4} from 'uuid';
+import { options } from '../../shared/shareddtypes';
 
 const theme = createTheme({
   components: {
@@ -46,25 +47,7 @@ const darkTheme = createTheme({
 
 function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
 
-  const options = [
-    "academicInstitution",
-    "bar",
-    "hospital",
-    "entertainment",
-    "hotel",
-    "landscape",
-    "museum",
-    "other",
-    "park",
-    "policeStation",
-    "publicInstitution",
-    "restaurant",
-    "shop",
-    "sportsClub",
-    "supermarket",
-    "transportCentre",
-    "cinema"
-  ];
+  
   
   const [pointName, setPointName] = useState("");
   const [pointDescription, setPointDescription] = useState("");
@@ -104,7 +87,7 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
       setPointName("");
       setPointDescription("");
       setPointCategoryInputValue("");
-      let point: Point = new Point(uuidv4(), pointName, pointCategoryInputValue, clickedPoint.lat, clickedPoint.lng, pointDescription);
+      let point: Point = new Point(uuidv4(), pointName, options[pointCategoryInputValue], clickedPoint.lat, clickedPoint.lng, pointDescription);
       createPoint(point);
       setOpenAlert(true);
     }
@@ -152,7 +135,7 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
             <ListItem>
 
               <Autocomplete
-                  options={options}
+                  options={Object.keys(options)}
                   className="point-fill-field"
                   includeInputInList
                   onChange={(event: any, newValue: string | null) => {

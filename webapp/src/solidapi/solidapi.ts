@@ -226,44 +226,38 @@ export async function deletePoint(session: Session,mapName:string, id: string): 
     return true;
   }
 
-  export async function checkPointCategory(session: Session, mapName: string, id: string, categoryName: string): Promise<boolean> {
+  export async function getPointsCategory(session: Session, mapName: string, categoryNames: string[]): Promise<Point[]> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
-      return false;
+      return [];
     } // Check if the webId is undefined
   
     let url = mapUrlFor(session, mapName);
   
     if (!await checkStructure(session, mapName)) {
-      return false;
+      return [];
     }
   
     try {
-      let mapBlob = await getFile(
-        url,
-        { fetch: session.fetch }
-      );
-  
-      let map = JSON.parse(await mapBlob.text());
-  
-      let pointIndex = -1;
-      for (let i = 0; i < map.spatialCoverage.length; i++) {
-        if (map.spatialCoverage[i].id === id) {
-          pointIndex = i;
-          break;
+        let mapBlob = await getFile(
+            url,
+            { fetch: session.fetch }
+        );
+    
+        let map = JSON.parse(await mapBlob.text());
+
+        let lista:Point[]=[];
+        
+        for (let i = 0; i < map.spatialCoverage.length; i++) {
+            if(categoryNames.includes(map.spatialCoverage[i].category)){
+            lista.push(map.spatialCoverage[i])
+            
+            }
         }
-      }
-  
-      if (pointIndex === -1) {
-        return false; // Point with given ID not found
-      }
-  
-      if (map.spatialCoverage[pointIndex].category === categoryName) {
-        return true; // Point category matches given category name
-      }
-  
-      return false; // Point category does not match given category name
+    
+    
+        return lista; 
     } catch (error) {
-      return false;
+      return [];
     }
   }
 

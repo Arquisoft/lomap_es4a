@@ -22,6 +22,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import {ChangeEvent, useEffect, useState} from "react";
 import {v4 as uuidv4} from "uuid";
+import { options } from '../../shared/shareddtypes';
 
 const theme = createTheme({
   components: {
@@ -44,25 +45,7 @@ const darkTheme = createTheme({
 
 function EditPoint({open, onClose, point, editPoint}: any) {
 
-  const options = [
-    "academicInstitution",
-    "bar",
-    "entertainment",
-    "hospital",
-    "hotel",
-    "landscape",
-    "museum",
-    "other",
-    "park",
-    "policeStation",
-    "publicInstitution",
-    "restaurant",
-    "shop",
-    "sportsClub",
-    "supermarket",
-    "transportCentre",
-    "cinema"
-  ];
+  
   
   const [openAlert, setOpenAlert] = useState(false);
   const [pointName, setPointName] = useState(point.name);
@@ -75,7 +58,14 @@ function EditPoint({open, onClose, point, editPoint}: any) {
   useEffect(() => {
       setPointName(point.name);
       setPointDescription(point.description);
-      setPointCategoryInputValue(point.category);
+      Object.keys(options).forEach(o=>{
+        if(options[o]===point.category){
+          setPointCategoryInputValue(o);
+        console.log(o)
+        return;
+        }
+      })
+      //setPointCategoryInputValue(point.category);
     
   },[point]);
 
@@ -88,7 +78,7 @@ function EditPoint({open, onClose, point, editPoint}: any) {
       
     } else {
       onClose();
-      let pointToEdit: Point = new Point(point.id, pointName, pointCategoryInputValue, point.latitude, point.longitude, pointDescription);
+      let pointToEdit: Point = new Point(point.id, pointName, options[pointCategoryInputValue], point.latitude, point.longitude, pointDescription);
       editPoint(pointToEdit);
       setOpenAlert(true);
     }
@@ -144,10 +134,10 @@ function EditPoint({open, onClose, point, editPoint}: any) {
             <ListItem>
             
               <Autocomplete
-                  options={options}
+                  options={Object.keys(options)}
                   className="point-fill-field"
                   includeInputInList
-                  defaultValue={point.category}
+                  defaultValue={pointCategoryInputValue}
                   onChange={(event: any, newValue: string | null) => {
                     if (newValue !== null) {
                       setPointCategoryValue(newValue);

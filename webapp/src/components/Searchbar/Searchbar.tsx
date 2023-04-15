@@ -10,7 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import { useState } from "react";
-import { Typography } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 
 interface SearchBarProps {
   toggleNavbar: ()=>void;
@@ -68,19 +68,27 @@ const SearchBar: React.FC<SearchBarProps> = ({ toggleNavbar ,markers,nombreMapa 
     return (
       <Box >
         <Box >
-        <AppBar position="static" style={{ background: '#101F33', height: '9vh' }}>
+        <AppBar position="static" style={{ background: '#101F33', height: '7vh' }}>
           <Toolbar >
 
             <Box sx={{ flexGrow: 1 }} />
-            <IconButton sx={{color:'white'}}>LoMap_es4a<AiFillPushpin /></IconButton>
-                        
+
+            <Box sx={{display:'flex',pr:'1em'}}>
+              <IconButton sx={{color:'white'}}> <Typography variant="h6">LoMap_es4a<AiFillPushpin /></Typography></IconButton>
+            </Box>
+
+            <Divider orientation='vertical' sx={{backgroundColor: "#808b96",height:'2.5em',width:'0.05em'}} />
+
+            <Box sx={{display:'flex',pl:'1.5em'}}>
+              <Typography variant="h6">Mapa actual:  </Typography>
+              <Typography variant="h6">{nombreMapa()}</Typography>
+            </Box>
+
             <Box sx={{ flexGrow: 1 }} />
 
             
            
-            <Typography variant="body2">Mapa actual:  </Typography>
-            
-            <Typography variant="body2">{nombreMapa()}</Typography>
+           
             <IconButton 
               size="large"
               edge="start"
