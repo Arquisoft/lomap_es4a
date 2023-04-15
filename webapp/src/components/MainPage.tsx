@@ -86,7 +86,8 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         });
     }
 
-    const clickMarker = () => {
+    const clickMarker = (lat: number, lng: number) => {
+        //getPoint()
         setDetailsPointOpen(true);
     }
 
@@ -95,13 +96,12 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     }
 
     const clickMap = (lat: number, lng: number) => {
-        setAddPointOpen(true);
         setClickedPoint({lat: lat, lng: lng});
+        setAddPointOpen(true);
 
     }
     const handleCloseDialog = () => {
         setOpenDialog(false);
-        
         setPointsListOpen(!pointsListOpen)
       };
 

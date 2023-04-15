@@ -45,7 +45,7 @@ function DetailsPoint({open, onClose, point}: any) {
   const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
-  }, point);
+  }, [point]);
 
   const exit = () => {
     onClose();

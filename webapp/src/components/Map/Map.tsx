@@ -59,10 +59,9 @@ function Mapa({session, markerList, clickMap, clickMarker, markerToAdd}: any) {
                         }
                     });
                     marker.setMap(googleMap);
-                    marker.addListener('click', () =>{
-                        //openInfoView(marker);
-                        clickMarker();
-                    })
+                    marker.addListener('click', (marker: any) =>{
+                        clickMarker(marker.latLng.lat(), marker.latLng.lng());
+                    });
 
                     addMarker(point.id, marker);
                 });
@@ -101,11 +100,10 @@ function Mapa({session, markerList, clickMap, clickMarker, markerToAdd}: any) {
                 visible:true,
             });
 
-            marker.addListener('click', () =>{
-                //openInfoView(marker);
-                clickMarker();
+            marker.addListener('click', (marker: any) =>{
+                clickMarker(marker.latLng.lat(), marker.latLng.lng());
+            });
 
-            })
             // Punto a añadir si guardamos
             markerToAdd(marker);
             // Mostrar menú añadir punto
