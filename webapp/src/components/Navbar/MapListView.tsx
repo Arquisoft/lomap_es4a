@@ -8,12 +8,20 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import FindReplaceIcon from '@mui/icons-material/FindReplace';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl, createTheme, ThemeProvider, IconButton, Divider, TextField } from "@mui/material";
+import { deleteMap, retrieveMapNames, checkMapNameIsValid } from '../../solidapi/solidapi';
+import { Session } from '@inrupt/solid-client-authn-browser';
 
 
 interface MapListViewProps {
     open: boolean;
     onClose: () => void;
+    currentMapName: string;
+    setCurrentMapName: React.Dispatch<React.SetStateAction<string>>;
+    session: Session;
 }
 
 function MapListView(props: MapListViewProps): JSX.Element {
@@ -21,6 +29,8 @@ function MapListView(props: MapListViewProps): JSX.Element {
     const [currentLoadMap, setCurrentLoadMap] = useState(""); // info del mapa a cargar
     const [currentNewMap, setCurrentNewMap] = useState(""); // info del mapa a crear
     const [currentDeleteMap, setCurrentDeleteMap] = useState(""); // info del mapa a borrar
+    const [mapNames, setMapNames] = useState<string[]>([]); // lista de nombres sacados del pod
+    const [openAlert, setOpenAlert] = useState(false);
 
     const handleLoadMapChange = (event: SelectChangeEvent) => {
         setCurrentLoadMap(event.target.value);
@@ -34,25 +44,62 @@ function MapListView(props: MapListViewProps): JSX.Element {
         setCurrentDeleteMap(event.target.value);
     };
 
+    // Carga la lista de puntos correspondiente al mapa seleccionado
     const handleLoadMapClick = () => {
-        // TODO: Se debe de cargar la lista de puntos correspondiente al mapa seleccionado
+        props.setCurrentMapName(currentLoadMap);
         setCurrentLoadMap("");
         props.onClose();
     };
 
+    // Elimina el mapa seleccionado
     const handleDeleteMapClick = () => {
-        // TODO: Se debe de eliminar el mapa seleccionado
-        setCurrentDeleteMap("");
-        props.onClose();
+        // Si el mapa actual es el que se a a borrar, se carga un nuevo mapa.
+        // Si no hay más mapas, se crea el mapa "Map1"
+        deleteMap(props.session, currentDeleteMap)
+            .then(() => {
+                retrieveMapNames(props.session).then(names => {
+                    if (props.currentMapName === currentDeleteMap) { // comprueba si se borra el mapa actual
+                        props.setCurrentMapName(names.length > 0 ? names[0] : props.currentMapName+"_new");
+                    }
+                    else if (names.length === 0) { // Comprueba si quedan mapas
+                        props.setCurrentMapName("Map1");
+                    }
+                    setCurrentDeleteMap("");
+                    props.onClose();
+                });
+            });
     };
 
+    // Crea el nuevo mapa con el nombre escogido (validando el nuevo nombre)
     const handleNewMapClick = () => {
-        // TODO: Se debe de crear el nuevo mapa con el nombre escogido (y validar el nuevo nombre)
-        if (currentNewMap != null && currentNewMap.trim() !== "") {
+        if (checkMapNameIsValid(currentNewMap)) {            
+            props.setCurrentMapName(currentNewMap);
+            setOpenAlert(true);
             setCurrentNewMap("");
             props.onClose();
         }
     };
+
+    const handleOpenSelect = () => {
+        retrieveMapNames(props.session)
+            .then(names => setMapNames(names));
+    }
+
+    // Devuelve los menu items correspondientes a los nombres de los 
+    // mapas existentes en el pod del usuario
+    const generateMapSelectMenuItems = (): JSX.Element[] => {        
+        return (mapNames.map((mapName:string) => 
+            <MenuItem key={mapName} value={mapName}>{mapName}</MenuItem>
+        ));
+    }
+
+    // Maneja el cierre de la alerta
+    const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setOpenAlert(false);
+    }
 
     const theme = createTheme({
         components: {
@@ -119,11 +166,9 @@ function MapListView(props: MapListViewProps): JSX.Element {
                                 id="selectMap"
                                 value={currentLoadMap}
                                 onChange={handleLoadMapChange}
+                                onOpen={handleOpenSelect}
                             >
-                                <MenuItem value={"Mapa1"}>Mapa1</MenuItem>
-                                <MenuItem value={"Mapa2"}>Mapa2</MenuItem>
-                                <MenuItem value={"Mapa3"}>Mapa3</MenuItem>
-                                <MenuItem value={"Mapa4"}>Mapa4</MenuItem>
+                                {generateMapSelectMenuItems()}
                             </Select>                        
                         </FormControl>
                     </ThemeProvider>
@@ -154,11 +199,9 @@ function MapListView(props: MapListViewProps): JSX.Element {
                                 id="selectDeleteMap"
                                 value={currentDeleteMap}
                                 onChange={handleDeleteMapChange}
+                                onOpen={handleOpenSelect}
                             >
-                                <MenuItem value={"Mapa1"}>Mapa1</MenuItem>
-                                <MenuItem value={"Mapa2"}>Mapa2</MenuItem>
-                                <MenuItem value={"Mapa3"}>Mapa3</MenuItem>
-                                <MenuItem value={"Mapa4"}>Mapa4</MenuItem>
+                                {generateMapSelectMenuItems()}
                             </Select>                        
                         </FormControl>
                     </ThemeProvider>
@@ -175,6 +218,16 @@ function MapListView(props: MapListViewProps): JSX.Element {
                 </ListItem>
             </List>
         </Drawer>
+
+        <Snackbar open={openAlert} onClose={handleCloseAlert} autoHideDuration={1000} >
+            <Alert severity="success" 
+                sx={{ width: '100%', backgroundColor: 'green', color: 'white'  }}  
+                iconMapping={{ success: <CheckCircleOutlineIcon sx={{ color: 'white' }} />,}}
+                >
+                    Map created correctly!
+            </Alert>
+        </Snackbar>
+
     </ThemeProvider>
   );
 }

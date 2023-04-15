@@ -9,6 +9,7 @@ import { createTheme, Divider, IconButton, ListItemButton, ListSubheader, makeSt
 import GreenSwitch from './GreenSwitch';
 import EditIcon from '@mui/icons-material/Edit';
 import Point from "../../solidapi/Point";
+
 interface PointsViewProps {
     open: boolean;
     onClose: () => void;
@@ -19,17 +20,16 @@ interface PointsViewProps {
 
 const theme = createTheme({
     components: {
-        MuiDrawer: {
-            styleOverrides: {
-                paper: {
-                    backgroundColor: "#101F33",
-                    color: "white"
-                }
-            }
+      MuiDrawer: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: "#101F33",
+            color: "white"
+          }
         }
+      }
     }
-});
-
+  });
 
 
 const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,openEditPoint,deletePoint }) => {
@@ -87,9 +87,11 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,openEd
 
     const generatePointsControl = () => {
         return Object.keys(markerList).map((id) => (
+            
             <ListItem key={id}>
                 <ListItemText primary={markerList[id].getTitle() +": "} />
-                <GreenSwitch onChange={() => handleToggle(id)} checked={!checked[id]} />
+                
+                <Switch color="success" className='s1' onChange={() => handleToggle(id)} checked={!checked[id]} />
                 <ListItemButton onClick={() =>{handleEditButton(id)} }>
                     <EditIcon/>
                 </ListItemButton>
@@ -99,8 +101,6 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,openEd
             </ListItem>
         ));
     };
-
-
 
     return (
 
@@ -115,12 +115,10 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,openEd
                     </ListItem>
                     <ListItem>
                         <ListItemText primary={"Show / Hide all"} />
-                        <GreenSwitch checked={encendidaAll} onChange={() => handleToggleAll()} />
+                        <Switch color="success" className='s1' checked={encendidaAll} onChange={() => handleToggleAll()} />
                     </ListItem>
                     <Divider sx={{backgroundColor: "#808b96"}} />
                     {generatePointsControl()}
-
-
                 </List>
             </Drawer>
         </ThemeProvider>
