@@ -88,12 +88,16 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     }
 
     const clickMarker = (lat: number, lng: number) => {
+        
+
+        console.log('clic')
         getPointFromCoords(session, currentMapName, lat, lng).then(point => {
             if (point !== null) {
                 setPoint(point);
             }
             setDetailsPointOpen(true);
         });
+        
     }
 
     const closeDetailsPoint = () => {
@@ -160,7 +164,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} openMyFriendsList={openMyFriendsList} /></Box>
             <Box><AddPoint open={addPointOpen} onClose={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
             <Box><EditPoint open={editPointOpen} onClose={closeEditPoint} point={point} editPoint={editPoint}/></Box>
-            <Box><DetailsPoint open={detailsPointOpen} onClose={closeDetailsPoint} point={point}/></Box>
+            <Box><DetailsPoint open={detailsPointOpen} onClose={closeDetailsPoint} point={point}  markerList={markerList}/></Box>
             <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}></PointsView></Box>
             <Box><MyFriendsListView open={myFriendsListOpen} onClose={closeMyFriendsList} ></MyFriendsListView></Box>
             <Box><MapListView open={mapListOpen} onClose={closeMapList} currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} session={session} ></MapListView></Box>
