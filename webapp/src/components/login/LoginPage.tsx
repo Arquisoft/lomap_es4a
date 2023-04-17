@@ -9,7 +9,6 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { LoginButton } from "@inrupt/solid-ui-react";
 import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl } from "@mui/material";
 
 function Copyright(props: any) {
@@ -29,7 +28,7 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 
-export default function LoginPage() {
+export default function LoginPage({logIn}: any) {
 	const [podProvider, setPodProvider] = useState("https://inrupt.net");
 	const [currentUrl] = useState("http://localhost:3000");
   
@@ -39,6 +38,9 @@ export default function LoginPage() {
 	  setPodProvider(event.target.value);
 	};
 
+    return (
+        <Button onClick={logIn}>Login</Button>
+    );
 
   return (
     <ThemeProvider theme={theme}>
@@ -91,8 +93,7 @@ export default function LoginPage() {
 						<MenuItem value={"https://solidweb.org"}>Solid Web</MenuItem>
 					</Select>
 				</FormControl>
-			  
-			<LoginButton oidcIssuer={podProvider} redirectUrl={currentUrl}>
+
 				<Button
 					type="submit"
 					fullWidth
@@ -101,10 +102,9 @@ export default function LoginPage() {
 				>
 					Log In
 				</Button>
-			</LoginButton>
+			</Button>
             <Copyright sx={{ mt: 5 }} />
-            </Box>
-			
+
           </Box>
         </Grid>
       </Grid>

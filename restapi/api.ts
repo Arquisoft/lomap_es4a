@@ -1,7 +1,58 @@
 import express, { Request, Response, Router } from 'express';
 import {check} from 'express-validator';
 
-const api:Router = express.Router()
+const api:Router = express.Router();
+
+const cookieSession = require("cookie-session");
+
+const {
+    getSessionFromStorage,
+    getSessionFromStorageAll,
+    Session
+} = require("@inrupt/solid-client-authn-node");
+
+const port = 5000;
+
+api.use(
+    cookieSession({
+        name: "session",
+        // These keys are required by cookie-session to sign the cookies.
+        keys: [
+            "Required, but value not relevant for this demo - key1",
+            "Required, but value not relevant for this demo - key2",
+        ],
+        maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    })
+);
+
+api.post("/login", async (req: any, res, next) => {
+    const session = new Session();
+    req.session.sessionId = session.info.sessionId;
+    const redirectToSolidIdentityProvider = (url: string) => {
+        res.redirect(url);
+    };
+
+    await session.login({
+        redirectUrl: `http://localhost:5000/api/redirect`,
+        oidcIssuer: "https://solidcommunity.net/",
+        clientName: "LoMap",
+        handleRedirect: redirectToSolidIdentityProvider,
+    });
+});
+
+api.get("/redirect", async (req: any, res, next) => {
+    const session = await getSessionFromStorage(req.session.sessionId);
+
+    await session.handleIncomingRedirect(`http://localhost:5000/api${req.url}`);
+
+    // if-else no totalmente necesario, 
+    if (session.info.isLoggedIn) {
+        res.status(200);
+    } else {
+        res.status(403);
+    }
+    return res.redirect("http://localhost:3000/");
+});
 
 interface User {
     name: string;

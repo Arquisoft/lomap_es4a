@@ -17,7 +17,7 @@ import EditPoint from "./Options/EditPoint";
 import {Button, Grid, Typography, Box, Dialog, DialogActions, DialogContent} from '@mui/material';
 import MyFriendsListView from "./Navbar/MyFriendsListView";
 
-export default function MainPage({ session }: SessionType): JSX.Element {
+export default function MainPage(): JSX.Element {
 
     const [navbarOpen, setNavbarOpen] = React.useState(false);
     const [pointsListOpen, setPointsListOpen] = React.useState(false);
@@ -76,13 +76,13 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     }
 
     const openEditPoint = (id: string) => {
-        getPoint(session, currentMapName, id).then(point => {
-            if (point !== null) {
-                setPoint(point);
-            }
-            setPointsListOpen(false);
-            setEditPointOpen(true);
-        });
+        // getPoint(session, currentMapName, id).then(point => {
+        //     if (point !== null) {
+        //         setPoint(point);
+        //     }
+        //     setPointsListOpen(false);
+        //     setEditPointOpen(true);
+        // });
     }
 
     const clickMap = (lat: number, lng: number) => {
@@ -97,7 +97,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
       };
 
     const createPoint = (point: Point) => {
-        addPoint(session, currentMapName, point);
+        //addPoint(session, currentMapName, point);
         markerToAdd?.setIcon(savedMarker2);
         markerToAdd?.setVisible(true);
         markerToAdd?.setTitle(point.name);
@@ -105,14 +105,14 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     }
 
     const editPoint = (point: Point) => {
-        updatePoint(session, currentMapName, point);
+        //updatePoint(session, currentMapName, point);
         closeEditPoint();
 
         markerList[point.id].setTitle(point.name);
     }
     
     const eliminatePoint = (id: string)=>{
-        deletePoint(session, currentMapName, id);
+        //deletePoint(session, currentMapName, id);
         markerList[id].setMap(null);
 
         delete markerList[id];
@@ -143,13 +143,13 @@ export default function MainPage({ session }: SessionType): JSX.Element {
                 "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "`,
             }}>
             <Box sx={{ gridArea: 'search'}}><SearchBar toggleNavbar={toggleNavbar} /></Box>
-            <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} openMyFriendsList={openMyFriendsList} /></Box>
-            <Box><AddPoint open={addPointOpen} onClose={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
-            <Box><EditPoint open={editPointOpen} onClose={closeEditPoint} point={point} editPoint={editPoint}/></Box>
-            <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}></PointsView></Box>
-            <Box><MyFriendsListView open={myFriendsListOpen} onClose={closeMyFriendsList} ></MyFriendsListView></Box>
-            <Box><MapListView open={mapListOpen} onClose={closeMapList} currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} session={session} ></MapListView></Box>
-            <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markers={markerList} markerList={setMarkerlist} clickMap={clickMap} setMarkerToAdd={setMarkerToAdd} currentMapName={currentMapName} /></Box>
+            {/*<Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} openMyFriendsList={openMyFriendsList} /></Box>*/}
+            {/*<Box><AddPoint open={addPointOpen} onClose={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>*/}
+            {/*<Box><EditPoint open={editPointOpen} onClose={closeEditPoint} point={point} editPoint={editPoint}/></Box>*/}
+            {/*<Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}></PointsView></Box>*/}
+            {/*<Box><MyFriendsListView open={myFriendsListOpen} onClose={closeMyFriendsList} ></MyFriendsListView></Box>*/}
+            {/*<Box><MapListView open={mapListOpen} onClose={closeMapList} currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} ></MapListView></Box>*/}
+            <Box sx={{ gridArea: 'mainContainer'}}><Mapa markers={markerList} markerList={setMarkerlist} clickMap={clickMap} setMarkerToAdd={setMarkerToAdd} currentMapName={currentMapName} /></Box>
 
 
             <Dialog onClose={handleCloseDialog} aria-labelledby="customized-dialog-title" open={openDialog}>

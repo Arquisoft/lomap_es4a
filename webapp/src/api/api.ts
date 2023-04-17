@@ -23,3 +23,15 @@ export async function getUsers():Promise<User[]>{
     return response.json()
 }
 // ----------------------------------------------------------------------------------------------------------
+
+export async function login(): Promise<boolean> {
+    const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api';
+    let response = await fetch(apiEndPoint+'/login', {
+        method: 'POST',
+        headers: {'Content-Type':'cors'}
+    });
+    if (response.status===200)
+        return true;
+    else
+        return false;
+}
