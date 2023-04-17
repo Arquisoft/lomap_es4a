@@ -7,7 +7,6 @@ const cookieSession = require("cookie-session");
 
 const {
     getSessionFromStorage,
-    getSessionFromStorageAll,
     Session
 } = require("@inrupt/solid-client-authn-node");
 
@@ -25,8 +24,20 @@ api.use(
     })
 );
 
+api.get("/isLoggedIn", async (req: any, res, next) => {
+    const session = await getSessionFromStorage(req.session.sessionId);
+    let isLoggedIn = false;
+    if (req.session.sessionId !== null && req.session.sessionId !== undefined && session !== null && session !== undefined && session.info !== null && session.info !== undefined) {
+        isLoggedIn = session.info.isLoggedIn;
+    }
+    res.json({isLoggedIn: isLoggedIn});
+});
+
 api.post("/login", async (req: any, res, next) => {
     const session = new Session();
+
+    let podProvider = req.body.podProvider;
+
     req.session.sessionId = session.info.sessionId;
     const redirectToSolidIdentityProvider = (url: string) => {
         res.redirect(url);
@@ -34,16 +45,16 @@ api.post("/login", async (req: any, res, next) => {
 
     await session.login({
         redirectUrl: `http://localhost:5000/api/redirect`,
-        oidcIssuer: "https://solidcommunity.net/",
+        oidcIssuer: podProvider,
         clientName: "LoMap",
-        handleRedirect: redirectToSolidIdentityProvider,
+        handleRedirect: redirectToSolidIdentityProvider
     });
 });
 
 api.get("/redirect", async (req: any, res, next) => {
     const session = await getSessionFromStorage(req.session.sessionId);
 
-    await session.handleIncomingRedirect(`http://localhost:5000/api${req.url}`);
+    await session.handleIncomingRedirect({url: `http://localhost:5000/api${req.url}`});
 
     // if-else no totalmente necesario, 
     if (session.info.isLoggedIn) {

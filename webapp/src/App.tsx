@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import './App.css';
 import {QueryClient, QueryClientProvider} from "react-query";
 import LoginPage from './components/login/LoginPage';
@@ -6,14 +6,14 @@ import {SessionProvider, useSession} from "@inrupt/solid-ui-react";
 // import { handleIncomingRedirect } from '@inrupt/solid-client-authn-browser';
 import MainPage from "./components/MainPage";
 import {SelectChangeEvent} from "@mui/material";
-import {login} from "./api/api";
+import {isLoggedIn, login} from "./api/api";
 
 function App(): JSX.Element {
 
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	// const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-	const logIn = () => {
-		login().then(res => setIsLoggedIn(res));
+	const logIn = (podProvider: string) => {
+		login(podProvider);
 	}
 
 	// //With this we can control the login status for solid
@@ -26,18 +26,10 @@ function App(): JSX.Element {
 
 	return(
 		<SessionProvider>
-			{(!isLoggedIn)
+			{(!isLoggedIn())
 		  		? <LoginPage logIn={logIn} />
 				: <MainPage/>}
 		</SessionProvider>
-	);
-
-	return(
-		<div>
-		{(!isLoggedIn)
-			  		? <LoginPage logIn={logIn} />
-			: <p>hola</p>}
-		</div>
 	);
 }
 

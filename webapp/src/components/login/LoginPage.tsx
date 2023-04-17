@@ -31,16 +31,12 @@ const theme = createTheme();
 export default function LoginPage({logIn}: any) {
 	const [podProvider, setPodProvider] = useState("https://inrupt.net");
 	const [currentUrl] = useState("http://localhost:3000");
-  
-	
+
+
 	// Cambia el proveedor de pod
 	const handleChange = (event: SelectChangeEvent) => {
 	  setPodProvider(event.target.value);
 	};
-
-    return (
-        <Button onClick={logIn}>Login</Button>
-    );
 
   return (
     <ThemeProvider theme={theme}>
@@ -98,13 +94,13 @@ export default function LoginPage({logIn}: any) {
 					type="submit"
 					fullWidth
 					variant="contained"
+                    onClick={() => logIn(podProvider)}
 					sx={{ mt: 3, mb: 2 }}
 				>
 					Log In
 				</Button>
-			</Button>
             <Copyright sx={{ mt: 5 }} />
-
+            </Box>
           </Box>
         </Grid>
       </Grid>

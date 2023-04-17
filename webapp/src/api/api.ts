@@ -24,14 +24,22 @@ export async function getUsers():Promise<User[]>{
 }
 // ----------------------------------------------------------------------------------------------------------
 
-export async function login(): Promise<boolean> {
+export async function login(podProvider: string): Promise<boolean> {
     const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api';
     let response = await fetch(apiEndPoint+'/login', {
         method: 'POST',
-        headers: {'Content-Type':'cors'}
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({'podProvider': podProvider})
     });
     if (response.status===200)
         return true;
     else
         return false;
+}
+
+export async function isLoggedIn(): Promise<boolean> {
+    const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api';
+    let response = await fetch(apiEndPoint+'/isLoggedIn');
+    let result = await response.json();
+    return result.isLoggedIn;
 }
