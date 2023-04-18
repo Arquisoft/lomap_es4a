@@ -13,11 +13,14 @@ import {
     Divider,
     Typography, Switch, ListItemButton, MenuItem, FormControl, InputLabel, Select
 } from "@mui/material";
-import {useSession} from "@inrupt/solid-ui-react";
+import {CombinedDataProvider, Image, Text, useSession} from "@inrupt/solid-ui-react";
 
 import * as React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import {FOAF} from "@inrupt/vocab-common-rdf";
+import {VCARD} from "@inrupt/lit-generated-vocab-common";
+import Box from "@mui/material/Box";
 
 
 interface MyFriendsListViewProps {
@@ -37,16 +40,6 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
 
         })
     };
-
-    const seeMyFriends = (): JSX.Element[] => {
-        loadFriends()
-        console.log(myFriendList);
-        return (myFriendList.map((friend:string) =>
-            <ListItem key={friend}>
-                <ListItemText primary={friend.toString()} />
-            </ListItem>
-        ));
-    }
 
     const theme = createTheme({
         components: {
@@ -70,7 +63,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
     return (
         <ThemeProvider theme={theme}>
             <Drawer anchor="left" open={props.open} onClose={props.onClose} >
-                <List sx={{width: '20em'}} disablePadding>
+                <List sx={{width: '25em'}} disablePadding>
                     <ListItem>
                         <IconButton onClick={props.onClose}>
                             <ChevronLeftIcon sx={{color: "white"}}/>
@@ -81,9 +74,25 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                     <Button onClick={loadFriends}> Cargar Amigos</Button>
                     {
                         myFriendList.map(friend =>(
-                            <ListItem key={friend}>
-                                <ListItemText primary={friend} />
-                            </ListItem>
+                            friend ? (
+                                <ListItem>
+                                    <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white', padding:"1em"} }}>
+                                    <CombinedDataProvider
+                                        datasetUrl={friend}
+                                        thingUrl={friend}>
+                                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture" style={{width:60, height:60, borderRadius:30}}/>
+                                    </CombinedDataProvider>
+                                    </Box>
+                                    <CombinedDataProvider
+                                        datasetUrl={friend}
+                                        thingUrl={friend}>
+                                        {FOAF.name !== null && FOAF.name !== undefined ?
+                                            (<Text property={ FOAF.name }/>):
+                                            (<Typography>User</Typography>)
+                                        }
+                                    </CombinedDataProvider>
+                                </ListItem>
+                            ): null
                         ))
                     }
                 </List>

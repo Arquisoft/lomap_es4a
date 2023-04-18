@@ -130,6 +130,7 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
             <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white', padding:"1em"} }}>
 
               {session.info.webId ? (
+
                   <CombinedDataProvider
                       datasetUrl={session.info.webId}
                       thingUrl={session.info.webId}>
