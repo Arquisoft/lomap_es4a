@@ -9,7 +9,7 @@ import PointsView from "./Navbar/PointsView";
 import MapListView from "./Navbar/MapListView";
 import SearchBar from "./Searchbar/Searchbar";
 
-import {addPoint, deletePoint, getPoint, getPointFromCoords, updatePoint} from "../solidapi/solidapi";
+import {addPoint, deletePoint, getPoint, getPointFromCoords, getPointImages, saveImage, updatePoint} from "../solidapi/solidapi";
 
 import savedMarker2 from '../images/markerGuerdado2.png';
 import EditPoint from "./Options/EditPoint";
@@ -17,9 +17,10 @@ import EditPoint from "./Options/EditPoint";
 import {Button, Grid, Typography, Box, Dialog, DialogActions, DialogContent} from '@mui/material';
 import MyFriendsListView from "./Navbar/MyFriendsListView";
 import DetailsPoint from "./Options/DetailsPoint";
+import { MyImage } from "./Options/Carousel";
 
 export default function MainPage({ session }: SessionType): JSX.Element {
-
+    const [imagesList, setImagesList] = React.useState<MyImage[]>([]);
     const [navbarOpen, setNavbarOpen] = React.useState(false);
     const [pointsListOpen, setPointsListOpen] = React.useState(false);
     const [addPointOpen, setAddPointOpen] = React.useState(false);
@@ -139,7 +140,12 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         setOpenDialog(true)
         
     }
-
+    const addImage=(image: File,point:Point)=>{
+        saveImage(session,currentMapName,image,point)
+    }
+    const getImages=(point:Point)=>{
+        getPointImages(session,currentMapName,point).then(images=>setImagesList(images))
+    }
     
     /* Solo para mostrar los puntos (a ser llamado al cerrar la lista de puntos y al actualizar la visibilidad de un punto)
     const showPoints = () => {
@@ -164,7 +170,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} openMyFriendsList={openMyFriendsList} /></Box>
             <Box><AddPoint open={addPointOpen} onClose={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
             <Box><EditPoint open={editPointOpen} onClose={closeEditPoint} point={point} editPoint={editPoint}/></Box>
-            <Box><DetailsPoint open={detailsPointOpen} onClose={closeDetailsPoint} point={point}  markerList={markerList}/></Box>
+            <Box><DetailsPoint open={detailsPointOpen} onClose={closeDetailsPoint} point={point}  markerList={markerList} addImage={addImage} getImages={imagesList}/></Box>
             <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}></PointsView></Box>
             <Box><MyFriendsListView open={myFriendsListOpen} onClose={closeMyFriendsList} ></MyFriendsListView></Box>
             <Box><MapListView open={mapListOpen} onClose={closeMapList} currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} session={session} ></MapListView></Box>

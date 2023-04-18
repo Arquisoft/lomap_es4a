@@ -4,6 +4,7 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import Rating from '@mui/material/Rating';
 
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -12,7 +13,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Carousel, { MyImage } from "./Carousel";
 import {
 
-  Autocomplete, Avatar, Button,
+  Autocomplete, Avatar, Box, Button,
   Collapse,
   createTheme, Dialog, DialogActions, DialogContent,
   IconButton,
@@ -79,14 +80,20 @@ export const ImageViewer = ({ image, onClose }: { image: MyImage; onClose: () =>
     </div>
   );
 };
-
-function DetailsPoint({open, onClose, point,markerList}: any) {
+interface Review {
+  comment: string;
+  rating: number;
+}
+function DetailsPoint({ open, onClose, point, markerList,addImage, imagesList}: any) {
+  const [ratingValue, setRatingValue] = React.useState<number | null>(0);
   const [images, setImages] = useState<MyImage[]>([]);
-  const [commentsOpen, setCommentsOpen] = React.useState(false);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [imagesOpen, setImagesOpen] = React.useState(false);
   const [comment, setComment] = useState("");
+  const [commentsOpen, setCommentsOpen] = React.useState(false);
   const [commentsList, setCommentsList] = useState<string[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+
   const handleImageClick = (index: number) => {
     setSelectedImageIndex(index);
   };
@@ -98,7 +105,8 @@ function DetailsPoint({open, onClose, point,markerList}: any) {
   const handleImageUpload = (image: File) => {
     const reader = new FileReader();
     reader.onload = () => {
-      setImages([...images, { src: reader.result as string, alt: "uploaded image" }]);
+      //setImages([...images, { src: reader.result as string, alt: "uploaded image" }]);
+      addImage(image,point)
     };
     reader.readAsDataURL(image);
   };
@@ -107,12 +115,11 @@ function DetailsPoint({open, onClose, point,markerList}: any) {
     setCommentsOpen(!commentsOpen);
   };
 
-
   const handleImagesSubmenu = () => {
     setImagesOpen(!imagesOpen);
   };
-  
-  const handleCommentChange = (event:any) => {
+
+  const handleCommentChange = (event: any) => {
     setComment(event.target.value);
   };
 
@@ -123,10 +130,34 @@ function DetailsPoint({open, onClose, point,markerList}: any) {
     }
   };
 
+  const handleAddReview = () => {
+    if (comment.trim() !== "" && ratingValue !== null) {
+      setReviews([...reviews, { comment: comment, rating: ratingValue }]);
+      setComment("");
+      setRatingValue(0);
+    }
+  };
+
   useEffect(() => {
+      setImages(imagesList) 
   }, [point]);
 
- 
+  const renderReviews=()=> {
+    return (
+      <List sx={{ mt: 2 }}>
+        {reviews.map((review, index) => (
+          <Box key={index}>
+            <Rating name="read-only" value={review.rating} readOnly />
+            <ListItem>
+              <Typography variant="body1" color="textPrimary">
+                {review.comment}
+              </Typography>
+            </ListItem>
+          </Box>
+        ))}
+      </List>
+    );
+  }
 
   return (
       <ThemeProvider theme={theme}>
@@ -209,6 +240,13 @@ function DetailsPoint({open, onClose, point,markerList}: any) {
                   </ListItemButton>
 
                   <Collapse in={commentsOpen} timeout="auto" unmountOnExit>
+                  <Rating
+                    name="simple-controlled"
+                    sx={{pl:'1rem'}}
+                    value={ratingValue}
+                    onChange={(event, newValue) => {
+                      setRatingValue(newValue);
+                    }}/>
                   <ListItem style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                   <TextField
                     id="comment"
@@ -220,8 +258,8 @@ function DetailsPoint({open, onClose, point,markerList}: any) {
                     margin="normal"
                     style={{ flex: 1 }}
                   />
-
-                  <Button variant="contained" onClick={handleAddComment} style={{ flex: 'none' }}>
+                   
+                  <Button variant="contained" onClick={handleAddReview} style={{ flex: 'none' }} >
                     Add
                   </Button>
                   </ListItem>
@@ -229,17 +267,7 @@ function DetailsPoint({open, onClose, point,markerList}: any) {
                 
 
 
-                {commentsList.length > 0 && (
-                  <List sx={{ mt: 2 }}>
-                    {commentsList.map((comment, index) => (
-                      <ListItem>
-                        <Typography variant="body1" color="textPrimary">
-                          {comment}
-                        </Typography>
-                      </ListItem>
-                    ))}
-                  </List>
-                )}
+                  {renderReviews()}
 
               </Collapse>
 

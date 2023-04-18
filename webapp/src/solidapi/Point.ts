@@ -8,11 +8,13 @@ class Point {
     description: string;
     comments: string[];
     reviewScore: number;
+    logo:string[];
     date: number;
+    
 
     constructor(
         id: string, name: string, category: string, latitude: number, longitude: number, description: string = "",
-        comments: string[] = [], reviewScore: number = 0, date: number = Date.now())
+        comments: string[] = [], reviewScore: number = 0,logo:string[]=[], date: number = Date.now())
     {
         this.id = id;
         this.name = name;
@@ -22,6 +24,7 @@ class Point {
         this.description = description;
         this.comments = comments;
         this.reviewScore = reviewScore;
+        this.logo=logo;
         this.date = date;
     }
 

@@ -9,6 +9,9 @@ import Point from "./Point";
 import { fetchDocument } from "tripledoc";
 import { foaf } from "rdf-namespaces";
 
+import {v4 as uuidv4} from 'uuid';
+import { MyImage } from '../components/Options/Carousel';
+
 function checkSession(session: Session): boolean {
     if (session === null || typeof session === "undefined") {
         return false;
@@ -217,6 +220,10 @@ export async function addPoint(session: Session, mapName:string, point: Point): 
     return true;
 }
 
+
+
+
+
 export async function deletePoint(session: Session,mapName:string, id: string): Promise<boolean> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return false;
@@ -391,3 +398,43 @@ export async function myFriends(session: Session): Promise<string[]> {
     }
     return [];
 }
+
+
+///
+
+export async function saveImage(session: Session, mapName:string, image: File, point:Point): Promise<boolean> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return false;
+    } // Check if the webId is undefined
+
+   
+    let id=uuidv4()
+    let url = lomapUrlFor(session)+id;
+    console.log(url)
+
+    try {
+        point.logo.push(url)
+        console.log(point.logo)
+        await updatePoint(session, mapName,point)
+        await overwriteFile(
+            url,
+            image,
+            { contentType: image.type, fetch: session.fetch }
+        );
+    } catch (error) {
+        return false;
+    }
+    return true;
+}
+export async function getPointImages(session: Session, mapName:string, point:Point): Promise<MyImage[]> {
+        return [];
+}
+
+function lomapUrlFor(session: Session): string {
+    if (typeof session.info.webId !== "undefined") {
+        return session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/images", "/");
+    }
+    return "";
+}
+
+
