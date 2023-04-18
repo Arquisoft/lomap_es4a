@@ -10,6 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl } from "@mui/material";
+import {login} from "../../api/api";
 
 function Copyright(props: any) {
   return (
@@ -31,7 +32,6 @@ const theme = createTheme();
 export default function LoginPage({logIn}: any) {
 	const [podProvider, setPodProvider] = useState("https://inrupt.net");
 	const [currentUrl] = useState("http://localhost:3000");
-
 
 	// Cambia el proveedor de pod
 	const handleChange = (event: SelectChangeEvent) => {
@@ -94,7 +94,7 @@ export default function LoginPage({logIn}: any) {
 					type="submit"
 					fullWidth
 					variant="contained"
-                    onClick={() => logIn(podProvider)}
+                    onClick={() => login(podProvider)}
 					sx={{ mt: 3, mb: 2 }}
 				>
 					Log In

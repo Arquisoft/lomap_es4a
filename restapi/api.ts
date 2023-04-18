@@ -13,7 +13,14 @@ const {
 
 const port = 5000;
 
-api.use(cors());
+api.use(
+    cors({
+        credentials: true,
+        origin: 'http://localhost:3000',
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        preflightContinue: true
+    }),
+);
 
 api.use(
     cookieSession({
@@ -36,14 +43,13 @@ api.get("/isLoggedIn", async (req: any, res, next) => {
     res.json({isLoggedIn: isLoggedIn});
 });
 
-api.post("/login", async (req: any, res, next) => {
+api.get("/login", async (req: any, res, next) => {
     const session = new Session();
 
-    let podProvider = req.body.podProvider;
+    //let podProvider = req.body.podProvider;
 
     req.session.sessionId = session.info.sessionId;
     const redirectToSolidIdentityProvider = (url: string) => {
-        console.log(url)
         res.redirect(url);
     };
 
@@ -69,10 +75,9 @@ api.get("/redirect", async (req: any, res, next) => {
         res.status(403);
     }
 
-    console.log("hola")
-    console.log(session.info.isLoggedIn)
+    console.log("Session: " + session.info.webId)
 
-    return res.redirect("http://localhost:3000");
+    return res.redirect("http://localhost:3000/mainpage");
 });
 
 interface User {
