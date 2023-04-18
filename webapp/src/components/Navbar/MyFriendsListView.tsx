@@ -11,11 +11,13 @@ import {
     ThemeProvider,
     IconButton,
     Divider,
-    Typography
+    Typography, Switch, ListItemButton, MenuItem, FormControl, InputLabel, Select
 } from "@mui/material";
 import {useSession} from "@inrupt/solid-ui-react";
 
 import * as React from "react";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 
 interface MyFriendsListViewProps {
@@ -25,22 +27,25 @@ interface MyFriendsListViewProps {
 
 function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
     const {session} = useSession();
-
-    let actualFriends:string[];
-    actualFriends = [];
+    const [myFriendList, setMyFriendList] = React.useState([] as string[]);
 
     const loadFriends = () => {
         myFriends(session).then((friends) => {
             // COMPROBADO, LOS SACA BIEN
-            actualFriends = friends;
+            //actualFriends = friends;
+            setMyFriendList(friends);
+
         })
-        seeMyFriends();
     };
 
-    const seeMyFriends = () => {
-        actualFriends.forEach(friend => {
-            console.log(friend);
-        });
+    const seeMyFriends = (): JSX.Element[] => {
+        loadFriends()
+        console.log(myFriendList);
+        return (myFriendList.map((friend:string) =>
+            <ListItem key={friend}>
+                <ListItemText primary={friend.toString()} />
+            </ListItem>
+        ));
     }
 
     const theme = createTheme({
@@ -56,9 +61,15 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
         }
     });
 
+    const darkTheme = createTheme({
+        palette: {
+            mode: "dark"
+        }
+    });
+
     return (
         <ThemeProvider theme={theme}>
-            <Drawer anchor="left" open={props.open} onClose={props.onClose}>
+            <Drawer anchor="left" open={props.open} onClose={props.onClose} >
                 <List sx={{width: '20em'}} disablePadding>
                     <ListItem>
                         <IconButton onClick={props.onClose}>
@@ -66,15 +77,15 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                         </IconButton>
                         <ListItemText primary="Your friends list"/>
                     </ListItem>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{display: {xs: 'none', sm: 'block', color: 'white'}}}
-                    >
-                    </Typography>
                     <Divider sx={{backgroundColor: "#808b96"}} />
-                    <Button onClick={loadFriends}>Cargar amigos</Button>
+                    <Button onClick={loadFriends}> Cargar Amigos</Button>
+                    {
+                        myFriendList.map(friend =>(
+                            <ListItem key={friend}>
+                                <ListItemText primary={friend} />
+                            </ListItem>
+                        ))
+                    }
                 </List>
             </Drawer>
         </ThemeProvider>
