@@ -216,7 +216,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage, imagesList}: 
                   <ImageUploader onImageUpload={handleImageUpload} />
                   </ListItem>
 
-                  {images.length > 0 && (
+                  {images &&images.length > 0 && (
                      <ListItem>
                       <Carousel images={images} onImageClick={handleImageClick} />
                       </ListItem>

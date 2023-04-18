@@ -91,12 +91,20 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const clickMarker = (lat: number, lng: number) => {
         
 
-        console.log('clic')
+        
         getPointFromCoords(session, currentMapName, lat, lng).then(point => {
+            console.log("c")
             if (point !== null) {
+                console.log('clic')
                 setPoint(point);
+                getImages(point)
             }
+           
+            console.log("b"+imagesList)
+            console.log(imagesList.length)
+            console.log("b"+imagesList)
             setDetailsPointOpen(true);
+            
         });
         
     }
@@ -144,7 +152,8 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         saveImage(session,currentMapName,image,point)
     }
     const getImages=(point:Point)=>{
-        getPointImages(session,currentMapName,point).then(images=>setImagesList(images))
+        getPointImages(session,currentMapName,point).then(async images=>await setImagesList(images))
+        console.log(imagesList)
     }
     
     /* Solo para mostrar los puntos (a ser llamado al cerrar la lista de puntos y al actualizar la visibilidad de un punto)

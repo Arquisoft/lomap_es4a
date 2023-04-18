@@ -434,13 +434,19 @@ export async function getPointImages(session: Session, mapName:string, point:Poi
     if (!checkMapNameIsValid(mapName)) {
         return [];
     }
-
-    return point.logo.map(imageUrl => {
+    
+    let l:any=point.logo.map(imageUrl => {
+        
         return {
             src: imageUrl,
             alt: "Image stored at " + imageUrl
         };
+        
     });
+    
+    console.log("a devolver"+l)
+    return l
+   
 }
 
 function lomapUrlFor(session: Session): string {
