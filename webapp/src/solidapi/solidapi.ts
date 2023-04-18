@@ -427,7 +427,20 @@ export async function saveImage(session: Session, mapName:string, image: File, p
     return true;
 }
 export async function getPointImages(session: Session, mapName:string, point:Point): Promise<MyImage[]> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return [];
+    } // Check if the webId is undefined
+
+    if (!checkMapNameIsValid(mapName)) {
+        return [];
+    }
+
+    return point.logo.map(imageUrl => {
+        return {
+            src: imageUrl,
+            alt: "Image stored at " + imageUrl
+        };
+    });
 }
 
 function lomapUrlFor(session: Session): string {
