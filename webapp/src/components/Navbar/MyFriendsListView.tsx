@@ -21,6 +21,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import {FOAF} from "@inrupt/vocab-common-rdf";
 import {VCARD} from "@inrupt/lit-generated-vocab-common";
 import Box from "@mui/material/Box";
+import {useEffect} from "react";
 
 
 interface MyFriendsListViewProps {
@@ -31,6 +32,10 @@ interface MyFriendsListViewProps {
 function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
     const {session} = useSession();
     const [myFriendList, setMyFriendList] = React.useState([] as string[]);
+
+    useEffect(() => {
+        loadFriends();
+    });
 
     const loadFriends = () => {
         myFriends(session).then((friends) => {
@@ -71,11 +76,12 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                         <ListItemText primary="Your friends list"/>
                     </ListItem>
                     <Divider sx={{backgroundColor: "#808b96"}} />
-                    <Button onClick={loadFriends}> Cargar Amigos</Button>
+
                     {
+                        //<Button onClick={loadFriends}> Cargar Amigos</Button>
                         myFriendList.map(friend =>(
                             friend ? (
-                                <ListItem>
+                                <ListItem key={friend}>
                                     <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white', padding:"1em"} }}>
                                     <CombinedDataProvider
                                         datasetUrl={friend}
