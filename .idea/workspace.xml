@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Añadida la lógica para recuperar la imagen de perfil">
+    <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Intento de mantener sesión al recargar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/restapi/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/api.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/login/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/login/LoginPage.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

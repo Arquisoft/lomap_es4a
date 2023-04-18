@@ -26,7 +26,7 @@ function App(): JSX.Element {
 
 	return(
 		<SessionProvider>
-			{(!isLoggedIn())
+			{(true)
 		  		? <LoginPage logIn={logIn} />
 				: <MainPage/>}
 		</SessionProvider>

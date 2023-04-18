@@ -1,9 +1,10 @@
 import express, { Request, Response, Router } from 'express';
 import {check} from 'express-validator';
-
 const api:Router = express.Router();
 
 const cookieSession = require("cookie-session");
+
+const cors = require("cors");
 
 const {
     getSessionFromStorage,
@@ -11,6 +12,8 @@ const {
 } = require("@inrupt/solid-client-authn-node");
 
 const port = 5000;
+
+api.use(cors());
 
 api.use(
     cookieSession({
@@ -40,12 +43,13 @@ api.post("/login", async (req: any, res, next) => {
 
     req.session.sessionId = session.info.sessionId;
     const redirectToSolidIdentityProvider = (url: string) => {
+        console.log(url)
         res.redirect(url);
     };
 
     await session.login({
-        redirectUrl: `http://localhost:5000/api/redirect`,
-        oidcIssuer: podProvider,
+        redirectUrl: "http://localhost:5000/api/redirect",
+        oidcIssuer: "https://inrupt.net/",
         clientName: "LoMap",
         handleRedirect: redirectToSolidIdentityProvider
     });
@@ -54,7 +58,9 @@ api.post("/login", async (req: any, res, next) => {
 api.get("/redirect", async (req: any, res, next) => {
     const session = await getSessionFromStorage(req.session.sessionId);
 
-    await session.handleIncomingRedirect({url: `http://localhost:5000/api${req.url}`});
+    let url = "http://localhost:5000/api" + req.url;
+
+    await session.handleIncomingRedirect(url);
 
     // if-else no totalmente necesario, 
     if (session.info.isLoggedIn) {
@@ -62,7 +68,11 @@ api.get("/redirect", async (req: any, res, next) => {
     } else {
         res.status(403);
     }
-    return res.redirect("http://localhost:3000/");
+
+    console.log("hola")
+    console.log(session.info.isLoggedIn)
+
+    return res.redirect("http://localhost:3000");
 });
 
 interface User {

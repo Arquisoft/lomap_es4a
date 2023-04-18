@@ -28,7 +28,7 @@ export async function login(podProvider: string): Promise<boolean> {
     const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api';
     let response = await fetch(apiEndPoint+'/login', {
         method: 'POST',
-        headers: {'Content-Type':'application/json'},
+        headers: {'Content-Type':'application/json', 'Access-Control-Allow-Origin':'*'},
         body: JSON.stringify({'podProvider': podProvider})
     });
     if (response.status===200)
