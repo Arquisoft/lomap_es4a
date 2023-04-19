@@ -84,7 +84,7 @@ interface Review {
   comment: string;
   rating: number;
 }
-function DetailsPoint({ open, onClose, point, markerList,addImage, imagesList}: any) {
+function DetailsPoint({ open, onClose, point, markerList,addImage}: any) {
   const [ratingValue, setRatingValue] = React.useState<number | null>(0);
   const [images, setImages] = useState<MyImage[]>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -105,8 +105,8 @@ function DetailsPoint({ open, onClose, point, markerList,addImage, imagesList}: 
   const handleImageUpload = (image: File) => {
     const reader = new FileReader();
     reader.onload = () => {
-      //setImages([...images, { src: reader.result as string, alt: "uploaded image" }]);
       addImage(image,point)
+      //ponerImagenes()
     };
     reader.readAsDataURL(image);
   };
@@ -137,9 +137,20 @@ function DetailsPoint({ open, onClose, point, markerList,addImage, imagesList}: 
       setRatingValue(0);
     }
   };
-
+  const ponerImagenes=()=>{
+    console.log(point)
+      let l:any=point.logo.map((imageUrl:string) => {
+        
+        return {
+            src: imageUrl,
+            alt: "Image stored at " + imageUrl
+        };
+        
+    });
+    setImages(l)
+  }
   useEffect(() => {
-      setImages(imagesList) 
+      ponerImagenes()
   }, [point]);
 
   const renderReviews=()=> {

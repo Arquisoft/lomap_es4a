@@ -427,6 +427,7 @@ export async function saveImage(session: Session, mapName:string, image: File, p
     return true;
 }
 export async function getPointImages(session: Session, mapName:string, point:Point): Promise<MyImage[]> {
+    
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return [];
     } // Check if the webId is undefined
@@ -443,8 +444,11 @@ export async function getPointImages(session: Session, mapName:string, point:Poi
         };
         
     });
-    
-    console.log("a devolver"+l)
+    /*
+    l.forEach((element:MyImage) => {
+        console.log(element)
+    });
+    */
     return l
    
 }

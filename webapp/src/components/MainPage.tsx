@@ -20,7 +20,6 @@ import DetailsPoint from "./Options/DetailsPoint";
 import { MyImage } from "./Options/Carousel";
 
 export default function MainPage({ session }: SessionType): JSX.Element {
-    const [imagesList, setImagesList] = React.useState<MyImage[]>([]);
     const [navbarOpen, setNavbarOpen] = React.useState(false);
     const [pointsListOpen, setPointsListOpen] = React.useState(false);
     const [addPointOpen, setAddPointOpen] = React.useState(false);
@@ -34,6 +33,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const [point, setPoint] = React.useState(new Point("", "", "", 0, 0, ""));
     const [markerToAdd, setMarkerToAdd] = React.useState<google.maps.Marker>();
     const [openDialog, setOpenDialog] = React.useState(false);
+    const [openDialog2, setOpenDialog2] = React.useState(false);
 
     const toggleNavbar = () => {
         setNavbarOpen(!navbarOpen);
@@ -93,17 +93,14 @@ export default function MainPage({ session }: SessionType): JSX.Element {
 
         
         getPointFromCoords(session, currentMapName, lat, lng).then(point => {
-            console.log("c")
+            
             if (point !== null) {
-                console.log('clic')
                 setPoint(point);
-                getImages(point)
+                //getImages(point)
+               
+                setDetailsPointOpen(true);
             }
            
-            console.log("b"+imagesList)
-            console.log(imagesList.length)
-            console.log("b"+imagesList)
-            setDetailsPointOpen(true);
             
         });
         
@@ -121,6 +118,11 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const handleCloseDialog = () => {
         setOpenDialog(false);
         setPointsListOpen(!pointsListOpen)
+      };
+
+      const handleCloseDialog2 = () => {
+        setOpenDialog2(false);
+        setDetailsPointOpen(!pointsListOpen)
       };
 
     const createPoint = (point: Point) => {
@@ -150,11 +152,22 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     }
     const addImage=(image: File,point:Point)=>{
         saveImage(session,currentMapName,image,point)
+        setDetailsPointOpen(!detailsPointOpen)
+        setOpenDialog2(true)
     }
-    const getImages=(point:Point)=>{
-        getPointImages(session,currentMapName,point).then(async images=>await setImagesList(images))
-        console.log(imagesList)
-    }
+    /*
+    const getImages = async (point: Point) => {
+          const images = await getPointImages(session, currentMapName, point);
+          return images;
+        
+        
+    };
+    */
+    /*
+    React.useEffect(() => {
+        console.log(imagesList);
+      }, [imagesList]);
+    */
     
     /* Solo para mostrar los puntos (a ser llamado al cerrar la lista de puntos y al actualizar la visibilidad de un punto)
     const showPoints = () => {
@@ -179,7 +192,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} openMyFriendsList={openMyFriendsList} /></Box>
             <Box><AddPoint open={addPointOpen} onClose={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
             <Box><EditPoint open={editPointOpen} onClose={closeEditPoint} point={point} editPoint={editPoint}/></Box>
-            <Box><DetailsPoint open={detailsPointOpen} onClose={closeDetailsPoint} point={point}  markerList={markerList} addImage={addImage} getImages={imagesList}/></Box>
+            <Box><DetailsPoint open={detailsPointOpen} onClose={closeDetailsPoint} point={point}  markerList={markerList} addImage={addImage} /></Box>
             <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}></PointsView></Box>
             <Box><MyFriendsListView open={myFriendsListOpen} onClose={closeMyFriendsList} ></MyFriendsListView></Box>
             <Box><MapListView open={mapListOpen} onClose={closeMapList} currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} session={session} ></MapListView></Box>
@@ -192,6 +205,18 @@ export default function MainPage({ session }: SessionType): JSX.Element {
                 </DialogContent>
                 <DialogActions>
                 <Button autoFocus onClick={handleCloseDialog} color="primary">
+                OK
+                </Button>
+                </DialogActions>
+            </Dialog>
+
+
+            <Dialog onClose={handleCloseDialog2} aria-labelledby="customized-dialog-title" open={openDialog2}>
+                <DialogContent dividers>
+                <Typography gutterBottom>Image uploaded!</Typography>
+                </DialogContent>
+                <DialogActions>
+                <Button autoFocus onClick={handleCloseDialog2} color="primary">
                 OK
                 </Button>
                 </DialogActions>
