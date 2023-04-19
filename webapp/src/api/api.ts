@@ -46,9 +46,37 @@ export async function createMap(mapName: string): Promise<boolean> {
     }
 }
 
+export async function deleteMap(mapName: string): Promise<boolean> {
+    const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+    let response = await fetch(apiEndPoint+'/maps/delete/'+mapName, {
+        credentials: 'include',
+        mode: 'cors',
+        method: 'DELETE'
+    });
+    if (response.status === 200) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 export async function retrievePoints(mapName: string): Promise<Point[]> {
     const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
     let response = await fetch(apiEndPoint+'/points/'+mapName, {
+        credentials: 'include',
+        mode: 'cors',
+        method: 'GET'
+    });
+    if (response.status === 200) {
+        return response.json();
+    } else {
+        return response.json();
+    }
+}
+
+export async function retrieveMapNames(): Promise<string[]> {
+    const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+    let response = await fetch(apiEndPoint+'/maps/names', {
         credentials: 'include',
         mode: 'cors',
         method: 'GET'

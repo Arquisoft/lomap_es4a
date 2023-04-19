@@ -12,8 +12,8 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl, createTheme, ThemeProvider, IconButton, Divider, TextField } from "@mui/material";
-import { deleteMap, retrieveMapNames, checkMapNameIsValid } from '../../solidapi/solidapi';
 import { Session } from '@inrupt/solid-client-authn-browser';
+import {deleteMap, retrieveMapNames} from "../../api/api";
 
 
 interface MapListViewProps {
@@ -54,34 +54,36 @@ function MapListView(props: MapListViewProps): JSX.Element {
     const handleDeleteMapClick = () => {
         // Si el mapa actual es el que se a a borrar, se carga un nuevo mapa.
         // Si no hay más mapas, se crea el mapa "Map1"
-        // deleteMap(props.session, currentDeleteMap)
-        //     .then(() => {
-        //         retrieveMapNames(props.session).then(names => {
-        //             if (props.currentMapName === currentDeleteMap) { // comprueba si se borra el mapa actual
-        //                 props.setCurrentMapName(names.length > 0 ? names[0] : props.currentMapName+"_new");
-        //             }
-        //             else if (names.length === 0) { // Comprueba si quedan mapas
-        //                 props.setCurrentMapName("Map1");
-        //             }
-        //             setCurrentDeleteMap("");
-        //             props.onClose();
-        //         });
-        //     });
+        deleteMap(currentDeleteMap)
+            .then(() => {
+                retrieveMapNames().then(names => {
+                    if (props.currentMapName === currentDeleteMap) { // comprueba si se borra el mapa actual
+                        props.setCurrentMapName(names.length > 0 ? names[0] : props.currentMapName+"_new");
+                    }
+                    else if (names.length === 0) { // Comprueba si quedan mapas
+                        props.setCurrentMapName("Map1");
+                    }
+                    setCurrentDeleteMap("");
+                    props.onClose();
+                });
+            });
     };
 
     // Crea el nuevo mapa con el nombre escogido (validando el nuevo nombre)
     const handleNewMapClick = () => {
-        if (checkMapNameIsValid(currentNewMap)) {            
-            props.setCurrentMapName(currentNewMap);
-            setOpenAlert(true);
-            setCurrentNewMap("");
-            props.onClose();
-        }
+        // if (checkMapNameIsValid(currentNewMap)) {
+        //     props.setCurrentMapName(currentNewMap);
+        //     setOpenAlert(true);
+        //     setCurrentNewMap("");
+        //     props.onClose();
+        // }
     };
 
     const handleOpenSelect = () => {
-        // retrieveMapNames(props.session)
-        //     .then(names => setMapNames(names));
+        retrieveMapNames()
+            .then(names => {
+                setMapNames(names)
+            });
     }
 
     // Devuelve los menu items correspondientes a los nombres de los 

@@ -323,29 +323,29 @@ export async function retrieveMapNames(session: Session): Promise<string[]> {
 }
 
 // Borra el mapa cuyo nombre se pasa como parámetro
-export async function deleteMap(session: Session, mapName: string): Promise<boolean> {
-    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
-        return false;
-    } // Check if the webId is undefined
-
-    if (!checkMapNameIsValid(mapName)) {
-        return false;
-    }
-  
-    let url = mapUrlFor(session, mapName);
-  
-    try {
-        await deleteFile(
-            url,
-            { fetch: session.fetch }
-        );
-
-        return true;
-
-    } catch (error) {
-      return false;
-    }
-}
+// export async function deleteMap(session: Session, mapName: string): Promise<boolean> {
+//     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+//         return false;
+//     } // Check if the webId is undefined
+//
+//     if (!checkMapNameIsValid(mapName)) {
+//         return false;
+//     }
+//
+//     let url = mapUrlFor(session, mapName);
+//
+//     try {
+//         await deleteFile(
+//             url,
+//             { fetch: session.fetch }
+//         );
+//
+//         return true;
+//
+//     } catch (error) {
+//       return false;
+//     }
+// }
 
 export async function myFriends(session: Session): Promise<string[]> {
     if (checkSession(session)) {

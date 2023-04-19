@@ -17,7 +17,7 @@ export type MarkerType = {
     website: string
 }
 
-function Mapa({session, markers, markerList, clickMap, setMarkerToAdd, currentMapName}: any): JSX.Element {
+function Mapa({markers, markerList, clickMap, setMarkerToAdd, currentMapName}: any): JSX.Element {
     
     const [map, setMap] = useState(React.useRef<google.maps.Map | null>(null).current);
 

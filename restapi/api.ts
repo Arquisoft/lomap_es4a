@@ -137,6 +137,64 @@ api.post("/maps/add", async (req: any, res, next) => {
     }
 });
 
+api.delete("/maps/delete/:id", async (req: any, res, next) => {
+    if (req.session.sessionId === undefined || req.session.sessionId === null || req.session.sessionId === "") {
+        return res.status(400).send([]);
+    } // Check sessionId
+
+    const session = await getSessionFromStorage(req.session.sessionId);
+    const mapName = req.params.mapName;
+
+    if (!checkSession(session)) {
+        return res.status(400).send([]);
+    }
+
+    if (!checkMapNameIsValid(mapName)) {
+        return res.status(400).send([]);
+    } // Check if map name is valid
+
+    if (!await checkStructure(session, mapName)) {
+        return res.status(400).send([]);
+    } // Check if there's a structure for the map already created
+
+    const url = mapUrlFor(session, mapName);
+
+    try {
+        await deleteFile(
+            url,
+            { fetch: session.fetch }
+        );
+
+        return true;
+
+    } catch (error) {
+        return false;
+    }
+});
+
+api.get("/maps/names", async (req: any, res, next) => {
+    if (req.session.sessionId === undefined || req.session.sessionId === null || req.session.sessionId === "") {
+        return res.status(400).send([]);
+    } // Check sessionId
+
+    const session = await getSessionFromStorage(req.session.sessionId);
+
+    if (!checkSession(session)) {
+        return res.status(400).send([]);
+    }
+
+    const url = session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/lomap");
+
+    let dataset = await getSolidDataset(url, { fetch: session.fetch });
+    let mapUrls = getContainedResourceUrlAll(dataset); // urls de los mapas del usuario
+
+    let mapNames = mapUrls.map(mapUrl =>
+        mapUrl.split("/lomap/")[1]
+    );
+
+    return res.status(200).send(mapNames);
+});
+
 api.get("/points/:mapName", async (req: any, res, next) => {
     if (req.session.sessionId === undefined || req.session.sessionId === null || req.session.sessionId === "") {
         return res.status(400).send([]);
@@ -172,7 +230,7 @@ api.get("/points/:mapName", async (req: any, res, next) => {
         map.spatialCoverage.forEach((point: Point) => {
             points.push(point);
         });
-        console.log(points)
+
         return res.status(200).send(points);
     } catch (error) {
         return res.status(400).send([]);

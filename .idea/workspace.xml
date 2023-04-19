@@ -7,15 +7,9 @@
     <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Soluciones errores y creación de endpoints">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/restapi/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Map/Map.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/components/Navbar/MapListView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Navbar/MapListView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/shared/shareddtypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/shared/shareddtypes.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/solidapi/solidapi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/solidapi/solidapi.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -125,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678459410126</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Soluciones errores y creación de endpoints">
+      <created>1681933361099</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1681933361099</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
