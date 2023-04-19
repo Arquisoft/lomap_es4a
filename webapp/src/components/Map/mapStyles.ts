@@ -1,78 +1,86 @@
 const mapStyles =  [
     {
+        "featureType": "landscape",
+        "stylers": [
+            {
+                "hue": "#F1FF00"
+            },
+            {
+                "saturation": -27.4
+            },
+            {
+                "lightness": 9.4
+            },
+            {
+                "gamma": 1
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "stylers": [
+            {
+                "hue": "#0099FF"
+            },
+            {
+                "saturation": -20
+            },
+            {
+                "lightness": 36.4
+            },
+            {
+                "gamma": 1
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "stylers": [
+            {
+                "hue": "#00FF4F"
+            },
+            {
+                "saturation": 0
+            },
+            {
+                "lightness": 0
+            },
+            {
+                "gamma": 1
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "stylers": [
+            {
+                "hue": "#FFB300"
+            },
+            {
+                "saturation": -38
+            },
+            {
+                "lightness": 11.2
+            },
+            {
+                "gamma": 1
+            }
+        ]
+    },
+    {
         "featureType": "water",
         "stylers": [
             {
-                "saturation": 43
+                "hue": "#00B6FF"
             },
             {
-                "lightness": -11
+                "saturation": 4.2
             },
             {
-                "hue": "#0088ff"
-            }
-        ]
-    },
-    {
-        "featureType": "road",
-        "elementType": "geometry.fill",
-        "stylers": [
-            {
-                "hue": "#ff0000"
+                "lightness": -63.4
             },
             {
-                "saturation": -100
-            },
-            {
-                "lightness": 99
-            }
-        ]
-    },
-    {
-        "featureType": "road",
-        "elementType": "geometry.stroke",
-        "stylers": [
-            {
-                "color": "#808080"
-            },
-            {
-                "lightness": 54
-            }
-        ]
-    },
-    {
-        "featureType": "landscape.man_made",
-        "elementType": "geometry.fill",
-        "stylers": [
-            {
-                "color": "#ece2d9"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.park",
-        "elementType": "geometry.fill",
-        "stylers": [
-            {
-                "color": "#ccdca1"
-            }
-        ]
-    },
-    {
-        "featureType": "road",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#767676"
-            }
-        ]
-    },
-    {
-        "featureType": "road",
-        "elementType": "labels.text.stroke",
-        "stylers": [
-            {
-                "color": "#ffffff"
+                "gamma": 1
             }
         ]
     },
@@ -80,51 +88,16 @@ const mapStyles =  [
         "featureType": "poi",
         "stylers": [
             {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "landscape.natural",
-        "elementType": "geometry.fill",
-        "stylers": [
-            {
-                "visibility": "on"
+                "hue": "#9FFF00"
             },
             {
-                "color": "#b8cb93"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.park",
-        "stylers": [
+                "saturation": 0
+            },
             {
-                "visibility": "on"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.sports_complex",
-        "stylers": [
+                "lightness": 0
+            },
             {
-                "visibility": "on"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.medical",
-        "stylers": [
-            {
-                "visibility": "on"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.business",
-        "stylers": [
-            {
-                "visibility": "simplified"
+                "gamma": 1
             }
         ]
     }
