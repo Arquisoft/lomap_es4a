@@ -6,7 +6,8 @@ import {containerStyle, center, options} from "./settings";
 // Images
 import savedMarker from '../../images/markerGuardado.png';
 import savedMarker2 from '../../images/markerGuerdado2.png';
-import {createMap, retrievePoints} from "../../solidapi/solidapi";
+import {createMap, retrievePoints} from "../../api/api";
+//import {createMap, retrievePoints} from "../../api/api";
 
 export type MarkerType = {
     id: string,
@@ -46,10 +47,9 @@ function Mapa({session, markers, markerList, clickMap, setMarkerToAdd, currentMa
         mList[pointId] = m;
     }
 
-    const onLoad = (googleMap: google.maps.Map): void => { // TODO: aquí se imprimen los puntos recuperados del pod
-        createMap(session, currentMapName).then(() => {
-
-            retrievePoints(session, currentMapName).then(points => {
+    const onLoad = (googleMap: google.maps.Map): void => {
+        createMap(currentMapName).then(() => {
+            retrievePoints(currentMapName).then(points => {
                 if (points != null) {
 
                     points.forEach(point => {

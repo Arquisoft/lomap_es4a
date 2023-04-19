@@ -272,39 +272,39 @@ export async function updatePoint(session: Session, mapName:string, pointToUpdat
     return true;
 }
 
-export async function retrievePoints(session: Session, mapName:string): Promise<Point[]> {
-    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
-        return [];
-    } // Check if the webId is undefined
-
-    if (!checkMapNameIsValid(mapName)) {
-        return [];
-    }
-
-    let url = mapUrlFor(session, mapName);
-
-    if (!await checkStructure(session, mapName)) {
-        return [];
-    }
-
-    try {
-        let mapBlob = await getFile(
-            url,
-            { fetch: session.fetch }
-        );
-
-        let map = JSON.parse(await mapBlob.text());
-
-        let points: Point[] = [];
-
-        map.spatialCoverage.forEach((point: Point) => {
-            points.push(point);
-        });
-        return points;
-    } catch (error) {
-        return [];
-    }
-}
+// export async function retrievePoints(session: Session, mapName:string): Promise<Point[]> {
+//     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+//         return [];
+//     } // Check if the webId is undefined
+//
+//     if (!checkMapNameIsValid(mapName)) {
+//         return [];
+//     }
+//
+//     let url = mapUrlFor(session, mapName);
+//
+//     if (!await checkStructure(session, mapName)) {
+//         return [];
+//     }
+//
+//     try {
+//         let mapBlob = await getFile(
+//             url,
+//             { fetch: session.fetch }
+//         );
+//
+//         let map = JSON.parse(await mapBlob.text());
+//
+//         let points: Point[] = [];
+//
+//         map.spatialCoverage.forEach((point: Point) => {
+//             points.push(point);
+//         });
+//         return points;
+//     } catch (error) {
+//         return [];
+//     }
+// }
 
 // Devuelve los nombres de los mapas que tiene el usuario
 export async function retrieveMapNames(session: Session): Promise<string[]> {

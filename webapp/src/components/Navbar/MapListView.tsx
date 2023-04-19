@@ -21,7 +21,6 @@ interface MapListViewProps {
     onClose: () => void;
     currentMapName: string;
     setCurrentMapName: React.Dispatch<React.SetStateAction<string>>;
-    session: Session;
 }
 
 function MapListView(props: MapListViewProps): JSX.Element {
@@ -55,19 +54,19 @@ function MapListView(props: MapListViewProps): JSX.Element {
     const handleDeleteMapClick = () => {
         // Si el mapa actual es el que se a a borrar, se carga un nuevo mapa.
         // Si no hay más mapas, se crea el mapa "Map1"
-        deleteMap(props.session, currentDeleteMap)
-            .then(() => {
-                retrieveMapNames(props.session).then(names => {
-                    if (props.currentMapName === currentDeleteMap) { // comprueba si se borra el mapa actual
-                        props.setCurrentMapName(names.length > 0 ? names[0] : props.currentMapName+"_new");
-                    }
-                    else if (names.length === 0) { // Comprueba si quedan mapas
-                        props.setCurrentMapName("Map1");
-                    }
-                    setCurrentDeleteMap("");
-                    props.onClose();
-                });
-            });
+        // deleteMap(props.session, currentDeleteMap)
+        //     .then(() => {
+        //         retrieveMapNames(props.session).then(names => {
+        //             if (props.currentMapName === currentDeleteMap) { // comprueba si se borra el mapa actual
+        //                 props.setCurrentMapName(names.length > 0 ? names[0] : props.currentMapName+"_new");
+        //             }
+        //             else if (names.length === 0) { // Comprueba si quedan mapas
+        //                 props.setCurrentMapName("Map1");
+        //             }
+        //             setCurrentDeleteMap("");
+        //             props.onClose();
+        //         });
+        //     });
     };
 
     // Crea el nuevo mapa con el nombre escogido (validando el nuevo nombre)
@@ -81,8 +80,8 @@ function MapListView(props: MapListViewProps): JSX.Element {
     };
 
     const handleOpenSelect = () => {
-        retrieveMapNames(props.session)
-            .then(names => setMapNames(names));
+        // retrieveMapNames(props.session)
+        //     .then(names => setMapNames(names));
     }
 
     // Devuelve los menu items correspondientes a los nombres de los 
