@@ -30,6 +30,9 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import {ChangeEvent, useEffect, useState} from "react";
 import {v4 as uuidv4} from "uuid";
 import ImageUploader from './ImageUploader';
+import Author from '../../solidapi/Author';
+import { reviewRating } from 'rdf-namespaces/dist/schema';
+import Review from '../../solidapi/Review';
 
 const theme = createTheme({
   components: {
@@ -80,11 +83,8 @@ export const ImageViewer = ({ image, onClose }: { image: MyImage; onClose: () =>
     </div>
   );
 };
-interface Review {
-  comment: string;
-  rating: number;
-}
-function DetailsPoint({ open, onClose, point, markerList,addImage}: any) {
+
+function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: any) {
   const [ratingValue, setRatingValue] = React.useState<number | null>(0);
   const [images, setImages] = useState<MyImage[]>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -93,7 +93,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage}: any) {
   const [commentsOpen, setCommentsOpen] = React.useState(false);
   const [commentsList, setCommentsList] = useState<string[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
-
+  //const [author,setAuthor]=React.useState<string>()
   const handleImageClick = (index: number) => {
     setSelectedImageIndex(index);
   };
@@ -132,7 +132,14 @@ function DetailsPoint({ open, onClose, point, markerList,addImage}: any) {
 
   const handleAddReview = () => {
     if (comment.trim() !== "" && ratingValue !== null) {
-      setReviews([...reviews, { comment: comment, rating: ratingValue }]);
+      addReview(comment, ratingValue)
+      //setAuthor({identifier:"2"  })
+      /*
+      setReviews([...reviews, { 
+        author: "u",
+        reviewBody: comment, 
+        ratingValue: ratingValue,
+      datePublished:Date.now() }]);*/
       setComment("");
       setRatingValue(0);
     }
@@ -149,19 +156,36 @@ function DetailsPoint({ open, onClose, point, markerList,addImage}: any) {
     });
     setImages(l)
   }
+
+
+  const ponerReviews=()=>{
+    console.log(point)
+      let l:any=point.review.map((r:Review) => {
+
+        renderReviews()
+      });
+        
+    
+    setReviews(l)
+  }
+
+
   useEffect(() => {
-      ponerImagenes()
+      ponerImagenes();
+      //ponerReviews();
+      setReviews(point.review)
   }, [point]);
 
   const renderReviews=()=> {
     return (
       <List sx={{ mt: 2 }}>
-        {reviews.map((review, index) => (
-          <Box key={index}>
-            <Rating name="read-only" value={review.rating} readOnly />
+        {point.review.map((review:Review) => (
+          
+          <Box key={review.datePublished}>
+            <Rating name="read-only" value={review.reviewRating} readOnly />
             <ListItem>
               <Typography variant="body1" color="textPrimary">
-                {review.comment}
+                {review.author} ({review.datePublished}) - {review.reviewBody} - {review.reviewRating}
               </Typography>
             </ListItem>
           </Box>

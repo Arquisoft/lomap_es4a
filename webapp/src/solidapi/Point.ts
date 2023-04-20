@@ -1,3 +1,4 @@
+import Review from "./Review";
 
 class Point {
     id: string;
@@ -6,15 +7,16 @@ class Point {
     latitude: number;
     longitude: number;
     description: string;
-    comments: string[];
-    reviewScore: number;
+    //comments: string[];
+    //reviewScore: number;
     logo:string[];
     date: number;
+    review:Review[];
     
 
     constructor(
         id: string, name: string, category: string, latitude: number, longitude: number, description: string = "",
-        comments: string[] = [], reviewScore: number = 0,logo:string[]=[], date: number = Date.now())
+        /*comments: string[] = [], reviewScore: number = 0,*/logo:string[]=[], date: number = Date.now(),review:Review[]=[])
     {
         this.id = id;
         this.name = name;
@@ -22,10 +24,11 @@ class Point {
         this.latitude = latitude;
         this.longitude = longitude;
         this.description = description;
-        this.comments = comments;
-        this.reviewScore = reviewScore;
+        //this.comments = comments;
+        //this.reviewScore = reviewScore;
         this.logo=logo;
         this.date = date;
+        this.review=review;
     }
 
     public getId(): string {

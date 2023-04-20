@@ -9,8 +9,7 @@ import PointsView from "./Navbar/PointsView";
 import MapListView from "./Navbar/MapListView";
 import SearchBar from "./Searchbar/Searchbar";
 
-import {addPoint, getPointsCategory, deletePoint, getPoint, updatePoint} from "../solidapi/solidapi";
-import {addPoint, deletePoint, getPoint, getPointFromCoords, getPointImages, saveImage, updatePoint} from "../solidapi/solidapi";
+import {addPoint, getPointsCategory,getPointFromCoords, deletePoint, getPoint, updatePoint,saveImage, saveReview} from "../solidapi/solidapi";
 
 import savedMarker2 from '../images/markerGuerdado2.png';
 import EditPoint from "./Options/EditPoint";
@@ -162,7 +161,11 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         setDetailsPointOpen(!detailsPointOpen)
         setOpenDialog2(true)
     }
-    
+    const addReview=(comment:string,ratingValue:number)=>{
+
+        saveReview(session, currentMapName, comment, ratingValue,point);
+       
+    }
     const getNombreMapa= ()=>{
         return currentMapName
     }
@@ -194,7 +197,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             <Box><AddPoint open={addPointOpen} onClose={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
             <Box><EditPoint open={editPointOpen} onClose={closeEditPoint} point={point} editPoint={editPoint}/></Box>
             <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}  getPointsCategory={getPuntosCategoria}></PointsView></Box>
-            <Box><DetailsPoint open={detailsPointOpen} onClose={closeDetailsPoint} point={point}  markerList={markerList} addImage={addImage} /></Box>
+            <Box><DetailsPoint open={detailsPointOpen} onClose={closeDetailsPoint} point={point}  markerList={markerList} addImage={addImage} addReview={addReview}/></Box>
             <Box><MyFriendsListView open={myFriendsListOpen} onClose={closeMyFriendsList} ></MyFriendsListView></Box>
             <Box><MapListView open={mapListOpen} onClose={closeMapList} currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} session={session} ></MapListView></Box>
             <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markers={markerList} markerList={setMarkerlist} clickMap={clickMap} clickMarker={clickMarker} setMarkerToAdd={setMarkerToAdd} currentMapName={currentMapName} /></Box>

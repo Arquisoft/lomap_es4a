@@ -109,7 +109,7 @@ function Mapa({session, markers, markerList, clickMap, clickMarker, setMarkerToA
             marker.addListener('click', (marker: any) =>{
                 clickMarker(marker.latLng.lat(), marker.latLng.lng());
             });
-
+            
             // Punto a añadir si guardamos
             setMarkerToAdd(marker);
             // Mostrar menú añadir punto

@@ -11,6 +11,8 @@ import { foaf } from "rdf-namespaces";
 
 import {v4 as uuidv4} from 'uuid';
 import { MyImage } from '../components/Options/Carousel';
+import Review from './Review';
+import { reviewRating } from 'rdf-namespaces/dist/schema';
 
 function checkSession(session: Session): boolean {
     if (session === null || typeof session === "undefined") {
@@ -494,6 +496,39 @@ export async function getPointImages(session: Session, mapName:string, point:Poi
     */
     return l
    
+}
+
+export async function saveReview(session: Session, mapName:string, comment:string,ratingValue:number, point:Point): Promise<boolean> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return false;
+    } // Check if the webId is undefined
+    /*
+setReviews([...reviews, { 
+    author: "u",
+    reviewBody: comment, 
+    reviewRating: ratingValue,
+  datePublished:Date.now() }]);
+
+    */
+    
+
+    try {
+        point.review.push({
+            author: "u",
+            reviewBody: comment, 
+            reviewRating: ratingValue,
+            
+          datePublished:Date.now()
+         });
+         console.log(ratingValue)
+        
+        //console.log(point.review)
+        await updatePoint(session, mapName,point)
+        
+    } catch (error) {
+        return false;
+    }
+    return true;
 }
 
 function lomapUrlFor(session: Session): string {
