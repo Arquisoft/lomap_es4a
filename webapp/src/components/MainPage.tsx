@@ -13,6 +13,7 @@ import EditPoint from "./Options/EditPoint";
 
 import {Button, Grid, Typography, Box, Dialog, DialogActions, DialogContent} from '@mui/material';
 import MyFriendsListView from "./Navbar/MyFriendsListView";
+import {addPoint, deletePoint, getPoint, updatePoint} from "../api/api";
 
 export default function MainPage(): JSX.Element {
 
@@ -73,13 +74,13 @@ export default function MainPage(): JSX.Element {
     }
 
     const openEditPoint = (id: string) => {
-        // getPoint(session, currentMapName, id).then(point => {
-        //     if (point !== null) {
-        //         setPoint(point);
-        //     }
-        //     setPointsListOpen(false);
-        //     setEditPointOpen(true);
-        // });
+        getPoint(currentMapName, id).then(point => {
+            if (point !== null) {
+                setPoint(point);
+            }
+            setPointsListOpen(false);
+            setEditPointOpen(true);
+        });
     }
 
     const clickMap = (lat: number, lng: number) => {
@@ -94,7 +95,7 @@ export default function MainPage(): JSX.Element {
       };
 
     const createPoint = (point: Point) => {
-        //addPoint(session, currentMapName, point);
+        addPoint(currentMapName, point);
         markerToAdd?.setIcon(savedMarker2);
         markerToAdd?.setVisible(true);
         markerToAdd?.setTitle(point.name);
@@ -102,14 +103,14 @@ export default function MainPage(): JSX.Element {
     }
 
     const editPoint = (point: Point) => {
-        //updatePoint(session, currentMapName, point);
+        updatePoint(currentMapName, point);
         closeEditPoint();
 
         markerList[point.id].setTitle(point.name);
     }
     
     const eliminatePoint = (id: string)=>{
-        //deletePoint(session, currentMapName, id);
+        deletePoint(currentMapName, id);
         markerList[id].setMap(null);
 
         delete markerList[id];

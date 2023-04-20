@@ -20,8 +20,7 @@ import "./Option.css";
 import Point from "../../solidapi/Point";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import {ChangeEvent, useEffect, useState} from "react";
-import {v4 as uuidv4} from "uuid";
+import {useEffect, useState} from "react";
 
 const theme = createTheme({
   components: {

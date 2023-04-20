@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Divider from '@mui/material/Divider';
-import Drawer, { DrawerProps } from '@mui/material/Drawer';
+import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
@@ -12,14 +12,13 @@ import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
 import MapIcon from '@mui/icons-material/Map';
-import { Avatar, Button, createTheme, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, makeStyles, ThemeProvider, Typography } from '@mui/material';
+import { Button, createTheme, Dialog, DialogActions, DialogContent, DialogTitle, ThemeProvider, Typography } from '@mui/material';
 
 // Pfp
-import { VCARD } from "@inrupt/lit-generated-vocab-common";
-import {CombinedDataProvider, useSession, Image, Text} from "@inrupt/solid-ui-react";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import LogoutIcon from '@mui/icons-material/Logout';
-import {FOAF} from "@inrupt/vocab-common-rdf";
+import {getNameOrDefault, getProfilePictureOrDefault, logout} from "../../api/api";
+
 const categories = [
   {
     id: 'LoMap',
@@ -70,12 +69,17 @@ const theme = createTheme({
   }
 });
 function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsList}: any) {
-  
+
   const [openDialog, setOpenDialog] = React.useState(false);
 
-  const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
-  const { session } = useSession();
-  const { webId } = session.info;
+  const [name, setName] = React.useState("");
+  const [image, setImage] = React.useState("");
+
+  useEffect(() => {
+    getNameOrDefault().then(n => setName(n));
+    getProfilePictureOrDefault().then(i => setImage(i));
+  });
+
   const handleClickOpen = () => {
     setOpenDialog(true);
   };
@@ -93,7 +97,7 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
 
   const handleClickLogout = async() => {
     try {
-      await session.logout();
+      await logout();
     } catch (error) {
       console.log(`Error logging out: ${error}`);
     }
@@ -115,28 +119,10 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
               component="div"
               sx={{ display: { xs: 'none', sm: 'block', color: 'white' } }}
             >
-              {session.info.webId ? (
-                  <CombinedDataProvider
-                      datasetUrl={session.info.webId}
-                      thingUrl={session.info.webId}>
-                    {FOAF.name !== null && FOAF.name !== undefined ?
-                        (<Text property={ FOAF.name }/>):
-                        (<Typography>User</Typography>)
-                    }
-
-                  </CombinedDataProvider>
-              ): null }
+              {name}
             </Typography>
             <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white', padding:"1em"} }}>
-
-              {session.info.webId ? (
-                  <CombinedDataProvider
-                      datasetUrl={session.info.webId}
-                      thingUrl={session.info.webId}>
-                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture" style={{width:60, height:60, borderRadius:30}}/>
-                  </CombinedDataProvider>
-              ): null }
-
+              <img src={image} alt="User profile picture" style={{width:60, height:60, borderRadius:30}}/>
             </Box>
           </ListItemButton>
           {categories.map(({ id, children }) => (
@@ -158,7 +144,7 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
 
                   </ListItemButton>
                 </ListItem>
-                
+
               ))}
               <Divider sx={{ mt: 2 }} />
             </Box>
@@ -189,11 +175,11 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
         </DialogActions>
       </Dialog>
 
-      
 
-      
+
+
       </>
-    
+
   );
 }
 //<PointsView open={true}></PointsView> 

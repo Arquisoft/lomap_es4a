@@ -8,7 +8,6 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import FindReplaceIcon from '@mui/icons-material/FindReplace';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {myFriends} from "../../solidapi/solidapi";
 
 import {
     SelectChangeEvent,

@@ -14,10 +14,22 @@ const {
 import {
     getFile,
     deleteFile,
-    overwriteFile, getContainedResourceUrlAll, getSolidDataset
+    overwriteFile,
+    getContainedResourceUrlAll,
+    getSolidDataset,
+    getThing,
+    getStringNoLocale,
+    getStringNoLocaleAll, getUrlAll
 } from '@inrupt/solid-client';
 
+import {FOAF, VCARD} from "@inrupt/vocab-common-rdf";
+
+// import { fetchDocument } from "tripledoc";
+
 import {Point} from "../webapp/src/shared/shareddtypes";
+
+import {Blob} from 'node:buffer';
+import {File} from '@web-std/file';
 
 const port = 5000;
 
@@ -69,6 +81,13 @@ api.get("/login", async (req: any, res, next) => {
     });
 });
 
+api.get("/logout", async (req: any, res, next) => {
+    const session = await getSessionFromStorage(req.session.sessionId);
+    await session.logout();
+
+    return res.redirect("http://localhost:3000/");
+});
+
 api.get("/redirect", async (req: any, res, next) => {
     const session = await getSessionFromStorage(req.session.sessionId);
 
@@ -84,6 +103,46 @@ api.get("/redirect", async (req: any, res, next) => {
     }
 
     return res.redirect("http://localhost:3000/mainpage");
+});
+
+api.get("/name", async (req: any, res, next) => {
+    if (req.session.sessionId === undefined || req.session.sessionId === null || req.session.sessionId === "") {
+        return res.status(400).send({name: ""});
+    } // Check sessionId
+
+    const session = await getSessionFromStorage(req.session.sessionId);
+
+    let dataset = await getSolidDataset(session.info.webId, { fetch: session.fetch });
+
+    const profile = getThing(dataset, session.info.webId);
+
+    let name = "";
+
+    if (profile !== null) {
+        name = getStringNoLocale(profile, FOAF.name)!;
+    }
+
+    return res.status(200).send({name: name});
+});
+
+api.get("/profilePicture", async (req: any, res, next) => {
+    if (req.session.sessionId === undefined || req.session.sessionId === null || req.session.sessionId === "") {
+        return res.status(400).send({name: ""});
+    } // Check sessionId
+
+    const session = await getSessionFromStorage(req.session.sessionId);
+
+    let dataset = await getSolidDataset(session.info.webId, { fetch: session.fetch });
+
+    const profile = getThing(dataset, session.info.webId);
+
+    let pfp = "";
+
+    if (profile !== null) {
+        pfp = getStringNoLocale(profile, VCARD.hasPhoto)!;
+    }
+
+    return res.status(200).send({pfp: pfp});
 });
 
 api.post("/maps/add", async (req: any, res, next) => {
@@ -125,37 +184,31 @@ api.post("/maps/add", async (req: any, res, next) => {
         }
 
         let blob = new Blob([JSON.stringify(mapa)], { type: "application/ld+json" });
-        let file = new File([blob], mapa.name + ".jsonld", { type: blob.type });
+        let file = new File([await blob.arrayBuffer()], mapa.name + ".jsonld", { type: blob.type });
 
         await overwriteFile(
             url,
             file,
             { contentType: file.type, fetch: session.fetch }
         );
+
+        return res.sendStatus(200);
     } catch (error) {
-        return false;
+        return res.sendStatus(400);
     }
 });
 
-api.delete("/maps/delete/:id", async (req: any, res, next) => {
+api.delete("/maps/delete/:mapName", async (req: any, res, next) => {
     if (req.session.sessionId === undefined || req.session.sessionId === null || req.session.sessionId === "") {
-        return res.status(400).send([]);
+        return res.sendStatus(400);
     } // Check sessionId
 
     const session = await getSessionFromStorage(req.session.sessionId);
     const mapName = req.params.mapName;
 
     if (!checkSession(session)) {
-        return res.status(400).send([]);
+        return res.sendStatus(400);
     }
-
-    if (!checkMapNameIsValid(mapName)) {
-        return res.status(400).send([]);
-    } // Check if map name is valid
-
-    if (!await checkStructure(session, mapName)) {
-        return res.status(400).send([]);
-    } // Check if there's a structure for the map already created
 
     const url = mapUrlFor(session, mapName);
 
@@ -165,10 +218,9 @@ api.delete("/maps/delete/:id", async (req: any, res, next) => {
             { fetch: session.fetch }
         );
 
-        return true;
-
+        return res.sendStatus(200);
     } catch (error) {
-        return false;
+        return res.sendStatus(400);
     }
 });
 
@@ -235,6 +287,241 @@ api.get("/points/:mapName", async (req: any, res, next) => {
     } catch (error) {
         return res.status(400).send([]);
     }
+});
+
+api.get("/point/:mapName/:id", async (req: any, res, next) => {
+    if (req.session.sessionId === undefined || req.session.sessionId === null || req.session.sessionId === "") {
+        return res.status(400).send([]);
+    } // Check sessionId
+
+    const session = await getSessionFromStorage(req.session.sessionId);
+    const mapName = req.params.mapName;
+    const id = req.params.id;
+
+    if (!checkSession(session)) {
+        return res.status(400).send([]);
+    }
+
+    if (!checkMapNameIsValid(mapName)) {
+        return res.status(400).send([]);
+    } // Check if map name is valid
+
+    if (!await checkStructure(session, mapName)) {
+        return res.status(400).send([]);
+    } // Check if there's a structure for the map already created
+
+    const url = mapUrlFor(session, mapName);
+
+    try {
+        let mapBlob = await getFile(
+            url,
+            { fetch: session.fetch }
+        );
+
+        let map = JSON.parse(await mapBlob.text());
+
+        let pointToGet: Point | null = null;
+        map.spatialCoverage.forEach((point: Point) => {
+            if (point.id === id) {
+                pointToGet = point;
+                return;
+            }
+        });
+
+        return res.status(200).send(pointToGet);
+    } catch (error) {
+        return res.status(400).send(null);
+    }
+});
+
+api.post("/points/add", async (req: any, res, next) => {
+    if (req.session.sessionId === undefined || req.session.sessionId === null || req.session.sessionId === "") {
+        return res.sendStatus(400);
+    } // Check sessionId
+
+    const session = await getSessionFromStorage(req.session.sessionId);
+    const mapName = req.body.mapName;
+    let point = req.body.point;
+
+    if (!checkSession(session)) {
+        return res.sendStatus(400);
+    }
+
+    if (!checkMapNameIsValid(mapName)) {
+        return res.sendStatus(400);
+    } // Check if map name is valid
+
+    if (!await checkStructure(session, mapName)) {
+        return res.sendStatus(400);
+    } // Check if there's a structure for the map already created
+
+    const url = mapUrlFor(session, mapName);
+
+    point = JSON.parse(JSON.stringify(point));
+    point["@context"] = "https://schema.org/";
+    point["@type"] = "Point";
+
+    try {
+        let mapBlob = await getFile(
+            url,
+            { fetch: session.fetch }
+        );
+
+        let map = JSON.parse(await mapBlob.text());
+
+        map.spatialCoverage.push(point);
+
+        let blob = new Blob([JSON.stringify(map)], { type: "application/ld+json" });
+        let file = new File([await blob.arrayBuffer()], map.name + ".jsonld", { type: blob.type });
+
+        await overwriteFile(
+            url,
+            file,
+            { contentType: file.type, fetch: session.fetch }
+        );
+
+        res.sendStatus(200);
+    } catch (error) {
+        res.sendStatus(400);
+    }
+});
+
+api.delete("/points/delete/:mapName/:id", async (req: any, res, next) => {
+    if (req.session.sessionId === undefined || req.session.sessionId === null || req.session.sessionId === "") {
+        return res.sendStatus(400);
+    } // Check sessionId
+
+    const session = await getSessionFromStorage(req.session.sessionId);
+    const mapName = req.params.mapName;
+    const id = req.params.id;
+
+    if (!checkSession(session)) {
+        return res.sendStatus(400);
+    }
+
+    if (!checkMapNameIsValid(mapName)) {
+        return res.sendStatus(400);
+    } // Check if map name is valid
+
+    if (!await checkStructure(session, mapName)) {
+        return res.sendStatus(400);
+    } // Check if there's a structure for the map already created
+
+    const url = mapUrlFor(session, mapName);
+
+    try {
+        let mapBlob = await getFile(
+            url,
+            { fetch: session.fetch }
+        );
+
+        let map = JSON.parse(await mapBlob.text());
+
+        let count = 0;
+        map.spatialCoverage.forEach((point: Point) => {
+            if (point.id === id) {
+                map.spatialCoverage.splice(count, 1);
+                return;
+            }
+            count++;
+        });
+
+        let blob = new Blob([JSON.stringify(map)], { type: "application/ld+json" });
+        let file = new File([await blob.arrayBuffer()], map.name + ".jsonld", { type: blob.type });
+
+        await overwriteFile(
+            url,
+            file,
+            { contentType: file.type, fetch: session.fetch }
+        );
+
+        return res.sendStatus(200);
+    } catch (error) {
+        return res.sendStatus(400);
+    }
+});
+
+api.put("/points/update", async (req: any, res, next) => {
+    if (req.session.sessionId === undefined || req.session.sessionId === null || req.session.sessionId === "") {
+        return res.sendStatus(400);
+    } // Check sessionId
+
+    const session = await getSessionFromStorage(req.session.sessionId);
+    const mapName = req.body.mapName;
+    let point = req.body.point;
+
+    if (!checkSession(session)) {
+        return res.sendStatus(400);
+    }
+
+    if (!checkMapNameIsValid(mapName)) {
+        return res.sendStatus(400);
+    } // Check if map name is valid
+
+    if (!await checkStructure(session, mapName)) {
+        return res.sendStatus(400);
+    } // Check if there's a structure for the map already created
+
+    const url = mapUrlFor(session, mapName);
+
+    point = JSON.parse(JSON.stringify(point));
+    point["@context"] = "https://schema.org/";
+    point["@type"] = "Point";
+
+    try {
+        let mapBlob = await getFile(
+            url,
+            { fetch: session.fetch }
+        );
+
+        let map = JSON.parse(await mapBlob.text());
+
+        let count = 0;
+        map.spatialCoverage.forEach((p: Point) => {
+            if (point.id === p.id) {
+                map.spatialCoverage[count] = point;
+                return;
+            }
+            count++;
+        });
+
+        let blob = new Blob([JSON.stringify(map)], { type: "application/ld+json" });
+        let file = new File([await blob.arrayBuffer()], map.name + ".jsonld", { type: blob.type });
+
+        await overwriteFile(
+            url,
+            file,
+            { contentType: file.type, fetch: session.fetch }
+        );
+
+        res.sendStatus(200);
+    } catch (error) {
+        res.sendStatus(400);
+    }
+});
+
+api.get("/friends", async (req: any, res, next) => {
+    if (req.session.sessionId === undefined || req.session.sessionId === null || req.session.sessionId === "") {
+        return res.status(400).send([]);
+    } // Check sessionId
+
+    const session = await getSessionFromStorage(req.session.sessionId);
+
+    if (!checkSession(session)) {
+        return res.status(400).send([]);
+    }
+
+    let dataset = await getSolidDataset(session.info.webId, { fetch: session.fetch });
+
+    const profile = getThing(dataset, session.info.webId);
+
+    let friendWebIds: string[] = [];
+
+    if (profile !== null) {
+        friendWebIds = getUrlAll(profile, FOAF.knows)!;
+    }
+
+    return res.status(200).send({friendWebIds: friendWebIds});
 });
 
 // PRIVATE FUNCTIONS

@@ -12,7 +12,6 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl, createTheme, ThemeProvider, IconButton, Divider, TextField } from "@mui/material";
-import { Session } from '@inrupt/solid-client-authn-browser';
 import {deleteMap, retrieveMapNames} from "../../api/api";
 
 
@@ -30,6 +29,13 @@ function MapListView(props: MapListViewProps): JSX.Element {
     const [currentDeleteMap, setCurrentDeleteMap] = useState(""); // info del mapa a borrar
     const [mapNames, setMapNames] = useState<string[]>([]); // lista de nombres sacados del pod
     const [openAlert, setOpenAlert] = useState(false);
+
+    const checkMapNameIsValid = (mapName:string): boolean => {
+        const regex = /\W+/; // \W es equivalente a [^A-Za-z0-9_]+
+        return typeof mapName !== "undefined" && mapName !== null
+            && mapName.trim() !== ""
+            && mapName.match(regex) === null;
+    }
 
     const handleLoadMapChange = (event: SelectChangeEvent) => {
         setCurrentLoadMap(event.target.value);
@@ -71,12 +77,12 @@ function MapListView(props: MapListViewProps): JSX.Element {
 
     // Crea el nuevo mapa con el nombre escogido (validando el nuevo nombre)
     const handleNewMapClick = () => {
-        // if (checkMapNameIsValid(currentNewMap)) {
-        //     props.setCurrentMapName(currentNewMap);
-        //     setOpenAlert(true);
-        //     setCurrentNewMap("");
-        //     props.onClose();
-        // }
+        if (checkMapNameIsValid(currentNewMap)) {
+            props.setCurrentMapName(currentNewMap);
+            setOpenAlert(true);
+            setCurrentNewMap("");
+            props.onClose();
+        }
     };
 
     const handleOpenSelect = () => {
