@@ -226,6 +226,49 @@ export async function deletePoint(session: Session,mapName:string, id: string): 
     return true;
   }
 
+  export async function getPointsCategory(session: Session, mapName: string, categoryNames: string[]): Promise<Point[]> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+      return [];
+    } // Check if the webId is undefined
+  
+    let url = mapUrlFor(session, mapName);
+  
+    if (!await checkStructure(session, mapName)) {
+      return [];
+    }
+  
+    try {
+        let mapBlob = await getFile(
+            url,
+            { fetch: session.fetch }
+        );
+    
+        let map = JSON.parse(await mapBlob.text());
+
+        let lista:Point[]=[];
+        
+        for (let i = 0; i < map.spatialCoverage.length; i++) {
+            if(categoryNames.includes(map.spatialCoverage[i].category)){
+            lista.push(map.spatialCoverage[i])
+            
+            }
+        }
+    
+    
+        return lista; 
+    } catch (error) {
+      return [];
+    }
+  }
+
+  
+  
+  
+  
+  
+  
+  
+
 export async function updatePoint(session: Session, mapName:string, pointToUpdate: Point): Promise<boolean> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return false;

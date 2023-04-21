@@ -9,7 +9,7 @@ import PointsView from "./Navbar/PointsView";
 import MapListView from "./Navbar/MapListView";
 import SearchBar from "./Searchbar/Searchbar";
 
-import {addPoint, deletePoint, getPoint, updatePoint} from "../solidapi/solidapi";
+import {addPoint, getPointsCategory, deletePoint, getPoint, updatePoint} from "../solidapi/solidapi";
 
 import savedMarker2 from '../images/markerGuerdado2.png';
 import EditPoint from "./Options/EditPoint";
@@ -56,10 +56,12 @@ export default function MainPage({ session }: SessionType): JSX.Element {
 
     const openMyFriendsList = () => {
         setMyFriendsListOpen(true);
+        setNavbarOpen(false);
     }
 
     const closeMyFriendsList = () => {
         setMyFriendsListOpen(false);
+        setNavbarOpen(true);
     }
 
     const closeAddPoints = () => {
@@ -120,6 +122,18 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         
     }
 
+    const getPuntosCategoria = async (cat: string[]) => {
+        const result = await getPointsCategory(session, currentMapName,  cat);
+        //console.log(result+" "+id);
+        return result;
+    }
+    
+    const getNombreMapa= ()=>{
+        return currentMapName
+    }
+
+    
+
     
     /* Solo para mostrar los puntos (a ser llamado al cerrar la lista de puntos y al actualizar la visibilidad de un punto)
     const showPoints = () => {
@@ -140,11 +154,11 @@ export default function MainPage({ session }: SessionType): JSX.Element {
                 "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "
                 "mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer mainContainer "`,
             }}>
-            <Box sx={{ gridArea: 'search'}}><SearchBar toggleNavbar={toggleNavbar} /></Box>
+            <Box sx={{ gridArea: 'search'}}><SearchBar toggleNavbar={toggleNavbar} markers={markerList} nombreMapa={getNombreMapa}/></Box>
             <Box><Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={openPointsList} openMapList={openMapList} openMyFriendsList={openMyFriendsList} /></Box>
             <Box><AddPoint open={addPointOpen} onClose={closeAddPoints} clickedPoint={clickedPoint} createPoint={createPoint}/></Box>
             <Box><EditPoint open={editPointOpen} onClose={closeEditPoint} point={point} editPoint={editPoint}/></Box>
-            <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}></PointsView></Box>
+            <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}  getPointsCategory={getPuntosCategoria}></PointsView></Box>
             <Box><MyFriendsListView open={myFriendsListOpen} onClose={closeMyFriendsList} ></MyFriendsListView></Box>
             <Box><MapListView open={mapListOpen} onClose={closeMapList} currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} session={session} ></MapListView></Box>
             <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markers={markerList} markerList={setMarkerlist} clickMap={clickMap} setMarkerToAdd={setMarkerToAdd} currentMapName={currentMapName} /></Box>

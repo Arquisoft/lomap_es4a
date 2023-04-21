@@ -11,7 +11,6 @@ export const center = {
 };
 
 export const options = {
-    styles: mapStyles,
     disableDefaultUI: false,
     zoomControl: true,
 };
