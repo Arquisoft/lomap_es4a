@@ -16,7 +16,7 @@ export type MarkerType = {
     website: string
 }
 
-function Mapa({session, markers, markerList, clickMap, setMarkerToAdd, currentMapName}: any): JSX.Element {
+function Mapa({session, markers, markerList, clickMap, clickMarker, setMarkerToAdd, currentMapName}: any): JSX.Element {
     
     const [map, setMap] = useState(React.useRef<google.maps.Map | null>(null).current);
 
@@ -64,9 +64,10 @@ function Mapa({session, markers, markerList, clickMap, setMarkerToAdd, currentMa
                             }
                         });
                         marker.setMap(googleMap);
-                        marker.addListener('click', () =>{
-                            openInfoView(marker);
-                        })
+                        marker.setMap(googleMap);
+                        marker.addListener('click', (marker: any) =>{
+                            clickMarker(marker.latLng.lat(), marker.latLng.lng());
+                        });
 
                         addMarker(point.id, marker);
                     });
@@ -77,15 +78,15 @@ function Mapa({session, markers, markerList, clickMap, setMarkerToAdd, currentMa
         });
     }
 
-    const openInfoView = (marker: google.maps.Marker): void => {
-        // TODO: Añadir funcion en el onClick de infoWindow
-        let infowindow = new google.maps.InfoWindow({
-            // Es HTML por lo tanto no funciona el deleteMark()-
-            content: 'Not implemented yet',
-            ariaLabel: "Uluru",
-        });
-        infowindow.open(map, marker);
-    };
+    // const openInfoView = (marker: google.maps.Marker): void => {
+    //     // TODO: Añadir funcion en el onClick de infoWindow
+    //     let infowindow = new google.maps.InfoWindow({
+    //         // Es HTML por lo tanto no funciona el deleteMark()-
+    //         content: '<button onclick="">Borrar Punto</button>',
+    //         ariaLabel: "Uluru",
+    //     });
+    //     infowindow.open(map, marker);
+    // };
 
     const onUnMount = (): void => {
         setMap(null);
@@ -104,9 +105,11 @@ function Mapa({session, markers, markerList, clickMap, setMarkerToAdd, currentMa
                 },
                 visible:true,
             });
-            marker.addListener('click', () =>{
-                openInfoView(marker);
-            })
+
+            marker.addListener('click', (marker: any) =>{
+                clickMarker(marker.latLng.lat(), marker.latLng.lng());
+            });
+            
             // Punto a añadir si guardamos
             setMarkerToAdd(marker);
             // Mostrar menú añadir punto

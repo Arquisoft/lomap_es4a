@@ -65,46 +65,43 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const SearchBar: React.FC<SearchBarProps> = ({ toggleNavbar ,markers,nombreMapa }) =>  {
 
-    return (
-      <Box >
-        <Box >
-        <AppBar position="static" style={{ background: '#101F33', height: '7vh' }}>
-          <Toolbar >
+  return (
+    <Box sx={{resize: 'both'}}>
+      <Box>
+      <AppBar position="relative" style={{ background: '#101F33', height: '7vh' }}>
+        <Toolbar>
 
-            <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ flexGrow: 1 }} />
 
-            <Box sx={{display:'flex',pr:'1em'}}>
-              <IconButton sx={{color:'white'}}> <Typography variant="h6">LoMap_es4a<AiFillPushpin /></Typography></IconButton>
-            </Box>
+          <Box sx={{display:'flex',pr:'1em'}}>
+            <IconButton sx={{color:'white'}}> <Typography variant="h6">LoMap_es4a<AiFillPushpin /></Typography></IconButton>
+          </Box>
 
-            <Divider orientation='vertical' sx={{backgroundColor: "#808b96",height:'2.5em',width:'0.05em'}} />
+          <Divider orientation='vertical' sx={{backgroundColor: "#808b96",height:'4.5vh',width:'0.05em'}} />
 
-            <Box sx={{display:'flex',pl:'1.5em'}}>
-              <Typography variant="h6">Mapa actual:  </Typography>
-              <Typography variant="h6">{nombreMapa()}</Typography>
-            </Box>
+          <Box sx={{display:'flex',pl:'1.5em'}}>
+            <Typography variant="h6">Mapa actual:  </Typography>
+            <Typography variant="h6">{nombreMapa()}</Typography>
+          </Box>
 
-            <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ flexGrow: 1 }} />
 
-            
-           
-           
-            <IconButton 
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ display:'flex', pl:2 }}
-              onClick={ toggleNavbar }
-            >
-              <MenuIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar></Box>
-      </Box>
-
-    );
+          <IconButton 
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ display:'flex', pl:2 }}
+            onClick={ toggleNavbar }
+          >
+            <MenuIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar></Box>
+    </Box>
+  );
 }
+
 /*
 <Search>
               <SearchIconWrapper>
