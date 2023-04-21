@@ -359,7 +359,7 @@ api.post("/points/add", async (req: any, res, next) => {
 
     point = JSON.parse(JSON.stringify(point));
     point["@context"] = "https://schema.org/";
-    point["@type"] = "Point";
+    point["@type"] = "Place";
 
     try {
         let mapBlob = await getFile(
@@ -466,7 +466,7 @@ api.put("/points/update", async (req: any, res, next) => {
 
     point = JSON.parse(JSON.stringify(point));
     point["@context"] = "https://schema.org/";
-    point["@type"] = "Point";
+    point["@type"] = "Place";
 
     try {
         let mapBlob = await getFile(
