@@ -67,7 +67,7 @@
     "@types/expect-puppeteer": "^4.4.7",
     "@types/express": "^4.17.15",
     "@types/googlemaps": "^3.43.3",
-    "@types/jest": "^29.2.5",
+    "@types/jest": "^29.5.1",
     "@types/node": "^18.15.9",
     "@types/puppeteer": "^5.4.4",
     "@types/react-dom": "^18.0.11",
@@ -77,7 +77,7 @@
     "puppeteer": "^13.0.1",
     "react-scripts": "^5.0.1",
     "start-server-and-test": "^1.14.0",
-    "ts-jest": "^29.0.4",
+    "ts-jest": "^29.1.0",
     "ts-node-dev": "^2.0.0"
   }
 }
