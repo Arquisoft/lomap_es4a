@@ -11,7 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl, createTheme, ThemeProvider, IconButton, Divider, TextField } from "@mui/material";
+import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl, createTheme, ThemeProvider, IconButton, Divider, TextField, FormHelperText } from "@mui/material";
 import { deleteMap, retrieveMapNames, checkMapNameIsValid } from '../../solidapi/solidapi';
 import { Session } from '@inrupt/solid-client-authn-browser';
 
@@ -34,9 +34,13 @@ function MapListView(props: MapListViewProps): JSX.Element {
 
     // Validaciones de datos
     const [newMapsNameError, setNewMapsNameError] = useState("");
+    const [isLoadMapEmpty, setIsLoadMapEmpty] = useState(false);
+    const [isDeleteMapEmpty, setIsDeleteMapEmpty] = useState(false);
+
 
 
     const handleLoadMapChange = (event: SelectChangeEvent) => {
+        setIsLoadMapEmpty(event.target.value === "");
         setCurrentLoadMap(event.target.value);
     };
     
@@ -51,33 +55,44 @@ function MapListView(props: MapListViewProps): JSX.Element {
     };
 
     const handleDeleteMapChange = (event: SelectChangeEvent) => {
+        setIsDeleteMapEmpty(event.target.value === "");
         setCurrentDeleteMap(event.target.value);
     };
 
     // Carga la lista de puntos correspondiente al mapa seleccionado
     const handleLoadMapClick = () => {
-        props.setCurrentMapName(currentLoadMap);
-        setCurrentLoadMap("");
-        props.onClose();
+        if (checkMapNameIsValid(currentLoadMap)) {
+            setIsLoadMapEmpty(false);
+            props.setCurrentMapName(currentLoadMap);
+            setCurrentLoadMap("");
+            props.onClose();
+        } else {
+            setIsLoadMapEmpty(true);
+        }
     };
 
     // Elimina el mapa seleccionado
     const handleDeleteMapClick = () => {
-        // Si el mapa actual es el que se a a borrar, se carga un nuevo mapa.
-        // Si no hay más mapas, se crea el mapa "Map1"
-        deleteMap(props.session, currentDeleteMap)
-            .then(() => {
-                retrieveMapNames(props.session).then(names => {
-                    if (props.currentMapName === currentDeleteMap) { // comprueba si se borra el mapa actual
-                        props.setCurrentMapName(names.length > 0 ? names[0] : props.currentMapName+"_new");
-                    }
-                    else if (names.length === 0) { // Comprueba si quedan mapas
-                        props.setCurrentMapName("Map1");
-                    }
-                    setCurrentDeleteMap("");
-                    props.onClose();
+        if (checkMapNameIsValid(currentDeleteMap)) { 
+            // Si el mapa actual es el que se a a borrar, se carga un nuevo mapa.
+            // Si no hay más mapas, se crea el mapa "Map1"
+            deleteMap(props.session, currentDeleteMap)
+                .then(() => {
+                    retrieveMapNames(props.session).then(names => {
+                        setIsDeleteMapEmpty(false);
+                        if (props.currentMapName === currentDeleteMap) { // comprueba si se borra el mapa actual
+                            props.setCurrentMapName(names.length > 0 ? names[0] : props.currentMapName+"_new");
+                        }
+                        else if (names.length === 0) { // Comprueba si quedan mapas
+                            props.setCurrentMapName("Map1");
+                        }                        
+                        setCurrentDeleteMap("");
+                        props.onClose();
+                    });
                 });
-            });
+        } else {
+            setIsDeleteMapEmpty(true);
+        }
     };
 
     // Crea el nuevo mapa con el nombre escogido (validando el nuevo nombre)
@@ -178,7 +193,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
                 </ListItem>
                 <ListItem>
                     <ThemeProvider theme={darkTheme}>
-                        <FormControl fullWidth >
+                        <FormControl fullWidth error={isLoadMapEmpty} >
                             <InputLabel id="selectMapLabel">Choose a map to load</InputLabel>                        
                             <Select 
                                 labelId="selectMapLabel"
@@ -189,7 +204,8 @@ function MapListView(props: MapListViewProps): JSX.Element {
                                 onOpen={handleOpenSelect}
                             >
                                 {generateMapSelectMenuItems()}
-                            </Select>                        
+                            </Select>
+                            <FormHelperText>{isLoadMapEmpty ? "Please, select a map to load." : ""}</FormHelperText>               
                         </FormControl>
                     </ThemeProvider>
                 </ListItem>
@@ -211,7 +227,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
                 </ListItem>
                 <ListItem>
                     <ThemeProvider theme={darkTheme}>
-                        <FormControl fullWidth >
+                        <FormControl fullWidth error={isDeleteMapEmpty} >
                             <InputLabel id="selectDeleteMapLabel">Choose a map to delete</InputLabel>                        
                             <Select 
                                 labelId="selectDeleteMapLabel"
@@ -222,7 +238,8 @@ function MapListView(props: MapListViewProps): JSX.Element {
                                 onOpen={handleOpenSelect}
                             >
                                 {generateMapSelectMenuItems()}
-                            </Select>                        
+                            </Select>
+                            <FormHelperText>{isDeleteMapEmpty ? "Please, select a map to delete." : ""}</FormHelperText>                        
                         </FormControl>
                     </ThemeProvider>
                 </ListItem>
