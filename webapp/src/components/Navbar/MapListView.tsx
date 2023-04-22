@@ -30,7 +30,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
     const [currentNewMap, setCurrentNewMap] = useState(""); // info del mapa a crear
     const [currentDeleteMap, setCurrentDeleteMap] = useState(""); // info del mapa a borrar
     const [mapNames, setMapNames] = useState<string[]>([]); // lista de nombres sacados del pod
-    const [openAlert, setOpenAlert] = useState(false);
+    const [openAlert, setOpenAlert] = useState("");
 
     // Validaciones de datos
     const [newMapsNameError, setNewMapsNameError] = useState("");
@@ -64,6 +64,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
         if (checkMapNameIsValid(currentLoadMap)) {
             setIsLoadMapEmpty(false);
             props.setCurrentMapName(currentLoadMap);
+            setOpenAlert("Map loaded!"); 
             setCurrentLoadMap("");
             props.onClose();
         } else {
@@ -85,7 +86,8 @@ function MapListView(props: MapListViewProps): JSX.Element {
                         }
                         else if (names.length === 0) { // Comprueba si quedan mapas
                             props.setCurrentMapName("Map1");
-                        }                        
+                        }
+                        setOpenAlert("Map deleted correctly!");                        
                         setCurrentDeleteMap("");
                         props.onClose();
                     });
@@ -99,7 +101,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
     const handleNewMapClick = () => {
         if (checkMapNameIsValid(currentNewMap)) {            
             props.setCurrentMapName(currentNewMap);
-            setOpenAlert(true);
+            setOpenAlert("Map created correctly!");
             setCurrentNewMap("");
             props.onClose();
         } else {
@@ -125,7 +127,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
         if (reason === 'clickaway') {
           return;
         }
-        setOpenAlert(false);
+        setOpenAlert("");
     }
 
     const theme = createTheme({
@@ -256,12 +258,12 @@ function MapListView(props: MapListViewProps): JSX.Element {
             </List>
         </Drawer>
 
-        <Snackbar open={openAlert} onClose={handleCloseAlert} autoHideDuration={1000} >
+        <Snackbar open={openAlert !== ""} onClose={handleCloseAlert} autoHideDuration={1000} >
             <Alert severity="success" 
                 sx={{ width: '100%', backgroundColor: 'green', color: 'white'  }}  
                 iconMapping={{ success: <CheckCircleOutlineIcon sx={{ color: 'white' }} />,}}
                 >
-                    Map created correctly!
+                    {openAlert}
             </Alert>
         </Snackbar>
 
