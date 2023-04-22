@@ -8,11 +8,13 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import FindReplaceIcon from '@mui/icons-material/FindReplace';
 import DeleteIcon from '@mui/icons-material/Delete';
+import PeopleIcon from '@mui/icons-material/People';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl, createTheme, ThemeProvider, IconButton, Divider, TextField, FormHelperText } from "@mui/material";
-import { deleteMap, retrieveMapNames, checkMapNameIsValid } from '../../solidapi/solidapi';
+import { deleteMap, retrieveMapNames, retrieveFriendsMapNames, checkMapNameIsValid } from '../../solidapi/solidapi';
 import { Session } from '@inrupt/solid-client-authn-browser';
 
 
@@ -30,6 +32,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
     const [currentNewMap, setCurrentNewMap] = useState(""); // info del mapa a crear
     const [currentDeleteMap, setCurrentDeleteMap] = useState(""); // info del mapa a borrar
     const [mapNames, setMapNames] = useState<string[]>([]); // lista de nombres sacados del pod
+    const [friendsMaps, setFriendsMaps] = useState<{urls: string[]; names: string[];}>({urls:[], names:[]}); // lista de nombres y urls de los mapas de los amigos
     const [openAlert, setOpenAlert] = useState("");
 
     // Validaciones de datos
@@ -61,13 +64,13 @@ function MapListView(props: MapListViewProps): JSX.Element {
 
     // Carga la lista de puntos correspondiente al mapa seleccionado
     const handleLoadMapClick = () => {
-        if (checkMapNameIsValid(currentLoadMap)) {
+        if (checkMapNameIsValid(currentLoadMap) || currentLoadMap.includes("https://")) {
             setIsLoadMapEmpty(false);
             props.setCurrentMapName(currentLoadMap);
             setOpenAlert("Map loaded!"); 
             setCurrentLoadMap("");
             props.onClose();
-        } else {
+        } else { // mapa vacío
             setIsLoadMapEmpty(true);
         }
     };
@@ -109,17 +112,46 @@ function MapListView(props: MapListViewProps): JSX.Element {
         }
     };
 
-    const handleOpenSelect = () => {
+    const handleOpenDeleteSelect = () => {
         retrieveMapNames(props.session)
             .then(names => setMapNames(names));
     }
 
     // Devuelve los menu items correspondientes a los nombres de los 
     // mapas existentes en el pod del usuario
-    const generateMapSelectMenuItems = (): JSX.Element[] => {        
+    const generateMapDeleteSelectMenuItems = (): JSX.Element[] => {        
         return (mapNames.map((mapName:string) => 
             <MenuItem key={mapName} value={mapName}>{mapName}</MenuItem>
         ));
+    }
+
+    const handleOpenLoadSelect = () => {
+        retrieveMapNames(props.session)
+            .then(names => {
+                retrieveFriendsMapNames(props.session)
+                    .then(friendsMaps => {
+                        setFriendsMaps(friendsMaps);
+                        setMapNames(names);
+                    });                
+            });
+    }
+
+    // Devuelve los menu items correspondientes a los nombres de los 
+    // mapas existentes en el pod del usuario y en el de sus amigos
+    const generateMapLoadSelectMenuItems = (): JSX.Element[] => {    
+        let menuItems: JSX.Element[] = []
+
+        menuItems.push(...mapNames.map((mapName:string) => 
+            <MenuItem key={mapName} value={mapName}>{mapName}</MenuItem>
+        ));
+
+        menuItems.push(...friendsMaps.names.map((mapName:string, i:number) => 
+            <MenuItem key={friendsMaps.urls[i]} value={friendsMaps.urls[i]}>
+                <PeopleIcon/>{friendsMaps.urls[i].split("//")[1].split(".")[0]}<ArrowRightIcon/>{mapName}
+            </MenuItem>
+        ));
+
+        return menuItems;
     }
 
     // Maneja el cierre de la alerta
@@ -203,9 +235,9 @@ function MapListView(props: MapListViewProps): JSX.Element {
                                 id="selectMap"
                                 value={currentLoadMap}
                                 onChange={handleLoadMapChange}
-                                onOpen={handleOpenSelect}
+                                onOpen={handleOpenLoadSelect}
                             >
-                                {generateMapSelectMenuItems()}
+                                {generateMapLoadSelectMenuItems()}
                             </Select>
                             <FormHelperText>{isLoadMapEmpty ? "Please, select a map to load." : ""}</FormHelperText>               
                         </FormControl>
@@ -237,9 +269,9 @@ function MapListView(props: MapListViewProps): JSX.Element {
                                 id="selectDeleteMap"
                                 value={currentDeleteMap}
                                 onChange={handleDeleteMapChange}
-                                onOpen={handleOpenSelect}
+                                onOpen={handleOpenDeleteSelect}
                             >
-                                {generateMapSelectMenuItems()}
+                                {generateMapDeleteSelectMenuItems()}
                             </Select>
                             <FormHelperText>{isDeleteMapEmpty ? "Please, select a map to delete." : ""}</FormHelperText>                        
                         </FormControl>
