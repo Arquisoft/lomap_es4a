@@ -32,7 +32,7 @@ export function checkMapNameIsValid(mapName:string): boolean {
         && mapName.match(regex) === null;
 }
 
-function checkIsMapURL(mapUrl:string): boolean { 
+export function checkIsMapURL(mapUrl:string): boolean { 
     return mapUrl.includes("https://");
 }
 
