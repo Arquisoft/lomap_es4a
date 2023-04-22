@@ -32,11 +32,21 @@ function MapListView(props: MapListViewProps): JSX.Element {
     const [mapNames, setMapNames] = useState<string[]>([]); // lista de nombres sacados del pod
     const [openAlert, setOpenAlert] = useState(false);
 
+    // Validaciones de datos
+    const [newMapsNameError, setNewMapsNameError] = useState("");
+
+
     const handleLoadMapChange = (event: SelectChangeEvent) => {
         setCurrentLoadMap(event.target.value);
     };
     
     const handleNewMapChange = (event: any) => {
+        // Validaciones del nuevo nombre del mapa    
+        if (!checkMapNameIsValid(event.target.value) && event.target.value !== "") {
+            setNewMapsNameError("Only letters, numbers and _ are allowed.");
+        } else {
+            setNewMapsNameError("");
+        }
         setCurrentNewMap(event.target.value);
     };
 
@@ -77,6 +87,8 @@ function MapListView(props: MapListViewProps): JSX.Element {
             setOpenAlert(true);
             setCurrentNewMap("");
             props.onClose();
+        } else {
+            setNewMapsNameError("Empty map name");
         }
     };
 
@@ -137,7 +149,15 @@ function MapListView(props: MapListViewProps): JSX.Element {
                 </ListItem>
                 <ListItem>
                     <ThemeProvider theme={darkTheme}>
-                        <TextField id="mapNameField" label="New map's name" variant="filled" fullWidth onChange={handleNewMapChange}/>
+                        <TextField 
+                            id="mapNameField" 
+                            label="New map's name" 
+                            variant="filled" 
+                            fullWidth 
+                            onChange={handleNewMapChange}
+                            error={newMapsNameError !== ""}
+                            helperText={newMapsNameError}
+                        />
                     </ThemeProvider>
                 </ListItem>
                 <ListItem>
