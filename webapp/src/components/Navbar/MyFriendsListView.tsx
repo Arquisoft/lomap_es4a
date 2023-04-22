@@ -34,8 +34,16 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
     const [myFriendList, setMyFriendList] = React.useState([] as string[]);
 
     useEffect(() => {
+        // Si salimos del drawer hay que cancelar el fetch
+        // Así no hay Memory Leak
+        const controller = new AbortController();
         loadFriends();
-    });
+
+        return () => {
+            // cancel the request before component unmounts
+            controller.abort();
+        };
+    }, []);
 
     const loadFriends = () => {
         myFriends(session).then((friends) => {
