@@ -13,6 +13,8 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl, createTheme, ThemeProvider, IconButton, Divider, TextField, FormHelperText } from "@mui/material";
 import { deleteMap, retrieveMapNames, retrieveFriendsMapNames, checkMapNameIsValid } from '../../solidapi/solidapi';
 import { Session } from '@inrupt/solid-client-authn-browser';
@@ -237,6 +239,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
                                 onChange={handleLoadMapChange}
                                 onOpen={handleOpenLoadSelect}
                             >
+                                {friendsMaps.names.length === 0 ? (<Box sx={{ display: 'flex', justifyContent:'center' }}><CircularProgress /></Box>) : ""}
                                 {generateMapLoadSelectMenuItems()}
                             </Select>
                             <FormHelperText>{isLoadMapEmpty ? "Please, select a map to load." : ""}</FormHelperText>               
@@ -271,6 +274,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
                                 onChange={handleDeleteMapChange}
                                 onOpen={handleOpenDeleteSelect}
                             >
+                                {mapNames.length === 0 ? (<Box sx={{ display: 'flex', justifyContent:'center' }}><CircularProgress /></Box>) : ""}
                                 {generateMapDeleteSelectMenuItems()}
                             </Select>
                             <FormHelperText>{isDeleteMapEmpty ? "Please, select a map to delete." : ""}</FormHelperText>                        
