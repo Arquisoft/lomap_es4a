@@ -36,6 +36,16 @@ export function checkIsMapURL(mapUrl:string): boolean {
     return mapUrl.includes("https://");
 }
 
+// Devuelve el nombre del usuario de una URL del estilo https://dgg.inrupt.net/public/lomap/mapa1
+export function extractUsersNameFromURL(mapUrl:string): string {
+    return mapUrl.split("//")[1].split(".")[0];
+}
+
+// Devuelve el nombre del mapa de una URL del estilo https://dgg.inrupt.net/public/lomap/mapa1
+export function extractMapNameFromURL(mapUrl:string): string {
+    return mapUrl.split("/lomap/")[1];
+}
+
 function mapUrlFor(session: Session, mapName:string): string {
     if (typeof session.info.webId !== "undefined" && checkMapNameIsValid(mapName)) {
         return session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/lomap", "/", mapName);

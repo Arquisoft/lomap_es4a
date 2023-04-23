@@ -9,7 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import PeopleIcon from '@mui/icons-material/People';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { Divider, Typography } from "@mui/material";
-import { checkIsMapURL } from "../../solidapi/solidapi";
+import { checkIsMapURL, extractMapNameFromURL, extractUsersNameFromURL } from "../../solidapi/solidapi";
 
 interface SearchBarProps {
   toggleNavbar: ()=>void;
@@ -82,7 +82,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ toggleNavbar ,markers,nombreMapa 
             <Typography variant="h6">Mapa actual:  </Typography>
             <Typography variant="h6">
               {checkIsMapURL(nombreMapa()) 
-                ? (<><PeopleIcon/>{nombreMapa().split("//")[1].split(".")[0]}<ArrowRightIcon/>{nombreMapa().split("/lomap/")[1]}</>)
+                ? (<><PeopleIcon/>{extractUsersNameFromURL(nombreMapa())}<ArrowRightIcon/>{extractMapNameFromURL(nombreMapa())}</>)
                 : nombreMapa()}
             </Typography>
           </Box>

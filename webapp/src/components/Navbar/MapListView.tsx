@@ -16,7 +16,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl, createTheme, ThemeProvider, IconButton, Divider, TextField, FormHelperText } from "@mui/material";
-import { deleteMap, retrieveMapNames, retrieveFriendsMapNames, checkMapNameIsValid } from '../../solidapi/solidapi';
+import { deleteMap, retrieveMapNames, retrieveFriendsMapNames, checkMapNameIsValid, extractUsersNameFromURL } from '../../solidapi/solidapi';
 import { Session } from '@inrupt/solid-client-authn-browser';
 
 
@@ -149,7 +149,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
 
         menuItems.push(...friendsMaps.names.map((mapName:string, i:number) => 
             <MenuItem key={friendsMaps.urls[i]} value={friendsMaps.urls[i]}>
-                <PeopleIcon/>{friendsMaps.urls[i].split("//")[1].split(".")[0]}<ArrowRightIcon/>{mapName}
+                <PeopleIcon/>{extractUsersNameFromURL(friendsMaps.urls[i])}<ArrowRightIcon/>{mapName}
             </MenuItem>
         ));
 
