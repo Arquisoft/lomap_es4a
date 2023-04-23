@@ -10,6 +10,11 @@ import { fetchDocument } from "tripledoc";
 import { foaf } from "rdf-namespaces";
 import {FOAF} from "@inrupt/vocab-common-rdf";
 
+import {v4 as uuidv4} from 'uuid';
+import { MyImage } from '../components/Options/Carousel';
+import Review from './Review';
+import { reviewRating } from 'rdf-namespaces/dist/schema';
+
 function checkSession(session: Session): boolean {
     if (session === null || typeof session === "undefined") {
         return false;
@@ -141,6 +146,39 @@ export async function getPoint(session: Session, mapName:string, id: string): Pr
     }
 }
 
+export async function getPointFromCoords(session: Session, mapName:string, lat: number, lng: number): Promise<Point | null> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return null;
+    } // Check if the webId is undefined
+
+    let url = mapUrlFor(session, mapName);
+
+    if (!await checkStructure(session, mapName)) {
+        return null;
+    }
+
+    try {
+        let mapBlob = await getFile(
+            url,
+            { fetch: session.fetch }
+        );
+
+        let map = JSON.parse(await mapBlob.text());
+
+        let pointToGet: Point | null = null;
+        map.spatialCoverage.forEach((point: Point) => {
+            if (point.latitude === lat && point.longitude === lng) {
+                pointToGet = point;
+                return;
+            }
+        });
+
+        return pointToGet;
+    } catch (error) {
+        return null;
+    }
+}
+
 export async function addPoint(session: Session, mapName:string, point: Point): Promise<boolean> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return false;
@@ -185,6 +223,10 @@ export async function addPoint(session: Session, mapName:string, point: Point): 
     return true;
 }
 
+
+
+
+
 export async function deletePoint(session: Session,mapName:string, id: string): Promise<boolean> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return false;
@@ -226,6 +268,49 @@ export async function deletePoint(session: Session,mapName:string, id: string): 
     }
     return true;
   }
+
+  export async function getPointsCategory(session: Session, mapName: string, categoryNames: string[]): Promise<Point[]> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+      return [];
+    } // Check if the webId is undefined
+  
+    let url = mapUrlFor(session, mapName);
+  
+    if (!await checkStructure(session, mapName)) {
+      return [];
+    }
+  
+    try {
+        let mapBlob = await getFile(
+            url,
+            { fetch: session.fetch }
+        );
+    
+        let map = JSON.parse(await mapBlob.text());
+
+        let lista:Point[]=[];
+        
+        for (let i = 0; i < map.spatialCoverage.length; i++) {
+            if(categoryNames.includes(map.spatialCoverage[i].category)){
+            lista.push(map.spatialCoverage[i])
+            
+            }
+        }
+    
+    
+        return lista; 
+    } catch (error) {
+      return [];
+    }
+  }
+
+  
+  
+  
+  
+  
+  
+  
 
 export async function updatePoint(session: Session, mapName:string, pointToUpdate: Point): Promise<boolean> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
@@ -377,3 +462,98 @@ async function addNewFriend(webId, session, friendWebId) {
     });
 }
  */
+
+///
+
+export async function saveImage(session: Session, mapName:string, image: File, point:Point): Promise<boolean> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return false;
+    } // Check if the webId is undefined
+
+   
+    let id=uuidv4()
+    let url = lomapUrlFor(session)+id;
+    console.log(url)
+
+    try {
+        point.logo.push(url)
+        console.log(point.logo)
+        await updatePoint(session, mapName,point)
+        await overwriteFile(
+            url,
+            image,
+            { contentType: image.type, fetch: session.fetch }
+        );
+    } catch (error) {
+        return false;
+    }
+    return true;
+}
+export async function getPointImages(session: Session, mapName:string, point:Point): Promise<MyImage[]> {
+    
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return [];
+    } // Check if the webId is undefined
+
+    if (!checkMapNameIsValid(mapName)) {
+        return [];
+    }
+    
+    let l:any=point.logo.map(imageUrl => {
+        
+        return {
+            src: imageUrl,
+            alt: "Image stored at " + imageUrl
+        };
+        
+    });
+    /*
+    l.forEach((element:MyImage) => {
+        console.log(element)
+    });
+    */
+    return l
+   
+}
+
+export async function saveReview(session: Session, mapName:string, comment:string,ratingValue:number, point:Point): Promise<boolean> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return false;
+    } // Check if the webId is undefined
+    /*
+setReviews([...reviews, { 
+    author: "u",
+    reviewBody: comment, 
+    reviewRating: ratingValue,
+  datePublished:Date.now() }]);
+
+    */
+    
+
+    try {
+        point.review.push({
+            author: "u",
+            reviewBody: comment, 
+            reviewRating: ratingValue,
+            
+          datePublished:Date.now()
+         });
+         console.log(ratingValue)
+        
+        //console.log(point.review)
+        await updatePoint(session, mapName,point)
+        
+    } catch (error) {
+        return false;
+    }
+    return true;
+}
+
+function lomapUrlFor(session: Session): string {
+    if (typeof session.info.webId !== "undefined") {
+        return session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/images", "/");
+    }
+    return "";
+}
+
+

@@ -7,6 +7,16 @@ import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import Checkbox from '@mui/material/Checkbox';
+import Button from '@mui/material/Button';
+import { useState } from "react";
+import { Divider, Typography } from "@mui/material";
+
+interface SearchBarProps {
+  toggleNavbar: ()=>void;
+  markers: {[id: string]: google.maps.Marker};
+  nombreMapa:()=>string;
+}
 
 // Custom events
 
@@ -53,19 +63,47 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
-function SearchBar({toggleNavbar}: any) {
+const SearchBar: React.FC<SearchBarProps> = ({ toggleNavbar ,markers,nombreMapa }) =>  {
 
+  return (
+    <Box sx={{resize: 'both'}}>
+      <Box>
+      <AppBar position="relative" style={{ background: '#101F33', height: '7vh' }}>
+        <Toolbar>
 
+          <Box sx={{ flexGrow: 1 }} />
 
-    return (
-      <Box >
-        <Box >
-        <AppBar position="static" style={{ background: '#101F33', height: '7vh' }}>
-          <Toolbar >
-            <Box sx={{ flexGrow: 1 }} />
-            <IconButton sx={{color:'white'}}>LoMap_es4a<AiFillPushpin /></IconButton>
-            <Box sx={{ flexGrow: 1 }} />
-            <Search>
+          <Box sx={{display:'flex',pr:'1em'}}>
+            <IconButton sx={{color:'white'}}> <Typography variant="h6">LoMap_es4a<AiFillPushpin /></Typography></IconButton>
+          </Box>
+
+          <Divider orientation='vertical' sx={{backgroundColor: "#808b96",height:'4.5vh',width:'0.05em'}} />
+
+          <Box sx={{display:'flex',pl:'1.5em'}}>
+            <Typography variant="h6">Mapa actual:  </Typography>
+            <Typography variant="h6">{nombreMapa()}</Typography>
+          </Box>
+
+          <Box sx={{ flexGrow: 1 }} />
+
+          <IconButton 
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ display:'flex', pl:2 }}
+            onClick={ toggleNavbar }
+          >
+            <MenuIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar></Box>
+    </Box>
+  );
+}
+
+/*
+<Search>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
@@ -74,23 +112,6 @@ function SearchBar({toggleNavbar}: any) {
                 inputProps={{ 'aria-label': 'search' }}
               />
             </Search>
-              
-            
-            <IconButton 
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ display:'flex', pl:2 }}
-              onClick={ toggleNavbar }
-            >
-              <MenuIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar></Box>
-      </Box>
 
-    );
-}
-
+*/
 export default SearchBar;
