@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import IosShareIcon from '@mui/icons-material/IosShare';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import {myFriends} from "../../solidapi/solidapi";
 
@@ -27,6 +28,7 @@ import {ExpandLess, ExpandMore, StarBorder} from "@mui/icons-material";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import {TbSeparator} from "react-icons/all";
 import PeopleIcon from "@mui/icons-material/People";
+import {redirect} from "react-router-dom";
 
 
 interface MyFriendsListViewProps {
@@ -50,17 +52,16 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
         };
     }, []);
 
-    const [open, setOpen] = React.useState(false);
-
-    const handleClick = () => {
-        setOpen(!open);
-    };
-
     const loadFriends = () => {
         myFriends(session).then((friends) => {
             setMyFriendList(friends);
 
         })
+    };
+
+    const goToProfile = (friend: string) => {
+        window.location.href = friend;
+        //redirect(friend);
     };
 
     const theme = createTheme({
@@ -97,8 +98,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                     {
                         myFriendList.map(friend =>(
                             friend ? (
-                                <List>
-                                <ListItemButton key={friend} onClick={handleClick}>
+                                <ListItem key={friend}>
                                     <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white', padding:"1em"} }}>
                                     <CombinedDataProvider
                                         datasetUrl={friend}
@@ -114,19 +114,13 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                                             : (<Typography>User</Typography>)
                                         }
                                     </CombinedDataProvider>
-                                    {open ? <ExpandLess /> : <ExpandMore />}
-                                </ListItemButton>
-                                <Collapse in={open} timeout="auto" unmountOnExit>
-                                    <List component="div" disablePadding>
-                                        <ListItemButton sx={{ color: "white" }}>
-                                            <ListItemIcon sx={{ color: "white" }}>
-                                                <PeopleIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary="Perfil" />
-                                        </ListItemButton>
-                                    </List>
-                                </Collapse>
-                                </List>
+                                    <ListItemButton onClick={() => {goToProfile(friend)}}>
+                                        <IosShareIcon/>
+                                    </ListItemButton>
+                                    <ListItemButton>
+                                        <DeleteIcon/>
+                                    </ListItemButton>
+                                </ListItem>
                             ): null
                         ))
                     }
