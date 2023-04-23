@@ -11,7 +11,7 @@ import {
     ThemeProvider,
     IconButton,
     Divider,
-    Typography, Switch, ListItemButton, MenuItem, FormControl, InputLabel, Select
+    Typography, Switch, ListItemButton, MenuItem, FormControl, InputLabel, Select, CircularProgress, Collapse
 } from "@mui/material";
 import {CombinedDataProvider, Image, Text, useSession} from "@inrupt/solid-ui-react";
 
@@ -21,7 +21,12 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import {FOAF} from "@inrupt/vocab-common-rdf";
 import {VCARD} from "@inrupt/lit-generated-vocab-common";
 import Box from "@mui/material/Box";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+import {ExpandLess, ExpandMore, StarBorder} from "@mui/icons-material";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import {TbSeparator} from "react-icons/all";
+import PeopleIcon from "@mui/icons-material/People";
 
 
 interface MyFriendsListViewProps {
@@ -45,10 +50,14 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
         };
     }, []);
 
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(!open);
+    };
+
     const loadFriends = () => {
         myFriends(session).then((friends) => {
-            // COMPROBADO, LOS SACA BIEN
-            //actualFriends = friends;
             setMyFriendList(friends);
 
         })
@@ -86,10 +95,10 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                     <Divider sx={{backgroundColor: "#808b96"}} />
 
                     {
-                        //<Button onClick={loadFriends}> Cargar Amigos</Button>
                         myFriendList.map(friend =>(
                             friend ? (
-                                <ListItem key={friend}>
+                                <List>
+                                <ListItemButton key={friend} onClick={handleClick}>
                                     <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white', padding:"1em"} }}>
                                     <CombinedDataProvider
                                         datasetUrl={friend}
@@ -101,11 +110,23 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                                         datasetUrl={friend}
                                         thingUrl={friend}>
                                         {FOAF.name !== null && FOAF.name !== undefined ?
-                                            (<Text property={ FOAF.name }/>):
-                                            (<Typography>User</Typography>)
+                                            (<Text property={FOAF.name}/>)
+                                            : (<Typography>User</Typography>)
                                         }
                                     </CombinedDataProvider>
-                                </ListItem>
+                                    {open ? <ExpandLess /> : <ExpandMore />}
+                                </ListItemButton>
+                                <Collapse in={open} timeout="auto" unmountOnExit>
+                                    <List component="div" disablePadding>
+                                        <ListItemButton sx={{ color: "white" }}>
+                                            <ListItemIcon sx={{ color: "white" }}>
+                                                <PeopleIcon />
+                                            </ListItemIcon>
+                                            <ListItemText primary="Perfil" />
+                                        </ListItemButton>
+                                    </List>
+                                </Collapse>
+                                </List>
                             ): null
                         ))
                     }

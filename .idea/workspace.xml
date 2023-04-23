@@ -55,7 +55,7 @@
     &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\Uniovi\\Tercero\\ASW\\Proyecto Final\\lomap_es4a\\webapp\\node_modules\\typescript\\lib&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\UniOvi\\Tercero\\Segundo Semestre\\ASW\\lomap_es4a\\restapi\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -110,6 +110,7 @@
       <workItem from="1681164662781" duration="715000" />
       <workItem from="1681307327678" duration="2403000" />
       <workItem from="1681816578334" duration="4902000" />
+      <workItem from="1682246021294" duration="2171000" />
     </task>
     <task id="LOCAL-00001" summary="Se ha movido el directorio solidapi a webapp">
       <created>1678459410126</created>
