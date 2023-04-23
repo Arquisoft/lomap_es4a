@@ -229,7 +229,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
                   <Typography variant="subtitle1" color="textPrimary" >Point's icon:</Typography>
 
                   
-                  {point && point.id ? (
+                  {point && point.id && markerList[point.id] ? (
                       <Avatar alt="Point Icon" sx={{pl:'1em'}}src={markerList[point.id].icon.url} />
                     ) : (
                   <Typography variant="body1" color="textSecondary" sx={{ pl: "1em" }}>
