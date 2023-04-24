@@ -2,7 +2,15 @@
 import {
     getFile,
     deleteFile,
-    overwriteFile, getContainedResourceUrlAll, getSolidDataset, saveSolidDatasetAt, setThing, addIri, getThing
+    overwriteFile,
+    getContainedResourceUrlAll,
+    getSolidDataset,
+    saveSolidDatasetAt,
+    setThing,
+    addIri,
+    getThing,
+    addUrl,
+    Thing
 } from '@inrupt/solid-client';
 import { Session } from '@inrupt/solid-client-authn-browser';
 import Point from "./Point";
@@ -231,13 +239,13 @@ export async function deletePoint(session: Session,mapName:string, id: string): 
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return false;
     } // Check if the webId is undefined
-  
+
     let url = mapUrlFor(session, mapName);
-  
+
     if (!await checkStructure(session, mapName)) {
         return false;
     }
-  
+
     try {
         let mapBlob = await getFile(
             url,
@@ -273,44 +281,44 @@ export async function deletePoint(session: Session,mapName:string, id: string): 
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
       return [];
     } // Check if the webId is undefined
-  
+
     let url = mapUrlFor(session, mapName);
-  
+
     if (!await checkStructure(session, mapName)) {
       return [];
     }
-  
+
     try {
         let mapBlob = await getFile(
             url,
             { fetch: session.fetch }
         );
-    
+
         let map = JSON.parse(await mapBlob.text());
 
         let lista:Point[]=[];
-        
+
         for (let i = 0; i < map.spatialCoverage.length; i++) {
             if(categoryNames.includes(map.spatialCoverage[i].category)){
             lista.push(map.spatialCoverage[i])
-            
+
             }
         }
-    
-    
-        return lista; 
+
+
+        return lista;
     } catch (error) {
       return [];
     }
   }
 
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
 
 export async function updatePoint(session: Session, mapName:string, pointToUpdate: Point): Promise<boolean> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
@@ -402,7 +410,7 @@ export async function retrieveMapNames(session: Session): Promise<string[]> {
 
     let dataset = await getSolidDataset(url, { fetch: session.fetch });
     let mapUrls = getContainedResourceUrlAll(dataset); // urls de los mapas del usuario
-    
+
     return mapUrls.map(mapUrl =>
         mapUrl.split("/lomap/")[1]
     );
@@ -417,9 +425,9 @@ export async function deleteMap(session: Session, mapName: string): Promise<bool
     if (!checkMapNameIsValid(mapName)) {
         return false;
     }
-  
+
     let url = mapUrlFor(session, mapName);
-  
+
     try {
         await deleteFile(
             url,
@@ -445,23 +453,21 @@ export async function myFriends(session: Session){
     return [];
 }
 
-/*
 //Function that adds a new friend to the user's profile
-async function addNewFriend(webId, session, friendWebId) {
+async function addNewFriend(webId:string, session:Session, friendWebId:string) {
     // Get the Solid dataset of the profile
     const profileDataset = await getSolidDataset(webId);
 
     const thing = getThing(profileDataset, webId);
 
-    const updatedThing = addIri(thing, FOAF.knows, friendWebId);
+    const updatedThing = addIri(thing as Thing, FOAF.knows, friendWebId);
 
     const updatedProfileDataset = setThing(profileDataset, updatedThing);
 
-    const storedProfileDataset = await saveSolidDatasetAt(webId, updatedProfileDataset, {
+    await saveSolidDatasetAt(webId, updatedProfileDataset, {
         fetch: session.fetch,
     });
 }
- */
 
 ///
 

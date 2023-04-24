@@ -5,6 +5,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+
 import {myFriends} from "../../solidapi/solidapi";
 
 import {
@@ -60,7 +62,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
     };
 
     const goToProfile = (friend: string) => {
-        window.location.href = friend;
+        window.open(friend);
         //redirect(friend);
     };
 
@@ -125,6 +127,12 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                         ))
                     }
                 </List>
+                <Button variant="contained" onClick={() => {}}>
+                    <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white', padding:"0.5em"} }}>
+                        <PersonAddIcon/>
+                    </Box>
+                    Añadir amigo
+                </Button>
             </Drawer>
         </ThemeProvider>
     );
