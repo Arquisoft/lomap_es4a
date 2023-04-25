@@ -7,7 +7,6 @@
     <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Añadida la lógica para recuperar la imagen de perfil">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendsListView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendsListView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/Navbar/PointsView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Navbar/PointsView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webapp/src/solidapi/solidapi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/solidapi/solidapi.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -117,7 +116,7 @@
       <workItem from="1682263920865" duration="708000" />
       <workItem from="1682265930359" duration="205000" />
       <workItem from="1682363739181" duration="3270000" />
-      <workItem from="1682415056878" duration="8070000" />
+      <workItem from="1682415056878" duration="8298000" />
     </task>
     <task id="LOCAL-00001" summary="Se ha movido el directorio solidapi a webapp">
       <created>1678459410126</created>

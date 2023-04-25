@@ -58,12 +58,11 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
     const loadFriends = () => {
         myFriends(session).then((friends) => {
             setMyFriendList(friends);
-
         })
     };
 
-    function addFriend(friendWebID: string) {
-        //await addNewFriend(session.info.webId!, session, friendWebID);
+    const addFriend = (friendWebID: string) => {
+        addNewFriend(session.info.webId!, session, friendWebID);
         console.log("Amigo: "+ friendWebID +" añadido!!")
         setOpenDialogAdd(false);
     }

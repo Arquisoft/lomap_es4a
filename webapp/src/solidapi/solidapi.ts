@@ -453,7 +453,6 @@ export async function myFriends(session: Session){
     return [];
 }
 
-//Function that adds a new friend to the user's profile
 export async function addNewFriend(webId:string, session:Session, friendWebId:string) {
     // Get the Solid dataset of the profile
     // TODO: Comprobar que es una web id válida
@@ -466,7 +465,7 @@ export async function addNewFriend(webId:string, session:Session, friendWebId:st
 
     const updatedProfileDataset = setThing(profileDataset, updatedThing);
 
-    await saveSolidDatasetAt(webId, updatedProfileDataset, {
+    const savedToProfile = await saveSolidDatasetAt(webId, updatedProfileDataset, {
         fetch: session.fetch,
     });
 }
