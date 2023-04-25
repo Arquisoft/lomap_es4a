@@ -74,7 +74,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
         removeFriend(session.info.webId!, session, selectedFriend);
         console.log("Amigo: "+ selectedFriend +" eliminado.")
         setOpenDialogRemove(false);
-        let filteredFriends = myFriendList.filter((friend) => friend != selectedFriend);
+        let filteredFriends = myFriendList.filter((friend) => friend !== selectedFriend);
         setMyFriendList(filteredFriends);
     }
 
@@ -108,7 +108,6 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
         setOpenDialogRemove(true);
     };
     const handleCloseDialogRemove = () => {
-        console.log(myFriendList);
         setOpenDialogRemove(false);
     };
 
@@ -132,7 +131,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                                         datasetUrl={friend}
                                         thingUrl={friend}>
                                         <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture"
-                                               style={{width: 60, height: 60, borderRadius: 30}}/>
+                                                    style={{width: 60, height: 60, borderRadius: 30}}/>
                                     </CombinedDataProvider>
                                 </Box>
                                 <CombinedDataProvider
