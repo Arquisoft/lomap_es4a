@@ -473,13 +473,13 @@ export async function addNewFriend(webId:string, session:Session, friendWebId:st
 export async function removeFriend(webId:string, session:Session, friendWebId:string) {
     let profileDataset = await getSolidDataset(webId);
 
-    let thing = getThing(profileDataset, webId);
+    const thing = getThing(profileDataset, webId);
 
-    thing = buildThing(thing as Thing).removeUrl(FOAF.knows, friendWebId).build();
+    const removedThing = buildThing(thing as Thing).removeUrl(FOAF.knows, friendWebId).build();
 
-    profileDataset = setThing(profileDataset, thing);
+    profileDataset = setThing(profileDataset, removedThing);
 
-    await saveSolidDatasetAt(webId, profileDataset, {fetch:session.fetch});
+    const savedToProfile = await saveSolidDatasetAt(webId, profileDataset, {fetch:session.fetch});
 }
 
 ///
