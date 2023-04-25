@@ -15,32 +15,18 @@ import {
     IconButton,
     Divider,
     Typography,
-    Switch,
     ListItemButton,
-    MenuItem,
-    FormControl,
-    InputLabel,
-    Select,
-    CircularProgress,
-    Collapse,
     Dialog,
     DialogTitle, DialogContent, DialogActions
 } from "@mui/material";
 import {CombinedDataProvider, Image, Text, useSession} from "@inrupt/solid-ui-react";
 
 import * as React from "react";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import {FOAF} from "@inrupt/vocab-common-rdf";
 import {VCARD} from "@inrupt/lit-generated-vocab-common";
 import Box from "@mui/material/Box";
 import {useEffect, useState} from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {ExpandLess, ExpandMore, StarBorder} from "@mui/icons-material";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import {TbSeparator} from "react-icons/all";
-import PeopleIcon from "@mui/icons-material/People";
-import {redirect} from "react-router-dom";
 import TextField from "@mui/material/TextField";
 
 
@@ -96,17 +82,11 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
         }
     });
 
-    const darkTheme = createTheme({
-        palette: {
-            mode: "dark"
-        }
-    });
-
-    const handleClickOpen = () => {
+    const handleClickOpenDialog = () => {
         setOpenDialog(true);
     };
-    const handleClose = () => {
-
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
     };
 
     return (
@@ -151,7 +131,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                         ) : null
                     ))}
                 </List>
-                <Button variant="contained" onClick={() => {handleClickOpen()}}>
+                <Button variant="contained" onClick={() => {handleClickOpenDialog()}}>
                     <Box sx={{display: {xs: 'none', md: 'flex', color: 'white', padding: "0.5em"}}}>
                         <PersonAddIcon/>
                     </Box>
@@ -162,7 +142,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
             {
                 // ------------------------ Dialog para Añadir Amigos -----------------------------------------------
             }
-        <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={openDialog}>
+        <Dialog onClose={handleCloseDialog} aria-labelledby="customized-dialog-title" open={openDialog}>
             <DialogTitle>
                 Añadir amigo
             </DialogTitle>
@@ -173,7 +153,10 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                 <TextField id={"friend-webID"} label="Friend webID" variant="outlined"></TextField>
             </DialogContent>
             <DialogActions>
-                <Button autoFocus onClick={() => {addFriend("")}} color="primary">
+                <Button autoFocus onClick={handleCloseDialog} color="primary">
+                    Cancelar
+                </Button>
+                <Button autoFocus onClick={() => {/*addFriend("")*/}} color="primary">
                     Añadir amigo
                 </Button>
             </DialogActions>
