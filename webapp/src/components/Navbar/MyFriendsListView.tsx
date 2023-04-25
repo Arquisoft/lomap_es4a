@@ -7,7 +7,7 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
-import {myFriends, addNewFriend} from "../../solidapi/solidapi";
+import {myFriends, addNewFriend, removeFriend} from "../../solidapi/solidapi";
 
 import {
     createTheme,
@@ -43,6 +43,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
     const [openDialogAdd, setOpenDialogAdd] = React.useState(false);
     const [openDialogRemove, setOpenDialogRemove] = React.useState(false);
 
+
     useEffect(() => {
         // Si salimos del drawer hay que cancelar el fetch
         // Así no hay Memory Leak
@@ -59,18 +60,22 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
         myFriends(session).then((friends) => {
             setMyFriendList(friends);
         })
+
     };
 
     const addFriend = (friendWebID: string) => {
         addNewFriend(session.info.webId!, session, friendWebID);
         console.log("Amigo: "+ friendWebID +" añadido!!")
         setOpenDialogAdd(false);
+        myFriendList.push(friendWebID);
     }
 
-    function removeFriend() {
-        //await removeFriend(session.info.webId!, session, friendWebID);
+    function removeAFriend() {
+        removeFriend(session.info.webId!, session, selectedFriend);
         console.log("Amigo: "+ selectedFriend+" eliminado!!")
         setOpenDialogRemove(false);
+        let filteredFriends = myFriendList.filter((friend) => friend != selectedFriend);
+        setMyFriendList(filteredFriends);
     }
 
     const goToProfile = (friend: string) => {
@@ -103,6 +108,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
         setOpenDialogRemove(true);
     };
     const handleCloseDialogRemove = () => {
+        console.log(myFriendList);
         setOpenDialogRemove(false);
     };
 
@@ -204,7 +210,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                     <Button autoFocus onClick={handleCloseDialogRemove} color="primary">
                         Cancelar
                     </Button>
-                    <Button autoFocus onClick={() => {removeFriend()}} color="error">
+                    <Button autoFocus onClick={() => {removeAFriend()}} color="error">
                         Eliminar
                     </Button>
                 </DialogActions>

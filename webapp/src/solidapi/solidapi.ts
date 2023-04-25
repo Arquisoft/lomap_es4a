@@ -10,7 +10,7 @@ import {
     addIri,
     getThing,
     addUrl,
-    Thing
+    Thing, buildThing
 } from '@inrupt/solid-client';
 import { Session } from '@inrupt/solid-client-authn-browser';
 import Point from "./Point";
@@ -468,6 +468,18 @@ export async function addNewFriend(webId:string, session:Session, friendWebId:st
     const savedToProfile = await saveSolidDatasetAt(webId, updatedProfileDataset, {
         fetch: session.fetch,
     });
+}
+
+export async function removeFriend(webId:string, session:Session, friendWebId:string) {
+    let profileDataset = await getSolidDataset(webId);
+
+    let thing = getThing(profileDataset, webId);
+
+    thing = buildThing(thing as Thing).removeUrl(FOAF.knows, friendWebId).build();
+
+    profileDataset = setThing(profileDataset, thing);
+
+    await saveSolidDatasetAt(webId, profileDataset, {fetch:session.fetch});
 }
 
 ///
