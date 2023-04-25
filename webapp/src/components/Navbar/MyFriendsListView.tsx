@@ -65,14 +65,14 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
 
     const addFriend = (friendWebID: string) => {
         addNewFriend(session.info.webId!, session, friendWebID);
-        console.log("Amigo: "+ friendWebID +" añadido!!")
+        console.log("Amigo: "+ friendWebID +" añadido.")
         setOpenDialogAdd(false);
         myFriendList.push(friendWebID);
     }
 
     function removeAFriend() {
         removeFriend(session.info.webId!, session, selectedFriend);
-        console.log("Amigo: "+ selectedFriend+" eliminado!!")
+        console.log("Amigo: "+ selectedFriend +" eliminado.")
         setOpenDialogRemove(false);
         let filteredFriends = myFriendList.filter((friend) => friend != selectedFriend);
         setMyFriendList(filteredFriends);
