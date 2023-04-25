@@ -454,7 +454,7 @@ export async function myFriends(session: Session){
 }
 
 //Function that adds a new friend to the user's profile
-async function addNewFriend(webId:string, session:Session, friendWebId:string) {
+export async function addNewFriend(webId:string, session:Session, friendWebId:string) {
     // Get the Solid dataset of the profile
     const profileDataset = await getSolidDataset(webId);
 
