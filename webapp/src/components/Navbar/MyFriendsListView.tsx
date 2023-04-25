@@ -38,7 +38,10 @@ interface MyFriendsListViewProps {
 function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
     const {session} = useSession();
     const [myFriendList, setMyFriendList] = React.useState([] as string[]);
-    const [openDialog, setOpenDialog] = React.useState(false);
+    const [selectedFriend, setSelectedFriend] = React.useState("");
+    const [addedFriend, setAddedFriend] = useState("");
+    const [openDialogAdd, setOpenDialogAdd] = React.useState(false);
+    const [openDialogRemove, setOpenDialogRemove] = React.useState(false);
 
     useEffect(() => {
         // Si salimos del drawer hay que cancelar el fetch
@@ -59,9 +62,16 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
         })
     };
 
-    async function addFriend(friendWebID: string) {
+    function addFriend(friendWebID: string) {
         //await addNewFriend(session.info.webId!, session, friendWebID);
-        setOpenDialog(false);
+        console.log("Amigo: "+ friendWebID +" añadido!!")
+        setOpenDialogAdd(false);
+    }
+
+    function removeFriend() {
+        //await removeFriend(session.info.webId!, session, friendWebID);
+        console.log("Amigo: "+ selectedFriend+" eliminado!!")
+        setOpenDialogRemove(false);
     }
 
     const goToProfile = (friend: string) => {
@@ -82,11 +92,19 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
         }
     });
 
-    const handleClickOpenDialog = () => {
-        setOpenDialog(true);
+    const handleClickOpenDialogAdd = () => {
+        setOpenDialogAdd(true);
     };
-    const handleCloseDialog = () => {
-        setOpenDialog(false);
+    const handleCloseDialogAdd = () => {
+        setOpenDialogAdd(false);
+    };
+
+    const handleClickOpenDialogRemove = (friend:string) => {
+        setSelectedFriend(friend);
+        setOpenDialogRemove(true);
+    };
+    const handleCloseDialogRemove = () => {
+        setOpenDialogRemove(false);
     };
 
     return (
@@ -124,14 +142,14 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                                 }}>
                                     <IosShareIcon/>
                                 </ListItemButton>
-                                <ListItemButton>
+                                <ListItemButton onClick={() => {handleClickOpenDialogRemove(friend)}}>
                                     <DeleteIcon/>
                                 </ListItemButton>
                             </ListItem>
                         ) : null
                     ))}
                 </List>
-                <Button variant="contained" onClick={() => {handleClickOpenDialog()}}>
+                <Button variant="contained" onClick={() => {handleClickOpenDialogAdd()}}>
                     <Box sx={{display: {xs: 'none', md: 'flex', color: 'white', padding: "0.5em"}}}>
                         <PersonAddIcon/>
                     </Box>
@@ -140,9 +158,9 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
             </Drawer>
         </ThemeProvider>
             {
-                // ------------------------ Dialog para Añadir Amigos -----------------------------------------------
+                // ------------------------ Dialog para Añadir Amigos ----------------------------------------------
             }
-        <Dialog onClose={handleCloseDialog} aria-labelledby="customized-dialog-title" open={openDialog}>
+        <Dialog onClose={handleCloseDialogAdd} aria-labelledby="customized-dialog-title" open={openDialogAdd}>
             <DialogTitle>
                 Añadir amigo
             </DialogTitle>
@@ -150,17 +168,48 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                 <Typography gutterBottom>
                     Intoduce el webID de la persona que quieres añadir:
                 </Typography>
-                <TextField id={"friend-webID"} label="Friend webID" variant="outlined"></TextField>
+                <TextField id={"friend-webID"} label="Friend webID" variant="outlined"
+                           helperText="Ejemplo: https://xxxxxxxx.inrupt.net/profile/card#me"
+                           sx={{display: {xs: 'none', md: 'flex', color: 'white', padding: "0.5em"}}}
+                           onChange={(event: any) => {
+                               setAddedFriend(event.target.value);
+                           }}>
+
+                </TextField>
             </DialogContent>
             <DialogActions>
-                <Button autoFocus onClick={handleCloseDialog} color="primary">
+                <Button autoFocus onClick={handleCloseDialogAdd} color="error">
                     Cancelar
                 </Button>
-                <Button autoFocus onClick={() => {/*addFriend("")*/}} color="primary">
+                <Button autoFocus onClick={() => {addFriend(addedFriend)}} color="primary">
                     Añadir amigo
                 </Button>
             </DialogActions>
         </Dialog>
+            {
+                // ------------------------ Dialog para Eliminar Amigos ----------------------------------------------
+            }
+            <Dialog onClose={handleCloseDialogRemove} aria-labelledby="customized-dialog-title" open={openDialogRemove}>
+                <DialogTitle>
+                    Eliminar amigo
+                </DialogTitle>
+                <DialogContent dividers>
+                    <Typography gutterBottom>
+                        Esta acción no se puede revertir
+                    </Typography>
+                    <Typography gutterBottom>
+                        ¿Desea continuar?
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button autoFocus onClick={handleCloseDialogRemove} color="primary">
+                        Cancelar
+                    </Button>
+                    <Button autoFocus onClick={() => {removeFriend()}} color="error">
+                        Eliminar
+                    </Button>
+                </DialogActions>
+            </Dialog>
     </>
     );
 }
