@@ -17,7 +17,6 @@ import EditPoint from "./Options/EditPoint";
 import {Button, Grid, Typography, Box, Dialog, DialogActions, DialogContent} from '@mui/material';
 import MyFriendsListView from "./Navbar/MyFriendsListView";
 import DetailsPoint from "./Options/DetailsPoint";
-import { MyImage } from "./Options/Carousel";
 
 export default function MainPage({ session }: SessionType): JSX.Element {
     const [navbarOpen, setNavbarOpen] = React.useState(false);

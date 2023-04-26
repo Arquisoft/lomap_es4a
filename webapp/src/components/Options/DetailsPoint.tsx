@@ -6,16 +6,15 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Rating from '@mui/material/Rating';
 
-import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Carousel, { MyImage } from "./Carousel";
 import {
 
-  Autocomplete, Avatar, Box, Button,
+  Avatar, Box, Button,
   Collapse,
-  createTheme, Dialog, DialogActions, DialogContent,
+  createTheme, 
   IconButton,
   ListItemButton,
   ThemeProvider, Typography,
@@ -24,14 +23,9 @@ import TextField from "@mui/material/TextField";
 
 // CSS
 import "./Option.css";
-import Point from "../../solidapi/Point";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import {ChangeEvent, useEffect, useState} from "react";
-import {v4 as uuidv4} from "uuid";
+import {useEffect, useState} from "react";
 import ImageUploader from './ImageUploader';
-import Author from '../../solidapi/Author';
-import { reviewRating } from 'rdf-namespaces/dist/schema';
 import Review from '../../solidapi/Review';
 
 const theme = createTheme({

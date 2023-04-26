@@ -9,13 +9,11 @@ import {
     setThing,
     addIri,
     getThing,
-    addUrl,
     Thing, buildThing
 } from '@inrupt/solid-client';
 import { Session } from '@inrupt/solid-client-authn-browser';
 import Point from "./Point";
 import { fetchDocument } from "tripledoc";
-import { foaf } from "rdf-namespaces";
 import {FOAF} from "@inrupt/vocab-common-rdf";
 
 import {v4 as uuidv4} from 'uuid';
