@@ -28,6 +28,8 @@ import Box from "@mui/material/Box";
 import {useEffect, useState} from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TextField from "@mui/material/TextField";
+import { givePermissions } from '../../solidapi/permissions';
+import { Session } from '@inrupt/solid-client-authn-browser';
 
 
 interface MyFriendsListViewProps {
@@ -48,7 +50,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
         // Si salimos del drawer hay que cancelar el fetch
         // Así no hay Memory Leak
         const controller = new AbortController();
-        loadFriends();
+        loadFriends(); console.log(session)
 
         return () => {
             // cancel the request before component unmounts
@@ -58,16 +60,21 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
 
     const loadFriends = () => {
         myFriends(session).then((friends) => {
-            setMyFriendList(friends);
-        })
-
+            // Se dan permisos a los amigos
+            givePermissions(session, friends).then(() => {
+                setMyFriendList(friends);
+            });
+        });
     };
 
     const addFriend = (friendWebID: string) => {
-        addNewFriend(session.info.webId!, session, friendWebID);
-        console.log("Amigo: "+ friendWebID +" añadido.")
-        setOpenDialogAdd(false);
-        myFriendList.push(friendWebID);
+        // Se da permiso al nuevo amigo
+        givePermissions(session, [friendWebID]).then(() => {
+            addNewFriend(session.info.webId!, session, friendWebID);
+            console.log("Amigo: "+ friendWebID +" añadido.")
+            setOpenDialogAdd(false);
+            myFriendList.push(friendWebID);
+        });
     }
 
     function removeAFriend() {
