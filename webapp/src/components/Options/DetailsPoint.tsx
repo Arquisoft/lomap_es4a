@@ -94,6 +94,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
   const [commentsList, setCommentsList] = useState<string[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   //const [author,setAuthor]=React.useState<string>()
+
   const handleImageClick = (index: number) => {
     setSelectedImageIndex(index);
   };
@@ -146,15 +147,15 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
   };
   const ponerImagenes=()=>{
     console.log(point)
-      let l:any=point.logo.map((imageUrl:string) => {
-        
+    if (point.logo) {
+      let l:any=point.logo.map((imageUrl:string) => {          
         return {
             src: imageUrl,
             alt: "Image stored at " + imageUrl
-        };
-        
-    });
-    setImages(l)
+        };          
+      });
+      setImages(l)
+    }
   }
 
 
@@ -179,7 +180,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
   const renderReviews=()=> {
     return (
       <List sx={{ mt: 2 }}>
-        {point.review.map((review:Review) => (
+        {point.review ?point.review.map((review:Review) => (
           
           <Box key={review.datePublished}>
             <Rating name="read-only" value={review.reviewRating} readOnly />
@@ -189,7 +190,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
               </Typography>
             </ListItem>
           </Box>
-        ))}
+        )) : ""}
       </List>
     );
   }
