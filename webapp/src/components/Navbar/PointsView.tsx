@@ -104,7 +104,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
       }
       */
       const handleFilterClick = () => {
-        selectedFilters.map(filter=>{
+        selectedFilters.forEach(filter=>{
             if(filter.isActive)listaFiltros.push(filter.id)
 
             /*
