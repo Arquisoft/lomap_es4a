@@ -1,17 +1,17 @@
 import {
-    setAgentDefaultAccess,getSolidDatasetWithAcl,
+    getSolidDatasetWithAcl,
     hasResourceAcl,
     hasFallbackAcl,
     hasAccessibleAcl,
     createAcl,
     createAclFromFallbackAcl,
     getResourceAcl,
-    setAgentResourceAccess,
+    setAgentDefaultAccess,
     saveAclFor
 } from "@inrupt/solid-client";
 import { Session } from "@inrupt/solid-client-authn-browser";
 
-async function permissions(session: Session, friendsWebIds:string[]) {
+export async function givePermissions(session: Session, friendsWebIds:string[]) {
 
     if (session.info.webId === null || typeof session.info.webId === "undefined")
         throw new Error("Invalid session");
@@ -19,7 +19,7 @@ async function permissions(session: Session, friendsWebIds:string[]) {
     const lomapUrl = session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/lomap");
 
     // Fetch the SolidDataset and its associated ACLs, if available:
-    const myDatasetWithAcl = await getSolidDatasetWithAcl(lomapUrl);
+    const myDatasetWithAcl = await getSolidDatasetWithAcl(lomapUrl, {fetch: session.fetch});
 
     // Obtain the SolidDataset's own ACL, if available,
     // or initialise a new one, if possible:
@@ -42,24 +42,24 @@ async function permissions(session: Session, friendsWebIds:string[]) {
     
 
     // Give yourself Control access to the given Resource:
-    let updatedAcl = setAgentResourceAccess(
+    let updatedAcl = setAgentDefaultAccess(
         resourceAcl,
         session.info.webId,
         { read: true, append: true, write: true, control: true }
     );
     // Now save the ACL:
-    await saveAclFor(myDatasetWithAcl, updatedAcl);
+    await saveAclFor(myDatasetWithAcl, updatedAcl, {fetch: session.fetch});
 
 
     // Give your friends Control access to the given Resource:
     for (let friendWebId of friendsWebIds) {
-        updatedAcl = setAgentResourceAccess(
-            updatedAcl,
+        updatedAcl = setAgentDefaultAccess(
+            resourceAcl,
             friendWebId,
             { read: true, append: true, write: true, control: true }
         );
         // Now save the ACL:
-        await saveAclFor(myDatasetWithAcl, updatedAcl);
+        await saveAclFor(myDatasetWithAcl, updatedAcl, {fetch: session.fetch});
     }      
 }
   

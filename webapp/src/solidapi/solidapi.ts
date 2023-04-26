@@ -448,8 +448,12 @@ export async function retrieveFriendsMapNames(session: Session): Promise<{urls: 
 
     let friendsMapURLs: string[] = [];
     for (let url of friendsURLs) {
-        let dataset = await getSolidDataset(url, { fetch: session.fetch });
-        friendsMapURLs.push(...getContainedResourceUrlAll(dataset)); // urls de los mapas del amigos
+        try {
+            let dataset = await getSolidDataset(url, { fetch: session.fetch });
+            friendsMapURLs.push(...getContainedResourceUrlAll(dataset)); // urls de los mapas del amigos
+        } catch {
+            // Amigo sin mapas, se ignora
+        }
     }
 
     let friendsMapNames = friendsMapURLs.map(mapUrl => mapUrl.split("/lomap/")[1]);
@@ -458,16 +462,6 @@ export async function retrieveFriendsMapNames(session: Session): Promise<{urls: 
         urls: friendsMapURLs,
         names: friendsMapNames
     };
-
-    /*
-    let url = session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/lomap");
-
-    let dataset = await getSolidDataset(url, { fetch: session.fetch });
-    let mapUrls = getContainedResourceUrlAll(dataset); // urls de los mapas del usuario
-    
-    return mapUrls.map(mapUrl =>
-        mapUrl.split("/lomap/")[1]
-    );*/
 }
 
 // Borra el mapa cuyo nombre se pasa como parámetro
