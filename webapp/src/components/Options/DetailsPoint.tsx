@@ -94,6 +94,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
   const [commentsList, setCommentsList] = useState<string[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   //const [author,setAuthor]=React.useState<string>()
+
   const handleImageClick = (index: number) => {
     setSelectedImageIndex(index);
   };
@@ -230,7 +231,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
 
                   
                   {point && point.id ? (
-                      <Avatar alt="Point Icon" sx={{pl:'1em'}}src={markerList[point.id].icon.url} />
+                      ""//<Avatar alt="Point Icon" sx={{pl:'1em'}}src={markerList[point.id].icon.url} />
                     ) : (
                   <Typography variant="body1" color="textSecondary" sx={{ pl: "1em" }}>
                     No icon available

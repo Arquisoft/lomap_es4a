@@ -198,7 +198,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             <Box><EditPoint open={editPointOpen} onClose={closeEditPoint} point={point} editPoint={editPoint}/></Box>
             <Box><PointsView open={pointsListOpen} onClose={closePointsList} markerList={markerList} openEditPoint={openEditPoint} deletePoint={eliminatePoint}  getPointsCategory={getPuntosCategoria}></PointsView></Box>
             <Box><DetailsPoint open={detailsPointOpen} onClose={closeDetailsPoint} point={point}  markerList={markerList} addImage={addImage} addReview={addReview}/></Box>
-            <Box><MyFriendsListView open={myFriendsListOpen} onClose={closeMyFriendsList} ></MyFriendsListView></Box>
+            <Box><MyFriendsListView open={myFriendsListOpen} onClose={closeMyFriendsList}></MyFriendsListView></Box>
             <Box><MapListView open={mapListOpen} onClose={closeMapList} currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} session={session} ></MapListView></Box>
             <Box sx={{ gridArea: 'mainContainer'}}><Mapa session={session} markers={markerList} markerList={setMarkerlist} clickMap={clickMap} clickMarker={clickMarker} setMarkerToAdd={setMarkerToAdd} currentMapName={currentMapName} /></Box>
 
