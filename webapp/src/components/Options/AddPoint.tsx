@@ -135,6 +135,7 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
             <ListItem>
 
               <Autocomplete
+                  id="pointCategoryField"
                   options={Object.keys(options)}
                   className="point-fill-field"
                   includeInputInList
