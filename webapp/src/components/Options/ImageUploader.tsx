@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-import Carousel, { MyImage } from "./Carousel";
-import { ImageViewer } from "./DetailsPoint";
+import { useState } from "react";
+import { MyImage } from "./Carousel";
 
 interface ImageUploaderProps {
   onImageUpload: (image: File) => void;

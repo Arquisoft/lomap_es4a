@@ -9,19 +9,15 @@ import {
     setThing,
     addIri,
     getThing,
-    addUrl,
     Thing, buildThing
 } from '@inrupt/solid-client';
 import { Session } from '@inrupt/solid-client-authn-browser';
 import Point from "./Point";
 import { fetchDocument } from "tripledoc";
-import { foaf } from "rdf-namespaces";
 import {FOAF} from "@inrupt/vocab-common-rdf";
 
 import {v4 as uuidv4} from 'uuid';
 import { MyImage } from '../components/Options/Carousel';
-import Review from './Review';
-import { reviewRating } from 'rdf-namespaces/dist/schema';
 
 function checkSession(session: Session): boolean {
     if (session === null || typeof session === "undefined") {
@@ -43,9 +39,26 @@ export function checkMapNameIsValid(mapName:string): boolean {
         && mapName.match(regex) === null;
 }
 
+export function checkIsMapURL(mapUrl:string): boolean { 
+    return mapUrl.includes("https://");
+}
+
+// Devuelve el nombre del usuario de una URL del estilo https://dgg.inrupt.net/public/lomap/mapa1
+export function extractUsersNameFromURL(mapUrl:string): string {
+    return mapUrl.split("//")[1].split(".")[0];
+}
+
+// Devuelve el nombre del mapa de una URL del estilo https://dgg.inrupt.net/public/lomap/mapa1
+export function extractMapNameFromURL(mapUrl:string): string {
+    return mapUrl.split("/lomap/")[1];
+}
+
 function mapUrlFor(session: Session, mapName:string): string {
     if (typeof session.info.webId !== "undefined" && checkMapNameIsValid(mapName)) {
         return session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/lomap", "/", mapName);
+    } 
+    else if (checkIsMapURL(mapName)) {
+        return mapName;
     }
     return "";
 }
@@ -58,6 +71,10 @@ async function checkStructure(session: Session, mapName: string): Promise<boolea
         publicUrl = session.info.webId.split("/").slice(0, 3).join("/").concat("/public/");
         lomapUrl = publicUrl.concat("lomap/");
         mapUrl = lomapUrl.concat(mapName);
+    } else if (checkIsMapURL(mapName)) {
+        publicUrl = mapName.split("/").slice(0, 3).join("/").concat("/public/");
+        lomapUrl = publicUrl.concat("lomap/");
+        mapUrl = mapName;
     } else {
         return false;
     }
@@ -81,7 +98,7 @@ export async function createMap(session: Session, mapName:string): Promise<boole
         return false;
     } // Check if the webId is undefined
 
-    if (!checkMapNameIsValid(mapName)) {
+    if (!checkMapNameIsValid(mapName) && !checkIsMapURL(mapName)) {
         return false;
     } // Check if map name is valid
 
@@ -90,6 +107,7 @@ export async function createMap(session: Session, mapName:string): Promise<boole
     } // Check if there's a structure for the map already created
 
     let url = mapUrlFor(session, mapName);
+    mapName = checkIsMapURL(mapName) ? mapName.split("/lomap/")[1] : mapName;
 
     try {
         let persona  = {
@@ -371,7 +389,7 @@ export async function retrievePoints(session: Session, mapName:string): Promise<
         return [];
     } // Check if the webId is undefined
 
-    if (!checkMapNameIsValid(mapName)) {
+    if (!checkMapNameIsValid(mapName) && !checkIsMapURL(mapName)) {
         return [];
     }
 
@@ -414,6 +432,34 @@ export async function retrieveMapNames(session: Session): Promise<string[]> {
     return mapUrls.map(mapUrl =>
         mapUrl.split("/lomap/")[1]
     );
+}
+
+// Devuelve los nombres de los mapas que tienen los amigos del usuario
+export async function retrieveFriendsMapNames(session: Session): Promise<{urls: string[]; names: string[];}> {
+    if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
+        return {urls:[], names:[]};
+    } // Check if the webId is undefined
+
+    let friendsURLs: string[] = await myFriends(session);
+
+    friendsURLs = friendsURLs.map(url => url.split("/").slice(0, 3).join("/").concat("/public", "/lomap"));
+
+    let friendsMapURLs: string[] = [];
+    for (let url of friendsURLs) {
+        try {
+            let dataset = await getSolidDataset(url, { fetch: session.fetch });
+            friendsMapURLs.push(...getContainedResourceUrlAll(dataset)); // urls de los mapas del amigos
+        } catch {
+            // Amigo sin mapas, se ignora
+        }
+    }
+
+    let friendsMapNames = friendsMapURLs.map(mapUrl => mapUrl.split("/lomap/")[1]);
+    
+    return {
+        urls: friendsMapURLs,
+        names: friendsMapNames
+    };
 }
 
 // Borra el mapa cuyo nombre se pasa como parámetro

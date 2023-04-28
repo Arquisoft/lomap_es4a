@@ -6,11 +6,10 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import Checkbox from '@mui/material/Checkbox';
-import Button from '@mui/material/Button';
-import { useState } from "react";
+import PeopleIcon from '@mui/icons-material/People';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { Divider, Typography } from "@mui/material";
+import { checkIsMapURL, extractMapNameFromURL, extractUsersNameFromURL } from "../../solidapi/solidapi";
 
 interface SearchBarProps {
   toggleNavbar: ()=>void;
@@ -81,7 +80,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ toggleNavbar ,markers,nombreMapa 
 
           <Box sx={{display:'flex',pl:'1.5em'}}>
             <Typography variant="h6">Mapa actual:  </Typography>
-            <Typography variant="h6">{nombreMapa()}</Typography>
+            <Typography variant="h6">
+              {checkIsMapURL(nombreMapa()) 
+                ? (<><PeopleIcon/>{extractUsersNameFromURL(nombreMapa())}<ArrowRightIcon/>{extractMapNameFromURL(nombreMapa())}</>)
+                : nombreMapa()}
+            </Typography>
           </Box>
 
           <Box sx={{ flexGrow: 1 }} />

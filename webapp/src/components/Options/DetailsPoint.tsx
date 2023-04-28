@@ -6,16 +6,15 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Rating from '@mui/material/Rating';
 
-import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Carousel, { MyImage } from "./Carousel";
 import {
 
-  Autocomplete, Avatar, Box, Button,
+  Avatar, Box, Button,
   Collapse,
-  createTheme, Dialog, DialogActions, DialogContent,
+  createTheme, 
   IconButton,
   ListItemButton,
   ThemeProvider, Typography,
@@ -24,14 +23,9 @@ import TextField from "@mui/material/TextField";
 
 // CSS
 import "./Option.css";
-import Point from "../../solidapi/Point";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import {ChangeEvent, useEffect, useState} from "react";
-import {v4 as uuidv4} from "uuid";
+import {useEffect, useState} from "react";
 import ImageUploader from './ImageUploader';
-import Author from '../../solidapi/Author';
-import { reviewRating } from 'rdf-namespaces/dist/schema';
 import Review from '../../solidapi/Review';
 
 const theme = createTheme({
@@ -147,15 +141,15 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
   };
   const ponerImagenes=()=>{
     console.log(point)
-      let l:any=point.logo.map((imageUrl:string) => {
-        
+    if (point.logo) {
+      let l:any=point.logo.map((imageUrl:string) => {          
         return {
             src: imageUrl,
             alt: "Image stored at " + imageUrl
-        };
-        
-    });
-    setImages(l)
+        };          
+      });
+      setImages(l)
+    }
   }
 
 
@@ -180,7 +174,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
   const renderReviews=()=> {
     return (
       <List sx={{ mt: 2 }}>
-        {point.review.map((review:Review) => (
+        {point.review ?point.review.map((review:Review) => (
           
           <Box key={review.datePublished}>
             <Rating name="read-only" value={review.reviewRating} readOnly />
@@ -190,7 +184,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
               </Typography>
             </ListItem>
           </Box>
-        ))}
+        )) : ""}
       </List>
     );
   }
@@ -230,8 +224,8 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
                   <Typography variant="subtitle1" color="textPrimary" >Point's icon:</Typography>
 
                   
-                  {point && point.id ? (
-                      ""//<Avatar alt="Point Icon" sx={{pl:'1em'}}src={markerList[point.id].icon.url} />
+                  {point && point.id && markerList[point.id] ? (
+                      <Avatar alt="Point Icon" sx={{pl:'1em'}}src={markerList[point.id].icon.url} />
                     ) : (
                   <Typography variant="body1" color="textSecondary" sx={{ pl: "1em" }}>
                     No icon available
