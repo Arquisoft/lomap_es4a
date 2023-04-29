@@ -270,6 +270,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
                                 labelId="selectDeleteMapLabel"
                                 label="Choose a map to delete"
                                 id="selectDeleteMap"
+                                data-testid="selectDeleteMap"
                                 value={currentDeleteMap}
                                 onChange={handleDeleteMapChange}
                                 onOpen={handleOpenDeleteSelect}
