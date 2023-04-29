@@ -5,13 +5,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { Box, Button, Checkbox, Collapse, createTheme, Divider, IconButton, ListItemButton, ListSubheader, makeStyles, Menu, MenuItem, Switch, ThemeProvider, toggleButtonClasses, Typography } from '@mui/material';
-import GreenSwitch from './GreenSwitch';
+import { Box, Button, Checkbox, Collapse, createTheme, Divider, IconButton, ListItemButton, Switch, ThemeProvider, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import Point from "../../solidapi/Point";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { width } from 'rdf-namespaces/dist/as';
-import { getPointsCategory } from '../../solidapi/solidapi';
 interface PointsViewProps {
     open: boolean;
     onClose: () => void;
@@ -107,7 +104,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
       }
       */
       const handleFilterClick = () => {
-        selectedFilters.map(filter=>{
+        selectedFilters.forEach(filter=>{
             if(filter.isActive)listaFiltros.push(filter.id)
 
             /*

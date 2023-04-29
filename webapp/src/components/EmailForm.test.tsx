@@ -2,6 +2,7 @@ import { render, fireEvent, act } from "@testing-library/react";
 import EmailForm from "./EmailForm";
 import {User} from './../shared/shareddtypes';
 import * as api from './../api/api'
+import AddPoint from "./Options/AddPoint";
 
 jest.mock('../api/api');
 
@@ -22,8 +23,9 @@ test('check register ok', async () => {
   
   jest.spyOn(api,'addUser').mockImplementation((user:User):Promise<boolean> => Promise.resolve(true))
   await act(async () => {    
-    const {container, getByText} = render(<EmailForm OnUserListChange={()=>{}}/>)  
-    const inputName = container.querySelector('input[name="username"]')!;
+    const {container, getByText} = render(<AddPoint open={true}/>)
+    const inputName = container.querySelector('input[id="pointNameField"]')!;
+    console.log(inputName)
     const inputEmail = container.querySelector('input[name="email"]')!;
     fireEvent.change(inputName, { target: { value: "Pablo" } });
     fireEvent.change(inputEmail, { target: { value: "gonzalezgpablo@uniovi.es" } });
