@@ -50,7 +50,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
         // Si salimos del drawer hay que cancelar el fetch
         // Así no hay Memory Leak
         const controller = new AbortController();
-        loadFriends(); console.log(session)
+        loadFriends(); //console.log(session)
 
         return () => {
             // cancel the request before component unmounts
