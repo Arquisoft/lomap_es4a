@@ -1,13 +1,13 @@
 import {fireEvent, getByText, render, screen, waitFor} from '@testing-library/react';
 import "@inrupt/jest-jsdom-polyfills";
 import AddPoint from './AddPoint';
-import Map from '../Map/Map';
 import MainPage from "../MainPage";
 import {Session} from "@inrupt/solid-client-authn-browser";
 import {wait} from "@testing-library/user-event/dist/utils";
 import {act} from "react-dom/test-utils";
-import * as addPoint from "../../components/Options/AddPoint";
 import {User} from "../../shared/shareddtypes";
+import * as solidapi from "../../solidapi/solidapi";
+import Point from "../../solidapi/Point";
 
 test('check click in map renders AddPoint', async () => {
     const { container } = await render(<MainPage session={new Session()} />);
@@ -31,18 +31,31 @@ test('check AddPoint component renders', async () => {
     expect(addPointText).toBeInTheDocument();
 });
 
-test('check cancel AddPoint', async () => {
-    jest.spyOn(addPoint,'onClose')
-    const {container, getByText} = render(<AddPoint open={true}/>);
+test('check cancel AddPoint calls onClose', async () => {
+    let open = true;
+    const close = () => {
+        open = false;
+    };
+    let {getByText} = render(<AddPoint open={open} onClose={close}/>);
     const button = getByText("Cancel");
     fireEvent.click(button);
-    let addPointText = screen.getByText("Add Place");
+    expect(open).toBeFalsy();
+});
 
-    expect(addPointText).toBeNull();
+test('fill in AddPoint data', async () => {
+    jest.spyOn(solidapi,'addPoint').mockImplementation((session: Session, mapName:string, point: Point): Promise<boolean> => Promise.resolve(true));
+
+    let {container, getByText} = render(<AddPoint open={true} onClose={close} createPoint={await solidapi.addPoint(new Session(), "", new Point("", "", "", 0, 0))}/>);
+
+    const inputName = screen.getByTestId("pointNameField");
+    fireEvent.change(inputName, { target: { value: "Punto1" } });
+    const button = getByText("Save Place");
+    fireEvent.click(button);
+    console.log(container.)
+    expect(jest.spyOn(solidapi,'addPoint')).toHaveBeenCalled()
+    //expect(await findByText(container,"You have been registered in the system!")).toBeInTheDocument();
 
 
-    // const inputName = container.querySelector('#pointNameField');
-    // console.log(inputName)
 
 
     // await act(async () => {
@@ -66,4 +79,5 @@ test('check cancel AddPoint', async () => {
         // fireEvent.click(button);
         // expect(jest.spyOn(api,'addUser')).toHaveBeenCalled()
         // expect(await findByText(container,"There's been an error in the register proccess.")).toBeInTheDocument();
+
 });
