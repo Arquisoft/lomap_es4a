@@ -101,7 +101,7 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
 
   return (
     <><ThemeProvider theme={theme}>
-      <Drawer disableAutoFocus={true}
+      <Drawer data-testid="navbar-drawer" disableAutoFocus={true}
           open={open}
           sx={{ display: { mt: 500, height: '100vh' } }}
           onClose={toggleNavbar}

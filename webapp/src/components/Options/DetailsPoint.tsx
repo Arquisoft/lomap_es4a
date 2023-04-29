@@ -140,7 +140,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
     }
   };
   const ponerImagenes=()=>{
-    console.log(point)
+    //console.log(point)
     if (point.logo) {
       let l:any=point.logo.map((imageUrl:string) => {          
         return {
@@ -210,7 +210,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
             <ThemeProvider theme={darkTheme}>
                 <ListItem>
                   <Typography variant="subtitle1" color="textPrimary">Point's name:</Typography>
-                  <Typography variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.name}</Typography>
+                  <Typography id="details-point-name" variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.name}</Typography>
                 </ListItem>
                 <ListItem>
                   <Typography variant="subtitle1" color="textPrimary">Point's description:</Typography>
