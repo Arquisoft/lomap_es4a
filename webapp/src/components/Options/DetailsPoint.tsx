@@ -81,11 +81,10 @@ export const ImageViewer = ({ image, onClose }: { image: MyImage; onClose: () =>
 function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: any) {
   const [ratingValue, setRatingValue] = React.useState<number | null>(0);
   const [images, setImages] = useState<MyImage[]>([]);
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [, setReviews] = useState<Review[]>([]);
   const [imagesOpen, setImagesOpen] = React.useState(false);
   const [comment, setComment] = useState("");
   const [commentsOpen, setCommentsOpen] = React.useState(false);
-  const [commentsList, setCommentsList] = useState<string[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   //const [author,setAuthor]=React.useState<string>()
 
@@ -118,13 +117,6 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
     setComment(event.target.value);
   };
 
-  const handleAddComment = () => {
-    if (comment.trim() !== "") {
-      setCommentsList([...commentsList, comment]);
-      setComment("");
-    }
-  };
-
   const handleAddReview = () => {
     if (comment.trim() !== "" && ratingValue !== null) {
       addReview(comment, ratingValue)
@@ -151,19 +143,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
       setImages(l)
     }
   }
-
-
-  const ponerReviews=()=>{
-    console.log(point)
-      let l:any=point.review.map((r:Review) => {
-
-        renderReviews()
-      });
-        
-    
-    setReviews(l)
-  }
-
+ 
 
   useEffect(() => {
       ponerImagenes();
