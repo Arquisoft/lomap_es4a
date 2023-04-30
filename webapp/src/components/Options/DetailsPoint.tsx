@@ -149,6 +149,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
       ponerImagenes();
       //ponerReviews();
       setReviews(point.review)
+      // eslint-disable-next-line
   }, [point]);
 
   const renderReviews=()=> {
