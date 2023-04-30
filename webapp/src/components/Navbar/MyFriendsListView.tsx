@@ -22,8 +22,7 @@ import {
 import {CombinedDataProvider, Image, Text, useSession} from "@inrupt/solid-ui-react";
 
 import * as React from "react";
-import {FOAF} from "@inrupt/vocab-common-rdf";
-import {VCARD} from "@inrupt/lit-generated-vocab-common";
+import {FOAF, VCARD} from "@inrupt/vocab-common-rdf";
 import Box from "@mui/material/Box";
 import {useEffect, useState} from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -137,8 +136,8 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                                     <CombinedDataProvider
                                         datasetUrl={friend}
                                         thingUrl={friend}>
-                                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture"
-                                                    style={{width: 60, height: 60, borderRadius: 30}}/>
+                                        {/*<Image property={VCARD.hasPhoto.iri.value} alt="User profile picture"*/}
+                                        {/*            style={{width: 60, height: 60, borderRadius: 30}}/>*/}
                                     </CombinedDataProvider>
                                 </Box>
                                 <CombinedDataProvider
