@@ -396,7 +396,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
                             Mark All
                         </Button>
 
-                        <Button data-testid="filterButton" variant="contained" onClick={handleFilterClick} sx={{ mx: 'auto', width: '80%', paddingTop: '1', backgroundColor: '#375d81' }}>
+                        <Button variant="contained" onClick={handleFilterClick} sx={{ mx: 'auto', width: '80%', paddingTop: '1', backgroundColor: '#375d81' }}>
                             Filter
                         </Button>
 
@@ -441,13 +441,13 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
             <Drawer anchor="left" open={open} onClose={onClose} sx={{ display: { mt: 500 }  }} >
                 <List sx={{ width:'45vh' }} disablePadding>
                     <ListItem>
-                        <IconButton data-testid="closePointsView" onClick={onClose} >
+                        <IconButton onClick={onClose} >
                             <ChevronLeftIcon sx={{color: "#808b96"}}/>
                         </IconButton>
-                        <ListItemText data-testid={"pointsViewTitle"} primary="Points List" />
+                        <ListItemText primary="Points List" />
                     </ListItem>
                     <Divider sx={{backgroundColor: "#808b96"}} />
-                    <ListItemButton data-testid={"filters"} onClick={handleFiltersSubmenu}>
+                    <ListItemButton onClick={handleFiltersSubmenu}>
                         <ListItemText primary="Filters" />
                         <IconButton  >
                             <ExpandMoreIcon sx={{color: "#808b96"}}/>
@@ -458,7 +458,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
                     <Divider sx={{backgroundColor: "black"}} />
                         <List component="div" disablePadding>
                             
-                            <ListItemButton data-testid={"filtersCategories"} onClick={handleFiltersCategoriesSubmenu} >
+                            <ListItemButton onClick={handleFiltersCategoriesSubmenu} >
                                 <ListItemText primary="Categories" />
                                     <IconButton >
                                         <ExpandMoreIcon sx={{color: "#808b96"}}/>
