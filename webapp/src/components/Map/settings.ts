@@ -1,5 +1,3 @@
-import mapStyles from "./mapStyles";
-
 export const containerStyle = {
     width: '100%',
     height: '93vh'

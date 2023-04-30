@@ -9,11 +9,10 @@ import {
     setThing,
     addIri,
     getThing,
-    Thing, buildThing
+    Thing, buildThing, getUrlAll
 } from '@inrupt/solid-client';
 import { Session } from '@inrupt/solid-client-authn-browser';
 import Point from "./Point";
-import { fetchDocument } from "tripledoc";
 import {FOAF} from "@inrupt/vocab-common-rdf";
 
 import {v4 as uuidv4} from 'uuid';
@@ -489,14 +488,18 @@ export async function deleteMap(session: Session, mapName: string): Promise<bool
 
 export async function myFriends(session: Session){
     if (checkSession(session)) {
-        const webIdDoc = await fetchDocument(session.info.webId!);
-        let profile = webIdDoc.getSubject(session.info.webId!)
-        if(profile == null){
-            return [];
+        let dataset = await getSolidDataset(session.info.webId!, { fetch: session.fetch });
+        const profile = getThing(dataset, session.info.webId!);
+
+        let friendWebIds: string[] = [];
+
+        if (profile !== null) {
+            friendWebIds = getUrlAll(profile, FOAF.knows)!;
         }
-        return profile.getAllRefs(FOAF.knows);
+
+        return friendWebIds;
     }
-    return [];
+    return [];    
 }
 
 export async function addNewFriend(webId:string, session:Session, friendWebId:string) {
@@ -511,7 +514,7 @@ export async function addNewFriend(webId:string, session:Session, friendWebId:st
 
     const updatedProfileDataset = setThing(profileDataset, updatedThing);
 
-    const savedToProfile = await saveSolidDatasetAt(webId, updatedProfileDataset, {
+    await saveSolidDatasetAt(webId, updatedProfileDataset, {
         fetch: session.fetch,
     });
 }
@@ -525,7 +528,7 @@ export async function removeFriend(webId:string, session:Session, friendWebId:st
 
     profileDataset = setThing(profileDataset, removedThing);
 
-    const savedToProfile = await saveSolidDatasetAt(webId, profileDataset, {fetch:session.fetch});
+    await saveSolidDatasetAt(webId, profileDataset, {fetch:session.fetch});
 }
 
 ///

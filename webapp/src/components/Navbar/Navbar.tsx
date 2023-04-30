@@ -17,7 +17,6 @@ import { Button, createTheme, Dialog, DialogActions, DialogContent, DialogTitle,
 // Pfp
 import { VCARD } from "@inrupt/lit-generated-vocab-common";
 import {CombinedDataProvider, useSession, Image, Text} from "@inrupt/solid-ui-react";
-import {useState} from "react";
 import LogoutIcon from '@mui/icons-material/Logout';
 import {FOAF} from "@inrupt/vocab-common-rdf";
 const categories = [
@@ -53,11 +52,6 @@ const item = {
   },
 };
 
-const itemCategory = {
-  boxShadow: '0 -1px 0 rgb(255,255,255,0.1) inset',
-  py: 1.5,
-  px: 3,
-};
 const theme = createTheme({
   components: {
     MuiDrawer: {
@@ -73,9 +67,7 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
   
   const [openDialog, setOpenDialog] = React.useState(false);
 
-  const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
   const { session } = useSession();
-  const { webId } = session.info;
   const handleClickOpen = () => {
     setOpenDialog(true);
   };

@@ -9,8 +9,8 @@ interface ImageUploaderProps {
 
 
 const ImageUploader = ({ onImageUpload }: ImageUploaderProps) => {
-  const [image, setImage] = useState<File | null>(null);
-  const [carouselImages, setCarouselImages] = useState<MyImage[]>([]);
+  const [, setImage] = useState<File | null>(null);
+  const [, setCarouselImages] = useState<MyImage[]>([]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

@@ -49,7 +49,7 @@ function EditPoint({open, onClose, point, editPoint}: any) {
   const [openAlert, setOpenAlert] = useState(false);
   const [pointName, setPointName] = useState(point.name);
   const [pointDescription, setPointDescription] = useState(point.description);
-  const [pointCategoryValue, setPointCategoryValue] = useState(point.category);
+  const [, setPointCategoryValue] = useState(point.category);
   const [pointCategoryInputValue, setPointCategoryInputValue] = useState(point.category);
   const [openDialog, setOpenDialog] = useState(false);
   const [errorName, setErrorName] = useState(false);
