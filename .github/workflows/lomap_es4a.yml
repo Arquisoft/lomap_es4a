@@ -15,7 +15,7 @@ on:
       - develop
       
 env:
-  process.env.CI: false
+  CI: ""
 
 jobs:
   unit-tests:
