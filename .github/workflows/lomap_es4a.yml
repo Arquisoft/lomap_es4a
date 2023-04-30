@@ -13,6 +13,9 @@ on:
     branches:
       - master
       - develop
+      
+env:
+  CI: false
 
 jobs:
   unit-tests:
@@ -28,8 +31,6 @@ jobs:
     - run: npm --prefix restapi ci
     - run: npm --prefix webapp test --coverage --watchAll
     - run: npm --prefix restapi test --coverage --watchAll
-      env:
-        CI: ""
     #- run: npm --prefix webapp run test:e2e --coverage --watchAll
     - name: Analyze with SonarCloud
       uses: sonarsource/sonarcloud-github-action@v1.8
