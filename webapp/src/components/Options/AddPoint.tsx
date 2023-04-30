@@ -51,9 +51,8 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
   
   const [pointName, setPointName] = useState("");
   const [pointDescription, setPointDescription] = useState("");
-  const [pointCategoryValue, setPointCategoryValue] = useState("");
+  const [, setPointCategoryValue] = useState("");
   const [pointCategoryInputValue, setPointCategoryInputValue] = useState("");
-  const [openDialog, setOpenDialog] = React.useState(false);
   const [errorName, setErrorName] = useState(false);
   const [errorCategory, setErrorCategory] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
@@ -92,10 +91,6 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
       setOpenAlert(true);
     }
   }
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
 
   return (
       <ThemeProvider theme={theme}>
