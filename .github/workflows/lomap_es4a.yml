@@ -14,9 +14,6 @@ on:
       - master
       - develop
       
-env:
-  CI: ""
-
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
@@ -26,7 +23,7 @@ jobs:
         fetch-depth: 0
     - uses: actions/setup-node@v3
       with:
-        node-version: 18
+        node-version: 16
     - run: npm --prefix webapp ci
     - run: npm --prefix restapi ci
     - run: npm --prefix webapp test --coverage --watchAll
