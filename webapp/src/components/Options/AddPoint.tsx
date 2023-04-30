@@ -109,7 +109,7 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField id="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth
+                <TextField inputProps={{ "data-testid": "pointNameField" }} id="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth
                            onChange={(event: any) => {
                              setPointName(event.target.value);
                              setErrorName(event.target.value.trim() === '');
@@ -130,6 +130,7 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
             <ListItem>
 
               <Autocomplete
+                  id="pointCategoryField"
                   options={Object.keys(options)}
                   className="point-fill-field"
                   includeInputInList

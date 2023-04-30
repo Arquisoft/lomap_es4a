@@ -132,7 +132,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
     }
   };
   const ponerImagenes=()=>{
-    console.log(point)
+    //console.log(point)
     if (point.logo) {
       let l:any=point.logo.map((imageUrl:string) => {          
         return {
@@ -174,7 +174,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
         <Drawer anchor="left" open={open} onClose={onClose} >
           <List sx={{ width:'20em' }} disablePadding>
             <ListItem>
-              <IconButton onClick={onClose}>
+              <IconButton data-testid="detailsCloseButton" onClick={onClose}>
                 <ChevronLeftIcon sx={{color: "white"}} />
               </IconButton>
               <ListItemText primary="Place's Details" />
@@ -190,15 +190,15 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
             <ThemeProvider theme={darkTheme}>
                 <ListItem>
                   <Typography variant="subtitle1" color="textPrimary">Point's name:</Typography>
-                  <Typography variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.name}</Typography>
+                  <Typography data-testid="nameField" id="details-point-name" variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.name}</Typography>
                 </ListItem>
                 <ListItem>
                   <Typography variant="subtitle1" color="textPrimary">Point's description:</Typography>
-                  <Typography variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.description}</Typography>
+                  <Typography data-testid="descField" variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.description}</Typography>
                 </ListItem>
                 <ListItem>
                   <Typography variant="subtitle1" color="textPrimary" >Point's category:</Typography>
-                  <Typography variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.category}</Typography>
+                  <Typography data-testid="catField" variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.category}</Typography>
                 </ListItem>
                 <ListItem>
                   <Typography variant="subtitle1" color="textPrimary" >Point's icon:</Typography>
@@ -213,22 +213,21 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
                   )}
                   </ListItem>
                   <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
-
-                  <ListItemButton onClick={handleImagesSubmenu}>
+                  <ListItemButton data-testid="openImages" onClick={handleImagesSubmenu}>
                         <ListItemText primary="Point's images" />
                         <IconButton  >
                                       <ExpandMoreIcon sx={{color: "#808b96"}}/>
                             </IconButton>
                   </ListItemButton>
 
-                  <Collapse in={imagesOpen} timeout="auto" unmountOnExit>
+                  <Collapse data-testid="imagesCollapse" in={imagesOpen} timeout="auto" unmountOnExit>
                   <ListItem>
                   <ImageUploader onImageUpload={handleImageUpload} />
                   </ListItem>
 
                   {images &&images.length > 0 && (
                      <ListItem>
-                      <Carousel images={images} onImageClick={handleImageClick} />
+                      <Carousel data-testid="carousel" images={images} onImageClick={handleImageClick} />
                       </ListItem>
                   )}
                   {selectedImageIndex !== null && (
@@ -239,10 +238,11 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
 
 
                   </Collapse>
+                  
 
                   <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
 
-                  <ListItemButton onClick={handleCommentsSubmenu}>
+                  <ListItemButton data-testid="openComments" onClick={handleCommentsSubmenu}>
                       <ListItemText primary="Point's comments" />
                       <IconButton  >
                                 <ExpandMoreIcon sx={{color: "#808b96"}}/>
