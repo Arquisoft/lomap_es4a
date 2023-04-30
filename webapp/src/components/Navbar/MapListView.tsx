@@ -200,7 +200,8 @@ function MapListView(props: MapListViewProps): JSX.Element {
                 <ListItem>
                     <ThemeProvider theme={darkTheme}>
                         <TextField 
-                            id="mapNameField" 
+                            id="mapNameField"
+                            data-testid="mapNameField"
                             label="New map's name" 
                             variant="filled" 
                             fullWidth 
