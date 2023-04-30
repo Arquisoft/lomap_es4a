@@ -80,7 +80,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ toggleNavbar ,markers,nombreMapa 
 
           <Box sx={{display:'flex',pl:'1.5em'}}>
             <Typography variant="h6">Mapa actual:  </Typography>
-            <Typography variant="h6">
+            <Typography data-testid="mapname" variant="h6">
               {checkIsMapURL(nombreMapa()) 
                 ? (<><PeopleIcon/>{extractUsersNameFromURL(nombreMapa())}<ArrowRightIcon/>{extractMapNameFromURL(nombreMapa())}</>)
                 : nombreMapa()}
