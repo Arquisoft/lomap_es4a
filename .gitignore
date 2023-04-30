@@ -10,7 +10,7 @@ webapp/coverage
 restapi/coverage
 
 # production
-#webapp/build
+webapp/build
 
 # misc
 .DS_Store

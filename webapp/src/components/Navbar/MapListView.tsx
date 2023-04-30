@@ -17,7 +17,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { SelectChangeEvent, InputLabel, MenuItem, Select, FormControl, createTheme, ThemeProvider, IconButton, Divider, TextField, FormHelperText } from "@mui/material";
 import { deleteMap, retrieveMapNames, retrieveFriendsMapNames, checkMapNameIsValid, extractUsersNameFromURL } from '../../solidapi/solidapi';
-import { Session } from '@inrupt/solid-client-authn-browser';
 
 
 interface MapListViewProps {
@@ -25,7 +24,7 @@ interface MapListViewProps {
     onClose: () => void;
     currentMapName: string;
     setCurrentMapName: React.Dispatch<React.SetStateAction<string>>;
-    session: Session;
+    session: any;
 }
 
 function MapListView(props: MapListViewProps): JSX.Element {
@@ -201,7 +200,8 @@ function MapListView(props: MapListViewProps): JSX.Element {
                 <ListItem>
                     <ThemeProvider theme={darkTheme}>
                         <TextField 
-                            id="mapNameField" 
+                            id="mapNameField"
+                            data-testid="mapNameField"
                             label="New map's name" 
                             variant="filled" 
                             fullWidth 
@@ -235,6 +235,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
                                 labelId="selectMapLabel"
                                 label="Choose a map to load"
                                 id="selectMap"
+                                data-testid="selectMap"
                                 value={currentLoadMap}
                                 onChange={handleLoadMapChange}
                                 onOpen={handleOpenLoadSelect}
@@ -270,6 +271,7 @@ function MapListView(props: MapListViewProps): JSX.Element {
                                 labelId="selectDeleteMapLabel"
                                 label="Choose a map to delete"
                                 id="selectDeleteMap"
+                                data-testid="selectDeleteMap"
                                 value={currentDeleteMap}
                                 onChange={handleDeleteMapChange}
                                 onOpen={handleOpenDeleteSelect}
