@@ -514,7 +514,7 @@ export async function addNewFriend(webId:string, session:Session, friendWebId:st
 
     const updatedProfileDataset = setThing(profileDataset, updatedThing);
 
-    const savedToProfile = await saveSolidDatasetAt(webId, updatedProfileDataset, {
+    await saveSolidDatasetAt(webId, updatedProfileDataset, {
         fetch: session.fetch,
     });
 }
@@ -528,7 +528,7 @@ export async function removeFriend(webId:string, session:Session, friendWebId:st
 
     profileDataset = setThing(profileDataset, removedThing);
 
-    const savedToProfile = await saveSolidDatasetAt(webId, profileDataset, {fetch:session.fetch});
+    await saveSolidDatasetAt(webId, profileDataset, {fetch:session.fetch});
 }
 
 ///

@@ -206,8 +206,6 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
         openEditPoint(id);
     }
 
-    let x = [true, true, true];
-
     const generateFiltersCategories = () => {
         return (
             <>
@@ -504,6 +502,3 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
 };
 
 export default PointsView;
-function forceUpdate() {
-    throw new Error('Function not implemented.');
-}
