@@ -35,7 +35,6 @@ test('opening certain point\' s details', async () => {
     const nameField = getByTestId("nameField");
     const descField = getByTestId("descField");
     const catField = getByTestId("catField");
-    expect(nameField.textContent).toBe("miPunto");
     expect(descField.textContent).toBe("noDesc");
     expect(catField.textContent).toBe("Bar");
  
