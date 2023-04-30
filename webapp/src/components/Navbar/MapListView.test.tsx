@@ -1,4 +1,5 @@
 import { render, screen, act, fireEvent, within } from '@testing-library/react';
+import "@inrupt/jest-jsdom-polyfills";
 import MapListView from './MapListView';
 import * as solidApi from '../../solidapi/solidapi';
 import { Session } from '@inrupt/solid-client-authn-browser';
