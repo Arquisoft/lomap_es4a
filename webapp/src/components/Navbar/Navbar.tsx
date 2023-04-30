@@ -92,11 +92,7 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
   };
 
   const handleClickLogout = async() => {
-    try {
-      await session.logout();
-    } catch (error) {
-      console.log(`Error logging out: ${error}`);
-    }
+    try {await session.logout();} catch (error) {console.log(`Error logging out: ${error}`);}
   };
 
   return (
@@ -184,7 +180,7 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
           <Typography gutterBottom>- Manuel Palacios</Typography>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
+          <Button data-testid="closedialog" autoFocus onClick={handleClose} color="primary">
             Cerrar
           </Button>
         </DialogActions>
