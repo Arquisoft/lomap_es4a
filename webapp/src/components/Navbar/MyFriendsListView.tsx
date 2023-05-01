@@ -28,7 +28,6 @@ import {useEffect, useState} from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TextField from "@mui/material/TextField";
 import { givePermissions } from '../../solidapi/permissions';
-import { Session } from '@inrupt/solid-client-authn-browser';
 
 
 interface MyFriendsListViewProps {
@@ -49,12 +48,14 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
         // Si salimos del drawer hay que cancelar el fetch
         // Así no hay Memory Leak
         const controller = new AbortController();
-        loadFriends(); console.log(session)
+        
+        loadFriends();
 
         return () => {
             // cancel the request before component unmounts
             controller.abort();
         };
+        // eslint-disable-next-line
     }, []);
 
     const loadFriends = () => {

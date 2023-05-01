@@ -7,7 +7,7 @@
     "@fontsource/roboto": "^4.5.8",
     "@googlemaps/react-wrapper": "^1.1.35",
     "@googlemaps/typescript-guards": "^2.0.3",
-    "@inrupt/jest-jsdom-polyfills": "^1.6.1",
+    "@inrupt/jest-jsdom-polyfills": "^1.6.1zz",
     "@inrupt/lit-generated-vocab-common": "^0.3.11",
     "@inrupt/solid-client": "^1.25.2",
     "@inrupt/solid-client-authn-browser": "^1.13.3",
@@ -35,7 +35,6 @@
     "react-router-dom": "^6.9.0",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
-    "tripledoc": "^4.4.0",
     "typescript": "^4.9.4",
     "web-vitals": "^2.1.2"
   },

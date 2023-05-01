@@ -81,11 +81,10 @@ export const ImageViewer = ({ image, onClose }: { image: MyImage; onClose: () =>
 function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: any) {
   const [ratingValue, setRatingValue] = React.useState<number | null>(0);
   const [images, setImages] = useState<MyImage[]>([]);
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [, setReviews] = useState<Review[]>([]);
   const [imagesOpen, setImagesOpen] = React.useState(false);
   const [comment, setComment] = useState("");
   const [commentsOpen, setCommentsOpen] = React.useState(false);
-  const [commentsList, setCommentsList] = useState<string[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   //const [author,setAuthor]=React.useState<string>()
 
@@ -118,13 +117,6 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
     setComment(event.target.value);
   };
 
-  const handleAddComment = () => {
-    if (comment.trim() !== "") {
-      setCommentsList([...commentsList, comment]);
-      setComment("");
-    }
-  };
-
   const handleAddReview = () => {
     if (comment.trim() !== "" && ratingValue !== null) {
       addReview(comment, ratingValue)
@@ -140,7 +132,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
     }
   };
   const ponerImagenes=()=>{
-    console.log(point)
+    //console.log(point)
     if (point.logo) {
       let l:any=point.logo.map((imageUrl:string) => {          
         return {
@@ -151,24 +143,13 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
       setImages(l)
     }
   }
-
-
-  const ponerReviews=()=>{
-    console.log(point)
-      let l:any=point.review.map((r:Review) => {
-
-        renderReviews()
-      });
-        
-    
-    setReviews(l)
-  }
-
+ 
 
   useEffect(() => {
       ponerImagenes();
       //ponerReviews();
       setReviews(point.review)
+      // eslint-disable-next-line
   }, [point]);
 
   const renderReviews=()=> {
@@ -194,7 +175,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
         <Drawer anchor="left" open={open} onClose={onClose} >
           <List sx={{ width:'20em' }} disablePadding>
             <ListItem>
-              <IconButton onClick={onClose}>
+              <IconButton data-testid="detailsCloseButton" onClick={onClose}>
                 <ChevronLeftIcon sx={{color: "white"}} />
               </IconButton>
               <ListItemText primary="Place's Details" />
@@ -210,15 +191,15 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
             <ThemeProvider theme={darkTheme}>
                 <ListItem>
                   <Typography variant="subtitle1" color="textPrimary">Point's name:</Typography>
-                  <Typography variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.name}</Typography>
+                  <Typography data-testid="nameField" id="details-point-name" variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.name}</Typography>
                 </ListItem>
                 <ListItem>
                   <Typography variant="subtitle1" color="textPrimary">Point's description:</Typography>
-                  <Typography variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.description}</Typography>
+                  <Typography data-testid="descField" variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.description}</Typography>
                 </ListItem>
                 <ListItem>
                   <Typography variant="subtitle1" color="textPrimary" >Point's category:</Typography>
-                  <Typography variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.category}</Typography>
+                  <Typography data-testid="catField" variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.category}</Typography>
                 </ListItem>
                 <ListItem>
                   <Typography variant="subtitle1" color="textPrimary" >Point's icon:</Typography>
@@ -233,22 +214,21 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
                   )}
                   </ListItem>
                   <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
-
-                  <ListItemButton onClick={handleImagesSubmenu}>
+                  <ListItemButton data-testid="openImages" onClick={handleImagesSubmenu}>
                         <ListItemText primary="Point's images" />
                         <IconButton  >
                                       <ExpandMoreIcon sx={{color: "#808b96"}}/>
                             </IconButton>
                   </ListItemButton>
 
-                  <Collapse in={imagesOpen} timeout="auto" unmountOnExit>
+                  <Collapse data-testid="imagesCollapse" in={imagesOpen} timeout="auto" unmountOnExit>
                   <ListItem>
                   <ImageUploader onImageUpload={handleImageUpload} />
                   </ListItem>
 
                   {images &&images.length > 0 && (
                      <ListItem>
-                      <Carousel images={images} onImageClick={handleImageClick} />
+                      <Carousel data-testid="carousel" images={images} onImageClick={handleImageClick} />
                       </ListItem>
                   )}
                   {selectedImageIndex !== null && (
@@ -259,10 +239,11 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
 
 
                   </Collapse>
+                  
 
                   <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
 
-                  <ListItemButton onClick={handleCommentsSubmenu}>
+                  <ListItemButton data-testid="openComments" onClick={handleCommentsSubmenu}>
                       <ListItemText primary="Point's comments" />
                       <IconButton  >
                                 <ExpandMoreIcon sx={{color: "#808b96"}}/>
