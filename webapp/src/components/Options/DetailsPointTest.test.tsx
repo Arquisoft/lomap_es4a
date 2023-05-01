@@ -1,17 +1,8 @@
 import {fireEvent, getByText, getByTitle, render, screen, waitFor, within} from '@testing-library/react';
 import "@inrupt/jest-jsdom-polyfills";
-import AddPoint from './AddPoint';
-import MainPage from "../MainPage";
-import {Session} from "@inrupt/solid-client-authn-browser";
-import {wait} from "@testing-library/user-event/dist/utils";
-import {act} from "react-dom/test-utils";
-import {User} from "../../shared/shareddtypes";
-import * as solidapi from "../../solidapi/solidapi";
 import Point from "../../solidapi/Point";
-import Mapa from '../Map/Map';
 import DetailsPoint, { ImageViewer } from './DetailsPoint';
 import { MyImage } from './Carousel';
-import ImageUploader from './ImageUploader';
 
 
 

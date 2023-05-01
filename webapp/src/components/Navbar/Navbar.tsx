@@ -9,7 +9,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import PeopleIcon from '@mui/icons-material/People';
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
-import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
 import MapIcon from '@mui/icons-material/Map';
 import { Button, createTheme, Dialog, DialogActions, DialogContent, DialogTitle, ThemeProvider, Typography } from '@mui/material';
@@ -35,7 +34,7 @@ const categories = [
   {
     id: 'Personal Zone',
     children: [
-      { id: 'Configuration', icon: <SettingsIcon />,active: true },
+      
       { id: 'About us', icon: <PhonelinkSetupIcon /> },
       { id: 'Logout', icon: <LogoutIcon /> },
     ],

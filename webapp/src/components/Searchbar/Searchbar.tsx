@@ -35,7 +35,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ toggleNavbar ,markers,nombreMapa 
           <Divider orientation='vertical' sx={{backgroundColor: "#808b96",height:'4.5vh',width:'0.05em'}} />
 
           <Box sx={{display:'flex',pl:'1.5em'}}>
-            <Typography variant="h6">Mapa actual:  </Typography>
+            <Typography variant="h6">Current map:  </Typography>
             <Typography data-testid="mapname" variant="h6">
               {checkIsMapURL(nombreMapa()) 
                 ? (<><PeopleIcon/>{extractUsersNameFromURL(nombreMapa())}<ArrowRightIcon/>{extractMapNameFromURL(nombreMapa())}</>)
@@ -44,7 +44,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ toggleNavbar ,markers,nombreMapa 
           </Box>
 
           <Box sx={{ flexGrow: 1 }} />
-
+          <Typography variant="h6">Menu  </Typography>
           <IconButton 
             size="large"
             edge="start"
