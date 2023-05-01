@@ -1,9 +1,11 @@
 import { render, screen, act, fireEvent, within } from '@testing-library/react';
 import "@inrupt/jest-jsdom-polyfills";
 import MyFriendsListView from "./MyFriendsListView";
+import * as permissions from '../../solidapi/permissions';
+import {Session} from "@inrupt/solid-client-authn-browser";
 
 test('check friend list view renders correctly', async() => {
-
+    jest.spyOn(permissions, 'givePermissions').mockImplementation((session:Session, friendsWebIds:string[]): Promise<void> => Promise.resolve());
     let friendListOpen = true;
     const closeFriendList = () => friendListOpen = false;
 
@@ -16,6 +18,7 @@ test('check friend list view renders correctly', async() => {
 });
 
 test('check add friend but dont enter a name', async() => {
+    jest.spyOn(permissions, 'givePermissions').mockImplementation((session:Session, friendsWebIds:string[]): Promise<void> => Promise.resolve());
 
     let friendListOpen = true;
     const closeFriendList = () => friendListOpen = false;
@@ -37,6 +40,8 @@ test('check add friend but dont enter a name', async() => {
 });
 
 test('check add friend entering a valid name', async() => {
+
+    jest.spyOn(permissions, 'givePermissions').mockImplementation((session:Session, friendsWebIds:string[]): Promise<void> => Promise.resolve());
 
     let friendListOpen = true;
     const closeFriendList = () => friendListOpen = false;

@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Añadida la lógica para recuperar la imagen de perfil">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/Options/AddPoint.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Options/AddPoint.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/Options/AddPointTest.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Options/AddPointTest.test.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendListView.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendListView.test.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +45,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Amigos-POD",
+    "git-widget-placeholder": "Tests-carlos",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "D:/UniOvi/Tercero/Segundo Semestre/ASW/PruebaMaps-React/js-samples",
     "node.js.detected.package.eslint": "true",
@@ -55,9 +54,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.standard": "",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "C:/Users/Usuario/WebstormProjects/lomap_es4a/webapp/node_modules/react-scripts",
+    "nodejs.jest.jest_package": "D:/UniOvi/Tercero/Segundo Semestre/ASW/lomap_es4a/webapp/node_modules/react-scripts",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Users\\Usuario\\WebstormProjects\\lomap_es4a\\restapi\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "D:\\UniOvi\\Tercero\\Segundo Semestre\\ASW\\lomap_es4a\\restapi\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -73,23 +72,45 @@
       <recent name="D:\Uniovi\Tercero\ASW\Proyecto Final\lomap_es4a" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.fill in AddPoint data">
-    <configuration name="fill in AddPoint data error" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Jest.check add friend entering a valid name">
+    <configuration name="check add friend but dont enter a name" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
-      <node-options value="" />
       <jest-package value="$PROJECT_DIR$/webapp/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$/webapp" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/webapp/src/components/Options/AddPointTest.test.tsx" />
+      <test-file value="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendListView.test.tsx" />
       <test-names>
-        <test-name value="fill in AddPoint data error" />
+        <test-name value="check add friend but dont enter a name" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="check add friend entering a valid name" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/webapp/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$/webapp" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendListView.test.tsx" />
+      <test-names>
+        <test-name value="check add friend entering a valid name" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="check friend list view renders correctly" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/webapp/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$/webapp" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendListView.test.tsx" />
+      <test-names>
+        <test-name value="check friend list view renders correctly" />
       </test-names>
       <method v="2" />
     </configuration>
     <configuration name="fill in AddPoint data no category" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
-      <node-options value="" />
       <jest-package value="$PROJECT_DIR$/webapp/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$/webapp" />
       <envs />
@@ -100,22 +121,8 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="fill in AddPoint data no name" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/webapp/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$/webapp" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/webapp/src/components/Options/AddPointTest.test.tsx" />
-      <test-names>
-        <test-name value="fill in AddPoint data no name" />
-      </test-names>
-      <method v="2" />
-    </configuration>
     <configuration name="fill in AddPoint data" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
-      <node-options value="" />
       <jest-package value="$PROJECT_DIR$/webapp/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$/webapp" />
       <envs />
@@ -128,10 +135,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.check add friend entering a valid name" />
+        <item itemvalue="Jest.check add friend but dont enter a name" />
+        <item itemvalue="Jest.check friend list view renders correctly" />
         <item itemvalue="Jest.fill in AddPoint data" />
         <item itemvalue="Jest.fill in AddPoint data no category" />
-        <item itemvalue="Jest.fill in AddPoint data no name" />
-        <item itemvalue="Jest.fill in AddPoint data error" />
       </list>
     </recent_temporary>
   </component>
@@ -182,6 +190,7 @@
       <workItem from="1682415056878" duration="8298000" />
       <workItem from="1682436404247" duration="4134000" />
       <workItem from="1682935629852" duration="2429000" />
+      <workItem from="1682960793245" duration="1946000" />
     </task>
     <task id="LOCAL-00001" summary="Se ha movido el directorio solidapi a webapp">
       <created>1678459410126</created>
