@@ -27,6 +27,9 @@ import Box from "@mui/material/Box";
 import {useEffect, useState} from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TextField from "@mui/material/TextField";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { givePermissions } from '../../solidapi/permissions';
 
 
@@ -42,6 +45,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
     const [addedFriend, setAddedFriend] = useState("");
     const [openDialogAdd, setOpenDialogAdd] = React.useState(false);
     const [openDialogRemove, setOpenDialogRemove] = React.useState(false);
+    const [openAlert, setOpenAlert] = useState(false);
 
 
     useEffect(() => {
@@ -73,6 +77,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
             addNewFriend(session.info.webId!, session, friendWebID);
             console.log("Amigo: "+ friendWebID +" añadido.")
             setOpenDialogAdd(false);
+            setOpenAlert(true);
             myFriendList.push(friendWebID);
         });
     }
@@ -117,6 +122,14 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
     const handleCloseDialogRemove = () => {
         setOpenDialogRemove(false);
     };
+
+    // Maneja el cierre de la alerta
+    const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlert(false);
+    }
 
     return (
         <><ThemeProvider theme={theme}>
@@ -167,6 +180,16 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                     Añadir amigo
                 </Button>
             </Drawer>
+
+            <Snackbar open={openAlert} onClose={handleCloseAlert} autoHideDuration={1000} >
+                <Alert severity="success"
+                       sx={{ width: '100%', backgroundColor: 'green', color: 'white'  }}
+                       iconMapping={{ success: <CheckCircleOutlineIcon sx={{ color: 'white' }} />,}}
+                >
+                    Friend added!
+                </Alert>
+            </Snackbar>
+
         </ThemeProvider>
             {
                 // ------------------------ Dialog para Añadir Amigos ----------------------------------------------
@@ -192,8 +215,8 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                 <Button autoFocus onClick={handleCloseDialogAdd} color="error">
                     Cancelar
                 </Button>
-                <Button autoFocus onClick={() => {addFriend(addedFriend)}} color="primary">
-                    Añadir amigo
+                <Button id={"addFriendBtn"} autoFocus onClick={() => {addFriend(addedFriend)}} color="primary">
+                    Añadir
                 </Button>
             </DialogActions>
         </Dialog>
