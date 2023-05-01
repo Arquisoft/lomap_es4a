@@ -17,6 +17,7 @@ import {FOAF} from "@inrupt/vocab-common-rdf";
 
 import {v4 as uuidv4} from 'uuid';
 import { MyImage } from '../components/Options/Carousel';
+import Author from "./Author";
 
 function checkSession(session: Session): boolean {
     if (session === null || typeof session === "undefined") {
@@ -588,29 +589,28 @@ export async function saveReview(session: Session, mapName:string, comment:strin
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
         return false;
     } // Check if the webId is undefined
-    /*
-setReviews([...reviews, { 
-    author: "u",
-    reviewBody: comment, 
-    reviewRating: ratingValue,
-  datePublished:Date.now() }]);
-
-    */
-    
 
     try {
-        point.review.push({
-            author: extractUsersNameFromURL(session.info.webId),
-            reviewBody: comment, 
-            reviewRating: ratingValue,
-            
-          datePublished:Date.now()
-         });
-         console.log(ratingValue)
-        
-        //console.log(point.review)
+        let author = JSON.parse(JSON.stringify(new Author(session.info.webId)));
+        author["@type"] = "Person";
+        author = JSON.stringify(author);
+
+        let reviewRating = JSON.parse(JSON.stringify(ratingValue));
+        reviewRating["@type"] = "Rating";
+
+        let review = JSON.parse(JSON.stringify({
+            author: author,
+            reviewBody: comment,
+            reviewRating: reviewRating,
+
+            datePublished: Date.now()
+        }));
+        review["@type"] = "Review";
+
+        point.review.push(review);
+
         await updatePoint(session, mapName,point)
-        
+
     } catch (error) {
         return false;
     }
