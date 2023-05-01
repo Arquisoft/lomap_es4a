@@ -128,7 +128,7 @@ test('check Logout button works where clicking on Navbar', async () => {
     const { getByTestId } = await render(<Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={functionMock} openMapList={functionMock} openMyFriendsList={myFriendsMock} />);
     //Búsqueda del botón Logout y clic
     const button = await getByTestId('Logout');
-    fireEvent.click(button);
+    fireEvent.click(button); 
 });
 
 

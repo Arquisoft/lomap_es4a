@@ -1,4 +1,5 @@
 import {fireEvent, getByRole, getByTestId, getByText, render, screen, waitFor} from '@testing-library/react';
+import "@inrupt/jest-jsdom-polyfills";
 
 import SearchBar from './Searchbar';
 

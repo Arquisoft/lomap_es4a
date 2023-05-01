@@ -61,9 +61,6 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
         { id: 'markAll', isActive: false },
         { id: 'unmarkAll', isActive: false }
       ])
-
-      
-      
       
     const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const filterId = event.target.name;
@@ -212,7 +209,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'center', justifyContent: 'flex-end' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
-                          <Checkbox
+                          <Checkbox data-testid="academiccheckbox"
                             checked={selectedFilters.find(filter => filter.id === 'academicInstitution')?.isActive}
                             onChange={handleFilterChange}
                             name="academicInstitution"
@@ -390,7 +387,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
                         
                 </Box>
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', alignItems: 'center', justifyContent: 'flex-end', mt:'1em' }}>
-                        <Button variant="contained" onClick={handleMarkAll} name="markAll" sx={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', fontSize: '0.9rem', mx: 'auto' }}>
+                        <Button data-testid="markall" variant="contained" onClick={handleMarkAll} name="markAll" sx={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', fontSize: '0.9rem', mx: 'auto' }}>
                             Mark All
                         </Button>
 
@@ -399,7 +396,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
                         </Button>
 
 
-                        <Button variant="contained" onClick={handleUnmarkAll} name="unmarkAll" sx={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', fontSize: '0.9rem', mx: 'auto' }} >
+                        <Button data-testid="unmarkall" variant="contained" onClick={handleUnmarkAll} name="unmarkAll" sx={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', fontSize: '0.9rem', mx: 'auto' }} >
                             Unmark All
                         </Button>
                 </Box>
@@ -476,7 +473,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
                     </Collapse>
 
                     <Divider sx={{backgroundColor: "#808b96"}} />
-                    <ListItemButton onClick={handleVisibilitySubmenu}>
+                    <ListItemButton data-testid="visibility" onClick={handleVisibilitySubmenu}>
                         <ListItemText primary="Points edition" />
                         <IconButton>
                             <ExpandMoreIcon sx={{color: "#808b96"}}/>
@@ -487,7 +484,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
                     <Divider sx={{backgroundColor: "black"}} />
                     <ListItem>
                         <ListItemText primary={"Show / Hide all"} />
-                        <Switch color="success" className='s1' checked={encendidaAll} onChange={() => handleToggleAll()} />
+                        <Switch data-testid="visibilityall" color="success" className='s1' checked={encendidaAll} onChange={() => handleToggleAll()} />
                     </ListItem>
                    
                         {generatePointsControl()}
