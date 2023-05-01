@@ -1,9 +1,9 @@
 import {findByText, fireEvent, getByText, render, screen, waitFor, within} from '@testing-library/react';
 import "@inrupt/jest-jsdom-polyfills";
 import AddPoint from './AddPoint';
-
-
-
+import * as solidapi from "../../solidapi/solidapi";
+import {Session} from "@inrupt/solid-client-authn-browser";
+import Point from "../../solidapi/Point";
 
 test('check AddPoint component renders', async () => {
     await render(<AddPoint open={true} onClose={() => {}} clickedPoint={null} createPoint={() => {}}/>);
