@@ -22,8 +22,7 @@ import {
 import {CombinedDataProvider, Image, Text, useSession} from "@inrupt/solid-ui-react";
 
 import * as React from "react";
-import {FOAF} from "@inrupt/vocab-common-rdf";
-import {VCARD} from "@inrupt/lit-generated-vocab-common";
+import {FOAF, VCARD} from "@inrupt/vocab-common-rdf";
 import Box from "@mui/material/Box";
 import {useEffect, useState} from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -31,6 +30,7 @@ import TextField from "@mui/material/TextField";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { givePermissions } from '../../solidapi/permissions';
 
 
 interface MyFriendsListViewProps {
@@ -52,27 +52,34 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
         // Si salimos del drawer hay que cancelar el fetch
         // Así no hay Memory Leak
         const controller = new AbortController();
+        
         loadFriends();
 
         return () => {
             // cancel the request before component unmounts
             controller.abort();
         };
+        // eslint-disable-next-line
     }, []);
 
     const loadFriends = () => {
         myFriends(session).then((friends) => {
-            setMyFriendList(friends);
-        })
-
+            // Se dan permisos a los amigos
+            givePermissions(session, friends).then(() => {
+                setMyFriendList(friends);
+            });
+        });
     };
 
     const addFriend = (friendWebID: string) => {
+        // Se da permiso al nuevo amigo
+        givePermissions(session, [friendWebID]).then(() => {
             addNewFriend(session.info.webId!, session, friendWebID);
             console.log("Amigo: "+ friendWebID +" añadido.")
             setOpenDialogAdd(false);
             setOpenAlert(true);
             myFriendList.push(friendWebID);
+        });
     }
 
     function removeAFriend() {
@@ -143,7 +150,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                                     <CombinedDataProvider
                                         datasetUrl={friend}
                                         thingUrl={friend}>
-                                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture"
+                                        <Image property={VCARD.hasPhoto} alt="User profile picture"
                                                     style={{width: 60, height: 60, borderRadius: 30}}/>
                                     </CombinedDataProvider>
                                 </Box>

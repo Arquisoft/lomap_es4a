@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Divider from '@mui/material/Divider';
-import Drawer, { DrawerProps } from '@mui/material/Drawer';
+import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
@@ -12,14 +12,12 @@ import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
 import MapIcon from '@mui/icons-material/Map';
-import { Avatar, Button, createTheme, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, makeStyles, ThemeProvider, Typography } from '@mui/material';
+import { Button, createTheme, Dialog, DialogActions, DialogContent, DialogTitle, ThemeProvider, Typography } from '@mui/material';
 
 // Pfp
-import { VCARD } from "@inrupt/lit-generated-vocab-common";
 import {CombinedDataProvider, useSession, Image, Text} from "@inrupt/solid-ui-react";
-import {useEffect, useState} from "react";
 import LogoutIcon from '@mui/icons-material/Logout';
-import {FOAF} from "@inrupt/vocab-common-rdf";
+import {FOAF, VCARD} from "@inrupt/vocab-common-rdf";
 const categories = [
   {
     id: 'LoMap',
@@ -53,11 +51,6 @@ const item = {
   },
 };
 
-const itemCategory = {
-  boxShadow: '0 -1px 0 rgb(255,255,255,0.1) inset',
-  py: 1.5,
-  px: 3,
-};
 const theme = createTheme({
   components: {
     MuiDrawer: {
@@ -73,9 +66,7 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
   
   const [openDialog, setOpenDialog] = React.useState(false);
 
-  const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
   const { session } = useSession();
-  const { webId } = session.info;
   const handleClickOpen = () => {
     setOpenDialog(true);
   };
@@ -101,7 +92,7 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
 
   return (
     <><ThemeProvider theme={theme}>
-      <Drawer disableAutoFocus={true}
+      <Drawer data-testid="navbar-drawer" disableAutoFocus={true}
           open={open}
           sx={{ display: { mt: 500, height: '100vh' } }}
           onClose={toggleNavbar}
@@ -130,11 +121,10 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
             <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white', padding:"1em"} }}>
 
               {session.info.webId ? (
-
                   <CombinedDataProvider
                       datasetUrl={session.info.webId}
                       thingUrl={session.info.webId}>
-                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture" style={{width:60, height:60, borderRadius:30}}/>
+                        <Image property={VCARD.hasPhoto} alt="User profile picture" style={{width:60, height:60, borderRadius:30}}/>
                   </CombinedDataProvider>
               ): null }
 
@@ -147,7 +137,7 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
               </ListItem>
               {children.map(({ id: childId, icon, active }) => (
                 <ListItem disablePadding key={childId}>
-                  <ListItemButton selected={active} sx={item} onClick={() => {
+                  <ListItemButton data-testid={childId} selected={active} sx={item} onClick={() => {
                     if (childId === "About us") {handleClickOpen()}
                     else if(childId==="Logout"){handleClickLogout()}
                     else if(childId==="Points"){handleClickPointsOpen()}
@@ -170,7 +160,7 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
     {/*
       Dialogo al darle a about Us
     */}
-    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={openDialog}>
+    <Dialog data-testid="dialog" onClose={handleClose} aria-labelledby="customized-dialog-title" open={openDialog}>
         <DialogTitle>
           LoMap_es4a
         </DialogTitle>
@@ -199,7 +189,3 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
 }
 //<PointsView open={true}></PointsView> 
 export default Navbar;
-function viewPoints(arg0: string) {
-  throw new Error('Function not implemented.');
-}
-

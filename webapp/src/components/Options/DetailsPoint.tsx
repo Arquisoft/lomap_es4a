@@ -6,16 +6,15 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Rating from '@mui/material/Rating';
 
-import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Carousel, { MyImage } from "./Carousel";
 import {
 
-  Autocomplete, Avatar, Box, Button,
+  Avatar, Box, Button,
   Collapse,
-  createTheme, Dialog, DialogActions, DialogContent,
+  createTheme, 
   IconButton,
   ListItemButton,
   ThemeProvider, Typography,
@@ -24,14 +23,9 @@ import TextField from "@mui/material/TextField";
 
 // CSS
 import "./Option.css";
-import Point from "../../solidapi/Point";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import {ChangeEvent, useEffect, useState} from "react";
-import {v4 as uuidv4} from "uuid";
+import {useEffect, useState} from "react";
 import ImageUploader from './ImageUploader';
-import Author from '../../solidapi/Author';
-import { reviewRating } from 'rdf-namespaces/dist/schema';
 import Review from '../../solidapi/Review';
 
 const theme = createTheme({
@@ -87,11 +81,10 @@ export const ImageViewer = ({ image, onClose }: { image: MyImage; onClose: () =>
 function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: any) {
   const [ratingValue, setRatingValue] = React.useState<number | null>(0);
   const [images, setImages] = useState<MyImage[]>([]);
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [, setReviews] = useState<Review[]>([]);
   const [imagesOpen, setImagesOpen] = React.useState(false);
   const [comment, setComment] = useState("");
   const [commentsOpen, setCommentsOpen] = React.useState(false);
-  const [commentsList, setCommentsList] = useState<string[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   //const [author,setAuthor]=React.useState<string>()
 
@@ -124,13 +117,6 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
     setComment(event.target.value);
   };
 
-  const handleAddComment = () => {
-    if (comment.trim() !== "") {
-      setCommentsList([...commentsList, comment]);
-      setComment("");
-    }
-  };
-
   const handleAddReview = () => {
     if (comment.trim() !== "" && ratingValue !== null) {
       addReview(comment, ratingValue)
@@ -146,41 +132,30 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
     }
   };
   const ponerImagenes=()=>{
-    console.log(point)
-      let l:any=point.logo.map((imageUrl:string) => {
-        
+    //console.log(point)
+    if (point.logo) {
+      let l:any=point.logo.map((imageUrl:string) => {          
         return {
             src: imageUrl,
             alt: "Image stored at " + imageUrl
-        };
-        
-    });
-    setImages(l)
-  }
-
-
-  const ponerReviews=()=>{
-    console.log(point)
-      let l:any=point.review.map((r:Review) => {
-
-        renderReviews()
+        };          
       });
-        
-    
-    setReviews(l)
+      setImages(l)
+    }
   }
-
+ 
 
   useEffect(() => {
       ponerImagenes();
       //ponerReviews();
       setReviews(point.review)
+      // eslint-disable-next-line
   }, [point]);
 
   const renderReviews=()=> {
     return (
       <List sx={{ mt: 2 }}>
-        {point.review.map((review:Review) => (
+        {point.review ?point.review.map((review:Review) => (
           
           <Box key={review.datePublished}>
             <Rating name="read-only" value={review.reviewRating} readOnly />
@@ -190,7 +165,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
               </Typography>
             </ListItem>
           </Box>
-        ))}
+        )) : ""}
       </List>
     );
   }
@@ -200,7 +175,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
         <Drawer anchor="left" open={open} onClose={onClose} >
           <List sx={{ width:'20em' }} disablePadding>
             <ListItem>
-              <IconButton onClick={onClose}>
+              <IconButton data-testid="detailsCloseButton" onClick={onClose}>
                 <ChevronLeftIcon sx={{color: "white"}} />
               </IconButton>
               <ListItemText primary="Place's Details" />
@@ -216,22 +191,22 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
             <ThemeProvider theme={darkTheme}>
                 <ListItem>
                   <Typography variant="subtitle1" color="textPrimary">Point's name:</Typography>
-                  <Typography variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.name}</Typography>
+                  <Typography data-testid="nameField" id="details-point-name" variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.name}</Typography>
                 </ListItem>
                 <ListItem>
                   <Typography variant="subtitle1" color="textPrimary">Point's description:</Typography>
-                  <Typography variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.description}</Typography>
+                  <Typography data-testid="descField" variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.description}</Typography>
                 </ListItem>
                 <ListItem>
                   <Typography variant="subtitle1" color="textPrimary" >Point's category:</Typography>
-                  <Typography variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.category}</Typography>
+                  <Typography data-testid="catField" variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.category}</Typography>
                 </ListItem>
                 <ListItem>
                   <Typography variant="subtitle1" color="textPrimary" >Point's icon:</Typography>
 
                   
-                  {point && point.id ? (
-                      ""//<Avatar alt="Point Icon" sx={{pl:'1em'}}src={markerList[point.id].icon.url} />
+                  {point && point.id && markerList[point.id] ? (
+                      <Avatar alt="Point Icon" sx={{pl:'1em'}}src={markerList[point.id].icon.url} />
                     ) : (
                   <Typography variant="body1" color="textSecondary" sx={{ pl: "1em" }}>
                     No icon available
@@ -239,22 +214,21 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
                   )}
                   </ListItem>
                   <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
-
-                  <ListItemButton onClick={handleImagesSubmenu}>
+                  <ListItemButton data-testid="openImages" onClick={handleImagesSubmenu}>
                         <ListItemText primary="Point's images" />
                         <IconButton  >
                                       <ExpandMoreIcon sx={{color: "#808b96"}}/>
                             </IconButton>
                   </ListItemButton>
 
-                  <Collapse in={imagesOpen} timeout="auto" unmountOnExit>
+                  <Collapse data-testid="imagesCollapse" in={imagesOpen} timeout="auto" unmountOnExit>
                   <ListItem>
                   <ImageUploader onImageUpload={handleImageUpload} />
                   </ListItem>
 
                   {images &&images.length > 0 && (
                      <ListItem>
-                      <Carousel images={images} onImageClick={handleImageClick} />
+                      <Carousel data-testid="carousel" images={images} onImageClick={handleImageClick} />
                       </ListItem>
                   )}
                   {selectedImageIndex !== null && (
@@ -265,10 +239,11 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
 
 
                   </Collapse>
+                  
 
                   <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
 
-                  <ListItemButton onClick={handleCommentsSubmenu}>
+                  <ListItemButton data-testid="openComments" onClick={handleCommentsSubmenu}>
                       <ListItemText primary="Point's comments" />
                       <IconButton  >
                                 <ExpandMoreIcon sx={{color: "#808b96"}}/>

@@ -20,8 +20,7 @@ import "./Option.css";
 import Point from "../../solidapi/Point";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import {ChangeEvent, useEffect, useState} from "react";
-import {v4 as uuidv4} from "uuid";
+import {useEffect, useState} from "react";
 import { options } from '../../shared/shareddtypes';
 
 const theme = createTheme({
@@ -50,7 +49,7 @@ function EditPoint({open, onClose, point, editPoint}: any) {
   const [openAlert, setOpenAlert] = useState(false);
   const [pointName, setPointName] = useState(point.name);
   const [pointDescription, setPointDescription] = useState(point.description);
-  const [pointCategoryValue, setPointCategoryValue] = useState(point.category);
+  const [, setPointCategoryValue] = useState(point.category);
   const [pointCategoryInputValue, setPointCategoryInputValue] = useState(point.category);
   const [openDialog, setOpenDialog] = useState(false);
   const [errorName, setErrorName] = useState(false);

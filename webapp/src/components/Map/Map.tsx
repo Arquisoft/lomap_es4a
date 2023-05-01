@@ -40,6 +40,7 @@ function Mapa({session, markers, markerList, clickMap, clickMarker, setMarkerToA
             });
             onLoad(map);
         }
+        // eslint-disable-next-line
     }, [currentMapName]);
    
     const addMarker=(pointId: string, m:google.maps.Marker)=>{

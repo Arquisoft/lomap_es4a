@@ -5,13 +5,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { Box, Button, Checkbox, Collapse, createTheme, Divider, IconButton, ListItemButton, ListSubheader, makeStyles, Menu, MenuItem, Switch, ThemeProvider, toggleButtonClasses, Typography } from '@mui/material';
-import GreenSwitch from './GreenSwitch';
+import { Box, Button, Checkbox, Collapse, createTheme, Divider, IconButton, ListItemButton, Switch, ThemeProvider, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import Point from "../../solidapi/Point";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { width } from 'rdf-namespaces/dist/as';
-import { getPointsCategory } from '../../solidapi/solidapi';
 interface PointsViewProps {
     open: boolean;
     onClose: () => void;
@@ -107,7 +104,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
       }
       */
       const handleFilterClick = () => {
-        selectedFilters.map(filter=>{
+        selectedFilters.forEach(filter=>{
             if(filter.isActive)listaFiltros.push(filter.id)
 
             /*
@@ -208,8 +205,6 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
     const handleEditButton=(id: string)=>{
         openEditPoint(id);
     }
-
-    let x = [true, true, true];
 
     const generateFiltersCategories = () => {
         return (
@@ -399,7 +394,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
                             Mark All
                         </Button>
 
-                        <Button variant="contained" onClick={handleFilterClick} sx={{ mx: 'auto', width: '80%', paddingTop: '1', backgroundColor: '#375d81' }}>
+                        <Button data-testid="filterButton" variant="contained" onClick={handleFilterClick} sx={{ mx: 'auto', width: '80%', paddingTop: '1', backgroundColor: '#375d81' }}>
                             Filter
                         </Button>
 
@@ -444,13 +439,13 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
             <Drawer anchor="left" open={open} onClose={onClose} sx={{ display: { mt: 500 }  }} >
                 <List sx={{ width:'45vh' }} disablePadding>
                     <ListItem>
-                        <IconButton onClick={onClose} >
+                        <IconButton data-testid="closePointsView" onClick={onClose} >
                             <ChevronLeftIcon sx={{color: "#808b96"}}/>
                         </IconButton>
-                        <ListItemText primary="Points List" />
+                        <ListItemText data-testid={"pointsViewTitle"} primary="Points List" />
                     </ListItem>
                     <Divider sx={{backgroundColor: "#808b96"}} />
-                    <ListItemButton onClick={handleFiltersSubmenu}>
+                    <ListItemButton data-testid={"filters"} onClick={handleFiltersSubmenu}>
                         <ListItemText primary="Filters" />
                         <IconButton  >
                             <ExpandMoreIcon sx={{color: "#808b96"}}/>
@@ -461,7 +456,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
                     <Divider sx={{backgroundColor: "black"}} />
                         <List component="div" disablePadding>
                             
-                            <ListItemButton onClick={handleFiltersCategoriesSubmenu} >
+                            <ListItemButton data-testid={"filtersCategories"} onClick={handleFiltersCategoriesSubmenu} >
                                 <ListItemText primary="Categories" />
                                     <IconButton >
                                         <ExpandMoreIcon sx={{color: "#808b96"}}/>
@@ -507,6 +502,3 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
 };
 
 export default PointsView;
-function forceUpdate() {
-    throw new Error('Function not implemented.');
-}

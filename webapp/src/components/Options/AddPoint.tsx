@@ -51,9 +51,8 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
   
   const [pointName, setPointName] = useState("");
   const [pointDescription, setPointDescription] = useState("");
-  const [pointCategoryValue, setPointCategoryValue] = useState("");
+  const [, setPointCategoryValue] = useState("");
   const [pointCategoryInputValue, setPointCategoryInputValue] = useState("");
-  const [openDialog, setOpenDialog] = React.useState(false);
   const [errorName, setErrorName] = useState(false);
   const [errorCategory, setErrorCategory] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
@@ -93,10 +92,6 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
     }
   }
 
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
-
   return (
       <ThemeProvider theme={theme}>
         <Drawer anchor="left" open={open} onClose={onClose} >
@@ -114,7 +109,7 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField id="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth
+                <TextField id="pointNameField" data-testid="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth
                            onChange={(event: any) => {
                              setPointName(event.target.value);
                              setErrorName(event.target.value.trim() === '');
@@ -126,7 +121,7 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField id="pointDescriptionField" label="New point's description" variant="filled" placeholder="Description" fullWidth multiline
+                <TextField id="pointDescriptionField" data-testid="pointDescriptionField" label="New point's description" variant="filled" placeholder="Description" fullWidth multiline
                            onChange={(event: any) => {
                              setPointDescription(event.target.value);
                            }}/>
@@ -135,6 +130,8 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
             <ListItem>
 
               <Autocomplete
+                  id="pointCategoryField"
+                  data-testid="pointCategoryField"
                   options={Object.keys(options)}
                   className="point-fill-field"
                   includeInputInList
@@ -146,7 +143,9 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
                   }}
                   inputValue={pointCategoryInputValue}
                   onInputChange={(event, newInputValue) => {
-                    setPointCategoryInputValue(newInputValue);
+                    if (newInputValue !== null && newInputValue !== "") {
+                      setPointCategoryInputValue(newInputValue);
+                    }
                   }}
                   fullWidth
                   isOptionEqualToValue={(option, value) => option === value}
