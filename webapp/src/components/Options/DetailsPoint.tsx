@@ -57,6 +57,7 @@ export const ImageViewer = ({ image, onClose }: { image: MyImage; onClose: () =>
 
   return (
     <div
+    data-testid="image-viewer"
       style={{
         position: "fixed",
         top: 0,
@@ -222,8 +223,8 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
                   </ListItemButton>
 
                   <Collapse data-testid="imagesCollapse" in={imagesOpen} timeout="auto" unmountOnExit>
-                  <ListItem>
-                  <ImageUploader onImageUpload={handleImageUpload} />
+                  <ListItem data-testid="uploader">
+                    <ImageUploader onImageUpload={handleImageUpload} />
                   </ListItem>
 
                   {images &&images.length > 0 && (
@@ -252,6 +253,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
 
                   <Collapse in={commentsOpen} timeout="auto" unmountOnExit>
                   <Rating
+                    data-testid="rating"
                     name="simple-controlled"
                     sx={{pl:'1rem'}}
                     value={ratingValue}
@@ -260,6 +262,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
                     }}/>
                   <ListItem style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                   <TextField
+                    data-testid="commentfield"
                     id="comment"
                     label="Add a comment"
                     variant="outlined"
@@ -270,7 +273,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
                     style={{ flex: 1 }}
                   />
                    
-                  <Button variant="contained" onClick={handleAddReview} style={{ flex: 'none' }} >
+                  <Button data-testid="addReview" variant="contained" onClick={handleAddReview} style={{ flex: 'none' }} >
                     Add
                   </Button>
                   </ListItem>
