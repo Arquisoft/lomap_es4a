@@ -15,10 +15,9 @@ import MapIcon from '@mui/icons-material/Map';
 import { Button, createTheme, Dialog, DialogActions, DialogContent, DialogTitle, ThemeProvider, Typography } from '@mui/material';
 
 // Pfp
-import { VCARD } from "@inrupt/lit-generated-vocab-common";
 import {CombinedDataProvider, useSession, Image, Text} from "@inrupt/solid-ui-react";
 import LogoutIcon from '@mui/icons-material/Logout';
-import {FOAF} from "@inrupt/vocab-common-rdf";
+import {FOAF, VCARD} from "@inrupt/vocab-common-rdf";
 const categories = [
   {
     id: 'LoMap',
@@ -122,11 +121,10 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
             <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white', padding:"1em"} }}>
 
               {session.info.webId ? (
-
                   <CombinedDataProvider
                       datasetUrl={session.info.webId}
                       thingUrl={session.info.webId}>
-                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture" style={{width:60, height:60, borderRadius:30}}/>
+                        <Image property={VCARD.hasPhoto} alt="User profile picture" style={{width:60, height:60, borderRadius:30}}/>
                   </CombinedDataProvider>
               ): null }
 
