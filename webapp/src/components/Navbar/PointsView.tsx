@@ -464,11 +464,6 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
                                     {generateFiltersCategories()}
                                    
                                 </Collapse>
-                            
-                            
-                            <ListItemButton>
-                                <ListItemText primary="Otrosubmenuconfiltros" />
-                            </ListItemButton>
                         </List>
                     </Collapse>
 

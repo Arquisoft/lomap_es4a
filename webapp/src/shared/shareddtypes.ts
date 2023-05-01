@@ -1,9 +1,6 @@
 import {Session} from "@inrupt/solid-client-authn-browser";
 
-export type User = {
-    name:string;
-    email:string;
-  }
+
 
 export const options :{[publicName:string]:string}={
   "Academic Institution":"academicInstitution",

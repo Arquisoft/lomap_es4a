@@ -600,7 +600,7 @@ setReviews([...reviews, {
 
     try {
         point.review.push({
-            author: "u",
+            author: extractUsersNameFromURL(session.info.webId),
             reviewBody: comment, 
             reviewRating: ratingValue,
             

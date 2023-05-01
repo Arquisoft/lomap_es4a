@@ -158,12 +158,14 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
 
             </ListItem>
             <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
-            <ListItem>
-              <Button onClick={cancel} sx={{color: "white"}} >Cancel</Button>
+            
+            <ListItem sx={{display: 'flex', alignItems: 'center'}}>
+             
+              <Button onClick={cancel} sx={{color: "white", backgroundColor:"#084f96" }} >Cancel</Button>
+              <Button onClick={save} sx={{color: "white", backgroundColor:"#084f96",marginLeft:"1em"}}>Save Place</Button>
+            
             </ListItem>
-            <ListItem>
-              <Button onClick={save} sx={{color: "white"}}>Save Place</Button>
-            </ListItem>
+            
           </List>
         </Drawer>
 

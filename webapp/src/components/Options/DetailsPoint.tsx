@@ -148,7 +148,6 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
 
   useEffect(() => {
       ponerImagenes();
-      //ponerReviews();
       setReviews(point.review)
       // eslint-disable-next-line
   }, [point]);
@@ -162,7 +161,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
             <Rating name="read-only" value={review.reviewRating} readOnly />
             <ListItem>
               <Typography variant="body1" color="textPrimary">
-                {review.author} ({review.datePublished}) - {review.reviewBody} - {review.reviewRating}
+              {"[ "}{review.author}{" ] "}: {review.reviewBody}
               </Typography>
             </ListItem>
           </Box>
