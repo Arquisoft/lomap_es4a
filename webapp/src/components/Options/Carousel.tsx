@@ -14,9 +14,9 @@ export type MyImage ={
   
   const Carousel = ({ images, onImageClick }: CarouselProps) => {
     return (
-      <div>
+      <div data-testid="carousel">
         {images.map((image, index) => (
-          <img
+          <img data-testid={image.src}
             key={index}
             src={image.src}
             alt={image.alt}

@@ -2,7 +2,6 @@ import {fireEvent, getByRole, getByTestId, getByText, render, screen, waitFor} f
 import "@inrupt/jest-jsdom-polyfills";
 
 import SearchBar from '../Searchbar/Searchbar';
-import React from 'react';
 import Navbar from './Navbar';
 
 
@@ -43,6 +42,26 @@ test('check About Us button works where clicking on Navbar', async () => {
     const dialog=await getByTestId("dialog");
     expect(dialog).toBeInTheDocument();
     expect(await screen.findByText("Este es un proyecto de la asignatura ASW (2022-2023).Realizado por los alumnos:")).toBeInTheDocument();
+});
+
+test('check About Us dialog close button', async () => {
+    //Declaramos variables y funciones a usar para simular la apertura del drawer
+    let navbarOpen = true;
+    const toggleNavbar = () => {
+        navbarOpen=(!navbarOpen);
+    }
+   //Función de mockeo básica para centrarnos en las funcionalidades que nos interesan
+    const functionMock = jest.fn();
+    const { getByTestId } = await render(<Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={functionMock} openMapList={functionMock} openMyFriendsList={functionMock} />);
+    //Búsqueda del botón AboutUs y clic
+    const button = await getByTestId('About us');
+    fireEvent.click(button);
+    //Correcta apertura del dialogo
+    const dialog=await getByTestId("dialog");
+    expect(dialog).toBeInTheDocument();
+    expect(await screen.findByText("Este es un proyecto de la asignatura ASW (2022-2023).Realizado por los alumnos:")).toBeInTheDocument();
+    const closedialog=await getByTestId("closedialog");
+    fireEvent.click(closedialog);
 });
 
 test('check Points button works where clicking on Navbar', async () => {
@@ -94,6 +113,22 @@ test('check MyFriends button works where clicking on Navbar', async () => {
     fireEvent.click(button);
     //LLamada a la funcion de apertura
     expect(myFriendsMock).toBeCalled();
+});
+
+
+test('check Logout button works where clicking on Navbar', async () => {
+    //Declaramos variables y funciones a usar para simular la apertura del drawer
+    let navbarOpen = true;
+    const toggleNavbar = () => {
+        navbarOpen=(!navbarOpen);
+    }
+   //Función de mockeo básica para centrarnos en las funcionalidades que nos interesan
+    const functionMock = jest.fn();
+    const myFriendsMock = jest.fn();
+    const { getByTestId } = await render(<Navbar open={navbarOpen} toggleNavbar={toggleNavbar} openPointsList={functionMock} openMapList={functionMock} openMyFriendsList={myFriendsMock} />);
+    //Búsqueda del botón Logout y clic
+    const button = await getByTestId('Logout');
+    fireEvent.click(button); 
 });
 
 
