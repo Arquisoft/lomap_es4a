@@ -121,12 +121,11 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
             <Box sx={{ display: { xs: 'none', md: 'flex', color: 'white', padding:"1em"} }}>
 
               {session.info.webId ? (
-                  null
-                  // <CombinedDataProvider
-                  //     datasetUrl={session.info.webId}
-                  //     thingUrl={session.info.webId}>
-                  //       <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture" style={{width:60, height:60, borderRadius:30}}/>
-                  // </CombinedDataProvider>
+                  <CombinedDataProvider
+                      datasetUrl={session.info.webId}
+                      thingUrl={session.info.webId}>
+                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture" style={{width:60, height:60, borderRadius:30}}/>
+                  </CombinedDataProvider>
               ): null }
 
             </Box>

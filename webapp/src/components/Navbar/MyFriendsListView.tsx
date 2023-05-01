@@ -137,8 +137,8 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                                     <CombinedDataProvider
                                         datasetUrl={friend}
                                         thingUrl={friend}>
-                                        {/*<Image property={VCARD.hasPhoto.iri.value} alt="User profile picture"*/}
-                                        {/*            style={{width: 60, height: 60, borderRadius: 30}}/>*/}
+                                        <Image property={VCARD.hasPhoto.iri.value} alt="User profile picture"
+                                                    style={{width: 60, height: 60, borderRadius: 30}}/>
                                     </CombinedDataProvider>
                                 </Box>
                                 <CombinedDataProvider
