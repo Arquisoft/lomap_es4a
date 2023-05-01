@@ -58,15 +58,7 @@ function EditPoint({open, onClose, point, editPoint}: any) {
       const controller = new AbortController();
       setPointName(point.name);
       setPointDescription(point.description);
-      Object.keys(options).forEach(o=>{
-        if(options[o]===point.category){
-          setPointCategoryInputValue(o);
-        console.log(o)
-            return () => {
-                // cancel the request before component unmounts
-                controller.abort();
-            };
-        }
+      Object.keys(options).forEach(o=>{if(options[o]===point.category){setPointCategoryInputValue(o); console.log(o);return () => {/*cancel the request before component unmounts*/controller.abort();};}
       })
       //setPointCategoryInputValue(point.category);
     
@@ -88,13 +80,8 @@ function EditPoint({open, onClose, point, editPoint}: any) {
   }
 
   
-  const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenAlert(false);
-  };
+  const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {if (reason === 'clickaway')return;setOpenAlert(false);};
+  
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
@@ -104,7 +91,7 @@ function EditPoint({open, onClose, point, editPoint}: any) {
         <Drawer anchor="left" open={open} onClose={onClose} >
           <List sx={{ width:'20em' }} disablePadding>
             <ListItem>
-              <IconButton onClick={onClose}>
+              <IconButton   data-testid="editCloseButton" onClick={onClose}>
                 <ChevronLeftIcon sx={{color: "white"}} />
               </IconButton>
               <ListItemText primary="Edit Place" />
@@ -116,7 +103,7 @@ function EditPoint({open, onClose, point, editPoint}: any) {
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField id="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth defaultValue={point.name}
+                <TextField data-testid="editName" id="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth defaultValue={point.name}
                            onChange={(event: any) => {
                              setPointName(event.target.value);
                              setErrorName(event.target.value.trim() === '');
@@ -128,7 +115,7 @@ function EditPoint({open, onClose, point, editPoint}: any) {
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField id="pointDescriptionField" label="New point's description" variant="filled" placeholder="Description" fullWidth multiline defaultValue={point.description}
+                <TextField data-testid="editDesc" id="pointDescriptionField" label="New point's description" variant="filled" placeholder="Description" fullWidth multiline defaultValue={point.description}
                            onChange={(event: any) => {
                              setPointDescription(event.target.value);
                            }}/>
@@ -137,6 +124,7 @@ function EditPoint({open, onClose, point, editPoint}: any) {
             <ListItem>
             
               <Autocomplete
+                  data-testid="editCat"
                   options={Object.keys(options)}
                   className="point-fill-field"
                   includeInputInList
@@ -166,20 +154,20 @@ function EditPoint({open, onClose, point, editPoint}: any) {
             </ListItem>
             <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
             <ListItem>
-              <Button onClick={cancel} sx={{color: "white"}} >Cancel</Button>
+              <Button data-testid="cancellButton" onClick={cancel} sx={{color: "white"}} >Cancel</Button>
             </ListItem>
             <ListItem>
-              <Button onClick={save} sx={{color: "white"}}>Save Place</Button>
+              <Button   data-testid="saveButton" onClick={save} sx={{color: "white"}}>Save Place</Button>
             </ListItem>
           </List>
         </Drawer>
 
-        <Dialog onClose={handleCloseDialog} aria-labelledby="customized-dialog-title" open={openDialog}>
+        <Dialog data-testid="errorDialog" onClose={handleCloseDialog} aria-labelledby="customized-dialog-title" open={openDialog}>
           <DialogContent dividers>
             <Typography gutterBottom>The Place must have a name and a category</Typography>
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={handleCloseDialog} color="primary">
+            <Button  data-testid="okbutton" autoFocus onClick={handleCloseDialog} color="primary">
               OK
             </Button>
           </DialogActions>
