@@ -109,7 +109,7 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField data-testid="pointNameField" id="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth
+                <TextField id="pointNameField" data-testid="pointNameField" label="New point's name" variant="filled" placeholder="Name" fullWidth
                            onChange={(event: any) => {
                              setPointName(event.target.value);
                              setErrorName(event.target.value.trim() === '');
@@ -121,7 +121,7 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
             </ListItem>
             <ListItem>
               <ThemeProvider theme={darkTheme}>
-                <TextField id="pointDescriptionField" label="New point's description" variant="filled" placeholder="Description" fullWidth multiline
+                <TextField id="pointDescriptionField" data-testid="pointDescriptionField" label="New point's description" variant="filled" placeholder="Description" fullWidth multiline
                            onChange={(event: any) => {
                              setPointDescription(event.target.value);
                            }}/>
