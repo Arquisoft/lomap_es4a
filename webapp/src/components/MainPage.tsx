@@ -34,140 +34,48 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openDialog2, setOpenDialog2] = React.useState(false);
 
-    const toggleNavbar = () => {
-        setNavbarOpen(!navbarOpen);
-    }
+    const toggleNavbar = () => { setNavbarOpen(!navbarOpen);}
 
-    const openPointsList = () => {
-        setNavbarOpen(false);
-        setPointsListOpen(true);
-    }
+    const openPointsList = () => {setNavbarOpen(false);setPointsListOpen(true);}
 
-    const closePointsList = () => {
-        setPointsListOpen(false);
-        setNavbarOpen(true);
-    }
+    const closePointsList = () => {setPointsListOpen(false);setNavbarOpen(true);}
 
-    const openMapList = () => {
-        setMapListOpen(true);
-    }
+    const openMapList = () => {setMapListOpen(true);}
 
-    const closeMapList = () => {
-        setMapListOpen(false);
-    }
+    const closeMapList = () => {setMapListOpen(false);}
 
-    const openMyFriendsList = () => {
-        setMyFriendsListOpen(true);
-        setNavbarOpen(false);
-    }
+    const openMyFriendsList = () => {setMyFriendsListOpen(true);setNavbarOpen(false);}
 
-    const closeMyFriendsList = () => {
-        setMyFriendsListOpen(false);
-        setNavbarOpen(true);
-    }
+    const closeMyFriendsList = () => {setMyFriendsListOpen(false);setNavbarOpen(true);}
 
-    const closeAddPoints = () => {
-        setAddPointOpen(false);
-        markerToAdd?.setVisible(false);
-    }
+    const closeAddPoints = () => {setAddPointOpen(false);markerToAdd?.setVisible(false);}
 
-    const closeEditPoint = () => {
-        setEditPointOpen(false);
-        setPointsListOpen(true);
-        markerToAdd?.setVisible(false);
-    }
+    const closeEditPoint = () => {setEditPointOpen(false);setPointsListOpen(true);markerToAdd?.setVisible(false);}
 
-    const openEditPoint = (id: string) => {
-        getPoint(session, currentMapName, id).then(point => {
-            if (point !== null) {
-                setPoint(point);
-            }
-            setPointsListOpen(false);
-            setEditPointOpen(true);
-        });
-    }
+    const openEditPoint = (id: string) => {getPoint(session, currentMapName, id).then(point => {if (point !== null){setPoint(point)};setPointsListOpen(false);setEditPointOpen(true);}).catch(error => console.log(error));}
 
-    const clickMarker = (lat: number, lng: number) => {
-        
+    const clickMarker = (lat: number, lng: number) => {getPointFromCoords(session, currentMapName, lat, lng).then(point => {if (point !== null) {setPoint(point);setDetailsPointOpen(true);} }).catch(error => console.log(error));}
 
-        
-        getPointFromCoords(session, currentMapName, lat, lng).then(point => {
-            
-            if (point !== null) {
-                setPoint(point);
-                //getImages(point)
-               
-                setDetailsPointOpen(true);
-            }
-           
-            
-        });
-        
-    }
+    const closeDetailsPoint = () => { setDetailsPointOpen(false); }
 
-    const closeDetailsPoint = () => {
-        setDetailsPointOpen(false);
-    }
+    const clickMap = (lat: number, lng: number) => {setClickedPoint({lat: lat, lng: lng});setAddPointOpen(true);}
+    const handleCloseDialog = () => {setOpenDialog(false);setPointsListOpen(!pointsListOpen)};
 
-    const clickMap = (lat: number, lng: number) => {
-        setClickedPoint({lat: lat, lng: lng});
-        setAddPointOpen(true);
+    const handleCloseDialog2 = () => {setOpenDialog2(false);setDetailsPointOpen(!pointsListOpen)};
 
-    }
-    const handleCloseDialog = () => {
-        setOpenDialog(false);
-        setPointsListOpen(!pointsListOpen)
-      };
+    const createPoint = (point: Point) => {addPoint(session, currentMapName, point).then(() => {markerToAdd?.setIcon(savedMarker2);markerToAdd?.setVisible(true);markerToAdd?.setTitle(point.name);markerList[point.id] = (markerToAdd!);}).catch(error => console.log(error));}
 
-      const handleCloseDialog2 = () => {
-        setOpenDialog2(false);
-        setDetailsPointOpen(!pointsListOpen)
-      };
-
-    const createPoint = (point: Point) => {
-        addPoint(session, currentMapName, point);
-        markerToAdd?.setIcon(savedMarker2);
-        markerToAdd?.setVisible(true);
-        markerToAdd?.setTitle(point.name);
-        markerList[point.id] = (markerToAdd!);
-    }
-
-    const editPoint = (point: Point) => {
-        updatePoint(session, currentMapName, point);
-        closeEditPoint();
-
-        markerList[point.id].setTitle(point.name);
-    }
+    const editPoint = (point: Point) => {updatePoint(session, currentMapName, point).then(() => {closeEditPoint(); markerList[point.id].setTitle(point.name);}).catch(error => console.log(error));}
     
-    const eliminatePoint = (id: string)=>{
-        deletePoint(session, currentMapName, id);
-        markerList[id].setMap(null);
+    const eliminatePoint = (id: string)=>{deletePoint(session, currentMapName, id).then(() => {markerList[id].setMap(null);delete markerList[id];setPointsListOpen(!pointsListOpen);setOpenDialog(true);}).catch(error => console.log(error));}
 
-        delete markerList[id];
+    const getPuntosCategoria = async (cat: string[]) => {const result = await getPointsCategory(session, currentMapName,  cat);return result;}
 
-        setPointsListOpen(!pointsListOpen)
-        setOpenDialog(true)
-        
-    }
+    const addImage=(image: File,point:Point)=>{ saveImage(session,currentMapName,image,point).then(() => {setDetailsPointOpen(!detailsPointOpen);setOpenDialog2(true)}).catch(error => console.log(error));}
 
-    const getPuntosCategoria = async (cat: string[]) => {
-        const result = await getPointsCategory(session, currentMapName,  cat);
-        //console.log(result+" "+id);
-        return result;
-    }
-    const addImage=(image: File,point:Point)=>{
-        saveImage(session,currentMapName,image,point)
-        setDetailsPointOpen(!detailsPointOpen)
-        setOpenDialog2(true)
-    }
-    const addReview=(comment:string,ratingValue:number)=>{
+    const addReview=(comment:string,ratingValue:number)=>{saveReview(session, currentMapName, comment, ratingValue,point).catch(error => console.log(error));}
 
-        saveReview(session, currentMapName, comment, ratingValue,point);
-       
-    }
-    const getNombreMapa= ()=>{
-        return currentMapName
-    }
+    const getNombreMapa= ()=>{ return currentMapName}
 
     
 
@@ -219,9 +127,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
                 <Typography gutterBottom>Image uploaded!</Typography>
                 </DialogContent>
                 <DialogActions>
-                <Button autoFocus onClick={handleCloseDialog2} color="primary">
-                OK
-                </Button>
+                <Button autoFocus onClick={handleCloseDialog2} color="primary">OK</Button>
                 </DialogActions>
             </Dialog>
         </Grid>

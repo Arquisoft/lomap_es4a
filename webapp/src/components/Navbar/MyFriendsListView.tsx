@@ -67,34 +67,31 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
             // Se dan permisos a los amigos
             givePermissions(session, friends).then(() => {
                 setMyFriendList(friends);
-            });
-        });
+            }).catch(error => console.log(error));
+        }).catch(error => console.log(error));
     };
 
     const addFriend = (friendWebID: string) => {
         // Se da permiso al nuevo amigo
         givePermissions(session, [friendWebID]).then(() => {
-            addNewFriend(session.info.webId!, session, friendWebID);
-            console.log("Amigo: "+ friendWebID +" añadido.")
-            setOpenDialogAdd(false);
-            setOpenAlert("Friend added!");
-            myFriendList.push(friendWebID);
-        });
+            addNewFriend(session.info.webId!, session, friendWebID).then(() => {
+                setOpenDialogAdd(false);
+                setOpenAlert("Friend added!");
+                myFriendList.push(friendWebID);
+            }).catch(error => console.log(error));
+        }).catch(error => console.log(error));
     }
 
     function removeAFriend() {
-        removeFriend(session.info.webId!, session, selectedFriend);
-        console.log("Amigo: "+ selectedFriend +" eliminado.")
-        setOpenDialogRemove(false);
-        setOpenAlert("Friend deleted!");
-        let filteredFriends = myFriendList.filter((friend) => friend !== selectedFriend);
-        setMyFriendList(filteredFriends);
+        removeFriend(session.info.webId!, session, selectedFriend).then(() => {
+            setOpenDialogRemove(false);
+            setOpenAlert("Friend deleted!");
+            let filteredFriends = myFriendList.filter((friend) => friend !== selectedFriend);
+            setMyFriendList(filteredFriends);
+        }).catch(error => console.log(error));
     }
 
-    const goToProfile = (friend: string) => {
-        window.open(friend);
-        //redirect(friend);
-    };
+    const goToProfile = (friend: string) => { window.open(friend) };
 
     const theme = createTheme({
         components: {
@@ -125,19 +122,14 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
     };
 
     // Maneja el cierre de la alerta
-    const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpenAlert("");
-    }
+    const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {if (reason === 'clickaway') {return;}setOpenAlert("");}
 
     return (
         <><ThemeProvider theme={theme}>
             <Drawer anchor="left" open={props.open} onClose={props.onClose}>
                 <List sx={{width: '25em'}} disablePadding>
                     <ListItem>
-                        <IconButton onClick={props.onClose}>
+                        <IconButton data-testid={"closeMyFriendListView"} onClick={props.onClose}>
                             <ChevronLeftIcon sx={{color: "white"}}/>
                         </IconButton>
                         <ListItemText primary="Your friends list"/>
@@ -162,9 +154,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                                         (<Text property={FOAF.name}/>)
                                         : (<Typography>User</Typography>)}
                                 </CombinedDataProvider>
-                                <ListItemButton onClick={() => {
-                                    goToProfile(friend);
-                                }}>
+                                <ListItemButton onClick={() => {goToProfile(friend)}}>
                                     <IosShareIcon/>
                                 </ListItemButton>
                                 <ListItemButton data-testid={"del-" + friend} onClick={() => {handleClickOpenDialogRemove(friend)}}>
@@ -178,7 +168,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                     <Box sx={{display: {xs: 'none', md: 'flex', color: 'white', padding: "0.5em"}}}>
                         <PersonAddIcon/>
                     </Box>
-                    Añadir amigo
+                    Add friend
                 </Button>
             </Drawer>
 
@@ -197,11 +187,11 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
             }
         <Dialog onClose={handleCloseDialogAdd} aria-labelledby="customized-dialog-title" open={openDialogAdd}>
             <DialogTitle>
-                Añadir amigo
+                Add friend
             </DialogTitle>
             <DialogContent dividers>
                 <Typography gutterBottom>
-                    Intoduce el webID de la persona que quieres añadir:
+                    Introduce the webID of the friend you want to add:
                 </Typography>
                 <TextField id={"friend-webID"} label="Friend webID" variant="outlined"
                            helperText="Ejemplo: https://xxxxxxxx.inrupt.net/profile/card#me"
@@ -214,10 +204,10 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
             </DialogContent>
             <DialogActions>
                 <Button autoFocus onClick={handleCloseDialogAdd} color="error">
-                    Cancelar
+                    Cancel
                 </Button>
                 <Button id={"addFriendBtn"} autoFocus onClick={() => {addFriend(addedFriend)}} color="primary">
-                    Añadir
+                    Add
                 </Button>
             </DialogActions>
         </Dialog>
@@ -226,22 +216,22 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
             }
             <Dialog onClose={handleCloseDialogRemove} aria-labelledby="customized-dialog-title" open={openDialogRemove}>
                 <DialogTitle>
-                    Eliminar amigo
+                    Delete friend
                 </DialogTitle>
                 <DialogContent dividers>
                     <Typography gutterBottom>
-                        Esta acción no se puede revertir
+                        This action can not be undone
                     </Typography>
                     <Typography gutterBottom>
-                        ¿Desea continuar?
+                        ¿Are you sure you want to continue?
                     </Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={handleCloseDialogRemove} color="primary">
-                        Cancelar
+                        Cancel
                     </Button>
                     <Button autoFocus onClick={() => {removeAFriend()}} color="error">
-                        Eliminar
+                        Delete
                     </Button>
                 </DialogActions>
             </Dialog>

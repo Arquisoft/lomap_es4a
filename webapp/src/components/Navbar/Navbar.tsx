@@ -134,9 +134,9 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
                 <ListItem disablePadding key={childId}>
                   <ListItemButton data-testid={childId} selected={active} sx={item} onClick={() => {
                     if (childId === "About us") {handleClickOpen()}
-                    else if(childId==="Logout"){handleClickLogout()}
-                    else if(childId==="Points"){handleClickPointsOpen()}
-                    else if(childId==="MyFriends"){handleClickMyFriends()}
+                    else if(childId==="Logout"){handleClickLogout().catch(error => console.log(error))}
+                    else if(childId==="Points"){handleClickPointsOpen().catch(error => console.log(error))}
+                    else if(childId==="MyFriends"){handleClickMyFriends().catch(error => console.log(error))}
                     else if(childId==="MapList"){openMapList()}
                   } }>
                     <ListItemIcon sx={{color: "white"}}>{icon}</ListItemIcon>

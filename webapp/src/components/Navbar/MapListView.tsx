@@ -94,8 +94,8 @@ function MapListView(props: MapListViewProps): JSX.Element {
                         setOpenAlert("Map deleted correctly!");                        
                         setCurrentDeleteMap("");
                         props.onClose();
-                    });
-                });
+                    }).catch(error => console.log(error));
+                }).catch(error => console.log(error));
         } else {
             setIsDeleteMapEmpty(true);
         }
@@ -115,7 +115,8 @@ function MapListView(props: MapListViewProps): JSX.Element {
 
     const handleOpenDeleteSelect = () => {
         retrieveMapNames(props.session)
-            .then(names => setMapNames(names));
+            .then(names => setMapNames(names))
+            .catch(error => console.log(error));
     }
 
     // Devuelve los menu items correspondientes a los nombres de los 
@@ -133,8 +134,8 @@ function MapListView(props: MapListViewProps): JSX.Element {
                     .then(friendsMaps => {
                         setFriendsMaps(friendsMaps);
                         setMapNames(names);
-                    });                
-            });
+                    }).catch(error => console.log(error));                
+            }).catch(error => console.log(error));
     }
 
     // Devuelve los menu items correspondientes a los nombres de los 

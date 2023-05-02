@@ -76,10 +76,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
       const activar=async (cat:string[])=>{
         const listaPuntosCategoria=await getPointsCategory(cat);
 
-        Object.keys(markerList).forEach((id) => {
-            if(listaPuntosCategoria.map(p=>p.id).includes(id))markerList[id].setVisible(true)
-            else markerList[id].setVisible(false)
-        });
+        Object.keys(markerList).forEach((id) => { if(listaPuntosCategoria.map(p=>p.id).includes(id)) markerList[id].setVisible(true); else markerList[id].setVisible(false); });
         /*
         listaPuntosCategoria.forEach( p => {
             markerList[p.id].setVisible(true)
@@ -110,7 +107,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
             */
         });
 
-        activar(listaFiltros);
+        activar(listaFiltros).catch(error => console.log(error));
       }
 
       const handleMarkAll = () => {
@@ -186,11 +183,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
         let newEncendida = {...encendida};
         let newChecked = {...checked};
         Object.keys(markerList).forEach((id) => {
-            if (markerList[id].getVisible() === encendidaAll) {
-                newEncendida[id] = !newEncendida[id];
-                newChecked[id] = !newChecked[id];
-                markerList[id].setVisible(!markerList[id].getVisible());
-            }
+            if (markerList[id].getVisible() === encendidaAll) { newEncendida[id] = !newEncendida[id]; newChecked[id] = !newChecked[id]; markerList[id].setVisible(!markerList[id].getVisible());}
         });
         setEncendida(newEncendida);
         setChecked(newChecked);
@@ -416,11 +409,11 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
                 
                 <ListItemText primary={markerList[id].getTitle() +": "} sx={{ gridArea: 'nombre'}}/>
                 
-                <Switch color="success" className='s1' onChange={() => handleToggle(id)} checked={!checked[id]} sx={{ gridArea: 'visibilidad'}}/>
-                <ListItemButton onClick={() =>{handleEditButton(id)} } sx={{ gridArea: 'editar'}}>
+                <Switch data-testid={id} color="success" className='s1' onChange={() => handleToggle(id)} checked={!checked[id]} sx={{ gridArea: 'visibilidad'}}/>
+                <ListItemButton data-testid={'editar' + id} onClick={() =>{handleEditButton(id)} } sx={{ gridArea: 'editar'}}>
                     <EditIcon/>
                 </ListItemButton>
-                <ListItemButton onClick={() =>{handleDeleteButton(id)} }   sx={{ gridArea: 'borrar'}}>
+                <ListItemButton data-testid={'borrar' + id} onClick={() =>{handleDeleteButton(id)} }   sx={{ gridArea: 'borrar'}}>
                     <DeleteForeverIcon/>
                 </ListItemButton>
                 
