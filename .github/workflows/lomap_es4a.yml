@@ -16,22 +16,29 @@ on:
       
 jobs:
   deploy:
-     name: Deploy
-     runs-on: ubuntu-latest
-#     needs: [docker-push-webapp]
-     steps:
-     - name: Checkout
-       uses: actions/checkout@v3
-     - name: Send
-       uses: dmnemec/copy_file_to_another_repo_action@main
-       env:
-         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-       with:
-         source_directory: 'webapp/build'
-         user_name: 'gonzalo-rr'
-         destination_repo: 'gonzalo-rr/lomap_es4a'
-         destination_branch: 'gh-pages'
-
+    #needs: [e2e-tests]
+    name: gh-pages deploy
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 18
+    - run: npm --prefix webapp install
+    - run: PUBLIC_URL=https://gonzalo-rr.github.io/lomap_es4a/ npm --prefix webapp run build
+    - name: Deploy
+      uses: cpina/github-action-push-to-another-repository@create-branch-if-needed-arg
+      env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+          source-directory: 'webapp/build'
+          destination-github-username: 'gonzalo-rr'
+          destination-repository-name: 'lomap_es4a'
+          user-email: srgonzalorr@gmail.com
+          commit-message: See ORIGIN_COMMIT from $GITHUB_REF
+          target-branch: gh-pages
+    - name: Test get variable exported by push-to-another-repository
+      run: echo $DESTINATION_CLONED_DIRECTORY
  
  
   # deploy:
