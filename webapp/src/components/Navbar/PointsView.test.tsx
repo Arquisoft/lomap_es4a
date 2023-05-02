@@ -1,4 +1,4 @@
-import {fireEvent, render, screen} from '@testing-library/react';
+import {fireEvent, render, screen, within} from '@testing-library/react';
 import "@inrupt/jest-jsdom-polyfills";
 
 import PointsView from './PointsView';
@@ -113,11 +113,12 @@ test('check pointsView category marc academic and filter subbmenu opens correctl
 
     const academiccheckbox =  getByTestId("academiccheckbox");
     expect(academiccheckbox).toBeInTheDocument();
-    fireEvent.change(academiccheckbox);//deberia cambiar el filtro
+    const checkBox = within(academiccheckbox).getByRole("checkbox");
+    fireEvent.click(checkBox);
 
     const filterButton =  getByTestId("filterButton");
     expect(filterButton).toBeInTheDocument();
-
+    fireEvent.click(filterButton);
 });
 
 
@@ -155,8 +156,19 @@ test('check pointsView visibility all button switches correctly', async () => {
       openEditPoint={functionMock}
       deletePoint={functionMock}
       getPointsCategory={functionMock} />);
-    const button = await getByTestId("visibility");
+    const button = getByTestId("visibility");
     fireEvent.click(button);
-    const visibilityall = await getByTestId("visibilityall");
-    fireEvent.change(visibilityall);//deberia cambiar el switch
+    const visibilityall = getByTestId("visibilityall");
+    const suich = within(visibilityall).getByRole("checkbox");
+    fireEvent.click(suich);
+
+    const suich2 = getByTestId("marker1");
+    const suich22 = within(suich2).getByRole("checkbox");
+    fireEvent.click(suich22);
+
+    const buttonEditar = getByTestId("editarmarker1");
+    fireEvent.click(buttonEditar);
+
+    const buttonBorrar = getByTestId("borrarmarker1");
+    fireEvent.click(buttonBorrar);
 });

@@ -34,9 +34,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openDialog2, setOpenDialog2] = React.useState(false);
 
-    const toggleNavbar = () => {
-        setNavbarOpen(!navbarOpen);
-    }
+    const toggleNavbar = () => { setNavbarOpen(!navbarOpen);}
 
     const openPointsList = () => {
         setNavbarOpen(false);
@@ -48,13 +46,9 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         setNavbarOpen(true);
     }
 
-    const openMapList = () => {
-        setMapListOpen(true);
-    }
+    const openMapList = () => {setMapListOpen(true);}
 
-    const closeMapList = () => {
-        setMapListOpen(false);
-    }
+    const closeMapList = () => {setMapListOpen(false);}
 
     const openMyFriendsList = () => {
         setMyFriendsListOpen(true);
@@ -84,30 +78,19 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             }
             setPointsListOpen(false);
             setEditPointOpen(true);
-        }).catch();
+        }).catch(error => console.log(error));
     }
 
-    const clickMarker = (lat: number, lng: number) => {
-        
-
-        
+    const clickMarker = (lat: number, lng: number) => {    
         getPointFromCoords(session, currentMapName, lat, lng).then(point => {
-            
             if (point !== null) {
-                setPoint(point);
-                //getImages(point)
-               
+                setPoint(point);              
                 setDetailsPointOpen(true);
-            }
-           
-            
-        }).catch();
-        
+            }    
+        }).catch(error => console.log(error));    
     }
 
-    const closeDetailsPoint = () => {
-        setDetailsPointOpen(false);
-    }
+    const closeDetailsPoint = () => { setDetailsPointOpen(false); }
 
     const clickMap = (lat: number, lng: number) => {
         setClickedPoint({lat: lat, lng: lng});
@@ -117,12 +100,12 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const handleCloseDialog = () => {
         setOpenDialog(false);
         setPointsListOpen(!pointsListOpen)
-      };
+    };
 
       const handleCloseDialog2 = () => {
         setOpenDialog2(false);
         setDetailsPointOpen(!pointsListOpen)
-      };
+    };
 
     const createPoint = (point: Point) => {
         addPoint(session, currentMapName, point).then(() => {
@@ -130,7 +113,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             markerToAdd?.setVisible(true);
             markerToAdd?.setTitle(point.name);
             markerList[point.id] = (markerToAdd!);
-        }).catch();
+        }).catch(error => console.log(error));
     }
 
     const editPoint = (point: Point) => {
@@ -154,23 +137,21 @@ export default function MainPage({ session }: SessionType): JSX.Element {
 
     const getPuntosCategoria = async (cat: string[]) => {
         const result = await getPointsCategory(session, currentMapName,  cat);
-        //console.log(result+" "+id);
         return result;
     }
+
     const addImage=(image: File,point:Point)=>{
         saveImage(session,currentMapName,image,point).then(() => {
             setDetailsPointOpen(!detailsPointOpen)
             setOpenDialog2(true)
         }).catch(error => console.log(error));
     }
-    const addReview=(comment:string,ratingValue:number)=>{
 
+    const addReview=(comment:string,ratingValue:number)=>{
         saveReview(session, currentMapName, comment, ratingValue,point).catch(error => console.log(error));
-       
     }
-    const getNombreMapa= ()=>{
-        return currentMapName
-    }
+
+    const getNombreMapa= ()=>{ return currentMapName}
 
     
 

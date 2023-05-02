@@ -29,7 +29,7 @@ function Mapa({session, markers, markerList, clickMap, clickMarker, setMarkerToA
    
     const addMarker=(pointId: string, m:google.maps.Marker)=>{ mList[pointId] = m; }
 
-    const onLoad = (googleMap: google.maps.Map): void => {createMap(session, currentMapName).then(() => {retrievePoints(session, currentMapName).then(points => {if (points != null) {points.forEach(point => {let marker = new google.maps.Marker({position: {lat: point.latitude, lng: point.longitude}, map: googleMap, title: point.name, icon: {url: savedMarker2}});marker.setMap(googleMap);marker.setMap(googleMap);marker.addListener('click', (marker: any) =>{clickMarker(marker.latLng.lat(), marker.latLng.lng());});addMarker(point.id, marker);});setMap(googleMap);markerList(mList);}}).catch();}).catch();}
+    const onLoad = (googleMap: google.maps.Map): void => {createMap(session, currentMapName).then(() => {retrievePoints(session, currentMapName).then(points => {if (points != null) {points.forEach(point => {let marker = new google.maps.Marker({position: {lat: point.latitude, lng: point.longitude}, map: googleMap, title: point.name, icon: {url: savedMarker2}});marker.setMap(googleMap);marker.setMap(googleMap);marker.addListener('click', (marker: any) =>{clickMarker(marker.latLng.lat(), marker.latLng.lng());});addMarker(point.id, marker);});setMap(googleMap);markerList(mList);}}).catch(error => console.log(error));}).catch(error => console.log(error));}
 
     const onUnMount = (): void => {setMap(null);};
     // @ts-ignore
