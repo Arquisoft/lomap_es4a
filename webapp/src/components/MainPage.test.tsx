@@ -9,7 +9,7 @@ test('check MainPage component renders', async () => {
 
     await act(async () => {
         render(<MainPage session={new Session()}/>);
-        let addPointText = screen.getByText("LoMap_es4a");
+        let addPointText = screen.getByText("LoMap_es4a"); 
 
         expect(addPointText).toBeInTheDocument();
     });

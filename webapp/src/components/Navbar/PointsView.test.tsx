@@ -65,7 +65,7 @@ test('check pointsView category filter subbmenu opens correctly', async () => {
 
 });
 
-test('check pointsView category markall and filter subbmenu opens correctly', async () => {
+test('check pointsView category unmark markall and filter subbmenu opens correctly', async () => {
 
     let open = true;
     const close = () => {
@@ -73,47 +73,27 @@ test('check pointsView category markall and filter subbmenu opens correctly', as
     };
     const functionMock = jest.fn();
     
-    const { getByTestId } = await render(<PointsView open={open} onClose={close} markerList={{}} openEditPoint={functionMock} deletePoint={functionMock}  getPointsCategory={functionMock}></PointsView>);
-    const button = await getByTestId("filters");
+    const { getByTestId } =  render(<PointsView open={open} onClose={close} markerList={{}} openEditPoint={functionMock} deletePoint={functionMock}  getPointsCategory={functionMock}></PointsView>);
+    const button =  getByTestId("filters");
     fireEvent.click(button);
     
-    const filtersCategories = await getByTestId("filtersCategories");
+    const filtersCategories =  getByTestId("filtersCategories");
     expect(filtersCategories).toBeInTheDocument();
     fireEvent.click(filtersCategories);
 
-    const markall = await getByTestId("markall");
+     const unmarkall =  getByTestId("unmarkall");
+    expect(unmarkall).toBeInTheDocument();
+    fireEvent.click(unmarkall);
+
+    const markall =  getByTestId("markall");
     expect(markall).toBeInTheDocument();
     fireEvent.click(markall);
     
-    const filterButton = await getByTestId("filterButton");
+    const filterButton =  getByTestId("filterButton");
     expect(filterButton).toBeInTheDocument();
 
 });
 
-test('check pointsView category unmarkall and filter subbmenu opens correctly', async () => {
-
-    let open = true;
-    const close = () => {
-        open = false;
-    };
-    const functionMock = jest.fn();
-    
-    const { getByTestId } = await render(<PointsView open={open} onClose={close} markerList={{}} openEditPoint={functionMock} deletePoint={functionMock}  getPointsCategory={functionMock}></PointsView>);
-    const button = await getByTestId("filters");
-    fireEvent.click(button);
-    
-    const filtersCategories = await getByTestId("filtersCategories");
-    expect(filtersCategories).toBeInTheDocument();
-    fireEvent.click(filtersCategories);
-
-    const unmarkall = await getByTestId("unmarkall");
-    expect(unmarkall).toBeInTheDocument();
-    fireEvent.click(unmarkall);
-    
-    const filterButton = await getByTestId("filterButton");
-    expect(filterButton).toBeInTheDocument();
-
-});
 
 test('check pointsView category marc academic and filter subbmenu opens correctly', async () => {
     const handleFilterChange = jest.fn();
@@ -123,20 +103,20 @@ test('check pointsView category marc academic and filter subbmenu opens correctl
     };
     const functionMock = jest.fn();
     
-    const { getByTestId } = await render(<PointsView open={open} onClose={close} markerList={{}} openEditPoint={functionMock} deletePoint={functionMock}  getPointsCategory={functionMock}></PointsView>);
-    const button = await getByTestId("filters");
+    const { getByTestId } =  render(<PointsView open={open} onClose={close} markerList={{}} openEditPoint={functionMock} deletePoint={functionMock}  getPointsCategory={functionMock}></PointsView>);
+    const button =  getByTestId("filters");
     fireEvent.click(button);
     
-    const filtersCategories = await getByTestId("filtersCategories");
+    const filtersCategories =  getByTestId("filtersCategories");
     expect(filtersCategories).toBeInTheDocument();
     fireEvent.click(filtersCategories);
 
-    const academiccheckbox = await getByTestId("academiccheckbox");
+    const academiccheckbox =  getByTestId("academiccheckbox");
     expect(academiccheckbox).toBeInTheDocument();
     const checkBox = within(academiccheckbox).getByRole("checkbox");
     fireEvent.click(checkBox);
 
-    const filterButton = await getByTestId("filterButton");
+    const filterButton =  getByTestId("filterButton");
     expect(filterButton).toBeInTheDocument();
     fireEvent.click(filterButton);
 });
@@ -150,8 +130,8 @@ test('check pointsView visibility subbmenu opens correctly', async () => {
     };
     const functionMock = jest.fn();
     
-    const { getByTestId } = await render(<PointsView open={open} onClose={close} markerList={{}} openEditPoint={functionMock} deletePoint={functionMock}  getPointsCategory={functionMock}></PointsView>);
-    const button = await getByTestId("visibility");
+    const { getByTestId } =  render(<PointsView open={open} onClose={close} markerList={{}} openEditPoint={functionMock} deletePoint={functionMock}  getPointsCategory={functionMock}></PointsView>);
+    const button =  getByTestId("visibility");
     fireEvent.click(button);
 
      expect(await screen.findByText("Show / Hide all")).toBeInTheDocument();
