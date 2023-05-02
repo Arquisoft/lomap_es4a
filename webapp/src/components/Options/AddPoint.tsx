@@ -47,12 +47,10 @@ const darkTheme = createTheme({
 
 function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
 
-  
-  
   const [pointName, setPointName] = useState("");
   const [pointDescription, setPointDescription] = useState("");
-  const [, setPointCategoryValue] = useState("");
-  const [pointCategoryInputValue, setPointCategoryInputValue] = useState("");
+  const [pointCategoryValue, setPointCategoryValue] = React.useState<string | null>(null);
+  const [pointCategoryInputValue, setPointCategoryInputValue] = React.useState<string>("");
   const [errorName, setErrorName] = useState(false);
   const [errorCategory, setErrorCategory] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
@@ -79,8 +77,6 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
         setErrorName(false);
       }
       setErrorCategory(true);
-      //setOpenDialog(true);
-      
     } else {
       onClose();
       setPointName("");
@@ -135,25 +131,22 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
                   options={Object.keys(options)}
                   className="point-fill-field"
                   includeInputInList
+                  value={pointCategoryValue}
                   onChange={(event: any, newValue: string | null) => {
                     if (newValue !== null) {
                       setPointCategoryValue(newValue);
                     }
-                    setErrorCategory(newValue === null);
+                    setErrorCategory(newValue === null);                    
                   }}
                   inputValue={pointCategoryInputValue}
-                  onInputChange={(event, newInputValue) => {
-                    if (newInputValue !== null && newInputValue !== "") {
-                      setPointCategoryInputValue(newInputValue);
-                    }
+                  onInputChange={(event: any, newInputValue: string) => {
+                    setPointCategoryInputValue(newInputValue);
                   }}
                   fullWidth
                   isOptionEqualToValue={(option, value) => option === value}
                   renderInput={(params) => (
-
                       <TextField {...params} label="New point's category" variant="filled" fullWidth  error={errorCategory}
                                  helperText={errorCategory ? 'Empty category. Select one' : ''} />
-
                   )}
 
               />
@@ -175,7 +168,7 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
         <Snackbar open={openAlert} onClose={handleCloseAlert} autoHideDuration={3000} >
           <Alert severity="success"
                  sx={{ width: '100%', backgroundColor: 'green', color: 'white'  }}
-                 iconMapping={{ success: <CheckCircleOutlineIcon sx={{ color: 'white' }} />,}}>Place added correctly!
+                 iconMapping={{ success: <CheckCircleOutlineIcon sx={{ color: 'white' }} />}}>Place added correctly!
           </Alert>
         </Snackbar>
 
