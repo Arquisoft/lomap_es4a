@@ -29,11 +29,11 @@ test('check add friend but dont enter a name', async() => {
        render(<MyFriendsListView open={friendListOpen} onClose={closeFriendList} />);
 
         // Buscamos el boton añadir y le damos
-        const addFriendButton = await screen.findByText('Añadir amigo');
+        const addFriendButton = await screen.findByText('Add friend');
         fireEvent.click(addFriendButton);
 
         // Buscamos el boton de confirmación
-        const cancelButton = await screen.findByText('Cancelar');
+        const cancelButton = await screen.findByText('Cancel');
         fireEvent.click(cancelButton);
 
         const linkElement = await screen.findByText("Your friends list");
@@ -58,7 +58,7 @@ test('check add friend entering a valid name', async() => {
         render(<MyFriendsListView open={friendListOpen} onClose={closeFriendList} />);
 
         // Buscamos el boton añadir y le damos
-        const addFriendButton = await screen.findByText('Añadir amigo');
+        const addFriendButton = await screen.findByText('Add friend');
         fireEvent.click(addFriendButton);
 
         // Cambiamos el texto por un webID válido
@@ -66,7 +66,7 @@ test('check add friend entering a valid name', async() => {
         fireEvent.change(friendInput, { target: { value: "https://uo271477.inrupt.net/profile/card#me" } });
 
         // Buscamos el boton añadir final y le damos
-        const finalAddFriendButton = await screen.findByText('Añadir');
+        const finalAddFriendButton = await screen.findByText('Add');
         fireEvent.click(finalAddFriendButton);
 
         // Se ha añadido el amigo exitosamente
@@ -95,7 +95,7 @@ test('check cancel delete friend', async() => {
         fireEvent.click(deleteFriendButton);
 
         // Cancelamos la acción
-        const cancelDelete  = await screen.findByText("Cancelar");
+        const cancelDelete  = await screen.findByText("Cancel");
 
         fireEvent.click(cancelDelete);
 
@@ -129,7 +129,7 @@ test('check delete friend', async() => {
         fireEvent.click(deleteFriendButton);
 
         // Eliminamos el amigo 2
-        const finalDelete  = await screen.findByText("Eliminar");
+        const finalDelete  = await screen.findByText("Delete");
 
         fireEvent.click(finalDelete);
 
