@@ -54,38 +54,21 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
   const [errorName, setErrorName] = useState(false);
   const [errorCategory, setErrorCategory] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenAlert(false);
-  }
+  const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => { if (reason === 'clickaway') { return;}setOpenAlert(false);}
 
   const cancel = () => {
     onClose();
   }
 
   const save = () => {
-    if (pointName === '' ){
-      if(pointCategoryInputValue !== ''){
-        setErrorCategory(false);
-      }
+    if (pointName === '' ){if(pointCategoryInputValue !== ''){ setErrorCategory(false);}
       setErrorName(true);
 
     } else if(pointCategoryInputValue === '') {
       if (pointName !== '' ){
         setErrorName(false);
       }
-      setErrorCategory(true);
-    } else {
-      onClose();
-      setPointName("");
-      setPointDescription("");
-      setPointCategoryInputValue("");
-      let point: Point = new Point(uuidv4(), pointName, options[pointCategoryInputValue], clickedPoint.lat, clickedPoint.lng, pointDescription);
-      createPoint(point);
-      setOpenAlert(true);
-    }
+      setErrorCategory(true);} else {onClose();setPointName("");setPointDescription("");setPointCategoryInputValue("");let point: Point = new Point(uuidv4(), pointName, options[pointCategoryInputValue], clickedPoint.lat, clickedPoint.lng, pointDescription);createPoint(point);setOpenAlert(true);}
   }
 
   return (
@@ -119,31 +102,9 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
               <ThemeProvider theme={darkTheme}>
                 <TextField id="pointDescriptionField" data-testid="pointDescriptionField" label="New point's description" variant="filled" placeholder="Description" fullWidth multiline
                            onChange={(event: any) => {
-                             setPointDescription(event.target.value);
-                           }}/>
-              </ThemeProvider>
-            </ListItem>
-            <ListItem>
-
-              <Autocomplete
-                  id="pointCategoryField"
-                  data-testid="pointCategoryField"
-                  options={Object.keys(options)}
-                  className="point-fill-field"
-                  includeInputInList
-                  value={pointCategoryValue}
-                  onChange={(event: any, newValue: string | null) => {
-                    if (newValue !== null) {
-                      setPointCategoryValue(newValue);
-                    }
-                    setErrorCategory(newValue === null);                    
-                  }}
+                             setPointDescription(event.target.value);}}/></ThemeProvider> </ListItem><ListItem><Autocomplete id="pointCategoryField" data-testid="pointCategoryField" options={Object.keys(options)} className="point-fill-field" includeInputInList value={pointCategoryValue} onChange={(event: any, newValue: string | null) => {if (newValue !== null) { setPointCategoryValue(newValue);}setErrorCategory(newValue === null);}}
                   inputValue={pointCategoryInputValue}
-                  onInputChange={(event: any, newInputValue: string) => {
-                    setPointCategoryInputValue(newInputValue);
-                  }}
-                  fullWidth
-                  isOptionEqualToValue={(option, value) => option === value}
+                  onInputChange={(event: any, newInputValue: string) => {setPointCategoryInputValue(newInputValue);}} fullWidth isOptionEqualToValue={(option, value) => option === value}
                   renderInput={(params) => (
                       <TextField {...params} label="New point's category" variant="filled" fullWidth  error={errorCategory}
                                  helperText={errorCategory ? 'Empty category. Select one' : ''} />
