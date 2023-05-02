@@ -8,7 +8,7 @@ test('check MainPage component renders', async () => {
     jest.spyOn(permissions,'givePermissions').mockImplementation((session: Session, friendsWebIds:string[]): Promise<void> => Promise.resolve());
 
     await act(async () => {
-        await render(<MainPage session={new Session()}/>);
+        render(<MainPage session={new Session()}/>);
         let addPointText = screen.getByText("LoMap_es4a");
 
         expect(addPointText).toBeInTheDocument();

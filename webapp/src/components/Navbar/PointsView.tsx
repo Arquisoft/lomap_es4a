@@ -110,7 +110,7 @@ const PointsView: React.FC<PointsViewProps> = ({ open, onClose,markerList,getPoi
             */
         });
 
-        activar(listaFiltros);
+        activar(listaFiltros).catch();
       }
 
       const handleMarkAll = () => {
