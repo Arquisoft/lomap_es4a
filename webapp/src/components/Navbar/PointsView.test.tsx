@@ -59,7 +59,7 @@ test('check pointsView category filter subbmenu opens correctly', async () => {
 
 });
 
-test('check pointsView category markall and filter subbmenu opens correctly', async () => {
+test('check pointsView category unmark markall and filter subbmenu opens correctly', async () => {
 
     clickButton("filters");    
     clickButton("filtersCategories");

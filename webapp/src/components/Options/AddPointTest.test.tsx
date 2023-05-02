@@ -53,10 +53,6 @@ test('fill in AddPoint data', async () => {
     fireEvent.click(button);
 
     expect(true).toBeTruthy();
-
-    // expect(open).toBeFalsy();
-    //
-    // expect(jest.spyOn(solidapi,'addPoint')).toHaveBeenCalled();
 });
 
 test('fill in AddPoint data no name', async () => {
