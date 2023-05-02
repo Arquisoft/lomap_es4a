@@ -16,19 +16,18 @@ const ImageUploader = ({ onImageUpload }: ImageUploaderProps) => {
     const file = e.target.files?.[0];
     if (file) {
       setImage(file);
-      setCarouselImages((prevImages) => [
-        ...prevImages,
-        { src: URL.createObjectURL(file), alt: file.name },
-      ]);
-      onImageUpload(file);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {  onImageUpload(file);
+      };
     }
   };
-
+  
   
 
   return (
     <div>
-      <input type="file" onChange={handleImageChange} />
+      <input data-testid="inp" type="file" onChange={handleImageChange} />
       
     </div>
   );
