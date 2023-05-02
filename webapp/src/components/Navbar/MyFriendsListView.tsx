@@ -67,8 +67,8 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
             // Se dan permisos a los amigos
             givePermissions(session, friends).then(() => {
                 setMyFriendList(friends);
-            }).catch();
-        }).catch();
+            }).catch(error => console.log(error));
+        }).catch(error => console.log(error));
     };
 
     const addFriend = (friendWebID: string) => {
@@ -78,8 +78,8 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
                 setOpenDialogAdd(false);
                 setOpenAlert("Friend added!");
                 myFriendList.push(friendWebID);
-            }).catch();
-        }).catch();
+            }).catch(error => console.log(error));
+        }).catch(error => console.log(error));
     }
 
     function removeAFriend() {
@@ -88,7 +88,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
             setOpenAlert("Friend deleted!");
             let filteredFriends = myFriendList.filter((friend) => friend !== selectedFriend);
             setMyFriendList(filteredFriends);
-        }).catch();
+        }).catch(error => console.log(error));
     }
 
     const goToProfile = (friend: string) => { window.open(friend) };
