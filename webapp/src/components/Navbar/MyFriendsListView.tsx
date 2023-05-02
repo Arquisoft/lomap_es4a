@@ -75,7 +75,6 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
         // Se da permiso al nuevo amigo
         givePermissions(session, [friendWebID]).then(() => {
             addNewFriend(session.info.webId!, session, friendWebID);
-            console.log("Amigo: "+ friendWebID +" añadido.")
             setOpenDialogAdd(false);
             setOpenAlert("Friend added!");
             myFriendList.push(friendWebID);
@@ -84,7 +83,6 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
 
     function removeAFriend() {
         removeFriend(session.info.webId!, session, selectedFriend);
-        console.log("Amigo: "+ selectedFriend +" eliminado.")
         setOpenDialogRemove(false);
         setOpenAlert("Friend deleted!");
         let filteredFriends = myFriendList.filter((friend) => friend !== selectedFriend);

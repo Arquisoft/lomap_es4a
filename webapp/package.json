@@ -19,9 +19,6 @@
     "@react-google-maps/api": "^2.18.1",
     "@react-icons/all-files": "^4.1.0",
     "@tanstack/react-query": "^4.26.1",
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
     "@types/react": "^17.0.37",
     "express": "^4.18.2",
     "fast-equals": "^5.0.0",
@@ -41,7 +38,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --coverage",
-    "test:e2e": "start-server-and-test 'npm --prefix ../restapi start' http://localhost:5000/api/users/list prod 3000 'cd e2e && jest'",
+    "test:e2e": "start-server-and-test prod 3000 'cd e2e && jest'",
     "eject": "react-scripts eject",
     "prod": "ts-node-dev ./server.ts"
   },
@@ -64,6 +61,9 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
     "@types/expect-puppeteer": "^4.4.7",
     "@types/express": "^4.17.15",
     "@types/googlemaps": "^3.43.3",
