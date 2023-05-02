@@ -27,7 +27,7 @@ jobs:
        env:
          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
        with:
-         source_file: 'arquisoft/lomap_es4a/webapp'
+         source_file: 'webapp/build'
          user_name: 'gonzalo-rr'
          destination_repo: 'gonzalo-rr/lomap_es4a'
          destination_branch: 'gh-pages'
