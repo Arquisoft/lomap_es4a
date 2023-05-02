@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Añadida la lógica para recuperar la imagen de perfil">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/Map/Map.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Map/Map.test.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendListView.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendListView.test.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendsListView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendsListView.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,16 +73,7 @@
       <recent name="D:\Uniovi\Tercero\ASW\Proyecto Final\lomap_es4a" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.check initial map renders successfully">
-    <configuration name="Map.test.tsx" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <jest-package value="$PROJECT_DIR$/webapp/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$/webapp" />
-      <envs />
-      <scope-kind value="TEST_FILE" />
-      <test-file value="$PROJECT_DIR$/webapp/src/components/Map/Map.test.tsx" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Jest.check delete friend">
     <configuration name="Mapa.renders without errors" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/webapp/node_modules/react-scripts" />
@@ -92,6 +84,18 @@
       <test-names>
         <test-name value="Mapa" />
         <test-name value="renders without errors" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="check delete friend" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/webapp/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$/webapp" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendListView.test.tsx" />
+      <test-names>
+        <test-name value="check delete friend" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -133,11 +137,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.check delete friend" />
         <item itemvalue="Jest.check initial map renders successfully" />
         <item itemvalue="Jest.Mapa.renders without errors" />
         <item itemvalue="Jest.check initial map fails to render" />
         <item itemvalue="Jest.check initial map renders correctly" />
-        <item itemvalue="Jest.Map.test.tsx" />
       </list>
     </recent_temporary>
   </component>
@@ -192,7 +196,8 @@
       <workItem from="1682984536162" duration="3742000" />
       <workItem from="1683028409261" duration="125000" />
       <workItem from="1683031150879" duration="4109000" />
-      <workItem from="1683037220928" duration="134000" />
+      <workItem from="1683037220928" duration="324000" />
+      <workItem from="1683046613946" duration="1279000" />
     </task>
     <task id="LOCAL-00001" summary="Se ha movido el directorio solidapi a webapp">
       <created>1678459410126</created>
