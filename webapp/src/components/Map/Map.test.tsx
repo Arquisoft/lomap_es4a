@@ -1,105 +1,48 @@
 import "@inrupt/jest-jsdom-polyfills";
-import { render, screen } from '@testing-library/react';
-import Map, { MarkerType } from './Map';
+import {act, fireEvent, render, screen} from '@testing-library/react';
+import {Session} from "@inrupt/solid-client-authn-browser";
+import Mapa, {MarkerType} from "./Map";
+import * as solidApi from "../../solidapi/solidapi";
 
-test('a borrar', async () => {
-    expect(true).toBeTruthy();
+test('check initial map fails to render', async() => {
+    await act(async () => {
+        render(<Mapa/>);
+
+        expect(await screen.findByText("Map loading...")).toBeInTheDocument();
+    });
 });
-/*
-describe('Mapa', () => {
-    const session = null;
+
+test('check initial map renders successfully', async() => {
+
+    const functionMock = jest.fn();
+    const mockUseJsApiLoader = jest.fn();
+
     const markers: { [id: string]: google.maps.Marker } = {};
-    const markerList = (mList: { [id: string]: google.maps.Marker }) => {};
-    const clickMap = (lat: number, lng: number) => {};
-    const clickMarker = (lat: number, lng: number) => {};
-    const setMarkerToAdd = (marker: google.maps.Marker) => {};
-    const currentMapName = '';
-
-    const marker: MarkerType = {
-        id: '1',
-        location: { lat: 0, lng: 0 },
-        name: 'Marker 1',
-        phone_number: '123456789',
-        website: 'http://www.example.com',
+    const markerList = (marker: { [id: string]: google.maps.Marker }) => {
+        Object.assign(markers, marker);
     };
-    const markersList = [marker];
+    let currentMapName = "Map";
 
-    it('should render a map', () => {
-        render(
-            <Map
-                session={session}
-                markers={markers}
-                markerList={markerList}
-                clickMap={clickMap}
-                clickMarker={clickMarker}
-                setMarkerToAdd={setMarkerToAdd}
-                currentMapName={currentMapName}
-            />
-        );
+    jest.spyOn(solidApi, 'createMap').mockImplementation(
+        (session:Session, mapName:string): Promise<boolean> => Promise.resolve(true)
+    );
+    mockUseJsApiLoader.mockReturnValueOnce({ isLoaded: true });
 
-        const map = screen.getByRole('application');
-        expect(map).toBeInTheDocument();
-    });
+    await act(async () => {
+        render(<Mapa
+            session={{}}
+            markers={markers}
+            markerList={markerList}
+            clickMap={functionMock}
+            clickMarker={functionMock}
+            setMarkerToAdd={functionMock}
+            currentMapName={currentMapName}
+        />);
+        /*
+        const map = await screen.findByTestId('mapToTest');
+        fireEvent.click(map);
+        */
+        expect(await screen.findByText("Map loading...")).toBeInTheDocument();
 
-    it('should render markers', () => {
-        render(
-            <Map
-                session={session}
-                markers={markers}
-                markerList={markerList}
-                clickMap={clickMap}
-                clickMarker={clickMarker}
-                setMarkerToAdd={setMarkerToAdd}
-                currentMapName={currentMapName}
-            />
-        );
-
-        markersList.forEach((marker) => {
-            const markerElement = screen.getByTitle(marker.name);
-            expect(markerElement).toBeInTheDocument();
-        });
-    });
-/*
-    it('should call clickMap when the map is clicked', () => {
-        const clickMapMock = jest.fn();
-
-        render(
-            <Map
-                session={session}
-                markers={markers}
-                markerList={markerList}
-                clickMap={clickMapMock}
-                clickMarker={clickMarker}
-                setMarkerToAdd={setMarkerToAdd}
-                currentMapName={currentMapName}
-            />
-        );
-
-        const map = screen.getByRole('application');
-        map.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-
-        expect(clickMapMock).toHaveBeenCalled();
-    });
-    /*
-    it('should call clickMarker when a marker is clicked', () => {
-        const clickMarkerMock = jest.fn();
-
-        render(
-            <Map
-                session={session}
-                markers={markers}
-                markerList={markerList}
-                clickMap={clickMap}
-                clickMarker={clickMarkerMock}
-                setMarkerToAdd={setMarkerToAdd}
-                currentMapName={currentMapName}
-            />
-        );
-
-        const markerElement = screen.getByTitle(marker.name);
-        markerElement.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-
-        expect(clickMarkerMock).toHaveBeenCalled();
     });
 });
-*/

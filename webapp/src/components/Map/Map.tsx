@@ -26,9 +26,6 @@ function Mapa({session, markers, markerList, clickMap, clickMarker, setMarkerToA
             googleMapsApiKey: process.env.REACT_APP_GOOGLE_KEY!
         })
 
-    // Save map in ref if we want to access the map
-    //const mapRef = React.useRef<google.maps.Map | null>(null);
-
     let mList: { [id: string]: google.maps.Marker } = {};
    
     // Elimina todos los puntos del mapa y llama de nuevo al loadMap.
@@ -47,7 +44,7 @@ function Mapa({session, markers, markerList, clickMap, clickMarker, setMarkerToA
         mList[pointId] = m;
     }
 
-    const onLoad = (googleMap: google.maps.Map): void => { // TODO: aquí se imprimen los puntos recuperados del pod
+    const onLoad = (googleMap: google.maps.Map): void => {
         createMap(session, currentMapName).then(() => {
 
             retrievePoints(session, currentMapName).then(points => {
@@ -79,23 +76,12 @@ function Mapa({session, markers, markerList, clickMap, clickMarker, setMarkerToA
         });
     }
 
-    // const openInfoView = (marker: google.maps.Marker): void => {
-    //     // TODO: Añadir funcion en el onClick de infoWindow
-    //     let infowindow = new google.maps.InfoWindow({
-    //         // Es HTML por lo tanto no funciona el deleteMark()-
-    //         content: '<button onclick="">Borrar Punto</button>',
-    //         ariaLabel: "Uluru",
-    //     });
-    //     infowindow.open(map, marker);
-    // };
-
     const onUnMount = (): void => {
         setMap(null);
     };
 
     const onMapClick = (e: google.maps.MapMouseEvent) => {
         if (e.latLng != null) {
-            //TODO: Que se no se guarde si no le das al botón de marcar
             let marker = new google.maps.Marker({
                 // @ts-ignore
                 position: {lat: e.latLng.lat(), lng: e.latLng.lng()},
@@ -124,6 +110,7 @@ function Mapa({session, markers, markerList, clickMap, clickMarker, setMarkerToA
     return(
         <div>
             <GoogleMap
+                data-testid={"mapToTest"}
                 id="map"
                 mapContainerStyle={containerStyle}
                 options={options as google.maps.MapOptions}
