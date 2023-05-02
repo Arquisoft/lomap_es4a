@@ -55,6 +55,7 @@ jobs:
       - name: Deploy
         uses: cpina/github-action-push-to-another-repository@create-branch-if-needed-arg
         env:
+            REACT_APP_GOOGLE_KEY: ${{ secrets.REACT_APP_GOOGLE_KEY }}
             API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
             source-directory: 'webapp/build'
