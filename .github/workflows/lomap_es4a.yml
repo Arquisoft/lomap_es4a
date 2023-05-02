@@ -1,5 +1,4 @@
 name: CI for LOMAP ES4A
-
 on:
   release:
     types: [published]
@@ -13,7 +12,7 @@ on:
     branches:
       - master
       - develop
-      
+
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
@@ -26,7 +25,6 @@ jobs:
         node-version: 18
     - run: npm --prefix webapp ci
     - run: npm --prefix webapp test --coverage --watchAll
-    #- run: npm --prefix webapp run test:e2e --coverage --watchAll
     - name: Analyze with SonarCloud
       uses: sonarsource/sonarcloud-github-action@v1.8
       env:
@@ -42,55 +40,28 @@ jobs:
         node-version: 18
     - run: npm --prefix webapp install
     - run: npm --prefix webapp run build
-    - run: npm --prefix webapp run test:e2e
-  docker-push-webapp:
-    name: Push webapp Docker Image to GitHub Packages
-    runs-on: ubuntu-latest
-    needs: [e2e-tests]
-    steps:
-    - uses: actions/checkout@v3
-    - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@v5
-      with:
-          name: arquisoft/lomap_es4a/webapp
-          username: ${{ github.actor }}
-          password: ${{ secrets.DOCKER_PUSH_TOKEN }}
-          registry: ghcr.io
-          workdir: webapp
-          buildargs: API_URI
+    - run: npm --prefix webapp run test:e2e  
   deploy:
-     name: Deploy
-     runs-on: ubuntu-latest
-     needs: [docker-push-webapp]
-     steps:
-     - name: Checkout
-       uses: actions/checkout@v3
-     - name: Send
-       uses: dmnemec/copy_file_to_another_repo_action@main
-       env:
-         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-       with:
-         source_file: 'pages/.'
-         user_name: 'gonzalo-rr'
-         destination_repo: 'gonzalo-rr/lomap_es4a'
-         destination_branch: 'gh-pages'
-
- 
- 
-  # deploy:
-  #   name: Deploy over SSH
-  #   runs-on: ubuntu-latest
-  #   needs: [docker-push-webapp]
-  #   steps:
-  #   - name: Deploy over SSH
-  #     uses: fifsky/ssh-action@master
-  #     with:
-  #       host: ${{ secrets.DEPLOY_HOST }}
-  #       user: ${{ secrets.DEPLOY_USER }}
-  #       key: ${{ secrets.DEPLOY_KEY }}
-  #       command: |
-  #         wget https://raw.githubusercontent.com/arquisoft/lomap_es4a/master/docker-compose-deploy.yml -O docker-compose.yml
-  #         docker-compose stop
-  #         docker-compose rm -f
-  #         docker-compose pull   
-  #         docker-compose up -d
+      needs: [e2e-tests]
+      name: gh-pages deploy
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm --prefix webapp install
+      - run: PUBLIC_URL=https://gonzalo-rr.github.io/lomap_es4a/ npm --prefix webapp run build
+      - name: Deploy
+        uses: cpina/github-action-push-to-another-repository@create-branch-if-needed-arg
+        env:
+            API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+            source-directory: 'webapp/build'
+            destination-github-username: 'gonzalo-rr'
+            destination-repository-name: 'lomap_es4a'
+            user-email: srgonzalorr@gmail.com
+            commit-message: See ORIGIN_COMMIT from $GITHUB_REF
+            target-branch: gh-pages
+      - name: Test get variable exported by push-to-another-repository
+        run: echo $DESTINATION_CLONED_DIRECTORY
