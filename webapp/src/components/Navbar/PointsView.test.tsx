@@ -1,4 +1,4 @@
-import {fireEvent, getByRole, getByTestId, getByText, render, screen, waitFor} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import "@inrupt/jest-jsdom-polyfills";
 
 import PointsView from './PointsView';
@@ -158,14 +158,7 @@ test('check pointsView visibility subbmenu opens correctly', async () => {
 
 /*
 test('check pointsView visibility all button switches correctly', async () => {
-    jest.mock('google.maps.Marker', () => {
-        return jest.fn().mockImplementation(() => {
-          return {
-            setPosition: jest.fn(),
-            setMap: jest.fn(),
-          };
-        });
-      });
+   
     let open = true;
     const close = () => {
         open = false;
