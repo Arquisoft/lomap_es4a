@@ -134,11 +134,11 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     }
 
     const editPoint = (point: Point) => {
-            updatePoint(session, currentMapName, point).then(() => {
+        updatePoint(session, currentMapName, point).then(() => {
             closeEditPoint();
 
             markerList[point.id].setTitle(point.name);
-        }).catch();
+        }).catch(error => console.log(error));
     }
     
     const eliminatePoint = (id: string)=>{
@@ -149,7 +149,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
 
             setPointsListOpen(!pointsListOpen)
             setOpenDialog(true)
-        }).catch();
+        }).catch(error => console.log(error));
     }
 
     const getPuntosCategoria = async (cat: string[]) => {
@@ -161,11 +161,11 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         saveImage(session,currentMapName,image,point).then(() => {
             setDetailsPointOpen(!detailsPointOpen)
             setOpenDialog2(true)
-        }).catch();
+        }).catch(error => console.log(error));
     }
     const addReview=(comment:string,ratingValue:number)=>{
 
-        saveReview(session, currentMapName, comment, ratingValue,point).catch();
+        saveReview(session, currentMapName, comment, ratingValue,point).catch(error => console.log(error));
        
     }
     const getNombreMapa= ()=>{
