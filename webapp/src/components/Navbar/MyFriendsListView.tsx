@@ -137,7 +137,7 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
             <Drawer anchor="left" open={props.open} onClose={props.onClose}>
                 <List sx={{width: '25em'}} disablePadding>
                     <ListItem>
-                        <IconButton onClick={props.onClose}>
+                        <IconButton data-testid={"closeMyFriendListView"} onClick={props.onClose}>
                             <ChevronLeftIcon sx={{color: "white"}}/>
                         </IconButton>
                         <ListItemText primary="Your friends list"/>
