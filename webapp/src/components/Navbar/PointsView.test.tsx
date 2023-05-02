@@ -2,6 +2,7 @@ import {fireEvent, render, screen} from '@testing-library/react';
 import "@inrupt/jest-jsdom-polyfills";
 
 import PointsView from './PointsView';
+import { Marker } from "@googlemaps/jest-mocks";
 
 
 test('check pointsView renders correctly', async () => {
@@ -156,7 +157,7 @@ test('check pointsView visibility subbmenu opens correctly', async () => {
 
 });
 
-/*
+
 test('check pointsView visibility all button switches correctly', async () => {
    
     let open = true;
@@ -164,20 +165,18 @@ test('check pointsView visibility all button switches correctly', async () => {
         open = false;
     };
     const functionMock = jest.fn();
-  const { getByTestId } = await render(<PointsView 
-  open={open} 
-  onClose={close} 
-  markerList={{
-    'marker1': new google.maps.Marker({ position: { lat: 40.7128, lng: -74.0060 } }),
-    'marker2': new google.maps.Marker({ position: { lat: 37.7749, lng: -122.4194 } })
-  }} 
-  openEditPoint={functionMock} 
-  deletePoint={functionMock}  
-  getPointsCategory={functionMock} 
-/>);
+  const { getByTestId } = render(<PointsView
+      open={open}
+      onClose={close}
+      markerList={{
+          'marker1': new Marker({ position: { lat: 40.7128, lng: -74.0060 } }),
+          'marker2': new Marker({ position: { lat: 37.7749, lng: -122.4194 } })
+      }}
+      openEditPoint={functionMock}
+      deletePoint={functionMock}
+      getPointsCategory={functionMock} />);
     const button = await getByTestId("visibility");
     fireEvent.click(button);
     const visibilityall = await getByTestId("visibilityall");
     fireEvent.change(visibilityall);//deberia cambiar el switch
 });
-*/

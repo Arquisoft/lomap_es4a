@@ -67,28 +67,28 @@ function MyFriendsListView (props: MyFriendsListViewProps): JSX.Element {
             // Se dan permisos a los amigos
             givePermissions(session, friends).then(() => {
                 setMyFriendList(friends);
-            });
-        });
+            }).catch();
+        }).catch();
     };
 
     const addFriend = (friendWebID: string) => {
         // Se da permiso al nuevo amigo
         givePermissions(session, [friendWebID]).then(() => {
-            addNewFriend(session.info.webId!, session, friendWebID);
-            console.log("Amigo: "+ friendWebID +" añadido.")
-            setOpenDialogAdd(false);
-            setOpenAlert("Friend added!");
-            myFriendList.push(friendWebID);
-        });
+            addNewFriend(session.info.webId!, session, friendWebID).then(() => {
+                setOpenDialogAdd(false);
+                setOpenAlert("Friend added!");
+                myFriendList.push(friendWebID);
+            }).catch();
+        }).catch();
     }
 
     function removeAFriend() {
-        removeFriend(session.info.webId!, session, selectedFriend);
-        console.log("Amigo: "+ selectedFriend +" eliminado.")
-        setOpenDialogRemove(false);
-        setOpenAlert("Friend deleted!");
-        let filteredFriends = myFriendList.filter((friend) => friend !== selectedFriend);
-        setMyFriendList(filteredFriends);
+        removeFriend(session.info.webId!, session, selectedFriend).then(() => {
+            setOpenDialogRemove(false);
+            setOpenAlert("Friend deleted!");
+            let filteredFriends = myFriendList.filter((friend) => friend !== selectedFriend);
+            setMyFriendList(filteredFriends);
+        }).catch();
     }
 
     const goToProfile = (friend: string) => { window.open(friend) };

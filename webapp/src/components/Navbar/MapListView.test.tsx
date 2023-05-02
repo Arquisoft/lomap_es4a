@@ -4,18 +4,34 @@ import MapListView from './MapListView';
 import * as solidApi from '../../solidapi/solidapi';
 import { Session } from '@inrupt/solid-client-authn-browser';
 
-test('check map list view renders correctly', async() => {
 
-    let mapListOpen = true;
-    const closeMapList = () => mapListOpen = false;
+beforeEach( () => {
+    // mockeo de cargar nombres de mapas
+    jest.spyOn(solidApi, 'retrieveMapNames').mockImplementation(
+        (session: Session): Promise<string[]> => Promise.resolve(["Mapa1", "Mapa2"])
+    );
 
-    let currentMapName = "Map";
-    const setCurrentMapName = () => "NuevoMap";
- 
-    await act(async () => { 
-        render(<MapListView open={mapListOpen} onClose={closeMapList} 
-            currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} 
+    // mockeo de cargar nombres de mapas de amigos
+    jest.spyOn(solidApi, 'retrieveFriendsMapNames').mockImplementation(
+        (session: Session): Promise<{urls: string[]; names: string[];}> => 
+            Promise.resolve({urls:["https://dgg.inrupt.net/public/lomap"], names:["MapaAmigo1"]})
+    );
+
+    // mockeo de borrar mapa
+    jest.spyOn(solidApi, 'deleteMap').mockImplementation(
+        (session: Session, mapName: string): Promise<boolean> => Promise.resolve(true)
+    );
+    
+    // Renderizamos el componente
+    render(<MapListView open={true} onClose={() => {}} 
+            currentMapName={"Map"} setCurrentMapName={() => "NuevoMap"} 
             session={{}} />);
+});
+
+
+test('check map list view renders correctly', async() => { 
+
+    await act(async () => {  
 
         const linkElement = await screen.findByText("Map List");
         expect(linkElement).toBeInTheDocument();
@@ -24,17 +40,8 @@ test('check map list view renders correctly', async() => {
 
 
 test('check create map with valid name', async() => {
-
-    let mapListOpen = true;
-    const closeMapList = () => mapListOpen = false;
-
-    let currentMapName = "Map";
-    const setCurrentMapName = () => "NuevoMap";
  
-    await act(async () => { 
-        render(<MapListView open={mapListOpen} onClose={closeMapList} 
-            currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} 
-            session={{}} />);
+    await act(async () => {        
         
         // Escribimos el nombre del nuevo mapa
         const mapsNameTextField = await screen.findByTestId("mapNameField");
@@ -52,17 +59,8 @@ test('check create map with valid name', async() => {
 
 
 test('check create map with invalid name', async() => {
-
-    let mapListOpen = true;
-    const closeMapList = () => mapListOpen = false;
-
-    let currentMapName = "Map";
-    const setCurrentMapName = () => "NuevoMap";
  
-    await act(async () => { 
-        render(<MapListView open={mapListOpen} onClose={closeMapList} 
-            currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} 
-            session={{}} />);
+    await act(async () => {         
         
         // Escribimos el nombre del nuevo mapa de manera incorrecta
         const mapsNameTextField = await screen.findByTestId("mapNameField");
@@ -82,29 +80,9 @@ test('check create map with invalid name', async() => {
 });
 
 
-test('check load map', async() => {
-
-    let mapListOpen = true;
-    const closeMapList = () => mapListOpen = false;
-
-    let currentMapName = "Map";
-    const setCurrentMapName = () => "NuevoMap";
-
-    // mockeo de cargar nombres de mapas
-    jest.spyOn(solidApi, 'retrieveMapNames').mockImplementation(
-        (session: Session): Promise<string[]> => Promise.resolve(["Mapa1", "Mapa2"])
-    );
-
-    // mockeo de cargar nombres de mapas de amigos
-    jest.spyOn(solidApi, 'retrieveFriendsMapNames').mockImplementation(
-        (session: Session): Promise<{urls: string[]; names: string[];}> => 
-            Promise.resolve({urls:["https://dgg.inrupt.net/public/lomap"], names:["MapaAmigo1"]})
-    );
+test('check load map', async() => {    
  
-    await act(async () => { 
-        render(<MapListView open={mapListOpen} onClose={closeMapList} 
-            currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} 
-            session={{}} />);
+    await act(async () => {         
         
         // Hacemos click en el select de cargar mapa
         const loadMapSelect = await screen.findByTestId("selectMap");
@@ -129,28 +107,9 @@ test('check load map', async() => {
 
 
 test('check delete map', async() => {
-
-    let mapListOpen = true;
-    const closeMapList = () => mapListOpen = false;
-
-    let currentMapName = "Map";
-    const setCurrentMapName = () => "NuevoMap";
-
-    // mockeo de cargar nombres de mapas
-    jest.spyOn(solidApi, 'retrieveMapNames').mockImplementation(
-        (session: Session): Promise<string[]> => Promise.resolve(["Mapa1", "Mapa2"])
-    );
-
-    // mockeo de borrar mapa
-    jest.spyOn(solidApi, 'deleteMap').mockImplementation(
-        (session: Session, mapName: string): Promise<boolean> => Promise.resolve(true)
-    );
  
     await act(async () => { 
-        render(<MapListView open={mapListOpen} onClose={closeMapList} 
-            currentMapName={currentMapName} setCurrentMapName={setCurrentMapName} 
-            session={{}} />);
-        
+      
         // Hacemos click en el select de borrar mapa
         const deleteMapSelect = await screen.findByTestId("selectDeleteMap");
         const button = within(deleteMapSelect).getByRole("button");
