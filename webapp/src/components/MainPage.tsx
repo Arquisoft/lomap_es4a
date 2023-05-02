@@ -84,7 +84,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             }
             setPointsListOpen(false);
             setEditPointOpen(true);
-        });
+        }).catch();
     }
 
     const clickMarker = (lat: number, lng: number) => {
@@ -101,7 +101,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
             }
            
             
-        });
+        }).catch();
         
     }
 
@@ -125,29 +125,31 @@ export default function MainPage({ session }: SessionType): JSX.Element {
       };
 
     const createPoint = (point: Point) => {
-        addPoint(session, currentMapName, point);
-        markerToAdd?.setIcon(savedMarker2);
-        markerToAdd?.setVisible(true);
-        markerToAdd?.setTitle(point.name);
-        markerList[point.id] = (markerToAdd!);
+        addPoint(session, currentMapName, point).then(() => {
+            markerToAdd?.setIcon(savedMarker2);
+            markerToAdd?.setVisible(true);
+            markerToAdd?.setTitle(point.name);
+            markerList[point.id] = (markerToAdd!);
+        }).catch();
     }
 
     const editPoint = (point: Point) => {
-        updatePoint(session, currentMapName, point);
-        closeEditPoint();
+            updatePoint(session, currentMapName, point).then(() => {
+            closeEditPoint();
 
-        markerList[point.id].setTitle(point.name);
+            markerList[point.id].setTitle(point.name);
+        }).catch();
     }
     
     const eliminatePoint = (id: string)=>{
-        deletePoint(session, currentMapName, id);
-        markerList[id].setMap(null);
+        deletePoint(session, currentMapName, id).then(() => {
+            markerList[id].setMap(null);
 
-        delete markerList[id];
+            delete markerList[id];
 
-        setPointsListOpen(!pointsListOpen)
-        setOpenDialog(true)
-        
+            setPointsListOpen(!pointsListOpen)
+            setOpenDialog(true)
+        }).catch();
     }
 
     const getPuntosCategoria = async (cat: string[]) => {
@@ -156,13 +158,14 @@ export default function MainPage({ session }: SessionType): JSX.Element {
         return result;
     }
     const addImage=(image: File,point:Point)=>{
-        saveImage(session,currentMapName,image,point)
-        setDetailsPointOpen(!detailsPointOpen)
-        setOpenDialog2(true)
+        saveImage(session,currentMapName,image,point).then(() => {
+            setDetailsPointOpen(!detailsPointOpen)
+            setOpenDialog2(true)
+        }).catch();
     }
     const addReview=(comment:string,ratingValue:number)=>{
 
-        saveReview(session, currentMapName, comment, ratingValue,point);
+        saveReview(session, currentMapName, comment, ratingValue,point).catch();
        
     }
     const getNombreMapa= ()=>{

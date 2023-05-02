@@ -4,7 +4,6 @@ import MyFriendsListView from "./MyFriendsListView";
 import * as permissions from '../../solidapi/permissions';
 import {Session} from "@inrupt/solid-client-authn-browser";
 import * as solidApi from "../../solidapi/solidapi";
-import AddPoint from "../Options/AddPoint";
 
 test('check friend list view renders correctly', async() => {
     jest.spyOn(permissions, 'givePermissions').mockImplementation((session:Session, friendsWebIds:string[]): Promise<void> => Promise.resolve());
