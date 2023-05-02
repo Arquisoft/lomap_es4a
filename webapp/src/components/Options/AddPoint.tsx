@@ -47,12 +47,10 @@ const darkTheme = createTheme({
 
 function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
 
-  
-  
   const [pointName, setPointName] = useState("");
   const [pointDescription, setPointDescription] = useState("");
-  const [, setPointCategoryValue] = useState("");
-  const [pointCategoryInputValue, setPointCategoryInputValue] = useState("");
+  const [pointCategoryValue, setPointCategoryValue] = useState<string | null>(null);
+  const [pointCategoryInputValue, setPointCategoryInputValue] = useState<string>("");
   const [errorName, setErrorName] = useState(false);
   const [errorCategory, setErrorCategory] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
@@ -75,12 +73,11 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
       setErrorName(true);
 
     } else if(pointCategoryInputValue === '') {
+      console.log("Por último se guarda el punto (o se intenta) con pointCategoryInputValue igual a " + pointCategoryInputValue);
       if (pointName !== '' ){
         setErrorName(false);
       }
       setErrorCategory(true);
-      //setOpenDialog(true);
-      
     } else {
       onClose();
       setPointName("");
@@ -135,25 +132,24 @@ function AddPoint({open, onClose, clickedPoint, createPoint}: any) {
                   options={Object.keys(options)}
                   className="point-fill-field"
                   includeInputInList
+                  value={pointCategoryValue}
                   onChange={(event: any, newValue: string | null) => {
-                    if (newValue !== null) {
-                      setPointCategoryValue(newValue);
-                    }
+                    console.log("Se cambia la pointCategoryValue, de " + pointCategoryValue + " a " + newValue);
+                    setPointCategoryValue(newValue);
                     setErrorCategory(newValue === null);
+                    console.log("Y queda como " + pointCategoryValue);
                   }}
                   inputValue={pointCategoryInputValue}
-                  onInputChange={(event, newInputValue) => {
-                    if (newInputValue !== null && newInputValue !== "") {
-                      setPointCategoryInputValue(newInputValue);
-                    }
+                  onInputChange={(event: any, newInputValue: string) => {
+                    console.log("Se cambia la pointInputCategoryValue, de " + pointCategoryInputValue + " a " + newInputValue);
+                    setPointCategoryInputValue(newInputValue);
+                    console.log("Y queda como " + pointCategoryInputValue);
                   }}
                   fullWidth
                   isOptionEqualToValue={(option, value) => option === value}
                   renderInput={(params) => (
-
                       <TextField {...params} label="New point's category" variant="filled" fullWidth  error={errorCategory}
                                  helperText={errorCategory ? 'Empty category. Select one' : ''} />
-
                   )}
 
               />
