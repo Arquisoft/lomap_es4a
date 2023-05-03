@@ -16,14 +16,20 @@ image::QualityTree.png[]
 |===
 
 Some of these quality attributes have been checked with the following load tests:
+
 * 4 load peaks of 100 users, each 40 seconds:
+
+:imagesdir: images/
 image::loadTest_4_peaks.png[]
 
 * 1 user per second, through 3 minutes:
+
 image::loadTest_1_user_per_second.png[]
 
 * 3 series of 1, 5 and 10 users per second during 60 seconds, each other:
+
 image::loadTest_3_series.png[]
 
 * normal app use (20 users for 30 seconds):
+
 image::loadTest_normal_app_use.png[]
