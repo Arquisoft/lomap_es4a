@@ -6,7 +6,7 @@
 :imagesdir: images/
 image::03_system_scope_context_business.png[business system scope and context diagram]
 
-The main components that the LoMap system interacts with are: Database, Maps API, POD.
+The main components that the LoMap system interacts with are: Maps API, POD.
 
 The final user has a POD and uses the LoMap system to save and share maps. The LoMap system can also access the user's POD to store information.
 
@@ -15,4 +15,4 @@ The final user has a POD and uses the LoMap system to save and share maps. The L
 :imagesdir: images/
 image::03_system_scope_context_technical.png[technical system scope and context diagram]
 
-The components of the application use certain technologies and communicate with eachother using different channels. The LoMap application will be programmed mostly using TypeScript and the React and Node JS Express frameworks. The Pod will be a SOLID POD. The connections that happen between LoMap and the user's device follow the http protocol and the connection between the user's device and the SOLID PODs follow the https protocol, so the information is secure. LoMap will use a Google Maps API, and the connections will use http.
+The components of the application use certain technologies and communicate with eachother using different channels. The LoMap application will be programmed mostly using TypeScript and the React framework. The Pod will be a SOLID POD. The connections that happen between LoMap and the user's device follow the https protocol and the connection between the user's device and the SOLID PODs follow the https protocol, so the information is secure. LoMap will use a Google Maps API, and the connections will use http.
