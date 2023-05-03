@@ -66,6 +66,8 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
   const [openDialog, setOpenDialog] = React.useState(false);
 
   const { session } = useSession();
+
+  const goToProfile = (profile: string) => { window.open(profile) };
   const handleClickOpen = () => {
     setOpenDialog(true);
   };
@@ -94,7 +96,7 @@ function Navbar({open, toggleNavbar, openPointsList, openMapList, openMyFriendsL
           >
 
         <List disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={() => goToProfile(session.info.webId!)}>
             <Typography
               variant="h6"
               noWrap

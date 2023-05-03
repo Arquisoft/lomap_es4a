@@ -20,6 +20,8 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ toggleNavbar ,markers,nombreMapa }) =>  {
 
+  const goToRepository = (repository: string) => { window.open(repository) };
+
   return (
     <Box sx={{resize: 'both'}}>
       <Box>
@@ -29,7 +31,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ toggleNavbar ,markers,nombreMapa 
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{display:'flex',pr:'1em'}}>
-            <IconButton sx={{color:'white'}}> <Typography variant="h6">LoMap_es4a<AiFillPushpin /></Typography></IconButton>
+            <IconButton onClick={() => goToRepository("https://github.com/Arquisoft/lomap_es4a")} sx={{color:'white'}}> <Typography variant="h6">LoMap_es4a<AiFillPushpin /></Typography></IconButton>
           </Box>
 
           <Divider orientation='vertical' sx={{backgroundColor: "#808b96",height:'4.5vh',width:'0.05em'}} />
