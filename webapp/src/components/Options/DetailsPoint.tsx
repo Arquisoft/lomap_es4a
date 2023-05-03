@@ -27,6 +27,8 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import {useEffect, useState} from "react";
 import ImageUploader from './ImageUploader';
 import Review from '../../solidapi/Review';
+import {FOAF} from "@inrupt/vocab-common-rdf";
+import {CombinedDataProvider, Text} from "@inrupt/solid-ui-react";
 
 const theme = createTheme({
   components: {
@@ -79,7 +81,7 @@ export const ImageViewer = ({ image, onClose }: { image: MyImage; onClose: () =>
   );
 };
 
-function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: any) {
+function DetailsPoint({ open, onClose, point, markerList, addImage, addReview}: any) {
   const [ratingValue, setRatingValue] = React.useState<number | null>(0);
   const [images, setImages] = useState<MyImage[]>([]);
   const [, setReviews] = useState<Review[]>([]);
@@ -120,14 +122,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
 
   const handleAddReview = () => {
     if (comment.trim() !== "" && ratingValue !== null) {
-      addReview(comment, ratingValue)
-      //setAuthor({identifier:"2"  })
-      /*
-      setReviews([...reviews, { 
-        author: "u",
-        reviewBody: comment, 
-        ratingValue: ratingValue,
-      datePublished:Date.now() }]);*/
+      addReview(comment, ratingValue);
       setComment("");
       setRatingValue(0);
     }
@@ -158,10 +153,18 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
         {point.review ?point.review.map((review:Review) => (
           
           <Box key={review.datePublished}>
-            <Rating name="read-only" value={review.reviewRating} readOnly />
+            <Rating name="read-only" value={review.reviewRating.score} readOnly />
             <ListItem>
               <Typography variant="body1" color="textPrimary">
-              {"[ "}{review.author}{" ] "}: {review.reviewBody}
+                  {"[ "}
+                  <CombinedDataProvider
+                      datasetUrl={review.author.identifier}
+                      thingUrl={review.author.identifier}>
+                      {FOAF.name !== null && FOAF.name !== undefined ?
+                          (<Text property={FOAF.name}/>)
+                          : (<Typography>User</Typography>)}
+                  </CombinedDataProvider>
+                  {" ] : "} {review.reviewBody}
               </Typography>
             </ListItem>
           </Box>
@@ -206,7 +209,7 @@ function DetailsPoint({ open, onClose, point, markerList,addImage,addReview}: an
 
                   
                   {point && point.id && markerList[point.id] ? (
-                      <Avatar alt="Point Icon" sx={{pl:'1em'}}src={markerList[point.id].icon.url} />
+                      <Avatar alt="Point Icon" sx={{pl:'1em'}} src={markerList[point.id].icon.url} />
                     ) : (
                   <Typography variant="body1" color="textSecondary" sx={{ pl: "1em" }}>
                     No icon available

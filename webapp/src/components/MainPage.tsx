@@ -1,6 +1,6 @@
 import Mapa from "./Map/Map";
 import React from "react";
-import { SessionType } from "../shared/shareddtypes";
+import {SessionType} from "../shared/shareddtypes";
 import AddPoint from "./Options/AddPoint";
 import Point from "../solidapi/Point";
 
@@ -9,12 +9,21 @@ import PointsView from "./Navbar/PointsView";
 import MapListView from "./Navbar/MapListView";
 import SearchBar from "./Searchbar/Searchbar";
 
-import {addPoint, getPointsCategory,getPointFromCoords, deletePoint, getPoint, updatePoint,saveImage, saveReview} from "../solidapi/solidapi";
+import {
+    addPoint,
+    deletePoint,
+    getPoint,
+    getPointFromCoords,
+    getPointsCategory,
+    saveImage,
+    saveReview,
+    updatePoint
+} from "../solidapi/solidapi";
 
 import savedMarker2 from '../images/markerGuerdado2.png';
 import EditPoint from "./Options/EditPoint";
 
-import {Button, Grid, Typography, Box, Dialog, DialogActions, DialogContent} from '@mui/material';
+import {Box, Button, Dialog, DialogActions, DialogContent, Grid, Typography} from '@mui/material';
 import MyFriendsListView from "./Navbar/MyFriendsListView";
 import DetailsPoint from "./Options/DetailsPoint";
 
@@ -52,39 +61,32 @@ export default function MainPage({ session }: SessionType): JSX.Element {
 
     const closeEditPoint = () => {setEditPointOpen(false);setPointsListOpen(true);markerToAdd?.setVisible(false);}
 
-    const openEditPoint = (id: string) => {getPoint(session, currentMapName, id).then(point => {if (point !== null){setPoint(point)};setPointsListOpen(false);setEditPointOpen(true);}).catch(error => console.log(error));}
+    const openEditPoint = (id: string) => {getPoint(session, currentMapName, id).then(point => {if (point !== null){setPoint(point)} setPointsListOpen(false);setEditPointOpen(true);}).catch(error => console.log(error));}
 
-    const clickMarker = (lat: number, lng: number) => {getPointFromCoords(session, currentMapName, lat, lng).then(point => {if (point !== null) {setPoint(point);setDetailsPointOpen(true);} }).catch(error => console.log(error));}
+    const clickMarker = (lat: number, lng: number) => {getPointFromCoords(session, currentMapName, lat, lng).then(point => { if (point !== null) {setPoint(point);setDetailsPointOpen(true);} }).catch(error => console.log(error));}
 
     const closeDetailsPoint = () => { setDetailsPointOpen(false); }
 
     const clickMap = (lat: number, lng: number) => {setClickedPoint({lat: lat, lng: lng});setAddPointOpen(true);}
+
     const handleCloseDialog = () => {setOpenDialog(false);setPointsListOpen(!pointsListOpen)};
 
     const handleCloseDialog2 = () => {setOpenDialog2(false);setDetailsPointOpen(!pointsListOpen)};
 
-    const createPoint = (point: Point) => {addPoint(session, currentMapName, point).then(() => {markerToAdd?.setIcon(savedMarker2);markerToAdd?.setVisible(true);markerToAdd?.setTitle(point.name);markerList[point.id] = (markerToAdd!);}).catch(error => console.log(error));}
+    const createPoint = (point: Point) => {addPoint(session, currentMapName, point).then(() =>
+    {markerToAdd?.setIcon(savedMarker2);markerToAdd?.setVisible(true);markerToAdd?.setTitle(point.name);markerList[point.id] = (markerToAdd!);}).catch(error => console.log(error));}
 
     const editPoint = (point: Point) => {updatePoint(session, currentMapName, point).then(() => {closeEditPoint(); markerList[point.id].setTitle(point.name);}).catch(error => console.log(error));}
     
-    const eliminatePoint = (id: string)=>{deletePoint(session, currentMapName, id).then(() => {markerList[id].setMap(null);delete markerList[id];setPointsListOpen(!pointsListOpen);setOpenDialog(true);}).catch(error => console.log(error));}
+    const eliminatePoint = (id: string)=>{deletePoint(session, currentMapName, id).then(() =>
+    {markerList[id].setMap(null);delete markerList[id];setPointsListOpen(!pointsListOpen);setOpenDialog(true);}).catch(error => console.log(error));}
 
-    const getPuntosCategoria = async (cat: string[]) => {const result = await getPointsCategory(session, currentMapName,  cat);return result;}
-
+    const getPuntosCategoria = async (cat: string[]) => { return await getPointsCategory(session, currentMapName, cat); }
     const addImage=(image: File,point:Point)=>{ saveImage(session,currentMapName,image,point).then(() => {setDetailsPointOpen(!detailsPointOpen);setOpenDialog2(true)}).catch(error => console.log(error));}
 
     const addReview=(comment:string,ratingValue:number)=>{saveReview(session, currentMapName, comment, ratingValue,point).catch(error => console.log(error));}
 
     const getNombreMapa= ()=>{ return currentMapName}
-
-    
-
-    
-    /* Solo para mostrar los puntos (a ser llamado al cerrar la lista de puntos y al actualizar la visibilidad de un punto)
-    const showPoints = () => {
-        // Mostrar puntos en el mapa
-    };
-     */
 
     return (
         <Grid

@@ -18,6 +18,8 @@ import {FOAF} from "@inrupt/vocab-common-rdf";
 import {v4 as uuidv4} from 'uuid';
 import { MyImage } from '../components/Options/Carousel';
 import Author from "./Author";
+import ReviewRating from "./ReviewRating";
+import Review from "./Review";
 
 function checkSession(session: Session): boolean {
     if (session === null || typeof session === "undefined") {
@@ -161,7 +163,7 @@ export async function getPoint(session: Session, mapName:string, id: string): Pr
         let pointToGet: Point | null = null;
         map.spatialCoverage.forEach((point: Point) => {
             if (point.id === id) {
-                pointToGet = point;
+                pointToGet = parsePoint(point);
                 return;
             }
         });
@@ -170,6 +172,17 @@ export async function getPoint(session: Session, mapName:string, id: string): Pr
     } catch (error) {
         return null;
     }
+}
+
+function parsePoint(point: Point) {
+    let reviews: Review[] = [];
+    point.review.forEach(rev => {
+        reviews.push(new Review(
+            new Author(rev.author.identifier),
+            new ReviewRating(Number(rev.reviewRating.score)), Number(rev.datePublished), rev.reviewBody));
+    });
+    return new Point(point.id, point.name, point.category,
+        Number(point.latitude), Number(point.longitude), point.description, point.logo, Number(point.date), reviews);
 }
 
 export async function getPointFromCoords(session: Session, mapName:string, lat: number, lng: number): Promise<Point | null> {
@@ -194,7 +207,7 @@ export async function getPointFromCoords(session: Session, mapName:string, lat: 
         let pointToGet: Point | null = null;
         map.spatialCoverage.forEach((point: Point) => {
             if (point.latitude === lat && point.longitude === lng) {
-                pointToGet = point;
+                pointToGet = parsePoint(point);
                 return;
             }
         });
@@ -248,10 +261,6 @@ export async function addPoint(session: Session, mapName:string, point: Point): 
     }
     return true;
 }
-
-
-
-
 
 export async function deletePoint(session: Session,mapName:string, id: string): Promise<boolean> {
     if (typeof session.info.webId === 'undefined' || session.info.webId === null) {
@@ -317,12 +326,10 @@ export async function deletePoint(session: Session,mapName:string, id: string): 
         let lista:Point[]=[];
 
         for (let i = 0; i < map.spatialCoverage.length; i++) {
-            if(categoryNames.includes(map.spatialCoverage[i].category)){
-            lista.push(map.spatialCoverage[i])
-
+            if (categoryNames.includes(map.spatialCoverage[i].category)) {
+                lista.push(parsePoint(map.spatialCoverage[i]));
             }
         }
-
 
         return lista;
     } catch (error) {
@@ -410,7 +417,7 @@ export async function retrievePoints(session: Session, mapName:string): Promise<
         let points: Point[] = [];
 
         map.spatialCoverage.forEach((point: Point) => {
-            points.push(point);
+            points.push(parsePoint(point));
         });
         return points;
     } catch (error) {
@@ -542,11 +549,9 @@ export async function saveImage(session: Session, mapName:string, image: File, p
    
     let id=uuidv4()
     let url = lomapUrlFor(session)+id;
-    console.log(url)
 
     try {
         point.logo.push(url)
-        console.log(point.logo)
         await updatePoint(session, mapName,point)
         await overwriteFile(
             url,
@@ -576,11 +581,6 @@ export async function getPointImages(session: Session, mapName:string, point:Poi
         };
         
     });
-    /*
-    l.forEach((element:MyImage) => {
-        console.log(element)
-    });
-    */
     return l
    
 }
@@ -593,9 +593,9 @@ export async function saveReview(session: Session, mapName:string, comment:strin
     try {
         let author = JSON.parse(JSON.stringify(new Author(session.info.webId)));
         author["@type"] = "Person";
-        author = JSON.stringify(author);
 
-        let reviewRating = JSON.parse(JSON.stringify(ratingValue));
+        let reviewRating = JSON.parse(JSON.stringify(new ReviewRating(ratingValue)));
+
         reviewRating["@type"] = "Rating";
 
         let review = JSON.parse(JSON.stringify({

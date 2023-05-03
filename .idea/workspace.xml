@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75357aa4-e296-4cfa-b801-c2d5fef4d7a2" name="Changes" comment="Añadida la lógica para recuperar la imagen de perfil">
+      <change afterPath="$PROJECT_DIR$/webapp/src/solidapi/ReviewRating.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendListView.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendListView.test.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendsListView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Navbar/MyFriendsListView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/MainPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/components/Options/DetailsPoint.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/Options/DetailsPoint.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/components/login/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/components/login/LoginPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/solidapi/Review.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/solidapi/Review.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/solidapi/solidapi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/solidapi/solidapi.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +61,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs.jest.jest_package&quot;: &quot;D:/UniOvi/Tercero/Segundo Semestre/ASW/lomap_es4a/webapp/node_modules/react-scripts&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\UniOvi\\Tercero\\Segundo Semestre\\ASW\\lomap_es4a\\webapp\\node_modules\\typescript\\lib&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Usuario\\WebstormProjects\\lomap_es4a\\webapp\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -76,6 +80,7 @@
   <component name="RunManager" selected="Jest.check delete friend">
     <configuration name="Mapa.renders without errors" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
+      <node-options value="" />
       <jest-package value="$PROJECT_DIR$/webapp/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$/webapp" />
       <envs />
@@ -89,6 +94,7 @@
     </configuration>
     <configuration name="check delete friend" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
+      <node-options value="" />
       <jest-package value="$PROJECT_DIR$/webapp/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$/webapp" />
       <envs />
@@ -101,6 +107,7 @@
     </configuration>
     <configuration name="check initial map fails to render" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
+      <node-options value="" />
       <jest-package value="$PROJECT_DIR$/webapp/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$/webapp" />
       <envs />
@@ -113,6 +120,7 @@
     </configuration>
     <configuration name="check initial map renders correctly" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
+      <node-options value="" />
       <jest-package value="$PROJECT_DIR$/webapp/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$/webapp" />
       <envs />
@@ -125,6 +133,7 @@
     </configuration>
     <configuration name="check initial map renders successfully" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
+      <node-options value="" />
       <jest-package value="$PROJECT_DIR$/webapp/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$/webapp" />
       <envs />
