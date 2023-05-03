@@ -25,7 +25,7 @@ const ImageUploader = ({ onImageUpload }: ImageUploaderProps) => {
 
   return (
     <div>
-      <input data-testid="inp" type="file" onChange={handleImageChange} />
+      <input data-testid="inp" accept="image/*" type="file" onChange={handleImageChange} />
       
     </div>
   );
