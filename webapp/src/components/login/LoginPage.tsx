@@ -31,7 +31,7 @@ const theme = createTheme();
 
 export default function LoginPage() {
 	const [podProvider, setPodProvider] = useState("https://inrupt.net");
-	const [currentUrl] = useState("http://localhost:3000/");
+	const [currentUrl] = useState("https://gonzalo-rr.github.io/lomap_es4a/");
   
 	
 	// Cambia el proveedor de pod

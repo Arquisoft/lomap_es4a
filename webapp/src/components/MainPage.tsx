@@ -20,7 +20,7 @@ import {
     updatePoint
 } from "../solidapi/solidapi";
 
-import savedMarker2 from '../images/markerGuerdado2.png';
+import lomapMarker from '../images/lomapMarker.png';
 import EditPoint from "./Options/EditPoint";
 
 import {Box, Button, Dialog, DialogActions, DialogContent, Grid, Typography} from '@mui/material';
@@ -74,7 +74,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
     const handleCloseDialog2 = () => {setOpenDialog2(false);setDetailsPointOpen(!pointsListOpen)};
 
     const createPoint = (point: Point) => {addPoint(session, currentMapName, point).then(() =>
-    {markerToAdd?.setIcon(savedMarker2);markerToAdd?.setVisible(true);markerToAdd?.setTitle(point.name);markerList[point.id] = (markerToAdd!);}).catch(error => console.log(error));}
+    {markerToAdd?.setIcon(lomapMarker);markerToAdd?.setVisible(true);markerToAdd?.setTitle(point.name);markerList[point.id] = (markerToAdd!);}).catch(error => console.log(error));}
 
     const editPoint = (point: Point) => {updatePoint(session, currentMapName, point).then(() => {closeEditPoint(); markerList[point.id].setTitle(point.name);}).catch(error => console.log(error));}
     

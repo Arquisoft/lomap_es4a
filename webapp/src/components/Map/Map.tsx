@@ -4,8 +4,8 @@ import {GoogleMap, useJsApiLoader} from "@react-google-maps/api";
 // Map Settings
 import {containerStyle, center, options} from "./settings";
 // Images
-import savedMarker from '../../images/markerGuardado.png';
-import savedMarker2 from '../../images/markerGuerdado2.png';
+import tmpMarker from '../../images/tmpMarker.png';
+import savedMarker2 from '../../images/lomapMarker.png';
 import {createMap, retrievePoints} from "../../solidapi/solidapi";
 
 function Mapa({session, markers, markerList, clickMap, clickMarker, setMarkerToAdd, currentMapName}: any): JSX.Element {
@@ -33,7 +33,7 @@ function Mapa({session, markers, markerList, clickMap, clickMarker, setMarkerToA
 
     const onUnMount = (): void => {setMap(null);};
     // @ts-ignore
-    const onMapClick = (e: google.maps.MapMouseEvent) => {if (e.latLng != null) {let marker = new google.maps.Marker({position: {lat: e.latLng.lat(), lng: e.latLng.lng()}, map: map, title: 'Prueba save', icon: {url: savedMarker,}, visible:true,});marker.addListener('click', (marker: any) =>{clickMarker(marker.latLng.lat(), marker.latLng.lng()); }); setMarkerToAdd(marker); clickMap(e.latLng.lat(), e.latLng.lng());}};
+    const onMapClick = (e: google.maps.MapMouseEvent) => {if (e.latLng != null) {let marker = new google.maps.Marker({position: {lat: e.latLng.lat(), lng: e.latLng.lng()}, map: map, title: 'Prueba save', icon: {url: tmpMarker,}, visible:true,});marker.addListener('click', (marker: any) =>{clickMarker(marker.latLng.lat(), marker.latLng.lng()); }); setMarkerToAdd(marker); clickMap(e.latLng.lat(), e.latLng.lng());}};
 
     if(!isLoaded) return <div>Map loading...</div>;return(<div><GoogleMap data-testid={"mapToTest"} id="map" mapContainerStyle={containerStyle} options={options as google.maps.MapOptions} center={center} zoom={10} onLoad={onLoad} onUnmount={onUnMount} onClick={onMapClick}></GoogleMap></div>);
 }
