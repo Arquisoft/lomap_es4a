@@ -37,7 +37,7 @@ You create a new map by writing a new map’s name in the create a new map optio
 You load a different map by selecting one of your maps or one of your friend’s maps and pressing “load map” to switch to that map. (2)
 
 You can delete one of your maps by selecting one of your maps and pressing “delete map” to delete it. (3)
-[image](https://user-images.githubusercontent.com/98962656/236053404-3d5b6700-506c-49fc-99e6-a75983811c0b.png)
+![image](https://user-images.githubusercontent.com/98962656/236053404-3d5b6700-506c-49fc-99e6-a75983811c0b.png)
 
 ## How to add a new place
 To add a new place, click in the map, where you want the point to be located.
