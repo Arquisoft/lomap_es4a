@@ -82,7 +82,7 @@ test('check cancel delete friend', async() => {
         const deleteFriendButton = await screen.findByTestId("del-amigo2");
         fireEvent.click(deleteFriendButton);
 
-        // Cancelamos la acción
+        // Cancelamos la acciónn
         const cancelDelete  = await screen.findByText("Cancel");
 
         fireEvent.click(cancelDelete);

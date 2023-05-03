@@ -7,7 +7,7 @@ beforeEach( () => {
   open = true;
   const close = () => open = false;
   const functionMocked = jest.fn();
-  const { } = render(<EditPoint open={open} onClose={close} point={new Point("1", "PName", "Bar", 0, 0, "NoDesc")} editPoint={functionMocked}/>);
+   render(<EditPoint open={open} onClose={close} point={new Point("1", "PName", "Bar", 0, 0, "NoDesc")} editPoint={functionMocked}/>);
 });
 test('check Edit Point renders correctly', async () => {
    
