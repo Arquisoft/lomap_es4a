@@ -14,3 +14,16 @@ image::QualityTree.png[]
 | Efficiency | The conection and browsing speed must be fast enough to keep the users' attention and to not bore them, giving a fluent experience through the app. | Medium-high
 | Testability | The application should be able to go through different test and complete them successfully. Besides, the app has to be prepared for all kind of logical uses by the user | Medium-low
 |===
+
+Some of these quality attributes have been checked with the following load tests:
+* 4 load peaks of 100 users, each 40 seconds:
+image::loadTest_4_peaks.png[]
+
+* 1 user per second, through 3 minutes:
+image::loadTest_1_user_per_second.png[]
+
+* 3 series of 1, 5 and 10 users per second during 60 seconds, each other:
+image::loadTest_3_series.png[]
+
+* normal app use (20 users for 30 seconds):
+image::loadTest_normal_app_use.png[]
