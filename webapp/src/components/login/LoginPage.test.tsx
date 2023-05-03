@@ -18,9 +18,9 @@ test('check pod provider select works correctly', async() => {
 
     // Cambiamos el valor del select
     const input = container.querySelector("input")!;
-    fireEvent.change(input, { target: { value: "https://login.inrupt.com" } });
+    fireEvent.change(input, { target: { value: "https://solidcommunity.net" } });
 
     // Comprobamos que el proveedor del select ha cambiado
-    const finalProvider = await screen.findByText("pod.Inrupt.com");
+    const finalProvider = await screen.findByText("Solid Community");
     expect(finalProvider).toBeInTheDocument();
 });

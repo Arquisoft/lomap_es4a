@@ -126,7 +126,7 @@ export default function MainPage({ session }: SessionType): JSX.Element {
 
             <Dialog onClose={handleCloseDialog2} aria-labelledby="customized-dialog-title" open={openDialog2}>
                 <DialogContent dividers>
-                <Typography gutterBottom>Image uploaded!</Typography>
+                <Typography gutterBottom>Reopen the panel to see the uploaded image</Typography>
                 </DialogContent>
                 <DialogActions>
                 <Button autoFocus onClick={handleCloseDialog2} color="primary">OK</Button>

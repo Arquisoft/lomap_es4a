@@ -86,7 +86,6 @@ export default function LoginPage() {
 						onChange={handleChange}
 					>
 						<MenuItem value={"https://inrupt.net"}>Inrupt.net</MenuItem>
-						<MenuItem value={"https://login.inrupt.com"}>pod.Inrupt.com</MenuItem>
 						<MenuItem value={"https://solidcommunity.net"}>Solid Community</MenuItem>
 						<MenuItem value={"https://solidweb.org"}>Solid Web</MenuItem>
 					</Select>

@@ -16,7 +16,7 @@ export async function givePermissions(session: Session, friendsWebIds:string[]) 
     if (session.info.webId === null || typeof session.info.webId === "undefined")
         throw new Error("Invalid session");
 
-    const lomapUrl = session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/lomap");
+    const lomapUrl = session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/lomap_es4a");
 
     // Fetch the SolidDataset and its associated ACLs, if available:
     const myDatasetWithAcl = await getSolidDatasetWithAcl(lomapUrl, {fetch: session.fetch});
