@@ -88,9 +88,5 @@ include::10_quality_scenarios.adoc[]
 include::11_technical_risks.adoc[]
 
 <<<<
-// 12. Glossary
-include::12_glossary.adoc[]
-
-<<<<
 // About
 include::about-arc42.adoc[]
