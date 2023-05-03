@@ -13,6 +13,9 @@ on:
       - master
       - develop
 
+env:
+  REACT_APP_GOOGLE_KEY: ${{ secrets.REACT_APP_GOOGLE_KEY }}
+
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
