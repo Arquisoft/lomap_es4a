@@ -12,7 +12,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Carousel, { MyImage } from "./Carousel";
 import {
 
-  Avatar, Box, Button,
+  Box, Button,
   Collapse,
   createTheme, 
   IconButton,
