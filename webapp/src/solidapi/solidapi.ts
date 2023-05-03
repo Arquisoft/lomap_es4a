@@ -45,19 +45,19 @@ export function checkIsMapURL(mapUrl:string): boolean {
     return mapUrl.includes("https://");
 }
 
-// Devuelve el nombre del usuario de una URL del estilo https://dgg.inrupt.net/public/lomap/mapa1
+// Devuelve el nombre del usuario de una URL del estilo https://dgg.inrupt.net/public/lomap_es4a/mapa1
 export function extractUsersNameFromURL(mapUrl:string): string {
     return mapUrl.split("//")[1].split(".")[0];
 }
 
-// Devuelve el nombre del mapa de una URL del estilo https://dgg.inrupt.net/public/lomap/mapa1
+// Devuelve el nombre del mapa de una URL del estilo https://dgg.inrupt.net/public/lomap_es4a/mapa1
 export function extractMapNameFromURL(mapUrl:string): string {
-    return mapUrl.split("/lomap/")[1];
+    return mapUrl.split("/lomap_es4a/")[1];
 }
 
 function mapUrlFor(session: Session, mapName:string): string {
     if (typeof session.info.webId !== "undefined" && checkMapNameIsValid(mapName)) {
-        return session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/lomap", "/", mapName);
+        return session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/lomap_es4a", "/", mapName);
     } 
     else if (checkIsMapURL(mapName)) {
         return mapName;
@@ -71,11 +71,11 @@ async function checkStructure(session: Session, mapName: string): Promise<boolea
     let mapUrl = "";
     if (typeof session.info.webId !== "undefined" && checkMapNameIsValid(mapName)) {
         publicUrl = session.info.webId.split("/").slice(0, 3).join("/").concat("/public/");
-        lomapUrl = publicUrl.concat("lomap/");
+        lomapUrl = publicUrl.concat("lomap_es4a/");
         mapUrl = lomapUrl.concat(mapName);
     } else if (checkIsMapURL(mapName)) {
         publicUrl = mapName.split("/").slice(0, 3).join("/").concat("/public/");
-        lomapUrl = publicUrl.concat("lomap/");
+        lomapUrl = publicUrl.concat("lomap_es4a/");
         mapUrl = mapName;
     } else {
         return false;
@@ -109,7 +109,7 @@ export async function createMap(session: Session, mapName:string): Promise<boole
     } // Check if there's a structure for the map already created
 
     let url = mapUrlFor(session, mapName);
-    mapName = checkIsMapURL(mapName) ? mapName.split("/lomap/")[1] : mapName;
+    mapName = checkIsMapURL(mapName) ? mapName.split("/lomap_es4a/")[1] : mapName;
 
     try {
         let persona  = {
@@ -431,13 +431,13 @@ export async function retrieveMapNames(session: Session): Promise<string[]> {
         return [];
     } // Check if the webId is undefined
 
-    let url = session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/lomap");
+    let url = session.info.webId.split("/").slice(0, 3).join("/").concat("/public", "/lomap_es4a");
 
     let dataset = await getSolidDataset(url, { fetch: session.fetch });
     let mapUrls = getContainedResourceUrlAll(dataset); // urls de los mapas del usuario
 
     return mapUrls.map(mapUrl =>
-        mapUrl.split("/lomap/")[1]
+        mapUrl.split("/lomap_es4a/")[1]
     );
 }
 
@@ -449,7 +449,7 @@ export async function retrieveFriendsMapNames(session: Session): Promise<{urls: 
 
     let friendsURLs: string[] = await myFriends(session);
 
-    friendsURLs = friendsURLs.map(url => url.split("/").slice(0, 3).join("/").concat("/public", "/lomap"));
+    friendsURLs = friendsURLs.map(url => url.split("/").slice(0, 3).join("/").concat("/public", "/lomap_es4a"));
 
     let friendsMapURLs: string[] = [];
     for (let url of friendsURLs) {
@@ -461,7 +461,7 @@ export async function retrieveFriendsMapNames(session: Session): Promise<{urls: 
         }
     }
 
-    let friendsMapNames = friendsMapURLs.map(mapUrl => mapUrl.split("/lomap/")[1]);
+    let friendsMapNames = friendsMapURLs.map(mapUrl => mapUrl.split("/lomap_es4a/")[1]);
     
     return {
         urls: friendsMapURLs,
