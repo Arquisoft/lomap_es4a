@@ -4,8 +4,8 @@
 
 === Development Diagram
 
-While in development, the LoMap system will be run in the developer's computer. The system will be deployed in the developer's computer using Docker images which contain the necesary programs to run the application as a standalone application. Prometheus and Grafana will monitor and give information about the restapi. As it is shown in the diagram, the SOLID PODs, as well as the Maps API, are not part of the LoMap system.
-While the application is being developed, the MongoDB database will be allocated in the developer's computer. This will not be the case when the application is deployed.
+While in development, the LoMap system will be run in the developer's computer. The system will be deployed in the developer's computer using a Docker image which contains the necesary programs to run the application as a standalone application. As it is shown in the diagram, the SOLID PODs, as well as the Maps API, are not part of the LoMap system.
+While the application is being developed, there is a Docker image that runs the webapp. This will not be the case when the application is deployed.
 
 :imagesdir: images/
 image::07_deployment_view_development.png[deployment view diagram in development]
