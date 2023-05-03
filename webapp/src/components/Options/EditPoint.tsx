@@ -58,10 +58,8 @@ function EditPoint({open, onClose, point, editPoint}: any) {
       const controller = new AbortController();
       setPointName(point.name);
       setPointDescription(point.description);
-      Object.keys(options).forEach(o=>{if(options[o]===point.category){setPointCategoryInputValue(o); console.log(o);return () => {/*cancel the request before component unmounts*/controller.abort();};}
+      Object.keys(options).forEach(o=>{if(options[o]===point.category){setPointCategoryInputValue(o); return () => {/*cancel the request before component unmounts*/controller.abort();};}
       })
-      //setPointCategoryInputValue(point.category);
-    
   },[point]);
 
   const cancel = () => {

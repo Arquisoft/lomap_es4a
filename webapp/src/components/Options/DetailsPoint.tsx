@@ -128,7 +128,6 @@ function DetailsPoint({ open, onClose, point, markerList, addImage, addReview}: 
     }
   };
   const ponerImagenes=()=>{
-    //console.log(point)
     if (point.logo) {
       let l:any=point.logo.map((imageUrl:string) => {          
         return {
@@ -204,18 +203,6 @@ function DetailsPoint({ open, onClose, point, markerList, addImage, addReview}: 
                   <Typography variant="subtitle1" color="textPrimary" >Point's category:</Typography>
                   <Typography data-testid="catField" variant="body1" color="textSecondary" sx={{pl:'1em'}}>{point.category}</Typography>
                 </ListItem>
-                <ListItem>
-                  <Typography variant="subtitle1" color="textPrimary" >Point's icon:</Typography>
-
-                  
-                  {point && point.id && markerList[point.id] ? (
-                      <Avatar alt="Point Icon" sx={{pl:'1em'}} src={markerList[point.id].icon.url} />
-                    ) : (
-                  <Typography variant="body1" color="textSecondary" sx={{ pl: "1em" }}>
-                    No icon available
-                  </Typography>
-                  )}
-                  </ListItem>
                   <Divider sx={{backgroundColor: "#808b96", height: "0.1em"}} />
                   <ListItemButton data-testid="openImages" onClick={handleImagesSubmenu}>
                         <ListItemText primary="Point's images" />
