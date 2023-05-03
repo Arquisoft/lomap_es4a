@@ -15,6 +15,6 @@
 
 ==== Technical Debt
 
-* There is no REST API, which means there is no back-end. This is something that may hinder future development. Not having a REST API also means that the application will not be able to be used through requests to the REST API.
+* There is no REST API, which means there is no backend. This is something that may hinder future development. Not having a REST API also means that the application will not be able to be used through requests to the REST API.
 * There is no database, this means that there is no possibility to store useful information centrally. This might be useful for future growth of the application.
 * The code could be better organized, currently a change may require to update various files. In the future the application may need to be refactored to lower its coupling.

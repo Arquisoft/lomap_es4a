@@ -7,4 +7,5 @@
 |Desing Decision|Advantages|Disadvantages
 | TypeScript | Versatile language to program web applications. | Neither of us has experience with its use.
 | React | Very used javascript library. Easy to learn and use. Reusable components. | We have never worked with a library like this.
+| Not using REST API | Less latency. Easier to develop. Lighter application. | Higher coupling in the application. Lack of backend
 |===
