@@ -62,6 +62,7 @@ To edit a place, first press the menu on the upper right-hand corner of your scr
 ![image](https://user-images.githubusercontent.com/98962656/236052651-5e306d77-89a6-4b98-ae19-34440f4498a7.png)
 
 Then press “Points”.
+
 ![image](https://user-images.githubusercontent.com/98962656/236056077-f3051942-9e0f-4787-a814-8a9d85f9ff64.png)
 
 The menu you will see has two parts, the first one is to filter the places, by categories (for now). The second one is to change their visibility.
