@@ -3,7 +3,7 @@
 
 === Requirements Overview
 
-The LoMap system is a software solution that allows the citizens of a city to share places of interest woth other users. These places are part of a map, and the users can give feedback about them to other users.
+The LoMap system is a software solution that allows the citizens of a city to share places of interest with other users. These places are part of a map, and the users can give feedback about them to other users.
 
 The LoMap system must accomplish the following requirements:
 
