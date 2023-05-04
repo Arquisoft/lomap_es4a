@@ -3,7 +3,7 @@
 //
 // ====================================
 
-= image:LogoASW.png[arc42] LOMAP ES4A
+= image:lomapLogo.png[arc42]
 // toc-title definition MUST follow document title without blank line!
 :toc: left
 :toc-title: Table of Contents
@@ -86,10 +86,6 @@ include::10_quality_scenarios.adoc[]
 <<<<
 // 11. Technical Risks
 include::11_technical_risks.adoc[]
-
-<<<<
-// 12. Glossary
-include::12_glossary.adoc[]
 
 <<<<
 // About

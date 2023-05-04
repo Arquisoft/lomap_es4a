@@ -39,14 +39,14 @@ folder api as "Maps' API"
 folder pod as "User's pod"
 package LoMap {
     component frontend
-    component backend
+    component solidapi
     
-    frontend <-> backend
+    frontend <-> solidapi
 }
 
-backend -up-> api: API request
+frontend -up-> api: API request
 User -up-> frontend: interacts with
-backend<-right-> pod: obtains data
+solidapi<-right-> pod: obtains data
 ----
 
 Motivation::
@@ -58,24 +58,6 @@ Contained Building Blocks::
 |===
 | **Black boxes** | **Description**
 | Frontend | Application user's interface.
-| Backend | It is in charge of administrate the application logic.
+| Solidapi | It contains all the functionality related with pod's management.
 |===
 
-
-
-=== Level 3
-
-==== White Box <_building block x.1_>
-
-_<white box template>_
-
-
-==== White Box <_building block x.2_>
-
-_<white box template>_
-
-
-
-==== White Box <_building block y.1_>
-
-_<white box template>_

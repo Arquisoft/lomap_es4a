@@ -1,72 +1,35 @@
 [[section-quality-scenarios]]
 == Quality Requirements
 
-
-[role="arc42help"]
-****
-
-.Content
-This section contains all quality requirements as quality tree with scenarios. The most important ones have already been described in section 1.2. (quality goals)
-
-Here you can also capture quality requirements with lesser priority,
-which will not create high risks when they are not fully achieved.
-
-.Motivation
-Since quality requirements will have a lot of influence on architectural
-decisions you should know for every stakeholder what is really important to them,
-concrete and measurable.
-****
-
 === Quality Tree
-
-[role="arc42help"]
-****
-.Content
-The quality tree (as defined in ATAM – Architecture Tradeoff Analysis Method) with quality/evaluation scenarios as leafs.
-
-.Motivation
-The tree structure with priorities provides an overview for a sometimes large number of quality requirements.
-
-.Form
-The quality tree is a high-level overview of the quality goals and requirements:
-
-* tree-like refinement of the term "quality". Use "quality" or "usefulness" as a root
-* a mind map with quality categories as main branches
-
-In any case the tree should include links to the scenarios of the following section.
-****
 :imagesdir: images/
 image::QualityTree.png[]
 === Quality Scenarios
 
-[role="arc42help"]
-****
-.Contents
-Concretization of (sometimes vague or implicit) quality requirements using (quality) scenarios.
-
-These scenarios describe what should happen when a stimulus arrives at the system.
-
-For architects, two kinds of scenarios are important:
-
-* Usage scenarios (also called application scenarios or use case scenarios) describe the system’s runtime reaction to a certain stimulus. This also includes scenarios that describe the system’s efficiency or performance. Example: The system reacts to a user’s request within one second.
-* Change scenarios describe a modification of the system or of its immediate environment. Example: Additional functionality is implemented or requirements for a quality attribute change.
-
-.Motivation
-Scenarios make quality requirements concrete and allow to
-more easily measure or decide whether they are fulfilled.
-
-Especially when you want to assess your architecture using methods like
-ATAM you need to describe your quality goals (from section 1.2)
-more precisely down to a level of scenarios that can be discussed and evaluated.
-
-.Form
-Tabular or free form text.
-****
 [options="header",cols="1,3,3"]
 |===
 |Quality requirement | Quality scenario | Priority
-| Usability | Our app have to be easy to use for every kind of user, even for a non-experienced one. The views must be clear and intuitive, and the user has to be able to browse fluently through the entire application. In addition, must be implemented the recquired mechanisms to ease the users use of the app. | High
-| Privacy | Giving the users the control of the information saved and shared, we guarantee that there wouldn't be personal leaks. This is a result of the use of pods and a very cared system of terms and privacy options. | Medium-high
-| Efficiency | The conection and browsing speed must be faster enaugh to keep users attention and don't bore them, giving a fluent experience through the app. We are looking a balance with the privacy in terms of storeage of the personal user's information | Medium-high
+| Usability | Our app has to be easy to use for every kind of user, even for a non-experienced one. The views must be clear and intuitive, and the user has to be able to browse fluently through the entire application. In addition, the required mechanisms to ease the users use of the app must be implemented. | High
+| Privacy | Giving the users the control of the information saved and shared, we guarantee that there won't be personal leaks. This is a result of the use of pods and a very cared system of terms and privacy options. | Medium-high
+| Efficiency | The conection and browsing speed must be fast enough to keep the users' attention and to not bore them, giving a fluent experience through the app. | Medium-high
 | Testability | The application should be able to go through different test and complete them successfully. Besides, the app has to be prepared for all kind of logical uses by the user | Medium-low
 |===
+
+Some of these quality attributes have been checked with the following load tests:
+
+* 4 load peaks of 100 users, each 40 seconds:
+
+:imagesdir: images/
+image::loadTest_4_peaks.png[]
+
+* 1 user per second, through 3 minutes:
+
+image::loadTest_1_user_per_second.png[]
+
+* 3 series of 1, 5 and 10 users per second during 60 seconds, each other:
+
+image::loadTest_3_series.png[]
+
+* normal app use (20 users for 30 seconds):
+
+image::loadTest_normal_app_use.png[]

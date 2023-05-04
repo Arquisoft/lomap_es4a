@@ -5,8 +5,8 @@
 [options="header",cols="1,2"]
 |===
 |Constrains | Description
-| Arc42 | It will be the base template followed by the documentation.
-| Git & GitHub | A version control management has to be used so that the software can be versioned and all developers have access to the project. GitHub is a tool that has to be used so the professors can evaluate the project.
+| Arc42 | It will be the base template followed for the documentation.
+| Git & GitHub | A version control management system has to be used so that the software can be versioned and all developers have access to the project. GitHub is a tool that has to be used so the professors can evaluate the project.
 |===
 === Technology conventions
 [options="header",cols="1,2"]

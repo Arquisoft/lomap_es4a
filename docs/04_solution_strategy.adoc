@@ -16,15 +16,15 @@ Some members of the team will use Github IDEs such as Github Destopk, Github Kra
 
 === How are the quality goals going to be reached?
 .Usability:
-Our interfaces will be intuitive and easy to use for anyone.
+Our interfaces will be intuitive and easy to use for anyone thanks to using the React framework.
 
 .Privacy:
 The essential information will be stored in SOLID PODs providing a strong privacy.
 
 .Eficiency:
-The performance will be smooth, by using the SOLID PODs correctly.
+The performance will be smooth, by using the SOLID PODs correctly and not using a REST API.
 
 .Testability:
-The team will test the app manually and automatically 
+The team will test the app manually and automatically with automated jest tests. 
 
 ***
